@@ -6,6 +6,9 @@ public class EnemyBase : MonoBehaviour
     [Header("데이터 소스")]
     public EnemyData enemyData; // 유니티 인스펙터에서 EnemyData를 꽂아주는 곳
 
+    [Header("비주얼 설정")]
+    public Transform visuals; // 플립용 변수
+
     // 밑에 코드들은 EnemyData파일에서 받아올 실제 값들을 저장할 변수들
     protected int currentHealth;
     protected float moveSpeed;
@@ -14,9 +17,9 @@ public class EnemyBase : MonoBehaviour
     protected float knockbackForce;
 
     // 배회 관련 설정들도 EnemyData파일에서 가져옴
-    public float wanderSpeed;
-    public float wanderDuration;
-    public float waitDuration;
+    protected float wanderSpeed;
+    protected float wanderDuration;
+    protected float waitDuration;
 
     protected Transform player; // 자식 클래스에서도 쓸 수 있게 protected로 함.
     protected Rigidbody2D rb;
@@ -28,11 +31,18 @@ public class EnemyBase : MonoBehaviour
     private Vector2 wanderDirection;
     private float wanderTimer;
     private bool isWaiting = false;
+    // 몬스터 스프라이트가 좌우반전될 때 히트박스도 같이 움직이도록 하기 위한 변수설정.
+    protected bool isFacingRight = true; 
 
     protected virtual void Awake() // virtual를 써야 자식클래스에서 활용 가능하다고 함
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        if (visuals != null)
+        {
+            sr = visuals.GetComponent<SpriteRenderer>();
+        }
 
         // 받아온 EnemyData가 있다면 그 수치들을 이 몬스터의 값으로 사용함
         if (enemyData != null )
@@ -166,10 +176,36 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void FlipSprite()
     {
-        // 이동 속도가 너무 작을 때는 스프라이트 계속 좌우로 움직이면 거슬리니까 그거 방지용 코드
-        if(Mathf.Abs(rb.linearVelocity.x)>0.05f)
+        // 속도가 거의 0일때는 방향 전환하지 않는걸로
+        if (Mathf.Abs(rb.linearVelocity.x) < 0.05f)
+            return;
+        // 왼쪽으로 가고 있고, 현재 오른쪽을 보고 있으면 플립
+        if(rb.linearVelocity.x < 0 && isFacingRight)
         {
-            sr.flipX = rb.linearVelocity.x < 0;
+            Flip();
         }
+        // 이건 오른쪽으로 가고 있을때
+        else if (rb.linearVelocity.x > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+    protected void Flip()
+    {
+        // 보는 방향 상태를 반대로 바꿈
+        isFacingRight = !isFacingRight;
+
+        if (visuals != null)
+        {
+            // 현재 Scale을 가져옴
+            Vector3 localScale = visuals.localScale;
+
+            // x축 크기에 -1 곱해서 반전시키는 것
+            localScale.x *= -1;
+
+            // 이제 그 반전된 Scale을 다시 적용
+            visuals.localScale = localScale;
+        } // 이러면 이제 몬스터 프리팹에서 자식에 있는 것들만 좌우반전됨 --> 나중에 ui나 다른 거 추가되면 그것까지 뒤집힐 수 있어서 그거 방지용으로 이렇게 만듬
     }
 }

@@ -20,4 +20,7 @@ public class EnemyData : ScriptableObject
     public float wanderSpeed; // 배회할 때 속도
     public float wanderDuration; // 배회 시 한 방향으로 이동할 시간
     public float waitDuration; // 이동 후 멈춰 쉬는 시간
+
+    [Header("스폰 설정")]
+    public float spawnInterval; // 스폰 간격 시간 설정
 }

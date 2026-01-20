@@ -22,3 +22,4 @@ MonoBehaviour:
   wanderSpeed: 1
   wanderDuration: 1
   waitDuration: 0.5
+  spawnInterval: 5

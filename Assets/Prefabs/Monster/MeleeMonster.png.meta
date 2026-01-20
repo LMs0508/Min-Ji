@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9cb85f0a3c23aad49a1b4ad4dc74f7de
+guid: dd8641678d0f9e44593f41d6f3eb7959
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -116,10 +116,10 @@ TextureImporter:
       name: MeleeMonster_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 360
-        height: 360
+        x: 44
+        y: 49
+        width: 274
+        height: 262
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
