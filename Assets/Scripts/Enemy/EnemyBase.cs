@@ -208,4 +208,9 @@ public class EnemyBase : MonoBehaviour
             visuals.localScale = localScale;
         } // 이러면 이제 몬스터 프리팹에서 자식에 있는 것들만 좌우반전됨 --> 나중에 ui나 다른 거 추가되면 그것까지 뒤집힐 수 있어서 그거 방지용으로 이렇게 만듬
     }
+
+    protected virtual void PerformAttack()
+    {
+        Debug.Log("기본 공격 실행");
+    }
 }
