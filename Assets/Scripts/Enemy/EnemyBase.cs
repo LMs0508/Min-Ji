@@ -1,21 +1,28 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyBase : MonoBehaviour
 {
-    [Header("기본 셋팅")]
-    public float moveSpeed = 2f;
-    public float detectionRange = 8f; // 이건 플레이어를 발견하는 거리
-    public float stopDistance = 1.2f; // 멈추는 거리(근접 기준임) 원거리일 때는 숫자를 5정도로 키우면 될 듯
+    [Header("데이터 소스")]
+    public EnemyData enemyData; // 유니티 인스펙터에서 EnemyData를 꽂아주는 곳
 
-    [Header("배회 셋팅")]
-    public float wanderSpeed = 1f; //배회 속도
-    public float wanderDuration = 2f; // 한 방향인 동안 이동하는 시간
-    public float waitDuration = 1.5f; // 이동 후 대기하는 시간
+    // 밑에 코드들은 EnemyData파일에서 받아올 실제 값들을 저장할 변수들
+    protected int currentHealth;
+    protected float moveSpeed;
+    protected float detectionRange;
+    protected float stopDistance;
+    protected float knockbackForce;
+
+    // 배회 관련 설정들도 EnemyData파일에서 가져옴
+    public float wanderSpeed;
+    public float wanderDuration;
+    public float waitDuration;
 
     protected Transform player; // 자식 클래스에서도 쓸 수 있게 protected로 함.
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
     protected bool isChasing = false; // 플레이어를 쫒고 있는가?
+    protected bool isHit = false; // 타격된 상태인가? --> 이때 이동을 멈추게 할 거임
 
     // 밑에 코드들은 배회할 때 쓸 변수들
     private Vector2 wanderDirection;
@@ -26,6 +33,21 @@ public class EnemyBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        // 받아온 EnemyData가 있다면 그 수치들을 이 몬스터의 값으로 사용함
+        if (enemyData != null )
+        {
+            moveSpeed = enemyData.moveSpeed;
+            detectionRange = enemyData.detectionRange;
+            stopDistance = enemyData.stopDistance;
+            knockbackForce = enemyData.knockbackForce;
+
+            wanderSpeed = enemyData.wanderSpeed;
+            wanderDuration = enemyData.wanderDuration;
+            waitDuration = enemyData.waitDuration;
+
+            currentHealth = enemyData.maxHealth; //시작할 때 현재 체력을 최대 체력으로 설정함
+        }
         // 밑에 코드는 태그를 통해 몬스터가 플레이어를 찾기 위해서임
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -37,8 +59,9 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update() // 이것도 자식이 쓸 수 있게 하기 위해 virtual씀
     {
-        if (player == null)
-            return; // 플레이어 없으면 리턴
+        if (player == null || isHit)
+            return; // 플레이어가 없거나 맞아서 넉백 중일 땐 리턴
+
         float distance = Vector2.Distance(transform.position, player.position);
         // 플레이어 거리를 계산하기 위한 코드
         if (distance <= detectionRange) //거리가 감지범위 안에 들어왔다면
@@ -59,6 +82,43 @@ public class EnemyBase : MonoBehaviour
             Patrol(); // 아직 발견못했으니 순찰하는 함수로
         }
             FlipSprite();
+    }
+
+    public virtual void TakeDamage(int damage) // 피격함수임. 플레이어가 몬스터를 때릴 때 이 함수가 호출될 예정
+    {
+        if (currentHealth <= 0)
+            return; // 이미 죽었다면 무시
+
+        currentHealth -= damage;
+        Debug.Log($"{enemyData.enemyName} 피격, 남은 체력: {currentHealth}");
+
+        StartCoroutine(HitFeedback()); // 피격시 빨간색으로 표시
+
+        // 넉백 효과 계산해주는 것
+        Vector2 knockbackDir = (transform.position - player.position).normalized;
+        rb.linearVelocity = knockbackDir * knockbackForce;
+
+        // 체력 다 떨어졌는지 확인
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    // 코루틴 --> 피격 시 빨간색으로 변하게 하는 것
+    protected IEnumerator HitFeedback()
+    {
+        isHit = true; // 피격 중엔 몬스터 움직일 수 없게 할 것
+        sr.color = Color.red;
+
+        yield return new WaitForSeconds(0.2f); // 이것을 0.2초 동안 유지
+
+        sr.color = Color.white; // 다시 원래 색으로 복구
+        isHit = false; // 경직 풀어줌
+    }
+
+    protected virtual void Die()
+    {
+        Destroy(gameObject); // 몬스터 오브젝트 삭제
+        // 나중에 아이템 드롭 코드를 여기다 넣어도 될듯
     }
 
     protected virtual void Move() // 움직임 함수
@@ -100,12 +160,16 @@ public class EnemyBase : MonoBehaviour
     private void SetNewWanderDirection() // 아까는 시작할 때 방향을 정했다면 이건 그 이후 방향 설정 함수
     {
         float randomX = Random.Range(-1f, 1f); // 무작위 X방향
-        float randomY = Random.Range(-1f. 1f); // 무작위 Y방향
+        float randomY = Random.Range(-1f, 1f); // 무작위 Y방향
         wanderDirection = new Vector2(randomX, randomY).normalized;
     }
 
     protected virtual void FlipSprite()
     {
-        if(Mathf.Abs(rb.linear))
+        // 이동 속도가 너무 작을 때는 스프라이트 계속 좌우로 움직이면 거슬리니까 그거 방지용 코드
+        if(Mathf.Abs(rb.linearVelocity.x)>0.05f)
+        {
+            sr.flipX = rb.linearVelocity.x < 0;
+        }
     }
 }
