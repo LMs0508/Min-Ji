@@ -23,4 +23,9 @@ public class EnemyData : ScriptableObject
 
     [Header("스폰 설정")]
     public float spawnInterval; // 스폰 간격 시간 설정
+
+    [Header("공격 설정")]
+    public int attackDamage; // 공격력
+    public float attackRange; // 공격 사거리
+    public float attackCooldown; // 공격 쿨탐
 }
