@@ -13,8 +13,10 @@ namespace Game.Core
 
         private void Start()
         {
-            // HUD ¿¬°á
-            hud.Bind(playerStats, playerElement);
+            if (hud != null && playerStats != null && playerElement != null)
+                hud.Bind(playerStats, playerElement);
+            else
+                Debug.LogError("[GameManager] Assign playerStats, playerElement, hud in Inspector.");
         }
     }
 }
