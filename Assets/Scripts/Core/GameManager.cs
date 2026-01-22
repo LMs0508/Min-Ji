@@ -1,16 +1,20 @@
 using UnityEngine;
+using Game.Player;
+using Game.UI;
 
-public class GameManager : MonoBehaviour
+namespace Game.Core
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        
-    }
+        [Header("References")]
+        [SerializeField] private PlayerStats playerStats;
+        [SerializeField] private PlayerElement playerElement;
+        [SerializeField] private HUDController hud;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            // HUD ¿¬°á
+            hud.Bind(playerStats, playerElement);
+        }
     }
 }

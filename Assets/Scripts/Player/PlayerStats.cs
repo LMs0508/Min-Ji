@@ -96,7 +96,7 @@ namespace Game.Player
 
         public float ApplyCooldownReduction(float baseCooldownSeconds)
         {
-            // cooldownReduction.Value를 0~0.9 정도로 제한 추천
+            // cooldownReduction.Value 0.2 == 20%인지
             float cdr = Mathf.Clamp(cooldownReduction.Value, 0f, 0.9f);
             return baseCooldownSeconds * (1f - cdr);
         }
