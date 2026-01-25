@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: dd8641678d0f9e44593f41d6f3eb7959
+guid: d3447ee086ff280499d92c876eaeb5c0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 526339298298481098
-    second: MeleeMonster_0
+      213: 3414935988707183554
+    second: SkeletonWorkMotion_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +46,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.15}
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -113,23 +113,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MeleeMonster_0
+      name: SkeletonWalkMotion_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 49
-        width: 274
-        height: 262
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 7
+        y: 1024
+        width: 1024
+        height: 1024
+      alignment: 9
+      pivot: {x: 0.51756674, y: 0.37544262}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ac9c86a9dceed4700800000000000000
-      internalID: 526339298298481098
+      spriteID: 41dd2c84deb8c3b4480cefeb044d12ff
+      internalID: 429748317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkMotion_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 1024
+        height: 1024
+      alignment: 9
+      pivot: {x: 0.4838971, y: 0.38647318}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aece89be1a83d145b3a7c6933cd6f73
+      internalID: -1535344575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkMotion_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 9
+      pivot: {x: 0.5248864, y: 0.49333894}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aa3aa629aaebae47beafa0e896a9fd1
+      internalID: 382466114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkMotion_3
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 9
+      pivot: {x: 0.48828876, y: 0.49333912}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500da4d0521a0744a875b06843b9bdb8
+      internalID: 186797490
       vertices: []
       indices: 
       edges: []
@@ -138,17 +204,22 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 4b1308dded4761e43a22ba808b58e4e7
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":2.0},"gridSpriteSize":{"x":1024.0,"y":1024.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      MeleeMonster_0: 526339298298481098
+      SkeletonWalkMotion_0: 429748317
+      SkeletonWalkMotion_1: -1535344575
+      SkeletonWalkMotion_2: 382466114
+      SkeletonWalkMotion_3: 186797490
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
