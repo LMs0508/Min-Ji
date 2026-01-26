@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000a9090cc4
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1162,6 +1162,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6476256505310213959, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6961468259986789970, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: maxHP.baseValue
@@ -1172,23 +1182,32 @@ PrefabInstance:
       propertyPath: maxMP.baseValue
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 7079394887248948121, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_SortingLayerID
-      value: -105541197
+      value: -1869315837
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2262055049241631831, guid: 5f78891297016634f8e1ceef106e5664, type: 3}
+    - target: {fileID: 8952830129665925915, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

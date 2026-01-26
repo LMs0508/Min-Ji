@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3213219886605728786}
   - component: {fileID: 1019442405541676926}
   - component: {fileID: 7133063508156375382}
-  - component: {fileID: 2262055049241631831}
   m_Layer: 20
   m_Name: PF Player
   m_TagString: Player
@@ -207,23 +206,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2262055049241631831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5066033425070254266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e809fdb909f77c3429415698c219eaba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Core.SceneFlowManager
-  floorScenes:
-  - floor01
-  - floor02
-  player: {fileID: 4836199991063186068}
-  spawnObjectName: FloorSpawn
 --- !u!1 &6476256505310213959
 GameObject:
   m_ObjectHideFlags: 0
