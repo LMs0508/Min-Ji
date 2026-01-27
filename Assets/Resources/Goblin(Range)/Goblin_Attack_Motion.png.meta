@@ -129,8 +129,8 @@ TextureImporter:
         y: 167
         width: 320
         height: 330
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.6293231, y: 0.33898723}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 320
         height: 330
       alignment: 9
-      pivot: {x: 0.47605124, y: 0.48916265}
+      pivot: {x: 0.4888239, y: 0.33898723}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,10 +171,10 @@ TextureImporter:
         serializedVersion: 2
         x: 640
         y: 167
-        width: 320
+        width: 284
         height: 330
       alignment: 9
-      pivot: {x: 0.39462566, y: 0.3436318}
+      pivot: {x: 0.4521925, y: 0.33279446}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -191,12 +191,12 @@ TextureImporter:
       name: Goblin_Attack_Motion_3
       rect:
         serializedVersion: 2
-        x: 937
+        x: 924
         y: 168
-        width: 320
+        width: 280
         height: 330
       alignment: 9
-      pivot: {x: 0.37546653, y: 0.3281498}
+      pivot: {x: 0.4831216, y: 0.33434263}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

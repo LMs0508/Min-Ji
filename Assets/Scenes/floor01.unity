@@ -416,7 +416,8 @@ GameObject:
   - component: {fileID: 177956046}
   - component: {fileID: 177956047}
   - component: {fileID: 177956048}
-  m_Layer: 0
+  - component: {fileID: 177956049}
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +433,7 @@ Transform:
   m_GameObject: {fileID: 177956044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -476,7 +477,7 @@ BoxCollider2D:
   m_Offset: {x: -0.32974076, y: 0.18906605}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.50605583, y: 0.36092815}
     oldSize: {x: 8, y: 4.4125}
     newSize: {x: 12.8, y: 7.06}
     adaptiveTilingThreshold: 0.5
@@ -530,8 +531,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 89a098513f0f5604391d603ffa359154, type: 3}
@@ -556,10 +557,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b1509f8cf99a444b850f1a53a73a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangeMonsterAT
-  player: {fileID: 5628018141983903106, guid: ef67ba864d1ecc042b5f4cf48455c0a6, type: 3}
+  player: {fileID: 0}
   projectilePrefab: {fileID: 1471338574721905220, guid: d4e324a4a14688d449f6ebbdb7d54c22,
     type: 3}
   firePoint: {fileID: 472187340}
+--- !u!95 &177956049
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177956044}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84eb7e961591b4c4f9d4271cf47b3052, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &180341351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8552570291598617937, guid: bf462882706828c44a4465986b6fb8d2,
@@ -793,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 472187340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -809,7 +832,7 @@ Transform:
   m_GameObject: {fileID: 472187339}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.11, y: 0.07, z: 0}
+  m_LocalPosition: {x: 1.11, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41461,7 +41484,7 @@ GameObject:
   - component: {fileID: 1305746238}
   - component: {fileID: 1305746237}
   - component: {fileID: 1305746236}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RangeMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41587,7 +41610,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4

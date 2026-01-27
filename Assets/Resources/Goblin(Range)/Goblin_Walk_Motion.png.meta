@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 160
+  spritePixelsToUnits: 105
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,11 +126,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 329
-        height: 492
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 180
+        width: 320
+        height: 320
+      alignment: 9
+      pivot: {x: 0.63890254, y: 0.3100068}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -147,12 +147,12 @@ TextureImporter:
       name: Goblin_Walk_Motion_1
       rect:
         serializedVersion: 2
-        x: 370
-        y: 192
-        width: 242
-        height: 290
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 320
+        y: 180
+        width: 320
+        height: 320
+      alignment: 9
+      pivot: {x: 0.5095795, y: 0.27967176}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -169,12 +169,12 @@ TextureImporter:
       name: Goblin_Walk_Motion_2
       rect:
         serializedVersion: 2
-        x: 656
-        y: 190
-        width: 247
-        height: 298
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 640
+        y: 180
+        width: 286
+        height: 320
+      alignment: 9
+      pivot: {x: 0.4767772, y: 0.30681363}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -191,12 +191,12 @@ TextureImporter:
       name: Goblin_Walk_Motion_3
       rect:
         serializedVersion: 2
-        x: 947
-        y: 192
-        width: 231
-        height: 290
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 930
+        y: 180
+        width: 320
+        height: 320
+      alignment: 9
+      pivot: {x: 0.41538125, y: 0.2876547}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -213,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 54049a0812fab2f47a744f87e61a8601
     internalID: 0
     vertices: []
     indices: 
@@ -221,7 +221,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":320.0,"y":698.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Goblin_Walk_Motion_0: -35299711646252737
       Goblin_Walk_Motion_1: -3598531735676896835

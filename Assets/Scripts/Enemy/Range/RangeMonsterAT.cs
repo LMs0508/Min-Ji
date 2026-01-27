@@ -18,13 +18,10 @@ public class RangeMonsterAT : MonoBehaviour
         stats = GetComponentInParent<EnemyStats>();
         anim = GetComponent<Animator>();
 
-        if (player == null)
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        if (go != null)
         {
-            GameObject go = GameObject.FindGameObjectWithTag("Player");
-            if (go != null)
-            {
-                player = go.transform;
-            }
+            player = go.transform;
         }
     }
 
@@ -32,28 +29,31 @@ public class RangeMonsterAT : MonoBehaviour
     {
         if (player == null || mover == null || stats == null || anim == null)
             return;
-        if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking") ||
-           anim.GetNextAnimatorStateInfo(0).IsTag("Attacking"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking"))
         {
             mover.Stop();
+            anim.SetBool("isWalking", false);
             return;
         }
         float distance = Vector2.Distance(transform.position, player.position);
         var data = stats.enemyData;
+        Vector2 direction = (player.position - transform.position).normalized;
 
+        float buffer = 0.5f;
         if (distance > data.attackRange)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
             mover.Move(direction, data.moveSpeed);
+            anim.SetBool("isWalking", true);
         }
         else if (distance < data.stopDistance)
         {
-            Vector2 direction = (transform.position - player.position).normalized;
-            mover.Move(direction, data.moveSpeed);
+            mover.Move(-direction, data.moveSpeed);
+            anim.SetBool("isWalking", true);
         }
         else
         {
             mover.Stop();
+            anim.SetBool("isWalking", false);
             if (Time.time >= lastAttackTime + data.attackCooldown)
                 ShootTrigger();
         }
@@ -71,7 +71,6 @@ public class RangeMonsterAT : MonoBehaviour
         {
             GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             Vector2 shootDir = (player.position - firePoint.position).normalized;
-
             ProjectileLogic projScript = proj.GetComponent<ProjectileLogic>();
             if (projScript != null)
             {
