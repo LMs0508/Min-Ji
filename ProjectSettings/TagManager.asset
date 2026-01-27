@@ -16,10 +16,10 @@ TagManager:
   - Player
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - MiniMap_Ground
+  - MiniMap_Wall
+  - MiniMap_Player
+  - MiniMap_Enemy
   - 
   - 
   - 
