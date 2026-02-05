@@ -3,11 +3,11 @@ using UnityEngine;
 public class MiniMapFollow : MonoBehaviour
 {
     public Transform player;
+    public float z = -10f;
 
     void LateUpdate()
     {
-        Vector3 pos = player.position;
-        pos.y = transform.position.y; // 높이는 고정
-        transform.position = pos;
+        if (!player) return;
+        transform.position = new Vector3(player.position.x, player.position.y, z);
     }
 }
