@@ -12,6 +12,10 @@ public class RangeMonsterAT : MonoBehaviour
 
     private float lastAttackTime;
 
+    private float wanderTimer;
+    private Vector2 wanderDirection;
+    private bool isWaiting = false;
+
     void Start()
     {
         mover = GetComponentInParent<EnemyMover>();
@@ -29,36 +33,78 @@ public class RangeMonsterAT : MonoBehaviour
     {
         if (player == null || mover == null || stats == null || anim == null)
             return;
+
+        if (player == null) { Debug.LogWarning("플레이어 태그를 못 찾았어요!"); return; }
+
+        bool attacking = anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking");
+
         if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking"))
         {
             mover.Stop();
-            anim.SetBool("isWalking", false);
             return;
         }
-        float distance = Vector2.Distance(transform.position, player.position);
+        float distance = (player != null) ? Vector2.Distance(transform.position, player.position) : float.MaxValue;
         var data = stats.enemyData;
-        Vector2 direction = (player.position - transform.position).normalized;
 
+        if (player != null && distance <= stats.detectionRange)
+        {
+            HandleCombat(distance, data);
+        }
+        else
+        {
+            HandlePatrol(data);
+        }
+    }
+
+    private void HandleCombat(float distance, EnemyData data)
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
         float buffer = 0.5f;
-        if (distance > data.attackRange)
+
+        if (distance > data.attackRange + buffer)
         {
             mover.Move(direction, data.moveSpeed);
-            anim.SetBool("isWalking", true);
         }
-        else if (distance < data.stopDistance)
+        else if (distance < data.stopDistance - buffer)
         {
             mover.Move(-direction, data.moveSpeed);
-            anim.SetBool("isWalking", true);
         }
         else
         {
             mover.Stop();
-            anim.SetBool("isWalking", false);
+            mover.LookAt(direction);
+
             if (Time.time >= lastAttackTime + data.attackCooldown)
+            {
                 ShootTrigger();
+            }
         }
     }
-    
+
+    private void HandlePatrol(EnemyData data)
+    {
+        wanderTimer -= Time.deltaTime;
+        if (wanderTimer <= 0)
+        {
+            isWaiting = !isWaiting;
+            if (!isWaiting)
+            {
+                wanderDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+                wanderTimer = data.wanderDuration;
+            }
+            else
+            {
+                mover.Stop();
+                wanderTimer = data.waitDuration;
+            }
+        }
+
+        if (!isWaiting)
+        {
+            mover.Move(wanderDirection, data.moveSpeed);
+        }
+    }
+
     void ShootTrigger()
     {
         lastAttackTime = Time.time;
@@ -67,14 +113,21 @@ public class RangeMonsterAT : MonoBehaviour
     
     public void OnMonsterShoot()
     {
-        if(projectilePrefab != null && firePoint != null)
+        if (projectilePrefab != null && firePoint != null)
         {
+            Vector2 targetDir = (player.position - firePoint.position).normalized; // 플레이어 향한 방향
+            Vector2 forward = (transform.lossyScale.x > 0) ? Vector2.right : Vector2.left; // 몬스터의 현재 정면
+            float signedAngle = Vector2.SignedAngle(forward, targetDir);
+            float clampedAngle = Mathf.Clamp(signedAngle, -22.5f, 22.5f);
+
+            Quaternion rotation = Quaternion.Euler(0, 0, clampedAngle);
+            Vector2 finalShootDir = (rotation * forward).normalized;
+
             GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-            Vector2 shootDir = (player.position - firePoint.position).normalized;
             ProjectileLogic projScript = proj.GetComponent<ProjectileLogic>();
             if (projScript != null)
             {
-                projScript.Setup(shootDir, stats.enemyData.damage);
+                projScript.Setup(finalShootDir, stats.enemyData.damage);
             }
         }
     }

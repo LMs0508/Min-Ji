@@ -37,10 +37,28 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab == null)
             return;
 
-        Vector2 spawnPos = GetRandomSpawnPosition(); // 무작위 위치를 일단 잡음
+        Vector2 spawnPos;
+        int attempt = 0;
+        float minSpawnDistance = 3f;
 
-        // 몬스터를 생성하고 리스트에 넣는 코드
+        do{
+            spawnPos = GetRandomSpawnPosition();
+            attempt++;
+            if (GameObject.FindGameObjectWithTag("Player") == null) break;
+
+            float distToPlayer = Vector2.Distance(spawnPos, GameObject.FindGameObjectWithTag("Player").transform.position);
+            if (distToPlayer > minSpawnDistance) break;
+        } while (attempt < 10);
+
         GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+
+        EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+        if (enemyStats != null)
+        {
+            enemyStats.enemyData = this.enemyData; // 여기서 데이터를 전달함!
+            enemyStats.ApplyData();
+        }
+
         spawnedEnemies.Add(enemy);
     }
     // 스포너 주변의 무작위 좌표를 구하는 함수

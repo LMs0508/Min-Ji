@@ -33,6 +33,11 @@ public class EnemyMover : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
     }
 
+    public void LookAt(Vector2 direction)
+    {
+        FlipSprite(direction.x);
+    }
+
     private void FlipSprite(float xInput)
     {
         // 속도가 거의 0일때는 방향 전환하지 않는걸로
