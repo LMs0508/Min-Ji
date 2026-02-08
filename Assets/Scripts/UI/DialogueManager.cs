@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = lines[index];
 
         // (선택) 게임 멈추기
-        // Time.timeScale = 0f;
+        Time.timeScale = 0f;
     }
 
     void Next()
@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
         panel.SetActive(false);
 
         // (선택) 게임 재개
-        // Time.timeScale = 1f;
+        Time.timeScale = 1f;
     }
 
     public bool IsOpen() => isOpen;
