@@ -3,12 +3,23 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Animator anim;
     public Transform visuals;
     private bool isFacingRight = true;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
+    }
+
+    void Update()
+    {
+        if(anim != null)
+        {
+            float speed = rb.linearVelocity.magnitude;
+            anim.SetBool("isWalking", speed > 0.1f);
+        }
     }
 
     public void Move(Vector2 direction, float speed)

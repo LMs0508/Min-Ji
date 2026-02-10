@@ -8,7 +8,7 @@ namespace Game.Core
     public class SceneFlowManager : MonoBehaviour
     {
         [Header("Floor scene names (must match scene file names)")]
-        [SerializeField] private List<string> floorScenes = new List<string> { "floor01", "floor02" };
+        [SerializeField] private List<string> floorScenes = new List<string> { "floor01", "floor02","floor03" };
 
         [Header("Player")]
         [SerializeField] private Transform player;                       // PF Player µå·¡±×
