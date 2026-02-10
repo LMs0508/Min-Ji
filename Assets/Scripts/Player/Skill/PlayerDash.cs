@@ -15,7 +15,7 @@ public class PlayerDash : MonoBehaviour
     private bool isDashing = false;
     private float lastDashTime;
 
-    [Header("돌진 설정")]
+    [Header("키 설정")]
     public KeyCode DashKey = KeyCode.C;
 
     void Awake()
