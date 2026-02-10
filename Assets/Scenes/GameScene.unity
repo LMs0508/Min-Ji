@@ -1938,7 +1938,7 @@ MonoBehaviour:
   panel: {fileID: 1855529560}
   nameText: {fileID: 1316781678}
   dialogueText: {fileID: 1099130078}
-  interactKey: 32
+  nextKey: 32
 --- !u!1001 &2947958816322706718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2055,7 +2055,7 @@ PrefabInstance:
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}

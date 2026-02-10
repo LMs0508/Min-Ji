@@ -11,50 +11,62 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
 
     [Header("Input")]
-    public KeyCode interactKey = KeyCode.Space;
+    public KeyCode nextKey = KeyCode.Space; // "Next"도 Space
 
-    string[] lines;
-    int index;
-    bool isOpen;
+    private string[] lines;
+    private int index;
+    private bool open;
 
-    void Awake()
-    {
-        if (Instance != null) { Destroy(gameObject); return; }
-        Instance = this;
-    }
+    private NPCDialogue currentCaller; // <-- 누가 시작했는지 저장
 
     void Start()
     {
-        if (panel) panel.SetActive(false);
+        if (panel != null) panel.SetActive(false);
+        open = false;
+    }
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        // DontDestroyOnLoad(gameObject); // 필요하면 사용
     }
 
     void Update()
     {
-        if (!isOpen) return;
+        if (!open) return;
 
-        if (Input.GetKeyDown(interactKey))
+        if (Input.GetKeyDown(nextKey))
         {
-            Next();
+            NextLine();
         }
     }
 
-    public void StartDialogue(string speakerName, string[] dialogueLines)
+    public bool IsOpen() => open;
+
+    public void StartDialogue(NPCDialogue caller, string npcName, string[] newLines)
     {
-        if (dialogueLines == null || dialogueLines.Length == 0) return;
+        if (newLines == null || newLines.Length == 0) return;
 
-        lines = dialogueLines;
+        currentCaller = caller;   // <-- 여기 저장
+        lines = newLines;
         index = 0;
-        isOpen = true;
 
-        panel.SetActive(true);
-        nameText.text = speakerName;
-        dialogueText.text = lines[index];
+        open = true;
+        if (panel != null) panel.SetActive(true);
 
-        // (선택) 게임 멈추기
-        Time.timeScale = 0f;
+        if (nameText != null) nameText.text = npcName;
+        ShowCurrentLine();
+
+        Time.timeScale = 0f; // 게임 정지(너가 지금 쓰는 방식 유지)
     }
 
-    void Next()
+    void NextLine()
     {
         index++;
 
@@ -64,17 +76,27 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        dialogueText.text = lines[index];
+        ShowCurrentLine();
     }
 
-    public void EndDialogue()
+    void ShowCurrentLine()
     {
-        isOpen = false;
-        panel.SetActive(false);
-
-        // (선택) 게임 재개
-        Time.timeScale = 1f;
+        if (dialogueText != null) dialogueText.text = lines[index];
     }
 
-    public bool IsOpen() => isOpen;
+    void EndDialogue()
+    {
+        open = false;
+
+        if (panel != null) panel.SetActive(false);
+
+        Time.timeScale = 1f; // 게임 재개
+
+        //  "대화가 닫힌 기준" 쿨다운 시작
+        if (currentCaller != null)
+        {
+            currentCaller.NotifyDialogueClosed();
+            currentCaller = null;
+        }
+    }
 }
