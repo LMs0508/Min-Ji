@@ -1160,7 +1160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cainos.PixelArtTopDown_Basic.CameraFollowS
   target: {fileID: 5628018141342133600}
-  lerpSpeed: 1
+  lerpSpeed: 3
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2231,7 @@ MonoBehaviour:
   cooldown: 5
   SkillManaCost: 3
   auraEffect: {fileID: 398469524}
+  HasteKey: 101
 --- !u!114 &5628018141342133607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,6 +2248,7 @@ MonoBehaviour:
   dashTime: 0.1
   dashCooldown: 3
   SkillManaCost: 5
+  DashKey: 99
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

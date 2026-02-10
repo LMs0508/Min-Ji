@@ -14,6 +14,9 @@ public class PlayerSwiftness : MonoBehaviour
     [Header("시각 효과")]
     public GameObject auraEffect;
 
+    [Header("키 설정")]
+    public KeyCode HasteKey = KeyCode.E;
+
     private TopDownCharacterController controller;
     private float originalSpeed;
     private float lastUsedTime;
@@ -27,7 +30,7 @@ public class PlayerSwiftness : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isFast)
+        if (Input.GetKeyDown(HasteKey) && !isFast)
         {
             if (Time.time >= lastUsedTime + cooldown)
             {

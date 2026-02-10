@@ -15,6 +15,9 @@ public class PlayerDash : MonoBehaviour
     private bool isDashing = false;
     private float lastDashTime;
 
+    [Header("돌진 설정")]
+    public KeyCode DashKey = KeyCode.C;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,7 +27,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (isDashing) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(DashKey))
         {
             if (Time.time >= lastDashTime + dashCooldown)
             {
