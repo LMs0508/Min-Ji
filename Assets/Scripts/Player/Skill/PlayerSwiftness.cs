@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Cainos.PixelArtTopDown_Basic;
+using Game.Player;
 
 public class PlayerSwiftness : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerSwiftness : MonoBehaviour
     public float speedMultiplier;
     public float duration;
     public float cooldown;
+    public float SkillManaCost;
 
     [Header("시각 효과")]
     public GameObject auraEffect;
@@ -25,9 +27,28 @@ public class PlayerSwiftness : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Time.time >= lastUsedTime + cooldown && !isFast)
+        if (Input.GetKeyDown(KeyCode.E) && !isFast)
         {
-            StartCoroutine(SwiftnessRoutine());
+            if (Time.time >= lastUsedTime + cooldown)
+            {
+                PlayerStats stats = GetComponentInChildren<PlayerStats>();
+
+                if (stats != null)
+                {
+                    if (stats.SpendMP(SkillManaCost))
+                    {
+                        StartCoroutine(SwiftnessRoutine());
+                    }
+                    else
+                    {
+                        Debug.Log("마나 부족");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("쿨타임");
+            }
         }
     }
 

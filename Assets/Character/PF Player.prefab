@@ -224,6 +224,8 @@ MonoBehaviour:
   - floor02
   player: {fileID: 4836199991063186068}
   spawnObjectName: FloorSpawn
+  spawnOffset: {x: 0, y: 0}
+  blockWhileLoading: 1
 --- !u!1 &6476256505310213959
 GameObject:
   m_ObjectHideFlags: 0

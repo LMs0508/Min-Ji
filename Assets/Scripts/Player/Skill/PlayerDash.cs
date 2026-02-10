@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Cainos.PixelArtTopDown_Basic;
+using Game.Player;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerDash : MonoBehaviour
     public float dashDistance;    
     public float dashTime;      
     public float dashCooldown;
+    public float SkillManaCost;
 
     private Rigidbody2D rb;
     private bool isDashing = false;
@@ -22,12 +24,25 @@ public class PlayerDash : MonoBehaviour
     {
         if (isDashing) return;
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastDashTime + dashCooldown)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (Time.time >= lastDashTime + dashCooldown)
             {
-                Vector2 dir = GetDashDirection();
-                StartCoroutine(DashRoutine(dir));
+                PlayerStats stats = GetComponentInChildren<PlayerStats>();
+
+                if (stats != null && stats.SpendMP(SkillManaCost))
+                {
+                    Vector2 dir = GetDashDirection();
+                    StartCoroutine(DashRoutine(dir));
+                }
+                else
+                {
+                    Debug.Log("마나 부족");
+                }
+            }
+            else
+            {
+                Debug.Log("쿨타임");
             }
         }
     }

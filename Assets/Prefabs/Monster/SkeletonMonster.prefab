@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAttack
   player: {fileID: 0}
-  attackRange: 2
+  attackRange: 1.75
   attackCooldown: 1.5
   moveSpeed: 2
 --- !u!95 &3310683281049991182
@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 6191095884010611283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.85, y: -2.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
