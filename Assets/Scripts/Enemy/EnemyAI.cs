@@ -6,6 +6,7 @@ public class EnemyAI : MonoBehaviour
     private EnemyMover mover;
     private EnemyHealth health;
     private Transform player;
+    private Animator anim;
 
     private float wanderTimer;
     private Vector2 wanderDirection;
@@ -13,10 +14,14 @@ public class EnemyAI : MonoBehaviour
 
     void Awake()
     {
-        stats = GetComponent<EnemyStats>();
-        mover = GetComponent<EnemyMover>();
-        health = GetComponent<EnemyHealth>();
+        stats = GetComponentInParent<EnemyStats>();
+        mover = GetComponentInParent<EnemyMover>();
+        health = GetComponentInParent<EnemyHealth>();
+        anim = GetComponentInChildren<Animator>();
+    }
 
+    void Start()
+    {
         GameObject p = GameObject.FindGameObjectWithTag("Player");
         if (p != null)
             player = p.transform;
@@ -24,11 +29,10 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (player == null || health.isHit)
+        if(player == null || health.isHit || stats.enemyData == null)
             return;
         float distance = Vector2.Distance(transform.position, player.position);
-        
-        if(distance <= stats.detectionRange)
+        if (distance <= stats.enemyData.detectionRange)
         {
             HandleChasing(distance);
         }
@@ -40,10 +44,10 @@ public class EnemyAI : MonoBehaviour
 
     private void HandleChasing(float distance)
     {
-        if(distance > stats.stopDistance)
+        if (distance > stats.enemyData.stopDistance)
         {
             Vector2 dir = (player.position - transform.position).normalized;
-            mover.Move(dir, stats.moveSpeed);
+            mover.Move(dir, stats.enemyData.moveSpeed);
         }
         else // 일정거리에 도달하면 멈춤
         {
@@ -71,7 +75,7 @@ public class EnemyAI : MonoBehaviour
 
         if(!isWaiting)
         {
-            mover.Move(wanderDirection, stats.moveSpeed);
+            mover.Move(wanderDirection, stats.wanderSpeed);
         }
     }
 

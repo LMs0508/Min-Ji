@@ -1,13 +1,20 @@
 using UnityEngine;
+using Game.Player;
 
 public class MonsterAttack : MonoBehaviour
 {
     private EnemyMover mover;
     private Animator anim;
+    private EnemyStats stats;
 
     private Rigidbody2D rb;
     public Transform player;
     public float attackRange;
+
+    private float wanderTimer;
+    private Vector2 wanderDirection;
+    private bool isWaiting = false;
+
     public float attackCooldown;
     public float moveSpeed;
     private float lastAttackTime;
@@ -15,6 +22,7 @@ public class MonsterAttack : MonoBehaviour
     void Start()
     {
         mover = GetComponentInParent<EnemyMover>();
+        stats = GetComponentInParent<EnemyStats>();
         anim = GetComponent<Animator>();
         if (player == null )
         {
@@ -36,24 +44,50 @@ public class MonsterAttack : MonoBehaviour
         if (isAttacking)
         {// 공격 중이면 이동을 멈추게 하는 코드
             mover.Stop();
+            return; 
         }
         float distance = Vector2.Distance(transform.position, player.position);
-        
-        if(distance > attackRange)
-        {
-            if(!isAttacking)
-            {
-                Vector2 direction = (player.position - transform.position).normalized;
-                mover.Move(direction, moveSpeed);
-            }
-        }
-        else
+
+        if (distance <= stats.enemyData.attackRange)
         {
             mover.Stop();
-            if(Time.time >= lastAttackTime + attackCooldown)
+            if (Time.time >= lastAttackTime + stats.enemyData.attackCooldown)
             {
                 Attack();
             }
+        }
+        else if(distance <= stats.detectionRange)
+        {
+            Vector2 direction = (player.position - transform.position).normalized;
+            mover.Move(direction, stats.enemyData.moveSpeed);
+        }
+        else
+        {
+            HandlePatrol();
+        }
+    }
+
+    void HandlePatrol()
+    {
+        wanderTimer -= Time.deltaTime;
+        if (wanderTimer <= 0)
+        {
+            isWaiting = !isWaiting;
+            if (!isWaiting)
+            {
+                wanderDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+                wanderTimer = stats.wanderDuration;
+            }
+            else
+            {
+                mover.Stop();
+                wanderTimer = stats.waitDuration;
+            }
+        }
+
+        if (!isWaiting)
+        {
+            mover.Move(wanderDirection, stats.wanderSpeed);
         }
     }
 
@@ -65,14 +99,21 @@ public class MonsterAttack : MonoBehaviour
 
     public void OnMonsterHit()
     {
-        if (player == null) return;
-        float currentDistance = Vector2.Distance(transform.position, player.position); if (currentDistance <= attackRange)
+        if (stats == null || player == null)
         {
-            Debug.Log("HIT!");
+            return;
         }
-        else
+        float currentDistance = Vector2.Distance(transform.position, player.position);
+        float range = stats.enemyData.attackRange;
+        if (currentDistance <= range + 0.5f)
         {
-            Debug.Log("MISS!");
+            var pStats = player.GetComponentInChildren<Game.Player.PlayerStats>();
+            if (pStats != null)
+            {
+                float dmg = stats.enemyData.damage;
+                pStats.TakeDamage(dmg);
+                Debug.Log($"{dmg} 데미지");
+            }
         }
     }
 

@@ -15,16 +15,23 @@ public class EnemyStats : MonoBehaviour
 
     void Awake()
     {
-        if (enemyData != null)
+        ApplyData();
+    }
+
+    public void ApplyData()
+    {
+        if (enemyData == null)
         {
-            moveSpeed = enemyData.moveSpeed;
-            detectionRange = enemyData.detectionRange;
-            stopDistance = enemyData.stopDistance;
-            knockbackForce = enemyData.knockbackForce;
-            wanderSpeed = enemyData.wanderSpeed;
-            wanderDuration = enemyData.wanderDuration;
-            waitDuration = enemyData.waitDuration;
-            maxHealth = enemyData.maxHealth;
+            return;
         }
+        
+         moveSpeed = enemyData.moveSpeed;
+         detectionRange = enemyData.detectionRange;
+         stopDistance = enemyData.stopDistance;
+         knockbackForce = enemyData.knockbackForce;
+         wanderSpeed = enemyData.wanderSpeed;
+         wanderDuration = enemyData.wanderDuration;
+         waitDuration = enemyData.waitDuration;
+         maxHealth = enemyData.maxHealth;
     }
 }
