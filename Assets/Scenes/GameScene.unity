@@ -375,7 +375,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298455024}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &298455026
 Camera:
   m_ObjectHideFlags: 0
@@ -2106,6 +2106,7 @@ MonoBehaviour:
   - floor01
   - floor02
   - floor03
+  - floor04
   player: {fileID: 5628018141342133600}
   spawnObjectName: FloorSpawn
   spawnOffset: {x: 0, y: 0}
