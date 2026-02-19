@@ -39,16 +39,15 @@ public class SkillHotbarUI : MonoBehaviour
         if (slot < 0 || slot >= iconImages.Length) return;
         if (iconImages[slot] == null) return;
 
-        // 아이콘 가져오기: 스킬 프리팹에 SpriteRenderer가 있으면 그 sprite를 아이콘으로 사용
-        var sr = skillPrefab.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
+        var skill = skillPrefab.GetComponent<ISkill>();
+        if (skill == null || skill.Icon == null)
         {
-            iconImages[slot].sprite = sr.sprite;
-            iconImages[slot].enabled = (sr.sprite != null);
+            Debug.LogWarning($"스킬 프리팹에 ISkill/Icon이 없어 아이콘을 못 가져왔어! : {skillPrefab.name}");
+            iconImages[slot].enabled = false;
+            return;
         }
-        else
-        {
-            Debug.LogWarning("스킬 프리팹에 SpriteRenderer가 없어서 아이콘을 못 가져왔어!");
-        }
+
+        iconImages[slot].sprite = skill.Icon;
+        iconImages[slot].enabled = true;
     }
 }

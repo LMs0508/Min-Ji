@@ -5,6 +5,10 @@ using Game.Player;
 
 public class DashSkill : MonoBehaviour, ISkill
 {
+    [Header("UI")]
+    [SerializeField] private Sprite icon;
+    public Sprite Icon => icon;
+
     public float dashDistance = 3f;
     public float dashTime = 0.12f;
     public float dashCooldown = 1f;

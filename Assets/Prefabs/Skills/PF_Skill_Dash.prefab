@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832df17e0e1a66d49b6e9d9e547e67fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashSkill
+  icon: {fileID: -7848039375673857549, guid: 81a0dc69d627c6b45b2dfc8de93bb3d1, type: 3}
   dashDistance: 3
   dashTime: 0.12
   dashCooldown: 3
@@ -65,7 +66,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1743286546638806962
 Transform:
   m_ObjectHideFlags: 0
