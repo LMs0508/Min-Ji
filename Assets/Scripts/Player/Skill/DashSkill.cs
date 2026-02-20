@@ -30,6 +30,7 @@ public class DashSkill : MonoBehaviour, ISkill
 
     public bool TryUse(GameObject owner)
     {
+        Debug.Log($"AXIS H={Input.GetAxisRaw("Horizontal")} V={Input.GetAxisRaw("Vertical")}");
         if (owner == null) return false;
         if (isDashing) return false;
 
@@ -51,6 +52,11 @@ public class DashSkill : MonoBehaviour, ISkill
         }
 
         Vector2 dir = GetDashDirection(owner);
+        if (dir.sqrMagnitude < 0.0001f)
+        {
+            Debug.LogWarning("Dash dir is zero, cancel dash");
+            return false;
+        }
 
         var controllers = owner.GetComponentsInChildren<TopDownCharacterController>(true);
         runner.StartCoroutine(DashRoutine(owner, rb, dir, controllers));
@@ -63,12 +69,20 @@ public class DashSkill : MonoBehaviour, ISkill
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        Vector2 inputDir = new Vector2(x, y).normalized;
+        Vector2 input = new Vector2(x, y);
 
-        if (inputDir == Vector2.zero)
-            inputDir = (owner.transform.localScale.x > 0) ? Vector2.right : Vector2.left;
+        if (input.sqrMagnitude > 0.0001f)
+        {
+            input.Normalize();
+            return input;
+        }
 
-        return inputDir;
+        var facing = owner.GetComponent<PlayerFacing>();
+        if (facing != null && facing.LastFacingDir.sqrMagnitude > 0.0001f)
+            return facing.LastFacingDir;
+
+        // 최후: 오른쪽
+        return Vector2.right;
     }
 
     private IEnumerator DashRoutine(GameObject owner, Rigidbody2D rb, Vector2 dir, TopDownCharacterController[] controllers)

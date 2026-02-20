@@ -3771,7 +3771,7 @@ PrefabInstance:
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
@@ -3803,19 +3803,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5628018141342133607}
-    - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5628018141342133606}
-    - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5628018141342133608}
     - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5628018141342133614}
+    - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5628018141342133620}
   m_SourcePrefab: {fileID: 100100000, guid: 5f78891297016634f8e1ceef106e5664, type: 3}
 --- !u!4 &5628018141342133600 stripped
 Transform:
@@ -3823,41 +3819,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2947958816322706718}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5628018141342133606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924969222}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37027719a8bdc304d8eb42c164245e7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSwiftness
-  speedMultiplier: 3
-  duration: 2
-  cooldown: 5
-  SkillManaCost: 3
-  auraEffect: {fileID: 0}
-  HasteKey: 101
---- !u!114 &5628018141342133607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924969222}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f22e55765104e45843edc3557976e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
-  dashDistance: 5
-  dashTime: 0.1
-  dashCooldown: 3
-  SkillManaCost: 5
-  DashKey: 99
 --- !u!114 &5628018141342133608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3883,6 +3844,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4de0739f52fbc469592c99f8cc3ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoroutineRunner
+--- !u!114 &5628018141342133620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924969222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb294920e6651d4597c3bb13429d72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFacing
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
