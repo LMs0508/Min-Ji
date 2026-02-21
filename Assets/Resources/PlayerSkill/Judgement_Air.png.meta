@@ -1,0 +1,510 @@
+fileFormatVersion: 2
+guid: c3aa0b9a2203e0e41a6b3b4f1b6ba0a2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9143293769861573140
+    second: Judgement_Air_0
+  - first:
+      213: 6524842082090609510
+    second: Judgement_Air_1
+  - first:
+      213: 5549106356109939802
+    second: Judgement_Air_2
+  - first:
+      213: 8629976504581208849
+    second: Judgement_Air_3
+  - first:
+      213: 4190764744512871934
+    second: Judgement_Air_4
+  - first:
+      213: -3461485269821033129
+    second: Judgement_Air_5
+  - first:
+      213: 5699067101776782254
+    second: Judgement_Air_6
+  - first:
+      213: -1389959236796561414
+    second: Judgement_Air_7
+  - first:
+      213: -6442884921816570897
+    second: Judgement_Air_8
+  - first:
+      213: 993368778642703219
+    second: Judgement_Air_9
+  - first:
+      213: -2847502266177160938
+    second: Judgement_Air_10
+  - first:
+      213: -26714416268959901
+    second: Judgement_Air_11
+  - first:
+      213: 399710527078718856
+    second: Judgement_Air_12
+  - first:
+      213: -7257034920544948541
+    second: Judgement_Air_13
+  - first:
+      213: 5760329518480110504
+    second: Judgement_Air_14
+  - first:
+      213: -5495725381137659487
+    second: Judgement_Air_15
+  - first:
+      213: 1672685942639568211
+    second: Judgement_Air_16
+  - first:
+      213: -5270226582331414602
+    second: Judgement_Air_17
+  - first:
+      213: 2497597830559473920
+    second: Judgement_Air_18
+  - first:
+      213: -4361271488806741859
+    second: Judgement_Air_19
+  - first:
+      213: 6257151865772939795
+    second: Judgement_Air_20
+  - first:
+      213: -2221234785210405655
+    second: Judgement_Air_21
+  - first:
+      213: 3781533760236031158
+    second: Judgement_Air_22
+  - first:
+      213: 956626508006466318
+    second: Judgement_Air_23
+  - first:
+      213: 6709928273213330659
+    second: Judgement_Air_24
+  - first:
+      213: -2516287800061136569
+    second: Judgement_Air_25
+  - first:
+      213: 2304811280830554070
+    second: Judgement_Air_26
+  - first:
+      213: -5487257916509087282
+    second: Judgement_Air_27
+  - first:
+      213: 7717536591022683560
+    second: Judgement_Air_28
+  - first:
+      213: -300497939035770702
+    second: Judgement_Air_29
+  - first:
+      213: 2333737361025990249
+    second: Judgement_Air_30
+  - first:
+      213: -6245495043048500909
+    second: Judgement_Air_31
+  - first:
+      213: -7357382992705717036
+    second: Judgement_Air_32
+  - first:
+      213: -2747984948655808688
+    second: Judgement_Air_33
+  - first:
+      213: -8600167141777523013
+    second: Judgement_Air_34
+  - first:
+      213: -7786239683106994607
+    second: Judgement_Air_35
+  - first:
+      213: 683503437582457678
+    second: Judgement_Air_36
+  - first:
+      213: 3497777931012915531
+    second: Judgement_Air_37
+  - first:
+      213: 3199922910412204280
+    second: Judgement_Air_38
+  - first:
+      213: -7220165896400958337
+    second: Judgement_Air_39
+  - first:
+      213: -30221955420466846
+    second: Judgement_Air_40
+  - first:
+      213: 4576247658867694128
+    second: Judgement_Air_41
+  - first:
+      213: -987747804483118469
+    second: Judgement_Air_42
+  - first:
+      213: -6310027401437883612
+    second: Judgement_Air_43
+  - first:
+      213: -308905591185457956
+    second: Judgement_Air_44
+  - first:
+      213: -6483517240764916400
+    second: Judgement_Air_45
+  - first:
+      213: 5686554576466642538
+    second: Judgement_Air_46
+  - first:
+      213: 7131066180958201975
+    second: Judgement_Air_47
+  - first:
+      213: 2912149392859296088
+    second: Judgement_Air_48
+  - first:
+      213: 5193411219147836840
+    second: Judgement_Air_49
+  - first:
+      213: 471205507610111511
+    second: Judgement_Air_50
+  - first:
+      213: 7915466570880097038
+    second: Judgement_Air_51
+  - first:
+      213: 985874534410153674
+    second: Judgement_Air_52
+  - first:
+      213: 3442778654303810110
+    second: Judgement_Air_53
+  - first:
+      213: 5534812293408896015
+    second: Judgement_Air_54
+  - first:
+      213: 7178044012497256677
+    second: Judgement_Air_55
+  - first:
+      213: 5941558101218172400
+    second: Judgement_Air_56
+  - first:
+      213: -4540443845901198671
+    second: Judgement_Air_57
+  - first:
+      213: 7156853512766055352
+    second: Judgement_Air_58
+  - first:
+      213: 3288559146326381527
+    second: Judgement_Air_59
+  - first:
+      213: 3190924148725109996
+    second: Judgement_Air_60
+  - first:
+      213: 7231027861386803816
+    second: Judgement_Air_61
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Judgement_Air_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 590
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a24ad8d3183ee70800000000000000
+      internalID: 9143293769861573140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Judgement_Air_2
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 590
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a549bc894d2620d40800000000000000
+      internalID: 5549106356109939802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Judgement_Air_10
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 591
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 619f36f86c3ab78d0800000000000000
+      internalID: -2847502266177160938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Judgement_Air_34
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 205
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbe3d59dc8116a880800000000000000
+      internalID: -8600167141777523013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Judgement_Air_40
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 205
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 261debaaa41a49ff0800000000000000
+      internalID: -30221955420466846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Judgement_Air_45
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 205
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05d1611bb6be506a0800000000000000
+      internalID: -6483517240764916400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a74c7c5fb6d01614dafa593464bc0079
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Judgement_Air_0: 9143293769861573140
+      Judgement_Air_1: 6524842082090609510
+      Judgement_Air_10: -2847502266177160938
+      Judgement_Air_11: -26714416268959901
+      Judgement_Air_12: 399710527078718856
+      Judgement_Air_13: -7257034920544948541
+      Judgement_Air_14: 5760329518480110504
+      Judgement_Air_15: -5495725381137659487
+      Judgement_Air_16: 1672685942639568211
+      Judgement_Air_17: -5270226582331414602
+      Judgement_Air_18: 2497597830559473920
+      Judgement_Air_19: -4361271488806741859
+      Judgement_Air_2: 5549106356109939802
+      Judgement_Air_20: 6257151865772939795
+      Judgement_Air_21: -2221234785210405655
+      Judgement_Air_22: 3781533760236031158
+      Judgement_Air_23: 956626508006466318
+      Judgement_Air_24: 6709928273213330659
+      Judgement_Air_25: -2516287800061136569
+      Judgement_Air_26: 2304811280830554070
+      Judgement_Air_27: -5487257916509087282
+      Judgement_Air_28: 7717536591022683560
+      Judgement_Air_29: -300497939035770702
+      Judgement_Air_3: 8629976504581208849
+      Judgement_Air_30: 2333737361025990249
+      Judgement_Air_31: -6245495043048500909
+      Judgement_Air_32: -7357382992705717036
+      Judgement_Air_33: -2747984948655808688
+      Judgement_Air_34: -8600167141777523013
+      Judgement_Air_35: -7786239683106994607
+      Judgement_Air_36: 683503437582457678
+      Judgement_Air_37: 3497777931012915531
+      Judgement_Air_38: 3199922910412204280
+      Judgement_Air_39: -7220165896400958337
+      Judgement_Air_4: 4190764744512871934
+      Judgement_Air_40: -30221955420466846
+      Judgement_Air_41: 4576247658867694128
+      Judgement_Air_42: -987747804483118469
+      Judgement_Air_43: -6310027401437883612
+      Judgement_Air_44: -308905591185457956
+      Judgement_Air_45: -6483517240764916400
+      Judgement_Air_46: 5686554576466642538
+      Judgement_Air_47: 7131066180958201975
+      Judgement_Air_48: 2912149392859296088
+      Judgement_Air_49: 5193411219147836840
+      Judgement_Air_5: -3461485269821033129
+      Judgement_Air_50: 471205507610111511
+      Judgement_Air_51: 7915466570880097038
+      Judgement_Air_52: 985874534410153674
+      Judgement_Air_53: 3442778654303810110
+      Judgement_Air_54: 5534812293408896015
+      Judgement_Air_55: 7178044012497256677
+      Judgement_Air_56: 5941558101218172400
+      Judgement_Air_57: -4540443845901198671
+      Judgement_Air_58: 7156853512766055352
+      Judgement_Air_59: 3288559146326381527
+      Judgement_Air_6: 5699067101776782254
+      Judgement_Air_60: 3190924148725109996
+      Judgement_Air_61: 7231027861386803816
+      Judgement_Air_7: -1389959236796561414
+      Judgement_Air_8: -6442884921816570897
+      Judgement_Air_9: 993368778642703219
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
