@@ -20,6 +20,7 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
     public string auraChildName = "AuraEffect"; // 네 플레이어에 있는 이펙트 오브젝트 이름으로 맞춰도 됨
 
     private float lastUsedTime = -999f;
+    private bool HasteOn = false;
     private bool isFast = false;
 
     private float originalSpeed;
@@ -39,16 +40,14 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
     public bool TryUse(GameObject owner)
     {
         if (owner == null) return false;
-        if (isFast) return false;
 
-        // 쿨타임 체크
+        // 쿨타임
         if (Time.time < lastUsedTime + cooldown)
         {
             Debug.Log("쿨타임");
             return false;
         }
 
-        // 마나 체크/소모
         var stats = owner.GetComponentInChildren<PlayerStats>();
         if (stats == null || !stats.SpendMP(skillManaCost))
         {
@@ -56,15 +55,6 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
             return false;
         }
 
-        // 이동 컨트롤러
-        var controller = owner.GetComponent<TopDownCharacterController>();
-        if (controller == null)
-        {
-            Debug.LogWarning("SwiftnessSkill: owner에 TopDownCharacterController가 없어!");
-            return false;
-        }
-
-        // 코루틴 실행 주체(스킬 프리팹이 비활성일 수도 있으니 owner에서)
         var runner = owner.GetComponent<CoroutineRunner>();
         if (runner == null)
         {
@@ -73,27 +63,25 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
         }
 
         lastUsedTime = Time.time;
-        runner.StartCoroutine(SwiftnessRoutine(owner, controller));
+        runner.StartCoroutine(SwiftnessRoutine(owner, stats));
         return true;
     }
 
-    private IEnumerator SwiftnessRoutine(GameObject owner, TopDownCharacterController controller)
+    private IEnumerator SwiftnessRoutine(GameObject owner, PlayerStats stats)
     {
-        isFast = true;
-
-        // 오라 켜기(선택)
+        // 오라 켜기
         GameObject aura = FindChildByName(owner.transform, auraChildName);
         if (aura != null) aura.SetActive(true);
 
-        originalSpeed = controller.speed;
-        controller.speed = originalSpeed * speedMultiplier;
+        // 여기서부터 핵심: 스탯에 배수 적용
+        stats.MoveSpeed.Multiply(speedMultiplier);
 
         yield return new WaitForSeconds(duration);
 
-        controller.speed = originalSpeed;
-        if (aura != null) aura.SetActive(false);
+        //  끝나면 정확히 되돌리기
+        stats.MoveSpeed.Divide(speedMultiplier);
 
-        isFast = false;
+        if (aura != null) aura.SetActive(false);
     }
 
     private GameObject FindChildByName(Transform root, string name)
