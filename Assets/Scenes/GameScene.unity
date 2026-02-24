@@ -2940,8 +2940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68191466cece3644ea7313c6a26eb543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgmentSmash
-  playerRenderer: {fileID: 5628018141342133612}
   parentAnim: {fileID: 5628018141342133609}
+  playerRenderer: {fileID: 5628018141342133612}
   chargeVFX: {fileID: 1078773027}
   riseVFX: {fileID: 1176564590}
   airVFX: {fileID: 2026053442}

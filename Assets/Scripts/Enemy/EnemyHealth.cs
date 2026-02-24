@@ -1,51 +1,151 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
-{// ¸ó½ºÅÍ ÇÇ°İÆÇÁ¤, Ã¼·Â °¨¼Ò µîÀ» °ü¸®ÇÏ±â À§ÇÑ ÆÄÀÏ
+{
     private EnemyStats stats;
     private SpriteRenderer sr;
+
+    [Header("UI Settings")]
+    [SerializeField] private Slider hpSlider;
+
     public int currentHealth;
     public bool isHit = false;
+
+    [Header("VFX")]
+    public GameObject damageTextPrefab;
 
     void Awake()
     {
         stats = GetComponent<EnemyStats>();
-        sr = GetComponentInChildren<SpriteRenderer>(); // ÀÚ½ÄÀÎ Visuals¿¡ ½ºÇÁ¶óÀÌÆ® ÀÖ´Â °æ¿ì ´ëºñ
+
+        sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Start()
     {
+
         currentHealth = stats.maxHealth;
+
+
+        if (hpSlider != null)
+        {
+            hpSlider.maxValue = stats.maxHealth;
+            hpSlider.value = currentHealth;
+        }
+        Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
+        if (hpCanvas != null)
+        {
+            hpCanvas.worldCamera = Camera.main;
+        }
     }
 
     public void TakeDamage(int damage, Vector2 knockbackDir)
     {
-        if (currentHealth <= 0)
-            return;
+        if (currentHealth <= 0) return;
+
 
         currentHealth -= damage;
-        // ³Ë¹é Àû¿ë
-        GetComponent<Rigidbody2D>().linearVelocity = knockbackDir * stats.knockbackForce;
+
+
+        if (hpSlider != null)
+        {
+            hpSlider.value = currentHealth;
+        }
+
+        ShowDamageText(damage);
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = knockbackDir * stats.knockbackForce;
+        }
+
         StartCoroutine(HitFeedback());
+
         if (currentHealth <= 0)
+        {
             Die();
+        }
     }
 
-    // ÄÚ·çÆ¾ --> ÇÇ°İ ½Ã »¡°£»öÀ¸·Î º¯ÇÏ°Ô ÇÏ´Â °Í
+    void ShowDamageText(int damage)
+    {
+        if (damageTextPrefab != null)
+        {
+            Transform canvasTransform = hpSlider.GetComponentInParent<Canvas>().transform;
+            GameObject textObj = Instantiate(damageTextPrefab, canvasTransform, false);
+            textObj.SetActive(true);
+
+            textObj.transform.localPosition = new Vector3(100f, 200f, 0);
+            textObj.GetComponent<DamageText>().Setup(damage);
+        }
+    }
+
     private IEnumerator HitFeedback()
     {
-        isHit = true; // ÇÇ°İ Áß¿£ ¸ó½ºÅÍ ¿òÁ÷ÀÏ ¼ö ¾ø°Ô ÇÒ °Í
-        sr.color = Color.red;
+        isHit = true;
+        if (sr != null) sr.color = Color.red;
 
-        yield return new WaitForSeconds(0.2f); // ÀÌ°ÍÀ» 0.2ÃÊ µ¿¾È À¯Áö
+        yield return new WaitForSeconds(0.2f);
 
-        sr.color = Color.white; // ´Ù½Ã ¿ø·¡ »öÀ¸·Î º¹±¸
-        isHit = false; // °æÁ÷ Ç®¾îÁÜ
+        if (sr != null) sr.color = Color.white;
+        isHit = false;
     }
 
     private void Die()
     {
-        Destroy(gameObject); // ¸ó½ºÅÍ ¿ÀºêÁ§Æ® »èÁ¦
+        if (currentHealth < -999) return;
+        currentHealth = -1000;
+
+        if (hpSlider != null) hpSlider.gameObject.SetActive(false);
+
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim != null)
+        {
+            anim.ResetTrigger("Attack");
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isDead", true);
+            anim.Play("Die", 0, 0f);
+        }
+
+        // 1. ê¸°ì¡´ í”¼ê²© í”¼ë“œë°±(ë¹¨ê°„ìƒ‰ ë³€í•¨) ë“±ì´ ê¼¬ì´ì§€ ì•Šê²Œ ëª¨ë“  ì½”ë£¨í‹´ ì¤‘ë‹¨
+        StopAllCoroutines();
+
+        // 2. AI ë° ë¬¼ë¦¬ ì—”ì§„ ì •ì§€ (ê¸°ì¡´ ì½”ë“œì™€ ë™ì¼)
+        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+        foreach (var script in scripts)
+        {
+            if (script != this && !(script is Animator)) script.enabled = false;
+        }
+        if (GetComponent<Rigidbody2D>() != null) GetComponent<Rigidbody2D>().simulated = false;
+        GetComponent<Collider2D>().enabled = false;
+
+        // 3. í•µì‹¬: ì„œì„œíˆ ì‚¬ë¼ì§€ëŠ” ì½”ë£¨í‹´ ì‹œì‘!
+        StartCoroutine(FadeOutAndDestroy());
+    }
+
+    private IEnumerator FadeOutAndDestroy()
+    {
+        yield return new WaitForSeconds(1f);
+
+        float fadeDuration = 0.5f; // ì‚¬ë¼ì§€ëŠ” ë° ê±¸ë¦¬ëŠ” ì‹œê°„
+        float currentTime = 0f;
+        Color startColor = sr.color;
+
+        while (currentTime < fadeDuration)
+        {
+            currentTime += Time.deltaTime;
+
+            // íˆ¬ëª…ë„(Alpha)ë¥¼ 1ì—ì„œ 0ìœ¼ë¡œ ì„ í˜• ë³´ê°„($Lerp$)í•©ë‹ˆë‹¤.
+            float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeDuration);
+            sr.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+
+            yield return null; // ë‹¤ìŒ í”„ë ˆì„ê¹Œì§€ ëŒ€ê¸°
+        }
+
+        // ì™„ì „íˆ íˆ¬ëª…í•´ì§€ë©´ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
+        Destroy(gameObject);
     }
 }
