@@ -37,7 +37,7 @@ public class ProjectileLogic : MonoBehaviour
             Debug.Log($"µ¥¹ÌÁö: {damage}");
             Destroy(gameObject);
         }
-        else if (collision.CompareTag("Obstacle") || collision.CompareTag("Wall"))
+        else if (collision.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }

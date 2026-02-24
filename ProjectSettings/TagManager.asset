@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - Layer 1
   - Layer 2
   - Layer 3
-  - 
+  - Stairs
   - 
   - 
   - 
@@ -52,6 +54,9 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 3289123241
+    locked: 0
+  - name: Stairs
+    uniqueID: 3955276141
     locked: 0
   m_RenderingLayers:
   - Default

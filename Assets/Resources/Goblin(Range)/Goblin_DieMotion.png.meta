@@ -1,0 +1,332 @@
+fileFormatVersion: 2
+guid: fa9657616dc53384c866532f427cfa38
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9080476677273587042
+    second: Goblin_DieMotion_0
+  - first:
+      213: 277350686077676409
+    second: Goblin_DieMotion_1
+  - first:
+      213: -7560726291855076008
+    second: Goblin_DieMotion_2
+  - first:
+      213: -3128671825229106871
+    second: Goblin_DieMotion_3
+  - first:
+      213: -1465769994898074531
+    second: Goblin_DieMotion_4
+  - first:
+      213: -2319888535150860376
+    second: Goblin_DieMotion_5
+  - first:
+      213: 1212059762821390201
+    second: Goblin_DieMotion_6
+  - first:
+      213: 8589646450379399909
+    second: Goblin_DieMotion_7
+  - first:
+      213: 4140273292031324565
+    second: Goblin_DieMotion_8
+  - first:
+      213: -1504120605156688397
+    second: Goblin_DieMotion_9
+  - first:
+      213: 1090774743204176781
+    second: Goblin_DieMotion_10
+  - first:
+      213: 3813820042434364476
+    second: Goblin_DieMotion_11
+  - first:
+      213: -6659533962168990635
+    second: Goblin_DieMotion_12
+  - first:
+      213: -2601417899581100209
+    second: Goblin_DieMotion_13
+  - first:
+      213: 739290493989251008
+    second: Goblin_DieMotion_14
+  - first:
+      213: 7637620345962874464
+    second: Goblin_DieMotion_15
+  - first:
+      213: -3230743588965359871
+    second: Goblin_DieMotion_16
+  - first:
+      213: 2929874884194731320
+    second: Goblin_DieMotion_17
+  - first:
+      213: 1090496469184850056
+    second: Goblin_DieMotion_18
+  - first:
+      213: -7848814720661246323
+    second: Goblin_DieMotion_19
+  - first:
+      213: -5363299049464386728
+    second: Goblin_DieMotion_20
+  - first:
+      213: 8627700260852461840
+    second: Goblin_DieMotion_21
+  - first:
+      213: 6790728053290645621
+    second: Goblin_DieMotion_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Goblin_DieMotion_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 1400
+        width: 520
+        height: 450
+      alignment: 9
+      pivot: {x: 0.49999994, y: 0.3403098}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9273eb829aabf180800000000000000
+      internalID: -9080476677273587042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_DieMotion_2
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 1400
+        width: 300
+        height: 450
+      alignment: 9
+      pivot: {x: 0.51381916, y: 0.29117432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 855950afe77e21790800000000000000
+      internalID: -7560726291855076008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_DieMotion_4
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1400
+        width: 320
+        height: 450
+      alignment: 9
+      pivot: {x: 0.5043186, y: 0.27274847}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d549ca3a4f988abe0800000000000000
+      internalID: -1465769994898074531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_DieMotion_5
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 1400
+        width: 390
+        height: 450
+      alignment: 9
+      pivot: {x: 0.48936987, y: 0.26353544}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a7e4d72ba91ecfd0800000000000000
+      internalID: -2319888535150860376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_DieMotion_6
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 1400
+        width: 500
+        height: 450
+      alignment: 9
+      pivot: {x: 0.49723607, y: 0.27581924}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97f5389bee912d010800000000000000
+      internalID: 1212059762821390201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2be8dad5075543d4b862fb1e5749ec7d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Goblin_DieMotion_0: -9080476677273587042
+      Goblin_DieMotion_1: 277350686077676409
+      Goblin_DieMotion_10: 1090774743204176781
+      Goblin_DieMotion_11: 3813820042434364476
+      Goblin_DieMotion_12: -6659533962168990635
+      Goblin_DieMotion_13: -2601417899581100209
+      Goblin_DieMotion_14: 739290493989251008
+      Goblin_DieMotion_15: 7637620345962874464
+      Goblin_DieMotion_16: -3230743588965359871
+      Goblin_DieMotion_17: 2929874884194731320
+      Goblin_DieMotion_18: 1090496469184850056
+      Goblin_DieMotion_19: -7848814720661246323
+      Goblin_DieMotion_2: -7560726291855076008
+      Goblin_DieMotion_20: -5363299049464386728
+      Goblin_DieMotion_21: 8627700260852461840
+      Goblin_DieMotion_22: 6790728053290645621
+      Goblin_DieMotion_3: -3128671825229106871
+      Goblin_DieMotion_4: -1465769994898074531
+      Goblin_DieMotion_5: -2319888535150860376
+      Goblin_DieMotion_6: 1212059762821390201
+      Goblin_DieMotion_7: 8589646450379399909
+      Goblin_DieMotion_8: 4140273292031324565
+      Goblin_DieMotion_9: -1504120605156688397
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
