@@ -20,7 +20,6 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
     public string auraChildName = "AuraEffect"; // 네 플레이어에 있는 이펙트 오브젝트 이름으로 맞춰도 됨
 
     private float lastUsedTime = -999f;
-    private bool HasteOn = false;
     private bool isFast = false;
 
     private float originalSpeed;

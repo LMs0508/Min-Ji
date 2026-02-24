@@ -4,15 +4,16 @@ public class SlotSelectUI : MonoBehaviour
 {
     private SkillSlotsPrefab slots;
     private GameObject pendingSkillPrefab;
+    private GameObject pendingPickupPrefab; //  추가
 
-    public void Open(SkillSlotsPrefab slotManager, GameObject skillPrefab)
+    public void Open(SkillSlotsPrefab slotManager, GameObject skillPrefab, GameObject pickupPrefab)
     {
         slots = slotManager;
         pendingSkillPrefab = skillPrefab;
+        pendingPickupPrefab = pickupPrefab;
         gameObject.SetActive(true);
     }
 
-    //  버튼 연결용 (인자 없음)
     public void ChooseQ() => ChooseSlot(0);
     public void ChooseW() => ChooseSlot(1);
     public void ChooseE() => ChooseSlot(2);
@@ -22,15 +23,18 @@ public class SlotSelectUI : MonoBehaviour
     {
         if (slots == null || pendingSkillPrefab == null) return;
 
-        slots.Equip(pendingSkillPrefab, slotIndex);
+        //  이제 pickup도 같이 넘긴다
+        slots.Equip(pendingSkillPrefab, pendingPickupPrefab, slotIndex);
 
         pendingSkillPrefab = null;
+        pendingPickupPrefab = null;
         gameObject.SetActive(false);
     }
 
     public void Close()
     {
         pendingSkillPrefab = null;
+        pendingPickupPrefab = null;
         gameObject.SetActive(false);
     }
 }

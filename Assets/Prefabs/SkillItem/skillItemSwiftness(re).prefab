@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7482214547927443692}
   - component: {fileID: 1709758576251139185}
   m_Layer: 0
-  m_Name: skillItemSwiftness
+  m_Name: skillItemSwiftness(re)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillItemPickup
   skillPrefab: {fileID: 1807604013135975817, guid: 1a634e8d9127d3940b6c1a7fe766af0f,
     type: 3}
-  pickupPrefab: {fileID: 1776384500620398813, guid: b32b6e64d3a8f62478742ec0cc99cecf,
+  pickupPrefab: {fileID: 1776384500620398813, guid: e8a66c11d66d35f449f7b6a2ac2efe9c,
     type: 3}
 --- !u!61 &1709758576251139185
 BoxCollider2D:

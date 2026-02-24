@@ -108,6 +108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillItemPickup
   skillPrefab: {fileID: 5718707291572363915, guid: 7536f765ff9a8ab4ab54c36192f14bcf,
     type: 3}
+  pickupPrefab: {fileID: 3906125964923401287, guid: 9ef25fe07d8b05345bc57ffdcfed4331,
+    type: 3}
 --- !u!61 &3248893560551660312
 BoxCollider2D:
   m_ObjectHideFlags: 0
