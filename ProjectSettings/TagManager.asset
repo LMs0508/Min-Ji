@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
+  - Enemy
+  - Wall
+  - Player
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MiniMap_Ground
+  - MiniMap_Wall
+  - MiniMap_Player
+  - MiniMap_Enemy
   - 
   - 
   - 
@@ -50,3 +50,8 @@ TagManager:
   - name: Layer 3
     uniqueID: 4189426099
     locked: 0
+  - name: Characters
+    uniqueID: 3289123241
+    locked: 0
+  m_RenderingLayers:
+  - Default
