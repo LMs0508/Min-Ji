@@ -57,7 +57,7 @@ AnimatorController:
   m_Name: Judgement_RiseVFX
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: OnJudgm
+  - m_Name: OnJudgment
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
