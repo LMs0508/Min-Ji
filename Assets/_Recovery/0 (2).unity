@@ -375,7 +375,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298455024}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &298455026
 Camera:
   m_ObjectHideFlags: 0
@@ -1417,7 +1417,7 @@ Transform:
   m_GameObject: {fileID: 1149824850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000000059605, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2106,7 +2106,6 @@ MonoBehaviour:
   - floor01
   - floor02
   - floor03
-  - floor04
   player: {fileID: 5628018141342133600}
   spawnObjectName: FloorSpawn
   spawnOffset: {x: 0, y: 0}
@@ -2334,6 +2333,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayerID
       value: -1869315837
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: Up
+      value: 273
       objectReference: {fileID: 0}
     - target: {fileID: 8952830129665925915, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}

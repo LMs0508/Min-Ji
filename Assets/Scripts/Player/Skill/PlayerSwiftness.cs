@@ -24,7 +24,7 @@ public class PlayerSwiftness : MonoBehaviour
 
     void Awake()
     {
-        controller = GetComponent<TopDownCharacterController>();
+        controller = GetComponentInChildren<TopDownCharacterController>();
         if (auraEffect != null) auraEffect.SetActive(false);
     }
 
