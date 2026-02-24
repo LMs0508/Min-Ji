@@ -10,10 +10,10 @@ namespace Cainos.PixelArtTopDown_Basic
         private Animator animator;
 
         [Header("키 설정")]
-        public KeyCode Up = KeyCode.UpArrow;
-        public KeyCode Down = KeyCode.DownArrow;
-        public KeyCode Left = KeyCode.LeftArrow;
-        public KeyCode Right = KeyCode.RightArrow;
+        private KeyCode Up = KeyCode.W;
+        private KeyCode Down = KeyCode.S;
+        private KeyCode Left = KeyCode.A;
+        private KeyCode Right = KeyCode.D;
 
         private void Start()
         {
