@@ -22,7 +22,7 @@ public class DamageText : MonoBehaviour
         }
     }
 
-    public void Setup(int damage)
+    public void Setup(float damage)
     {
         if (textMesh != null)
         {
