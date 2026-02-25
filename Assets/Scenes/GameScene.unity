@@ -632,6 +632,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257165169}
   m_CullTransparentMesh: 1
+--- !u!1 &275401118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6487234826422068213, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &286505672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,6 +1073,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   icon: {fileID: 0}
   cooldownOverlay: {fileID: 0}
+--- !u!1 &384867678 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1438557362195532283, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &392942647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1757,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cainos.PixelArtTopDown_Basic.CameraFollowS
   target: {fileID: 5628018141342133600}
   lerpSpeed: 3
+--- !u!1001 &593172421
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5628018141342133600}
+    m_Modifications:
+    - target: {fileID: 353198949998310669, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_Name
+      value: JudgementSmash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c10cd8fd59c060418feef8794b5782e, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1909,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &789235681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &834746214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1910,6 +1996,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
     type: 3}
   m_PrefabInstance: {fileID: 2947958816322706718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &943658281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6602688457749101779, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1023938549
 GameObject:
@@ -3098,6 +3190,12 @@ MonoBehaviour:
   - {fileID: 338344480}
   - {fileID: 85537050}
   - {fileID: 1145583373}
+--- !u!1 &1844335994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 827987779436048360, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1849994167
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,6 +3648,7 @@ MonoBehaviour:
   - floor01
   - floor02
   - floor03
+  - floor04
   player: {fileID: 5628018141342133600}
   spawnObjectName: FloorSpawn
   spawnOffset: {x: 0, y: 0}
@@ -3791,7 +3890,22 @@ PrefabInstance:
     - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: Up
-      value: 273
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: Down
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: Left
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: Right
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8952830129665925915, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
@@ -3809,6 +3923,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 435620164}
+    - targetCorrespondingSourceObject: {fileID: 4836199991063186068, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 789235681}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
@@ -3826,6 +3944,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5628018141342133626}
+    - targetCorrespondingSourceObject: {fileID: 5066033425070254266, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5628018141342133632}
   m_SourcePrefab: {fileID: 100100000, guid: 5f78891297016634f8e1ceef106e5664, type: 3}
 --- !u!4 &5628018141342133600 stripped
 Transform:
@@ -3845,6 +3967,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae936246a55f67e499ec155c8aafbb95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotsPrefab
+  equippedObj:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  equippedPickupPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   skillHolder: {fileID: 0}
 --- !u!114 &5628018141342133614
 MonoBehaviour:
@@ -3882,6 +4014,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a392e0f91af9ad74a88af86fff0f704c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ApplyMoveSpeedFromStats
+--- !u!212 &5628018141342133630 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8170425277334703890, guid: 5f78891297016634f8e1ceef106e5664,
+    type: 3}
+  m_PrefabInstance: {fileID: 2947958816322706718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5628018141342133632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924969222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68191466cece3644ea7313c6a26eb543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JudgmentSmash
+  parentAnim: {fileID: 0}
+  playerRenderer: {fileID: 5628018141342133630}
+  chargeVFX: {fileID: 1844335994}
+  riseVFX: {fileID: 384867678}
+  airVFX: {fileID: 943658281}
+  fallVFX: {fileID: 275401118}
+  jumpHeight: 4
+  riseDuration: 0.15
+  pauseTime: 0.5
+  fallDuration: 0.1
+  explosionRadius: 3
+  damage: 50
+  knockbackForce: 15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

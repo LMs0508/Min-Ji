@@ -65,9 +65,9 @@ public class SkillSlotsPrefab : MonoBehaviour
     {
         // 키 입력 처리 (Q, W, E, R)
         if (Input.GetKeyDown(KeyCode.Q)) Use(0);
-        if (Input.GetKeyDown(KeyCode.W)) Use(1);
-        if (Input.GetKeyDown(KeyCode.E)) Use(2);
-        if (Input.GetKeyDown(KeyCode.R)) Use(3);
+        if (Input.GetKeyDown(KeyCode.E)) Use(1);
+        if (Input.GetKeyDown(KeyCode.C)) Use(2);
+        if (Input.GetKeyDown(KeyCode.F)) Use(3);
 
         // 쿨다운 UI 업데이트 이벤트 발송
         for (int i = 0; i < 4; i++)

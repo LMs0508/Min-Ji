@@ -36,7 +36,7 @@ public class JudgmentSmash : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !isCooldown)
+        if (Input.GetKeyDown(KeyCode.G) && !isCooldown)
         {
             StartCoroutine(ExecuteJudgmentSmash());
         }

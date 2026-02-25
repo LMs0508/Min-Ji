@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4791531242859352739}
   - component: {fileID: 7692342445881525886}
+  - component: {fileID: 8011879977665776052}
+  - component: {fileID: 2167839253789861997}
+  - component: {fileID: 8642937419935294146}
+  - component: {fileID: 5965371932933997418}
   m_Layer: 0
   m_Name: PF_Skill_Swiftness
   m_TagString: Untagged
@@ -50,3 +54,56 @@ MonoBehaviour:
   cooldown: 8
   skillManaCost: 10
   auraChildName: AuraEffect
+--- !u!114 &8011879977665776052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604013135975817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b160a17f12aa62c45afbbb345ca7790a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwiftnessEarthEnhancer
+  bonusArmor: 10
+--- !u!114 &2167839253789861997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604013135975817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3767e7c79dfdffc48b4cbc54dedbfd60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwiftnessFireEnhancer
+  fireTrailPrefab: {fileID: 4265661802508788631, guid: 4b8ae075319c8954992780cecd95f848,
+    type: 3}
+  spawnInterval: 0.1
+--- !u!114 &8642937419935294146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604013135975817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b9cdf8e56359b4cb66a898f0e9b72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwiftnessWaterEnhancer
+--- !u!114 &5965371932933997418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604013135975817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0cd9c78d1a5c64aa288338123a0abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwiftnessWindEnhancer
+  extraSpeedBonus: 1.5

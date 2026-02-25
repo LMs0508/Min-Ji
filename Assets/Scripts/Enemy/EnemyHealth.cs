@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private Slider hpSlider;
 
-    public int currentHealth;
+    public float currentHealth;
     public bool isHit = false;
 
     [Header("VFX")]
@@ -41,7 +41,28 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, Vector2 knockbackDir)
+
+    public void TakeDamage(float damage)
+    {
+        if (currentHealth <= 0) return;
+
+
+        currentHealth -= damage;
+
+
+        if (hpSlider != null)
+        {
+            hpSlider.value = currentHealth;
+        }
+
+        ShowDamageText(damage);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    public void TakeDamage(float damage, Vector2 knockbackDir)
     {
         if (currentHealth <= 0) return;
 
@@ -70,7 +91,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    void ShowDamageText(int damage)
+    void ShowDamageText(float damage)
     {
         if (damageTextPrefab != null)
         {
