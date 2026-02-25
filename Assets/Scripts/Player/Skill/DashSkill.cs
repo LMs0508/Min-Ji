@@ -30,13 +30,12 @@ public class DashSkill : MonoBehaviour, ISkill
 
     public bool TryUse(GameObject owner)
     {
-        Debug.Log($"AXIS H={Input.GetAxisRaw("Horizontal")} V={Input.GetAxisRaw("Vertical")}");
         if (owner == null) return false;
         if (isDashing) return false;
 
         if (Time.time < lastDashTime + dashCooldown)
         {
-            Debug.Log("쿨타임");
+            Debug.Log("대쉬 쿨타임 중");
             return false;
         }
 
@@ -47,14 +46,15 @@ public class DashSkill : MonoBehaviour, ISkill
         if (rb == null || runner == null) return false;
         if (stats == null || !stats.SpendMP(skillManaCost))
         {
-            Debug.Log("마나 부족");
+            Debug.Log("마나 부족으로 대쉬 불가");
             return false;
         }
 
+        // 1. 방향 결정 (마우스 방향으로 변경됨)
         Vector2 dir = GetDashDirection(owner);
+
         if (dir.sqrMagnitude < 0.0001f)
         {
-            Debug.LogWarning("Dash dir is zero, cancel dash");
             return false;
         }
 
@@ -67,22 +67,24 @@ public class DashSkill : MonoBehaviour, ISkill
 
     private Vector2 GetDashDirection(GameObject owner)
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(x, y);
+        Vector3 mousePos = Input.mousePosition;
 
-        if (input.sqrMagnitude > 0.0001f)
+        mousePos.z = -Camera.main.transform.position.z;
+        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+
+        Vector2 dashDir = ((Vector2)worldMousePos - (Vector2)owner.transform.position).normalized;
+
+        if (dashDir.sqrMagnitude < 0.0001f)
         {
-            input.Normalize();
-            return input;
+            var facing = owner.GetComponent<PlayerFacing>();
+            if (facing != null && facing.LastFacingDir.sqrMagnitude > 0.0001f)
+                return facing.LastFacingDir;
+
+            return Vector2.right;
         }
 
-        var facing = owner.GetComponent<PlayerFacing>();
-        if (facing != null && facing.LastFacingDir.sqrMagnitude > 0.0001f)
-            return facing.LastFacingDir;
-
-        // 최후: 오른쪽
-        return Vector2.right;
+        return dashDir;
     }
 
     private IEnumerator DashRoutine(GameObject owner, Rigidbody2D rb, Vector2 dir, TopDownCharacterController[] controllers)

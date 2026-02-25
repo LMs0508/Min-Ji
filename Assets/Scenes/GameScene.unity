@@ -1915,6 +1915,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 593172421}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &789235682 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 794189048414814731, guid: 4c10cd8fd59c060418feef8794b5782e,
+    type: 3}
+  m_PrefabInstance: {fileID: 593172421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &834746214
 GameObject:
   m_ObjectHideFlags: 0
@@ -3859,6 +3865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6961468259986789970, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
+      propertyPath: attack.baseValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6961468259986789970, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
       propertyPath: moveSpeed.baseValue
       value: 3
       objectReference: {fileID: 0}
@@ -3907,10 +3918,21 @@ PrefabInstance:
       propertyPath: Right
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8483895542592747710, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: clickEffectPrefab
+      value: 
+      objectReference: {fileID: 7433390272444043429, guid: b3e5042a52fc427488cf425d140d305a,
+        type: 3}
     - target: {fileID: 8952830129665925915, guid: 5f78891297016634f8e1ceef106e5664,
         type: 3}
       propertyPath: m_Layer
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952830129665925915, guid: 5f78891297016634f8e1ceef106e5664,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4032,7 +4054,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68191466cece3644ea7313c6a26eb543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgmentSmash
-  parentAnim: {fileID: 0}
+  maxJumpDistance: 5
+  cooldown: 10
+  landingIndicatorPrefab: {fileID: 6277927594774639960, guid: afa76ad03efb44a4c97f20e857e12c87,
+    type: 3}
+  parentAnim: {fileID: 789235682}
   playerRenderer: {fileID: 5628018141342133630}
   chargeVFX: {fileID: 1844335994}
   riseVFX: {fileID: 384867678}
@@ -4043,8 +4069,8 @@ MonoBehaviour:
   pauseTime: 0.5
   fallDuration: 0.1
   explosionRadius: 3
-  damage: 50
   knockbackForce: 15
+  baseDamage: 50
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
