@@ -4038,7 +4038,7 @@ MonoBehaviour:
   riseVFX: {fileID: 384867678}
   airVFX: {fileID: 943658281}
   fallVFX: {fileID: 275401118}
-  jumpHeight: 5
+  jumpHeight: 4
   riseDuration: 0.15
   pauseTime: 0.5
   fallDuration: 0.1
