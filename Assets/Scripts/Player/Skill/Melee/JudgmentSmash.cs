@@ -1,27 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Cainos.PixelArtTopDown_Basic; // ÀÌµ¿ ÄÁÆ®·Ñ·¯ ³×ÀÓ½ºÆäÀÌ½º
-using Game.Player;                  // PlayerStats ³×ÀÓ½ºÆäÀÌ½º
+using Cainos.PixelArtTopDown_Basic;
+using Game.Player;
+using Game.Core;
 
-public class JudgmentSmash : MonoBehaviour
+public class JudgmentSmash : MonoBehaviour, ISkill
 {
-    [Header("½ºÅ³ ¼ÂÆÃ")]
-    public float maxJumpDistance = 5f;      // ÃÖ´ë µµ¾à °Å¸®
-    public float cooldown = 10f;            // ÄğÅ¸ÀÓ 10ÃÊ
-    private float lastUsedTime = -100f;     // ¸¶Áö¸· »ç¿ë ½Ã°£
+    [Header("UI & Cost")]
+    [SerializeField] private Sprite icon;
+    public Sprite Icon => icon;
+    public float skillManaCost = 20f;
 
-    [Header("Á¶ÁØÁ¡ ¼³Á¤")]
-    public GameObject landingIndicatorPrefab; // Á¶ÁØÁ¡ ÇÁ¸®ÆÕ
-    private GameObject spawnedIndicator;      // »ı¼ºµÈ Á¶ÁØÁ¡ ÀÎ½ºÅÏ½º
+    [Header("ìŠ¤í‚¬ ì…‹íŒ…")]
+    public float maxJumpDistance = 5f;
+    public float cooldown = 10f;
+    private float lastUsedTime = -999f;
 
-    [Header("Animator")]
-    [SerializeField] private Animator parentAnim;
+    [Header("ì¡°ì¤€ì  ì„¤ì •")]
+    public GameObject landingIndicatorPrefab;
+    private GameObject spawnedIndicator;
 
-    [Header("Sorting Settings")]
-    [SerializeField] private SpriteRenderer playerRenderer;
-
-    [Header("VFX Objects (ÀÚ½Äµé)")]
+    [Header("VFX Objects (ìì‹ë“¤)")]
     public GameObject chargeVFX;
     public GameObject riseVFX;
     public GameObject airVFX;
@@ -36,10 +38,14 @@ public class JudgmentSmash : MonoBehaviour
     [Header("Combat Settings")]
     public float explosionRadius = 3f;
     public float knockbackForce = 15f;
-    [SerializeField] private int baseDamage = 50; // ½ºÅİÀ» ¸ø Ã£À» °æ¿ì¸¦ ´ëºñÇÑ ±âº» µ¥¹ÌÁö
 
-    // ¿ÜºÎ(UI µî)¿¡¼­ ÄğÅ¸ÀÓ È®ÀÎ¿ë
-    public float CooldownRemaining => Mathf.Max(0, (lastUsedTime + cooldown) - Time.time);
+Â  Â  // í´ë˜ìŠ¤ ë©¤ë²„ ë³€ìˆ˜ (ëŸ°íƒ€ì„ì— ìë™ í• ë‹¹ë¨)
+Â  Â  private SpriteRenderer playerRenderer;
+    private Animator parentAnim;
+    private bool isExecuting = false;
+
+    public float Cooldown => cooldown;
+    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
 
     void Start()
     {
@@ -48,41 +54,69 @@ public class JudgmentSmash : MonoBehaviour
 
     void Update()
     {
-        // ÄğÅ¸ÀÓ Ã¼Å© ÈÄ GÅ° ÀÔ·Â ½Ã ¹ßµ¿
-        if (Input.GetKeyDown(KeyCode.G) && Time.time >= lastUsedTime + cooldown)
-        {
-            StartCoroutine(ExecuteJudgmentSmash());
-        }
-
-        // ½Ç½Ã°£ Ä³¸¯ÅÍ ·¹ÀÌ¾î ¼ø¼­ µ¿±âÈ­
-        UpdateSortingOrder();
+Â  Â  Â  Â  // ë Œë”ëŸ¬ê°€ ìˆì„ ë•Œë§Œ ë ˆì´ì–´ ì •ë ¬ ì—…ë°ì´íŠ¸
+Â  Â  Â  Â  if (playerRenderer != null) UpdateSortingOrder();
     }
 
-    IEnumerator ExecuteJudgmentSmash()
+    public bool TryUse(GameObject owner)
     {
-        lastUsedTime = Time.time; // ÄğÅ¸ÀÓ ½ÃÀÛ
+        if (owner == null || isExecuting) return false;
+        if (Time.time < lastUsedTime + cooldown) return false;
 
-        // ÀÌµ¿ ½ºÅ©¸³Æ® ¹× ¹°¸® ÀÏ½Ã ÁßÁö
-        var controller = GetComponentInParent<TopDownCharacterController>();
-        var rb = GetComponentInParent<Rigidbody2D>();
+Â  Â  Â  Â  // [ìˆ˜ì •] ownerë¡œë¶€í„° í•„ìš”í•œ ì»´í¬ë„ŒíŠ¸ë“¤ì„ ì‹¤ì‹œê°„ìœ¼ë¡œ ì°¾ìŠµë‹ˆë‹¤
+Â  Â  Â  Â  var stats = owner.GetComponentInChildren<PlayerStats>();
+        var runner = owner.GetComponent<CoroutineRunner>();
+
+Â  Â  Â  Â  // í•„ìˆ˜ ì»´í¬ë„ŒíŠ¸ ì²´í¬ (í•˜ë‚˜ë¼ë„ ì—†ìœ¼ë©´ ì‹¤í–‰ ë¶ˆê°€)
+Â  Â  Â  Â  if (stats == null || runner == null) return false;
+
+Â  Â  Â  Â  // ë§ˆë‚˜ ì²´í¬ ë° ì†Œëª¨
+Â  Â  Â  Â  if (!stats.SpendMP(skillManaCost))
+        {
+            Debug.Log("ë§ˆë‚˜ ë¶€ì¡±: ì‹¬íŒì˜ ì¼ê²© ë¶ˆê°€");
+            return false;
+        }
+
+Â  Â  Â  Â  // ì„±ê³µ ì‹œ ë°ì´í„° ê¸°ë¡ ë° ì½”ë£¨í‹´ ì‹œì‘
+Â  Â  Â  Â  lastUsedTime = Time.time;
+        runner.StartCoroutine(ExecuteJudgmentSmash(owner));
+        return true;
+    }
+
+    private IEnumerator ExecuteJudgmentSmash(GameObject owner)
+    {
+        isExecuting = true;
+
+        transform.position = owner.transform.position + new Vector3(0, 0.25f, 0);
+        foreach (Transform child in transform) child.localPosition = Vector3.zero;
+
+        var playerElement = owner.GetComponentInChildren<PlayerElement>();
+        ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
+        var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
+
+        activeEnhancer?.OnStart(owner);
+
+        var controller = owner.GetComponentInChildren<TopDownCharacterController>();
+        var rb = owner.GetComponentInChildren<Rigidbody2D>();
+        parentAnim = owner.GetComponentInChildren<Animator>();
+        playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
+
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
-        // 1. ±â ¸ğÀ¸±â (Charge)
+        // 1. ê¸° ëª¨ìœ¼ê¸°
         SetVFX(chargeVFX);
         if (parentAnim != null) parentAnim.SetTrigger("OnJudgment");
         yield return new WaitForSeconds(0.2f);
 
-        // 2. ¼öÁ÷ »ó½Â (Rise)
+        // 2. ìˆ˜ì§ ìƒìŠ¹
         SetVFX(riseVFX);
-        Vector3 startPos = transform.position; // µµ¾à ½ÃÀÛ ÁöÁ¡ ÀúÀå
+        Vector3 startPos = owner.transform.position;
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
-        yield return StartCoroutine(MoveLinear(startPos, peakPos, riseDuration));
+        yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
 
-        // 3. °øÁß Á¤Áö ¹× ½Ç½Ã°£ Á¶ÁØ (Air/Targeting)
+        // 3. ê³µì¤‘ ì •ì§€ ë° ì‹¤ì‹œê°„ ì¡°ì¤€
         SetVFX(airVFX);
-
-        // Á¶ÁØÁ¡ »ı¼º ¹× ·¹ÀÌ¾î ¼³Á¤
         if (landingIndicatorPrefab != null)
         {
             spawnedIndicator = Instantiate(landingIndicatorPrefab);
@@ -90,40 +124,48 @@ public class JudgmentSmash : MonoBehaviour
             if (indicatorSR != null && playerRenderer != null)
             {
                 indicatorSR.sortingLayerID = playerRenderer.sortingLayerID;
-                indicatorSR.sortingOrder = playerRenderer.sortingOrder - 1; // ¹ß¹Ø¿¡ ¿Àµµ·Ï
+                indicatorSR.sortingOrder = playerRenderer.sortingOrder - 1;
             }
         }
 
         float elapsed = 0;
         Vector3 currentTargetPos = startPos;
-
         while (elapsed < pauseTime)
         {
             currentTargetPos = GetAdjustedTargetPositionByTag(startPos);
-
-            if (spawnedIndicator != null)
-                spawnedIndicator.transform.position = currentTargetPos;
-
+            if (spawnedIndicator != null) spawnedIndicator.transform.position = currentTargetPos;
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // 4. ³«ÇÏ ½ÃÀÛ (Fall)
+        // 4. ë‚™í•˜ (ì´ ë¶€ë¶„ì´ í•µì‹¬ ìˆ˜ì • ì‚¬í•­ì…ë‹ˆë‹¤)
+        if (spawnedIndicator != null) Destroy(spawnedIndicator); // ë‚™í•˜ ì‹œì‘ ì‹œ ì¡°ì¤€ì  ì œê±°
         SetVFX(fallVFX);
         if (parentAnim != null) parentAnim.SetTrigger("OnFall");
 
-        yield return StartCoroutine(MoveLinear(transform.position, currentTargetPos, fallDuration));
+        float fallElapsed = 0;
+        Vector3 fallStartPos = owner.transform.position;
 
-        // 5. Æø¹ß (Explode)
-        Explode(currentTargetPos);
+        while (fallElapsed < fallDuration)
+        {
+            fallElapsed += Time.deltaTime;
+            owner.transform.position = Vector3.Lerp(fallStartPos, currentTargetPos, fallElapsed / fallDuration);
 
-        if (spawnedIndicator != null) Destroy(spawnedIndicator);
+            activeEnhancer?.OnUpdate(owner);
+            yield return null;
+        }
+        owner.transform.position = currentTargetPos; // ì°©ì§€ ì§€ì  ê³ ì •
+
+        // 5. í­ë°œ ë° í›„ì²˜ë¦¬ (ë£¨í”„ ë°–ìœ¼ë¡œ ëºìŠµë‹ˆë‹¤)
+        Explode(owner, currentTargetPos);
 
         yield return new WaitForSeconds(0.2f);
         DisableAllVFX();
 
-        // ÀÌµ¿ ´Ù½Ã Çã¿ë
+        activeEnhancer?.OnEnd(owner);
+
         if (controller != null) controller.enabled = true;
+        isExecuting = false;
     }
 
     private Vector3 GetAdjustedTargetPositionByTag(Vector3 origin)
@@ -139,73 +181,75 @@ public class JudgmentSmash : MonoBehaviour
             targetPos = origin + (Vector3)(direction.normalized * maxJumpDistance);
         }
 
-        Vector2 limitedDir = (Vector2)targetPos - (Vector2)origin;
-        RaycastHit2D hit = Physics2D.Raycast(origin, limitedDir.normalized, limitedDir.magnitude, LayerMask.GetMask("Wall"));
+Â  Â  Â  Â  // ë²½ ë ˆì´ì–´ ì²´í¬ (Wall ë ˆì´ì–´ ë§ˆìŠ¤í¬ ì‚¬ìš©)
+Â  Â  Â  Â  RaycastHit2D hit = Physics2D.Raycast(origin, ((Vector2)targetPos - (Vector2)origin).normalized,
+      Vector2.Distance(origin, targetPos), LayerMask.GetMask("Wall"));
 
         if (hit.collider != null)
         {
-            return (Vector3)hit.point - (Vector3)(limitedDir.normalized * 0.5f);
+            return (Vector3)hit.point - (Vector3)(((Vector2)targetPos - (Vector2)origin).normalized * 0.5f);
         }
-
         return targetPos;
     }
 
-    void Explode(Vector3 position)
+    private void Explode(GameObject owner, Vector3 position)
     {
-        // 1. ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® ¹× ½ºÅİ Ã£±â
-        var playerObj = GameObject.FindWithTag("Player");
-        PlayerStats stats = (playerObj != null) ? playerObj.GetComponent<PlayerStats>() : GetComponentInParent<PlayerStats>();
+        var stats = owner.GetComponentInChildren<PlayerStats>();
+        float playerAttack = (stats != null) ? stats.Attack.Value : 20f;
+        int finalDamage = Mathf.RoundToInt(playerAttack * 2f);
 
-        // 2. µ¥¹ÌÁö °è»ê: ÇöÀç °ø°İ·ÂÀÇ 2¹è (Áßº¹ ¼±¾ğ Á¦°ÅµÊ)
-        float playerAttack = (stats != null) ? stats.Attack.Value : baseDamage;
-        int finalDamage = Mathf.Max(1, Mathf.RoundToInt(playerAttack * 2f));
-
-        Debug.Log($"[½ÉÆÇÀÇ ÀÏ°İ] °ø°İ·Â: {playerAttack} -> ÃÖÁ¾ µ¥¹ÌÁö: {finalDamage} (½ºÅİ ¹ß°ß: {stats != null})");
-
-        // 3. ¹üÀ§ ³» Àû °¨Áö
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(position, explosionRadius);
-
         foreach (Collider2D hit in hitColliders)
         {
             if (hit.CompareTag("Enemy"))
             {
-                // µ¥¹ÌÁö Àü´Ş
                 EnemyHealth healthScript = hit.GetComponent<EnemyHealth>();
                 if (healthScript != null)
                 {
-                    Vector2 knockbackDir = (hit.transform.position - position).normalized;
+                    Vector2 knockbackDir = ((Vector2)hit.transform.position - (Vector2)position).normalized;
                     healthScript.TakeDamage(finalDamage, knockbackDir);
-                }
 
-                // ¹°¸® ³Ë¹é
-                Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    Vector2 forceDir = (hit.transform.position - position).normalized;
-                    rb.AddForce(forceDir * knockbackForce, ForceMode2D.Impulse);
+                    if (!healthScript.IsDead)
+                    {
+                        Animator enemyAnim = hit.GetComponentInChildren<Animator>();
+                        if (enemyAnim != null) enemyAnim.SetTrigger("Hit");
+
+                        Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
+                        if (rb != null)
+                        {
+                            rb.linearVelocity = Vector2.zero;
+                            Vector2 rawDir = (Vector2)hit.transform.position - (Vector2)position;
+                            Vector2 finalKnockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
+                            if (finalKnockbackDir.y > 0) finalKnockbackDir.y += 0.2f;
+                            finalKnockbackDir = finalKnockbackDir.normalized;
+                            rb.AddForce(finalKnockbackDir * knockbackForce, ForceMode2D.Impulse);
+                        }
+
+                        EnemyMover mover = hit.GetComponent<EnemyMover>();
+                        if (mover != null) mover.ApplyStun(1.0f);
+                    }
                 }
             }
         }
     }
 
-    void UpdateSortingOrder()
+    private void UpdateSortingOrder()
     {
-        if (playerRenderer == null) return;
         SortingGroup sg = GetComponent<SortingGroup>();
-        if (sg != null)
+        if (sg != null && playerRenderer != null)
         {
             sg.sortingLayerID = playerRenderer.sortingLayerID;
             sg.sortingOrder = playerRenderer.sortingOrder + 1;
         }
     }
 
-    void SetVFX(GameObject target)
+    private void SetVFX(GameObject target)
     {
         DisableAllVFX();
         if (target != null) target.SetActive(true);
     }
 
-    void DisableAllVFX()
+    private void DisableAllVFX()
     {
         if (chargeVFX) chargeVFX.SetActive(false);
         if (riseVFX) riseVFX.SetActive(false);
@@ -213,21 +257,15 @@ public class JudgmentSmash : MonoBehaviour
         if (fallVFX) fallVFX.SetActive(false);
     }
 
-    IEnumerator MoveLinear(Vector3 start, Vector3 end, float duration)
+    private IEnumerator MoveLinear(Transform target, Vector3 start, Vector3 end, float duration)
     {
         float elapsed = 0;
         while (elapsed < duration)
         {
-            transform.position = Vector3.Lerp(start, end, elapsed / duration);
+            target.position = Vector3.Lerp(start, end, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = end;
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        target.position = end;
     }
 }

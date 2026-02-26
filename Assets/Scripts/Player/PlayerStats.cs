@@ -27,6 +27,10 @@ namespace Game.Player
 
     public class PlayerStats : MonoBehaviour
     {
+        [Header("UI & Effect")]
+        public GameObject damageTextPrefab;
+        public Transform popupPoint;
+
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
         [SerializeField] private Stat maxMP = new Stat();
@@ -75,8 +79,30 @@ namespace Game.Player
             if (amount <= 0f) return;
             currentHP = Mathf.Max(currentHP - amount, 0f);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
+
+            SpawnDamageText(amount);
         }
 
+        private void SpawnDamageText(float damage)
+        {
+            if (damageTextPrefab == null) return;
+
+            // 1. 위치 설정
+            Vector3 spawnPos = (popupPoint != null) ? popupPoint.position : transform.position + Vector3.up * 1.5f;
+
+            // 2. [핵심 수정] 생성할 때 세 번째 인자로 popupPoint를 넣어 부모로 설정합니다.
+            // 이렇게 해야 UI가 Canvas(부모)의 영향을 받아 화면에 그려집니다.
+            GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity, popupPoint);
+
+            // 3. 프리팹이 꺼져있을 경우를 대비해 깨우기
+            textObj.SetActive(true);
+
+            DamageText_Player damageScript = textObj.GetComponent<DamageText_Player>();
+            if (damageScript != null)
+            {
+                damageScript.Setup(damage);
+            }
+        }
         public bool SpendMP(float amount)
         {
             if (amount <= 0f) return true;
