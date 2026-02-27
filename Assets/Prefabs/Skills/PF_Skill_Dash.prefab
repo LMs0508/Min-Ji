@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8701860636218018653}
   - component: {fileID: 4801348220290956577}
+  - component: {fileID: 5269289125656181636}
+  - component: {fileID: 1101951961423772250}
+  - component: {fileID: 430526255799209022}
+  - component: {fileID: 6464110820549435703}
   m_Layer: 0
   m_Name: PF_Skill_Dash
   m_TagString: Untagged
@@ -49,3 +53,54 @@ MonoBehaviour:
   dashTime: 0.12
   dashCooldown: 3
   skillManaCost: 10
+--- !u!114 &5269289125656181636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718707291572363915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ba665cd404c0b43afcc2e904f96117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashEarthEnhancer
+  bonusArmorPerStack: 10
+  maxStacks: 3
+  resetTime: 6
+--- !u!114 &1101951961423772250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718707291572363915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b19715b9474164ab96fd8eeeec0bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashFireEnhancer
+--- !u!114 &430526255799209022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718707291572363915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12a036f210629734cafb6ad58798f75d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashWaterEnhancer
+--- !u!114 &6464110820549435703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718707291572363915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982ee8cef1e1868478f403b5f95994df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashWindEnhancer
