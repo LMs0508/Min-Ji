@@ -23,11 +23,14 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     public GameObject landingIndicatorPrefab;
     private GameObject spawnedIndicator;
 
-    [Header("VFX Objects (자식들)")]
+    [Header("VFX Objects (여기에 Normal 이펙트를 넣으세요)")]
     public GameObject chargeVFX;
     public GameObject riseVFX;
     public GameObject airVFX;
     public GameObject fallVFX;
+
+    // 강화기(Enhancer)가 교체하기 전의 '일반' 이펙트를 기억하는 백업용
+    [HideInInspector] public GameObject defaultCharge, defaultRise, defaultAir, defaultFall;
 
     [Header("Movement Settings")]
     public float jumpHeight = 5f;
@@ -39,13 +42,19 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     public float explosionRadius = 3f;
     public float knockbackForce = 15f;
 
-    // 클래스 멤버 변수 (런타임에 자동 할당됨)
-    private SpriteRenderer playerRenderer;
+    private SpriteRenderer playerRenderer;
     private Animator parentAnim;
     private bool isExecuting = false;
 
     public float Cooldown => cooldown;
     public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
+
+    void Awake()
+    {
+        // 처음 설정된 일반(Normal) 이펙트들을 백업해둡니다.
+        defaultCharge = chargeVFX; defaultRise = riseVFX;
+        defaultAir = airVFX; defaultFall = fallVFX;
+    }
 
     void Start()
     {
@@ -54,8 +63,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
     void Update()
     {
-        // 렌더러가 있을 때만 레이어 정렬 업데이트
-        if (playerRenderer != null) UpdateSortingOrder();
+        if (playerRenderer != null) UpdateSortingOrder();
     }
 
     public bool TryUse(GameObject owner)
@@ -63,22 +71,14 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (owner == null || isExecuting) return false;
         if (Time.time < lastUsedTime + cooldown) return false;
 
-        // [수정] owner로부터 필요한 컴포넌트들을 실시간으로 찾습니다
-        var stats = owner.GetComponentInChildren<PlayerStats>();
+        var stats = owner.GetComponentInChildren<PlayerStats>();
         var runner = owner.GetComponent<CoroutineRunner>();
 
-        // 필수 컴포넌트 체크 (하나라도 없으면 실행 불가)
-        if (stats == null || runner == null) return false;
+        if (stats == null || runner == null) return false;
 
-        // 마나 체크 및 소모
-        if (!stats.SpendMP(skillManaCost))
-        {
-            Debug.Log("마나 부족: 심판의 일격 불가");
-            return false;
-        }
+        if (!stats.SpendMP(skillManaCost)) return false;
 
-        // 성공 시 데이터 기록 및 코루틴 시작
-        lastUsedTime = Time.time;
+        lastUsedTime = Time.time;
         runner.StartCoroutine(ExecuteJudgmentSmash(owner));
         return true;
     }
@@ -87,15 +87,19 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     {
         isExecuting = true;
 
-        transform.position = owner.transform.position + new Vector3(0, 0.25f, 0);
-        foreach (Transform child in transform) child.localPosition = Vector3.zero;
+        // [핵심] 스킬 시작 시 항상 '일반' 속성으로 리셋하고 시작합니다.
+        chargeVFX = defaultCharge; riseVFX = defaultRise;
+        airVFX = defaultAir; fallVFX = defaultFall;
 
+        // 속성 체크 및 강화기 실행 (화속성이라면 여기서 VFX가 불꽃으로 교체됨)
         var playerElement = owner.GetComponentInChildren<PlayerElement>();
         ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
         var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
 
         activeEnhancer?.OnStart(owner);
 
+        // 위치 설정 및 컴포넌트 가져오기
+        transform.position = owner.transform.position + new Vector3(0, 0.25f, 0);
         var controller = owner.GetComponentInChildren<TopDownCharacterController>();
         var rb = owner.GetComponentInChildren<Rigidbody2D>();
         parentAnim = owner.GetComponentInChildren<Animator>();
@@ -115,7 +119,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
         yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
 
-        // 3. 공중 정지 및 실시간 조준
+        // 3. 공중 정지 및 조준
         SetVFX(airVFX);
         if (landingIndicatorPrefab != null)
         {
@@ -138,27 +142,24 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             yield return null;
         }
 
-        // 4. 낙하 (이 부분이 핵심 수정 사항입니다)
-        if (spawnedIndicator != null) Destroy(spawnedIndicator); // 낙하 시작 시 조준점 제거
+        // 4. 낙하
+        if (spawnedIndicator != null) Destroy(spawnedIndicator);
         SetVFX(fallVFX);
         if (parentAnim != null) parentAnim.SetTrigger("OnFall");
 
         float fallElapsed = 0;
         Vector3 fallStartPos = owner.transform.position;
-
         while (fallElapsed < fallDuration)
         {
             fallElapsed += Time.deltaTime;
             owner.transform.position = Vector3.Lerp(fallStartPos, currentTargetPos, fallElapsed / fallDuration);
-
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
-        owner.transform.position = currentTargetPos; // 착지 지점 고정
+        owner.transform.position = currentTargetPos;
 
-        // 5. 폭발 및 후처리 (루프 밖으로 뺐습니다)
+        // 5. 폭발
         Explode(owner, currentTargetPos);
-
         yield return new WaitForSeconds(0.2f);
         DisableAllVFX();
 
@@ -166,30 +167,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (controller != null) controller.enabled = true;
         isExecuting = false;
-    }
-
-    private Vector3 GetAdjustedTargetPositionByTag(Vector3 origin)
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
-        Vector3 targetPos = Camera.main.ScreenToWorldPoint(mousePos);
-        targetPos.z = 0;
-
-        Vector2 direction = (Vector2)targetPos - (Vector2)origin;
-        if (direction.magnitude > maxJumpDistance)
-        {
-            targetPos = origin + (Vector3)(direction.normalized * maxJumpDistance);
-        }
-
-        // 벽 레이어 체크 (Wall 레이어 마스크 사용)
-        RaycastHit2D hit = Physics2D.Raycast(origin, ((Vector2)targetPos - (Vector2)origin).normalized,
-      Vector2.Distance(origin, targetPos), LayerMask.GetMask("Wall"));
-
-        if (hit.collider != null)
-        {
-            return (Vector3)hit.point - (Vector3)(((Vector2)targetPos - (Vector2)origin).normalized * 0.5f);
-        }
-        return targetPos;
     }
 
     private void Explode(GameObject owner, Vector3 position)
@@ -206,24 +183,23 @@ public class JudgmentSmash : MonoBehaviour, ISkill
                 EnemyHealth healthScript = hit.GetComponent<EnemyHealth>();
                 if (healthScript != null)
                 {
-                    Vector2 knockbackDir = ((Vector2)hit.transform.position - (Vector2)position).normalized;
-                    healthScript.TakeDamage(finalDamage, knockbackDir);
+                    Vector2 rawDir = (Vector2)hit.transform.position - (Vector2)position;
+                    Vector2 finalKnockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
+                    if (finalKnockbackDir.y > 0) finalKnockbackDir.y += 0.2f;
+
+                    healthScript.TakeDamage(finalDamage, finalKnockbackDir);
+
+                    Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector2.zero;
+                        rb.AddForce(finalKnockbackDir.normalized * knockbackForce, ForceMode2D.Impulse);
+                    }
 
                     if (!healthScript.IsDead)
                     {
                         Animator enemyAnim = hit.GetComponentInChildren<Animator>();
                         if (enemyAnim != null) enemyAnim.SetTrigger("Hit");
-
-                        Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
-                        if (rb != null)
-                        {
-                            rb.linearVelocity = Vector2.zero;
-                            Vector2 rawDir = (Vector2)hit.transform.position - (Vector2)position;
-                            Vector2 finalKnockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
-                            if (finalKnockbackDir.y > 0) finalKnockbackDir.y += 0.2f;
-                            finalKnockbackDir = finalKnockbackDir.normalized;
-                            rb.AddForce(finalKnockbackDir * knockbackForce, ForceMode2D.Impulse);
-                        }
 
                         EnemyMover mover = hit.GetComponent<EnemyMover>();
                         if (mover != null) mover.ApplyStun(1.0f);
@@ -233,39 +209,39 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         }
     }
 
+    private Vector3 GetAdjustedTargetPositionByTag(Vector3 origin)
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
+        Vector3 targetPos = Camera.main.ScreenToWorldPoint(mousePos);
+        targetPos.z = 0;
+        Vector2 direction = (Vector2)targetPos - (Vector2)origin;
+        if (direction.magnitude > maxJumpDistance) targetPos = origin + (Vector3)(direction.normalized * maxJumpDistance);
+        RaycastHit2D hit = Physics2D.Raycast(origin, ((Vector2)targetPos - (Vector2)origin).normalized, Vector2.Distance(origin, targetPos), LayerMask.GetMask("Wall"));
+        return (hit.collider != null) ? (Vector3)hit.point - (Vector3)(((Vector2)targetPos - (Vector2)origin).normalized * 0.5f) : targetPos;
+    }
+
     private void UpdateSortingOrder()
     {
         SortingGroup sg = GetComponent<SortingGroup>();
-        if (sg != null && playerRenderer != null)
-        {
-            sg.sortingLayerID = playerRenderer.sortingLayerID;
-            sg.sortingOrder = playerRenderer.sortingOrder + 1;
-        }
+        if (sg != null && playerRenderer != null) { sg.sortingLayerID = playerRenderer.sortingLayerID; sg.sortingOrder = playerRenderer.sortingOrder + 1; }
     }
 
-    private void SetVFX(GameObject target)
-    {
-        DisableAllVFX();
-        if (target != null) target.SetActive(true);
-    }
+    private void SetVFX(GameObject target) { DisableAllVFX(); if (target != null) target.SetActive(true); }
 
     private void DisableAllVFX()
     {
-        if (chargeVFX) chargeVFX.SetActive(false);
-        if (riseVFX) riseVFX.SetActive(false);
-        if (airVFX) airVFX.SetActive(false);
-        if (fallVFX) fallVFX.SetActive(false);
+        // 모든 이펙트를 명시적으로 끕니다. (백업본까지 포함하여 모두 끔)
+        if (defaultCharge) defaultCharge.SetActive(false); if (defaultRise) defaultRise.SetActive(false);
+        if (defaultAir) defaultAir.SetActive(false); if (defaultFall) defaultFall.SetActive(false);
+        if (chargeVFX) chargeVFX.SetActive(false); if (riseVFX) riseVFX.SetActive(false);
+        if (airVFX) airVFX.SetActive(false); if (fallVFX) fallVFX.SetActive(false);
     }
 
     private IEnumerator MoveLinear(Transform target, Vector3 start, Vector3 end, float duration)
     {
         float elapsed = 0;
-        while (elapsed < duration)
-        {
-            target.position = Vector3.Lerp(start, end, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
+        while (elapsed < duration) { target.position = Vector3.Lerp(start, end, elapsed / duration); elapsed += Time.deltaTime; yield return null; }
         target.position = end;
     }
 }

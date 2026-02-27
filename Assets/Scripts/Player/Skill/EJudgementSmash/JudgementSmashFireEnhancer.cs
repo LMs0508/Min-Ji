@@ -6,16 +6,16 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
 {
     public ElementType TargetElement => ElementType.Fire;
 
-    [Header("화속성 오버라이드 컨트롤러 (4개)")]
-    public AnimatorOverrideController chargeOverride;
-    public AnimatorOverrideController riseOverride;
-    public AnimatorOverrideController airOverride;
-    public AnimatorOverrideController fallOverride;
+    [Header("화속성 전용 이펙트 (인스펙터에서 직접 넣으세요)")]
+    public GameObject fireCharge;
+    public GameObject fireRise;
+    public GameObject fireAir;
+    public GameObject fireFall;
 
     [Header("불꽃 연출 설정")]
-    public GameObject fireTrailPrefab;   
-    public GameObject groundFirePrefab; 
-    public float explosionRadius = 3f;  
+    public GameObject fireTrailPrefab;
+    public GameObject groundFirePrefab;
+    public float explosionRadius = 3f;
 
     [Header("화상(Burn) 설정")]
     public int burnDamage = 5;
@@ -24,28 +24,16 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
     private float trailTimer;
     public float trailInterval = 0.05f;
 
-    public void OnStart(GameObject owner) 
+    public void OnStart(GameObject owner)
     {
         JudgmentSmash skillBase = owner.GetComponentInChildren<JudgmentSmash>();
         if (skillBase != null)
         {
-            ApplyOverride(skillBase.chargeVFX, chargeOverride);
-            ApplyOverride(skillBase.riseVFX, riseOverride);
-            ApplyOverride(skillBase.airVFX, airOverride);
-            ApplyOverride(skillBase.fallVFX, fallOverride);
-        }
-    }
-
-    private void ApplyOverride(GameObject vfxObj, AnimatorOverrideController overrideCtrl)
-    {
-        if (vfxObj == null || overrideCtrl == null) return;
-
-        Animator anim = vfxObj.GetComponent<Animator>();
-        if (anim == null) anim = vfxObj.GetComponentInChildren<Animator>();
-
-        if (anim != null)
-        {
-            anim.runtimeAnimatorController = overrideCtrl;
+            // [핵심] 메인 스크립트가 사용할 이펙트를 화속성용으로 강제 교체합니다.
+            if (fireCharge) skillBase.chargeVFX = fireCharge;
+            if (fireRise) skillBase.riseVFX = fireRise;
+            if (fireAir) skillBase.airVFX = fireAir;
+            if (fireFall) skillBase.fallVFX = fireFall;
         }
     }
 
@@ -63,23 +51,18 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
     public void OnEnd(GameObject owner)
     {
         Vector3 landingPos = owner.transform.position;
-
         if (groundFirePrefab != null)
         {
             GameObject fireField = Instantiate(groundFirePrefab, landingPos, Quaternion.identity);
-            Destroy(fireField, 3.0f); 
+            Destroy(fireField, 3.0f);
         }
-
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(landingPos, explosionRadius);
         foreach (var hit in hitEnemies)
         {
             if (hit.CompareTag("Enemy"))
             {
                 EnemyHealth health = hit.GetComponent<EnemyHealth>();
-                if (health != null)
-                {
-                    StartCoroutine(ApplyBurnEffect(health));
-                }
+                if (health != null) StartCoroutine(ApplyBurnEffect(health));
             }
         }
     }
@@ -87,11 +70,30 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
     private IEnumerator ApplyBurnEffect(EnemyHealth target)
     {
         float elapsed = 0;
+        SpriteRenderer enemyRenderer = target.GetComponentInChildren<SpriteRenderer>();
         while (elapsed < burnDuration && target != null && !target.IsDead)
         {
-            target.TakeDamage(burnDamage); 
+            target.TakeDamage(burnDamage);
+            if (enemyRenderer != null)
+            {
+                StartCoroutine(FlashRedEffect(enemyRenderer));
+            }
             elapsed += 1.0f;
             yield return new WaitForSeconds(1.0f);
+        }
+    }
+    private IEnumerator FlashRedEffect(SpriteRenderer renderer)
+    {
+        if (renderer == null) yield break;
+
+        Color originalColor = renderer.color;
+        renderer.color = Color.red;
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (renderer != null)
+        {
+            renderer.color = originalColor;
         }
     }
 }

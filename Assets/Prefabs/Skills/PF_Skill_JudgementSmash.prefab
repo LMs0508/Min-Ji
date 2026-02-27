@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8785632303341552672}
   - component: {fileID: 6682140049501492471}
   - component: {fileID: 2839002271515147581}
+  - component: {fileID: 5095539513255463450}
+  - component: {fileID: 5464330172474090011}
   m_Layer: 0
   m_Name: PF_Skill_JudgementSmash
   m_TagString: Untagged
@@ -33,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2032024328596510974}
+  - {fileID: 8097326065807671355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8785632303341552672
@@ -57,6 +60,10 @@ MonoBehaviour:
   riseVFX: {fileID: 8768571966775358022}
   airVFX: {fileID: 3595992193943406446}
   fallVFX: {fileID: 3477262999348697160}
+  defaultCharge: {fileID: 0}
+  defaultRise: {fileID: 0}
+  defaultAir: {fileID: 0}
+  defaultFall: {fileID: 0}
   jumpHeight: 5
   riseDuration: 0.15
   pauseTime: 0.5
@@ -88,16 +95,142 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2691526714ec50d44a515ff64ddd202e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashFireEnhancer
-  chargeOverride: {fileID: 22100000, guid: d45707411014533408404dea10d975f9, type: 2}
-  riseOverride: {fileID: 22100000, guid: 5458b9e4397b7f54b92965fafbe3c294, type: 2}
-  airOverride: {fileID: 22100000, guid: fe97678d45886bd48a9c059e67233f46, type: 2}
-  fallOverride: {fileID: 22100000, guid: 25d4edda8c41c4e45859914099239c1c, type: 2}
+  fireCharge: {fileID: 5043885380445221000}
+  fireRise: {fileID: 983282654741807823}
+  fireAir: {fileID: 3773964368282036028}
+  fireFall: {fileID: 8116082238137716361}
   fireTrailPrefab: {fileID: 0}
   groundFirePrefab: {fileID: 0}
   explosionRadius: 3
   burnDamage: 5
   burnDuration: 3
   trailInterval: 0.05
+--- !u!114 &5095539513255463450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692249636830114244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8c8d187a4ece24885a2f6d8f7265d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashEarthEnhancer
+  barrierPrefab: {fileID: 3816884053376061786, guid: 31de74460adc67340970825909958c52,
+    type: 3}
+--- !u!114 &5464330172474090011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692249636830114244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727ae1df5ae1ce348b2bb2429f3fd334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashWaterEnhancer
+  whirlwindPrefab: {fileID: 7502610146362537723, guid: ba5ad53ad662f7346b4fd73666b7c14e,
+    type: 3}
+--- !u!1001 &4608486216057537396
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7904392369779621354}
+    m_Modifications:
+    - target: {fileID: 3481021180564212522, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_Name
+      value: JudgementSmash_Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ccd4149775139b44bfad08c9ac2bb9a, type: 3}
+--- !u!1 &983282654741807823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3625947003027227067, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608486216057537396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3773964368282036028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 840890356899406920, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608486216057537396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5043885380445221000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8794363268444320764, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608486216057537396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8097326065807671355 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5740922858010215247, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608486216057537396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8116082238137716361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5716963487333912061, guid: 5ccd4149775139b44bfad08c9ac2bb9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608486216057537396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7658074239712885693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,15 +244,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: JudgementSmash
       objectReference: {fileID: 0}
+    - target: {fileID: 353198949998310669, guid: 4c10cd8fd59c060418feef8794b5782e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.97876006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.08626
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535942722292654915, guid: 4c10cd8fd59c060418feef8794b5782e,
         type: 3}
