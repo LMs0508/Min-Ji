@@ -12,6 +12,8 @@ public class EnemyHealth : MonoBehaviour
 
     public float currentHealth;
     public bool isHit = false;
+    private bool isDead = false;
+    public bool IsDead => isDead;
 
     [Header("VFX")]
     public GameObject damageTextPrefab;
@@ -114,59 +116,77 @@ public class EnemyHealth : MonoBehaviour
         if (sr != null) sr.color = Color.white;
         isHit = false;
     }
-
     private void Die()
     {
-        if (currentHealth < -999) return;
-        currentHealth = -1000;
+        if (isDead) return;
+        isDead = true;
 
+        currentHealth = -1000;
         if (hpSlider != null) hpSlider.gameObject.SetActive(false);
+
+        StopAllCoroutines();
+        if (sr != null) sr.color = Color.white;
 
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null)
         {
-            anim.ResetTrigger("Attack");
+            anim.updateMode = AnimatorUpdateMode.Normal;
+            foreach (AnimatorControllerParameter param in anim.parameters)
+            {
+                if (param.type == AnimatorControllerParameterType.Trigger)
+                    anim.ResetTrigger(param.name);
+            }
+  
+
             anim.SetBool("isWalking", false);
             anim.SetBool("isDead", true);
+
+            // 강제 재생
             anim.Play("Die", 0, 0f);
         }
 
-        // 1. 기존 피격 피드백(빨간색 변함) 등이 꼬이지 않게 모든 코루틴 중단
-        StopAllCoroutines();
-
-        // 2. AI 및 물리 엔진 정지 (기존 코드와 동일)
+        // 다른 스크립트 비활성화
         MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
         foreach (var script in scripts)
         {
-            if (script != this && !(script is Animator)) script.enabled = false;
+            if (script == null || script == this) continue;
+            script.enabled = false;
         }
-        if (GetComponent<Rigidbody2D>() != null) GetComponent<Rigidbody2D>().simulated = false;
-        GetComponent<Collider2D>().enabled = false;
 
-        // 3. 핵심: 서서히 사라지는 코루틴 시작!
+        // [수정] 여기서 즉시 끄지 않고, 아래 코루틴에서 처리합니다.
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
         StartCoroutine(FadeOutAndDestroy());
     }
 
     private IEnumerator FadeOutAndDestroy()
     {
-        yield return new WaitForSeconds(1f);
+        // [추가] 애니메이션이 시작될 수 있도록 한 프레임 쉽니다.
+        yield return null;
 
-        float fadeDuration = 0.5f; // 사라지는 데 걸리는 시간
+        // [추가] 이제 안전하게 물리 시뮬레이션을 끕니다.
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+        yield return new WaitForSeconds(1f); // 시체가 유지되는 시간
+
+        float fadeDuration = 0.5f;
         float currentTime = 0f;
         Color startColor = sr.color;
 
         while (currentTime < fadeDuration)
         {
             currentTime += Time.deltaTime;
-
-            // 투명도(Alpha)를 1에서 0으로 선형 보간($Lerp$)합니다.
             float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeDuration);
             sr.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-
-            yield return null; // 다음 프레임까지 대기
+            yield return null;
         }
 
-        // 완전히 투명해지면 오브젝트 삭제
         Destroy(gameObject);
     }
 }
