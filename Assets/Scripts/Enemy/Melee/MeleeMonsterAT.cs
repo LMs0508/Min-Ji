@@ -2,24 +2,22 @@ using UnityEngine;
 
 public class MeleeMonsterAT : MonoBehaviour
 {
-    private EnemyAI ai; // 추격 관련
-    private EnemyHealth health; // 체력관련
-    public MeleeArea meleeArea; // 공격 판정 관련
+    private EnemyStats stats;
+    public MeleeArea meleeArea;
 
-    void Awake()
+    void Start()
     {
-        ai = GetComponent<EnemyAI>();
-        health = GetComponent<EnemyHealth>();
+        stats = GetComponentInParent<EnemyStats>();
     }
 
-    // 공격 애니메이션 이벤트 등을 위한 코드
-    public void OnAttackEvent()
+    public void OnMonsterHit()
     {
-        if (meleeArea != null)
+        if (meleeArea != null && stats != null && stats.enemyData != null)
         {
-            // EnemyStats에서 공격력 가져오도록 연결함
-            int damage = (int)GetComponent<EnemyStats>().enemyData.attackDamage;
+            float damage = stats.enemyData.damage;
             meleeArea.CheckAttack(damage);
+
+            Debug.Log($"<color=cyan>[이벤트]</color> 공격 실행! 데미지: {damage}");
         }
     }
 }

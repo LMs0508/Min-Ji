@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 8331052980765139244}
   - component: {fileID: 5376547012086500424}
   - component: {fileID: 3310683281049991182}
+  - component: {fileID: 2911533572456852612}
   m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
@@ -479,9 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAttack
   player: {fileID: 0}
-  attackRange: 1.75
-  attackCooldown: 1.5
-  moveSpeed: 2
+  attackRange: 3
 --- !u!95 &3310683281049991182
 Animator:
   serializedVersion: 7
@@ -504,6 +503,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2911533572456852612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815482284636174192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5a573a8da42c046a889a8c80f313ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &2543254739739571261
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,10 +670,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ffaca009587e24aace98adbb12578a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeArea
-  radius: 0.5
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  radius: 2
+  targetTag: Player
 --- !u!1 &6232908448510814632
 GameObject:
   m_ObjectHideFlags: 0
