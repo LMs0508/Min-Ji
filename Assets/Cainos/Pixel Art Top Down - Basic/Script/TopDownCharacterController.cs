@@ -1,55 +1,95 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Cainos.PixelArtTopDown_Basic
 {
     public class TopDownCharacterController : MonoBehaviour
     {
-        public float speed;
-        private Animator animator;
+        public float speed = 5f;
+        public GameObject clickEffectPrefab; // 1. 방금 만든 프리팹을 넣을 칸
 
-        [Header("키 설정")]
-        private KeyCode Up = KeyCode.W;
-        private KeyCode Down = KeyCode.S;
-        private KeyCode Left = KeyCode.A;
-        private KeyCode Right = KeyCode.D;
+        private Animator animator;
+        private Rigidbody2D rb;
+        private Vector2 targetPosition;
+        private bool isMoving = false;
+        public float stoppingDistance = 0.1f;
 
         private void Start()
         {
             animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody2D>();
+            targetPosition = transform.position;
         }
-
 
         private void Update()
         {
-            Vector2 dir = Vector2.zero;
-            if (Input.GetKey(Left))
+            // 마우스 우클릭을 "눌렀을 때(Down)" 한 번만 이펙트 생성
+            if (Input.GetMouseButtonDown(1))
             {
-                dir.x = -1;
-                animator.SetInteger("Direction", 3);
-            }
-            else if (Input.GetKey(Right))
-            {
-                dir.x = 1;
-                animator.SetInteger("Direction", 2);
+                ShowClickEffect();
             }
 
-            if (Input.GetKey(Up))
+            // 우클릭을 "누르고 있는 동안"은 계속 목표지점 갱신
+            if (Input.GetMouseButton(1))
             {
-                dir.y = 1;
-                animator.SetInteger("Direction", 1);
-            }
-            else if (Input.GetKey(Down))
-            {
-                dir.y = -1;
-                animator.SetInteger("Direction", 0);
+                SetTargetPosition();
             }
 
-            dir.Normalize();
-            animator.SetBool("IsMoving", dir.magnitude > 0);
+            MoveToTarget();
+        }
 
-            GetComponent<Rigidbody2D>().linearVelocity = speed * dir;
+        private void ShowClickEffect()
+        {
+            if (clickEffectPrefab == null) return;
+
+            // 마우스 위치 계산 (좌표 변환)
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = -Camera.main.transform.position.z;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            // 2. 이펙트 생성
+            GameObject effect = Instantiate(clickEffectPrefab, worldPos, Quaternion.identity);
+
+            // 3. 0.5초 뒤에 자동으로 파괴 (애니메이션 길이에 맞춰 조절)
+            Destroy(effect, 0.5f);
+        }
+
+        private void SetTargetPosition()
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = -Camera.main.transform.position.z;
+            targetPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            isMoving = true;
+        }
+
+        private void MoveToTarget()
+        {
+            float distance = Vector2.Distance(transform.position, targetPosition);
+
+            if (isMoving && distance > stoppingDistance)
+            {
+                Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+                UpdateAnimator(direction);
+                rb.linearVelocity = direction * speed;
+                animator.SetBool("IsMoving", true);
+            }
+            else
+            {
+                rb.linearVelocity = Vector2.zero;
+                animator.SetBool("IsMoving", false);
+                isMoving = false;
+            }
+        }
+
+        private void UpdateAnimator(Vector2 dir)
+        {
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            {
+                animator.SetInteger("Direction", dir.x > 0 ? 2 : 3);
+            }
+            else
+            {
+                animator.SetInteger("Direction", dir.y > 0 ? 1 : 0);
+            }
         }
     }
 }

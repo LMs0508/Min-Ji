@@ -7,8 +7,8 @@ namespace Game.Player
     public class Stat
     {
         [SerializeField] private float baseValue;
-        [SerializeField] private float bonusValue;      // 아이템/레벨업으로 더해지는 값
-        [SerializeField] private float multiplier = 1f; // 버프/디버프 배율
+        [SerializeField] private float bonusValue;
+        [SerializeField] private float multiplier = 1f;
 
         public float BaseValue => baseValue;
         public float BonusValue => bonusValue;
@@ -17,10 +17,8 @@ namespace Game.Player
         public float Value => (baseValue + bonusValue) * multiplier;
 
         public void SetBase(float value) => baseValue = value;
-
         public void AddBonus(float value) => bonusValue += value;
         public void RemoveBonus(float value) => bonusValue -= value;
-
         public void Multiply(float factor) => multiplier *= factor;
         public void Divide(float factor) { if (factor != 0f) multiplier /= factor; }
     }
@@ -30,16 +28,22 @@ namespace Game.Player
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
         [SerializeField] private Stat maxMP = new Stat();
+        [SerializeField] private Stat hpRegen = new Stat(); // 1 = 최대 체력의 1% 회복
+        [SerializeField] private Stat mpRegen = new Stat(); // 2 = 최대 마나의 2% 회복
         [SerializeField] private Stat attack = new Stat();
         [SerializeField] private Stat magic = new Stat();
+        [SerializeField] private Stat defense = new Stat();
         [SerializeField] private Stat moveSpeed = new Stat();
-        [SerializeField] private Stat cooldownReduction = new Stat(); // % (0~0.8 같은 식으로 쓰는 걸 추천)
-        [SerializeField] private Stat attackSpeed = new Stat();      // 배율(1.0=기본)
+        [SerializeField] private Stat cooldownReduction = new Stat();
+        [SerializeField] private Stat attackSpeed = new Stat();
 
         public Stat MaxHP => maxHP;
         public Stat MaxMP => maxMP;
+        public Stat HPRegen => hpRegen;
+        public Stat MPRegen => mpRegen;
         public Stat Attack => attack;
         public Stat Magic => magic;
+        public Stat Defense => defense;
         public Stat MoveSpeed => moveSpeed;
         public Stat CooldownReduction => cooldownReduction;
         public Stat AttackSpeed => attackSpeed;
@@ -51,16 +55,40 @@ namespace Game.Player
         public float CurrentHP => currentHP;
         public float CurrentMP => currentMP;
 
-        public event Action<float, float> OnHPChanged; // (current, max)
+        public event Action<float, float> OnHPChanged;
         public event Action<float, float> OnMPChanged;
 
         private void Awake()
         {
-            // 시작 시 풀로 채워두기
             currentHP = MaxHP.Value;
             currentMP = MaxMP.Value;
-
             ClampResources();
+        }
+
+        private void Update()
+        {
+            RegenerateStats();
+        }
+
+        private void RegenerateStats()
+        {
+            // [수정] 퍼센트 기반 체력 재생 로직
+            if (currentHP < MaxHP.Value && HPRegen.Value > 0)
+            {
+                // 공식: 최대 체력 * (재생 스탯 * 0.01) * 초당 시간
+                float regenAmount = MaxHP.Value * (HPRegen.Value * 0.01f) * Time.deltaTime;
+                currentHP = Mathf.Min(currentHP + regenAmount, MaxHP.Value);
+                OnHPChanged?.Invoke(currentHP, MaxHP.Value);
+            }
+
+            // [수정] 퍼센트 기반 마나 재생 로직
+            if (currentMP < MaxMP.Value && MPRegen.Value > 0)
+            {
+                // 공식: 최대 마나 * (재생 스탯 * 0.01) * 초당 시간
+                float regenAmount = MaxMP.Value * (MPRegen.Value * 0.01f) * Time.deltaTime;
+                currentMP = Mathf.Min(currentMP + regenAmount, MaxMP.Value);
+                OnMPChanged?.Invoke(currentMP, MaxMP.Value);
+            }
         }
 
         public void Heal(float amount)
@@ -73,7 +101,9 @@ namespace Game.Player
         public void TakeDamage(float amount)
         {
             if (amount <= 0f) return;
-            currentHP = Mathf.Max(currentHP - amount, 0f);
+            float reductionPercent = Mathf.Clamp(Defense.Value, 0f, 100f) * 0.01f;
+            float finalDamage = amount * (1f - reductionPercent);
+            currentHP = Mathf.Max(currentHP - finalDamage, 0f);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
         }
 
@@ -81,7 +111,6 @@ namespace Game.Player
         {
             if (amount <= 0f) return true;
             if (currentMP < amount) return false;
-
             currentMP -= amount;
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
             return true;
@@ -96,7 +125,6 @@ namespace Game.Player
 
         public float ApplyCooldownReduction(float baseCooldownSeconds)
         {
-            // cooldownReduction.Value 0.2 == 20%인지
             float cdr = Mathf.Clamp(cooldownReduction.Value, 0f, 0.9f);
             return baseCooldownSeconds * (1f - cdr);
         }
@@ -105,7 +133,6 @@ namespace Game.Player
         {
             currentHP = Mathf.Clamp(currentHP, 0f, MaxHP.Value);
             currentMP = Mathf.Clamp(currentMP, 0f, MaxMP.Value);
-
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
         }
