@@ -28,18 +28,22 @@ namespace Game.Player
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
         [SerializeField] private Stat maxMP = new Stat();
+        [SerializeField] private Stat hpRegen = new Stat(); // 1 = 최대 체력의 1% 회복
+        [SerializeField] private Stat mpRegen = new Stat(); // 2 = 최대 마나의 2% 회복
         [SerializeField] private Stat attack = new Stat();
         [SerializeField] private Stat magic = new Stat();
-        [SerializeField] private Stat defense = new Stat(); // [추가] 방어력 스탯
+        [SerializeField] private Stat defense = new Stat();
         [SerializeField] private Stat moveSpeed = new Stat();
         [SerializeField] private Stat cooldownReduction = new Stat();
         [SerializeField] private Stat attackSpeed = new Stat();
 
         public Stat MaxHP => maxHP;
         public Stat MaxMP => maxMP;
+        public Stat HPRegen => hpRegen;
+        public Stat MPRegen => mpRegen;
         public Stat Attack => attack;
         public Stat Magic => magic;
-        public Stat Defense => defense; // [추가] 외부 접근용 프로퍼티
+        public Stat Defense => defense;
         public Stat MoveSpeed => moveSpeed;
         public Stat CooldownReduction => cooldownReduction;
         public Stat AttackSpeed => attackSpeed;
@@ -61,6 +65,32 @@ namespace Game.Player
             ClampResources();
         }
 
+        private void Update()
+        {
+            RegenerateStats();
+        }
+
+        private void RegenerateStats()
+        {
+            // [수정] 퍼센트 기반 체력 재생 로직
+            if (currentHP < MaxHP.Value && HPRegen.Value > 0)
+            {
+                // 공식: 최대 체력 * (재생 스탯 * 0.01) * 초당 시간
+                float regenAmount = MaxHP.Value * (HPRegen.Value * 0.01f) * Time.deltaTime;
+                currentHP = Mathf.Min(currentHP + regenAmount, MaxHP.Value);
+                OnHPChanged?.Invoke(currentHP, MaxHP.Value);
+            }
+
+            // [수정] 퍼센트 기반 마나 재생 로직
+            if (currentMP < MaxMP.Value && MPRegen.Value > 0)
+            {
+                // 공식: 최대 마나 * (재생 스탯 * 0.01) * 초당 시간
+                float regenAmount = MaxMP.Value * (MPRegen.Value * 0.01f) * Time.deltaTime;
+                currentMP = Mathf.Min(currentMP + regenAmount, MaxMP.Value);
+                OnMPChanged?.Invoke(currentMP, MaxMP.Value);
+            }
+        }
+
         public void Heal(float amount)
         {
             if (amount <= 0f) return;
@@ -68,30 +98,19 @@ namespace Game.Player
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
         }
 
-        // [수정] 방어력 로직이 적용된 데미지 계산
         public void TakeDamage(float amount)
         {
             if (amount <= 0f) return;
-
-            // 방어력 계산: 1당 1% 감소 (최대 100% 감쇄로 제한)
-            // 예: Defense.Value가 10이면 reduction은 0.1(10%)
             float reductionPercent = Mathf.Clamp(Defense.Value, 0f, 100f) * 0.01f;
-
-            // 최종 데미지 = 원래 데미지 * (1 - 감쇄율)
-            // 예: 100 * (1 - 0.1) = 90 데미지
             float finalDamage = amount * (1f - reductionPercent);
-
             currentHP = Mathf.Max(currentHP - finalDamage, 0f);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
-
-            Debug.Log($"원래 데미지: {amount}, 방어 적용 후: {finalDamage} (방어력: {Defense.Value})");
         }
 
         public bool SpendMP(float amount)
         {
             if (amount <= 0f) return true;
             if (currentMP < amount) return false;
-
             currentMP -= amount;
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
             return true;
@@ -114,7 +133,6 @@ namespace Game.Player
         {
             currentHP = Mathf.Clamp(currentHP, 0f, MaxHP.Value);
             currentMP = Mathf.Clamp(currentMP, 0f, MaxMP.Value);
-
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
         }
