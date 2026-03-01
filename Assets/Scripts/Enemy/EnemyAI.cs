@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if(player == null || health.isHit || stats.enemyData == null)
+        if (player == null || health.isHit || stats.enemyData == null || mover.IsStunned)
             return;
         float distance = Vector2.Distance(transform.position, player.position);
         if (distance <= stats.enemyData.detectionRange)

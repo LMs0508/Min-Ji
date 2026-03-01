@@ -1,0 +1,417 @@
+fileFormatVersion: 2
+guid: 3229ec4bfd369c4419b57c2ddd1969e6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2169291876423650191
+    second: JudgementSmash_Fire2_0
+  - first:
+      213: -944403612846180258
+    second: JudgementSmash_Fire2_1
+  - first:
+      213: 8967031188411367481
+    second: JudgementSmash_Fire2_2
+  - first:
+      213: 6835984253943591870
+    second: JudgementSmash_Fire2_3
+  - first:
+      213: -3694050000031229689
+    second: JudgementSmash_Fire2_4
+  - first:
+      213: -7381302012635553559
+    second: JudgementSmash_Fire2_5
+  - first:
+      213: 9078984223860304850
+    second: JudgementSmash_Fire2_6
+  - first:
+      213: -4581185939330728460
+    second: JudgementSmash_Fire2_7
+  - first:
+      213: 7816200656452375454
+    second: JudgementSmash_Fire2_8
+  - first:
+      213: -7402250254692954134
+    second: JudgementSmash_Fire2_9
+  - first:
+      213: 8694296124519935532
+    second: JudgementSmash_Fire2_10
+  - first:
+      213: 6676082253121975971
+    second: JudgementSmash_Fire2_11
+  - first:
+      213: 1603602099511945832
+    second: JudgementSmash_Fire2_12
+  - first:
+      213: -678666190932078526
+    second: JudgementSmash_Fire2_13
+  - first:
+      213: 7251683945458324570
+    second: JudgementSmash_Fire2_14
+  - first:
+      213: 882939395944750206
+    second: JudgementSmash_Fire2_15
+  - first:
+      213: -9040689158036978330
+    second: JudgementSmash_Fire2_16
+  - first:
+      213: 1044359432594551189
+    second: JudgementSmash_Fire2_17
+  - first:
+      213: 1467919325110925983
+    second: JudgementSmash_Fire2_18
+  - first:
+      213: 1530910486902519008
+    second: JudgementSmash_Fire2_19
+  - first:
+      213: 432180738532050637
+    second: JudgementSmash_Fire2_20
+  - first:
+      213: -8077796029480094962
+    second: JudgementSmash_Fire2_21
+  - first:
+      213: 8040268001411452704
+    second: JudgementSmash_Fire2_22
+  - first:
+      213: 7536703544499462804
+    second: JudgementSmash_Fire2_23
+  - first:
+      213: -4167730937538874727
+    second: JudgementSmash_Fire2_24
+  - first:
+      213: 4713518046318243333
+    second: JudgementSmash_Fire2_25
+  - first:
+      213: 9075710527213917211
+    second: JudgementSmash_Fire2_26
+  - first:
+      213: -4313232247501398562
+    second: JudgementSmash_Fire2_27
+  - first:
+      213: -3064942237926887808
+    second: JudgementSmash_Fire2_28
+  - first:
+      213: -8839623195846456615
+    second: JudgementSmash_Fire2_29
+  - first:
+      213: -8263980320556428796
+    second: JudgementSmash_Fire2_30
+  - first:
+      213: -4764212768404504459
+    second: JudgementSmash_Fire2_31
+  - first:
+      213: 5391027944160120713
+    second: JudgementSmash_Fire2_32
+  - first:
+      213: -7104235097935764610
+    second: JudgementSmash_Fire2_33
+  - first:
+      213: -6216063187570032972
+    second: JudgementSmash_Fire2_34
+  - first:
+      213: 287171594336509125
+    second: JudgementSmash_Fire2_35
+  - first:
+      213: -5167167558108943948
+    second: JudgementSmash_Fire2_36
+  - first:
+      213: -1681436832977597841
+    second: JudgementSmash_Fire2_37
+  - first:
+      213: -4539146050366920604
+    second: JudgementSmash_Fire2_38
+  - first:
+      213: -2208494718617971696
+    second: JudgementSmash_Fire2_39
+  - first:
+      213: -7779815914501759620
+    second: JudgementSmash_Fire2_40
+  - first:
+      213: 1333209042855179228
+    second: JudgementSmash_Fire2_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 585
+        width: 330
+        height: 330
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 174b0a3288025e1e0800000000000000
+      internalID: -2169291876423650191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_6
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 585
+        width: 330
+        height: 330
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dba1909c080ffd70800000000000000
+      internalID: 9078984223860304850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_7
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 585
+        width: 330
+        height: 330
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd7d2c09ab5c60c0800000000000000
+      internalID: -4581185939330728460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_22
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 78
+        width: 320
+        height: 450
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02fc11be525c49f60800000000000000
+      internalID: 8040268001411452704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_27
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 78
+        width: 320
+        height: 450
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edd5be59f125424c0800000000000000
+      internalID: -4313232247501398562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JudgementSmash_Fire2_28
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 78
+        width: 320
+        height: 450
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08ee64bf5432775d0800000000000000
+      internalID: -3064942237926887808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a97fb326fc482f543bf4181911350d1a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      JudgementSmash_Fire2_0: -2169291876423650191
+      JudgementSmash_Fire2_1: -944403612846180258
+      JudgementSmash_Fire2_10: 8694296124519935532
+      JudgementSmash_Fire2_11: 6676082253121975971
+      JudgementSmash_Fire2_12: 1603602099511945832
+      JudgementSmash_Fire2_13: -678666190932078526
+      JudgementSmash_Fire2_14: 7251683945458324570
+      JudgementSmash_Fire2_15: 882939395944750206
+      JudgementSmash_Fire2_16: -9040689158036978330
+      JudgementSmash_Fire2_17: 1044359432594551189
+      JudgementSmash_Fire2_18: 1467919325110925983
+      JudgementSmash_Fire2_19: 1530910486902519008
+      JudgementSmash_Fire2_2: 8967031188411367481
+      JudgementSmash_Fire2_20: 432180738532050637
+      JudgementSmash_Fire2_21: -8077796029480094962
+      JudgementSmash_Fire2_22: 8040268001411452704
+      JudgementSmash_Fire2_23: 7536703544499462804
+      JudgementSmash_Fire2_24: -4167730937538874727
+      JudgementSmash_Fire2_25: 4713518046318243333
+      JudgementSmash_Fire2_26: 9075710527213917211
+      JudgementSmash_Fire2_27: -4313232247501398562
+      JudgementSmash_Fire2_28: -3064942237926887808
+      JudgementSmash_Fire2_29: -8839623195846456615
+      JudgementSmash_Fire2_3: 6835984253943591870
+      JudgementSmash_Fire2_30: -8263980320556428796
+      JudgementSmash_Fire2_31: -4764212768404504459
+      JudgementSmash_Fire2_32: 5391027944160120713
+      JudgementSmash_Fire2_33: -7104235097935764610
+      JudgementSmash_Fire2_34: -6216063187570032972
+      JudgementSmash_Fire2_35: 287171594336509125
+      JudgementSmash_Fire2_36: -5167167558108943948
+      JudgementSmash_Fire2_37: -1681436832977597841
+      JudgementSmash_Fire2_38: -4539146050366920604
+      JudgementSmash_Fire2_39: -2208494718617971696
+      JudgementSmash_Fire2_4: -3694050000031229689
+      JudgementSmash_Fire2_40: -7779815914501759620
+      JudgementSmash_Fire2_41: 1333209042855179228
+      JudgementSmash_Fire2_5: -7381302012635553559
+      JudgementSmash_Fire2_6: 9078984223860304850
+      JudgementSmash_Fire2_7: -4581185939330728460
+      JudgementSmash_Fire2_8: 7816200656452375454
+      JudgementSmash_Fire2_9: -7402250254692954134
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

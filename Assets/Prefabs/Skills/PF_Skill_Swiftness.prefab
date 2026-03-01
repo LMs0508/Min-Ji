@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2167839253789861997}
   - component: {fileID: 8642937419935294146}
   - component: {fileID: 5965371932933997418}
+  - component: {fileID: 429896199680851670}
   m_Layer: 0
   m_Name: PF_Skill_Swiftness
   m_TagString: Untagged
@@ -109,3 +110,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwiftnessWindEnhancer
   extraSpeedBonus: 1.5
+--- !u!114 &429896199680851670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604013135975817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faca3ee1b218de8418a250d782772108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashWindEnhancer
+  knockbackMultiplier: 2

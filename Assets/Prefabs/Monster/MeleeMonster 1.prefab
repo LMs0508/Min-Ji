@@ -419,8 +419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a339d201102cb744c803d2dc4a8ed986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  hpSlider: {fileID: 0}
   currentHealth: 0
   isHit: 0
+  damageTextPrefab: {fileID: 0}
 --- !u!114 &-2090211949063903118
 MonoBehaviour:
   m_ObjectHideFlags: 0

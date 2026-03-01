@@ -1,4 +1,5 @@
 using UnityEngine;
+using Game.Player;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
@@ -21,7 +22,6 @@ public class ProjectileLogic : MonoBehaviour
     public void Setup(Vector2 direction, float monsterDamage)
     {
         damage = monsterDamage;
-
         rb.linearVelocity = direction.normalized * speed;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -32,9 +32,16 @@ public class ProjectileLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            Debug.Log($"µ¥¹ÌÁö: {damage}");
+            PlayerStats stats = collision.GetComponentInChildren<PlayerStats>();
+            if (stats == null) stats = collision.GetComponentInParent<PlayerStats>();
+
+            if (stats != null)
+            {
+                stats.TakeDamage(damage);
+            }
+
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Wall"))
