@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2986182791167004024}
   - component: {fileID: 569376902198404171}
+  - component: {fileID: 1777261942721470763}
   m_Layer: 0
   m_Name: PF_Skill_WeaponCharge
   m_TagString: Untagged
@@ -94,9 +95,22 @@ MonoBehaviour:
   chargeSprite0: {fileID: 0}
   attackSprite0: {fileID: 0}
   rotationOffset: 0
-  handTransform: {fileID: 981875645179334588, guid: a394cd1c7cd9ae04b84433159ee27b5b,
-    type: 3}
+  handObjectName: RightHand
   handOffset: {x: 0.5, y: 0, z: 0}
+  knockbackForce: 0
+  stunDuration: 0
+--- !u!114 &1777261942721470763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937305669529462694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f71ebd628e5ee045bfcd5929f425c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponChargeWindEnhancer
 --- !u!1 &8962706759917877435
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,10 +201,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7195349617043621129, guid: aace843070516e54cb4f3ccf2ed19cd5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9148692817327285150, guid: aace843070516e54cb4f3ccf2ed19cd5,
         type: 3}
       propertyPath: m_Name
       value: WeaponCharge50%
+      objectReference: {fileID: 0}
+    - target: {fileID: 9148692817327285150, guid: aace843070516e54cb4f3ccf2ed19cd5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -374,12 +398,12 @@ PrefabInstance:
     - target: {fileID: 3832888987971985894, guid: 7f9eea2a5e8b7ee4dabb611aac739b4e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.240289
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3832888987971985894, guid: 7f9eea2a5e8b7ee4dabb611aac739b4e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0869703
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3832888987971985894, guid: 7f9eea2a5e8b7ee4dabb611aac739b4e,
         type: 3}
