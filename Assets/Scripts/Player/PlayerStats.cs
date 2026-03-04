@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System;
 
@@ -101,7 +102,12 @@ namespace Game.Player
             currentHP = Mathf.Min(currentHP + amount, MaxHP.Value);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
         }
-
+        public void RestoreMana(float amount)
+        {
+            currentMP = Mathf.Min(currentMP + amount, maxMP.Value);
+            OnMPChanged?.Invoke(currentMP, MaxMP.Value);
+            
+        }
         public void TakeDamage(float amount)
         {
             if (amount <= 0f) return;
@@ -154,6 +160,50 @@ namespace Game.Player
             float cdr = Mathf.Clamp(cooldownReduction.Value, 0f, 0.9f);
             return baseCooldownSeconds * (1f - cdr);
         }
+
+        private Coroutine speedBuffCoroutine;
+        private Coroutine attackBuffCoroutine;
+
+        // 이동 속도 버프 적용
+        public void ApplySpeedBuff(float multiplier, float duration)
+        {
+            // 이미 버프가 있다면 기존 버프를 멈추고 새로 시작 (시간 갱신형)
+            // 만약 아예 못 쓰게 하려면 if (speedBuffCoroutine != null) return; 을 사용하세요.
+            if (speedBuffCoroutine != null)
+            {
+                StopCoroutine(speedBuffCoroutine);
+                moveSpeed.Divide(multiplier); // 중첩 방지를 위해 일단 원복
+            }
+            speedBuffCoroutine = StartCoroutine(SpeedBuffRoutine(multiplier, duration));
+        }
+
+        private IEnumerator SpeedBuffRoutine(float multiplier, float duration)
+        {
+            moveSpeed.Multiply(multiplier);
+            yield return new WaitForSeconds(duration);
+            moveSpeed.Divide(multiplier);
+            speedBuffCoroutine = null; // 종료 후 비워주기
+        }
+
+        // 공격력 버프 적용
+        public void ApplyAttackBuff(float multiplier, float duration)
+        {
+            if (attackBuffCoroutine != null)
+            {
+                StopCoroutine(attackBuffCoroutine);
+                attack.Divide(multiplier);
+            }
+            attackBuffCoroutine = StartCoroutine(AttackBuffRoutine(multiplier, duration));
+        }
+
+        private IEnumerator AttackBuffRoutine(float multiplier, float duration)
+        {
+            attack.Multiply(multiplier);
+            yield return new WaitForSeconds(duration);
+            attack.Divide(multiplier);
+            attackBuffCoroutine = null;
+        }
+    
 
         public void ClampResources()
         {
