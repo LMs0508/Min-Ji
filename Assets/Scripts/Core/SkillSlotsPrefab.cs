@@ -9,18 +9,36 @@ public class SkillSlotsPrefab : MonoBehaviour
     public GameObject[] equippedPickupPrefab = new GameObject[4];
 
     public Transform skillHolder;
+    private SpriteRenderer playerSr;
 
     public event Action<int, GameObject> OnEquipped;
     public event Action<int, float> OnCooldownChanged;
 
     private void Awake()
     {
+        playerSr = GetComponentInParent<SpriteRenderer>();
         if (skillHolder == null)
         {
             GameObject go = new GameObject("SkillHolder");
             go.transform.SetParent(transform);
             go.transform.localPosition = Vector3.zero;
             skillHolder = go.transform;
+        }
+    }
+
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
+        obj.layer = newLayer;
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        if(sr != null && playerSr != null)
+        {
+            sr.sortingLayerID = playerSr.sortingLayerID;
+            sr.sortingOrder = playerSr.sortingOrder + 5;
+        }
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
         }
     }
 
@@ -50,6 +68,14 @@ public class SkillSlotsPrefab : MonoBehaviour
         GameObject inst = Instantiate(skillPrefab, skillHolder);
         inst.SetActive(true);
 
+        if (playerSr != null)
+        {
+            SpriteRenderer[] skillSrs = inst.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var s in skillSrs)
+            {
+                s.sortingOrder = playerSr.sortingOrder + 10;
+            }
+        }
         equippedObj[slot] = inst;
         equippedSkill[slot] = inst.GetComponent<ISkill>();
 
@@ -63,13 +89,23 @@ public class SkillSlotsPrefab : MonoBehaviour
 
     private void Update()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            if (equippedObj[i] != null && equippedObj[i].layer != gameObject.layer)
+            {
+                SetLayerRecursively(equippedObj[i], gameObject.layer);
+            }
+        }
+
         // 키 입력 처리 (Q, W, E, R)
         if (Input.GetKeyDown(KeyCode.Q)) Use(0);
         if (Input.GetKeyDown(KeyCode.W)) Use(1);
         if (Input.GetKeyDown(KeyCode.E)) Use(2);
         if (Input.GetKeyDown(KeyCode.R)) Use(3);
-
-        // 쿨다운 UI 업데이트 이벤트 발송
+        HandleCooldownEvents();
+    }
+    private void HandleCooldownEvents()
+    {
         for (int i = 0; i < 4; i++)
         {
             var s = equippedSkill[i];

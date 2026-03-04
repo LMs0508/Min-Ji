@@ -7,15 +7,16 @@ public class MonsterAttack : MonoBehaviour
     private Animator anim;
     private EnemyStats stats;
     private MeleeArea meleeArea;
+    private EnemyEncounter encounter;
 
-    public Transform player;
+    [HideInInspector]
+    private Transform player;
 
     private float wanderTimer;
     private Vector2 wanderDirection;
     private bool isWaiting = false;
     private float lastAttackTime;
 
-    // [수정] 최상위 부모가 아닌, 이 스크립트(Visuals)의 원래 크기를 저장합니다.
     private Vector3 originalScale;
 
     void Start()
@@ -24,8 +25,8 @@ public class MonsterAttack : MonoBehaviour
         stats = GetComponentInParent<EnemyStats>();
         anim = GetComponent<Animator>();
         meleeArea = GetComponentInChildren<MeleeArea>();
+        encounter = GetComponent<EnemyEncounter>();
 
-        // [수정] transform.root 대신 현재 오브젝트(Visuals)의 스케일을 저장
         originalScale = transform.localScale;
 
         if (player == null)
@@ -37,38 +38,37 @@ public class MonsterAttack : MonoBehaviour
 
     void Update()
     {
-        if (player == null || mover == null || anim == null || stats == null || stats.enemyData == null) return;
+        if (player == null || stats == null || stats.enemyData == null) return;
 
-        bool isAttacking = anim.GetCurrentAnimatorStateInfo(0).IsName("AttackMotion") ||
-                           anim.GetNextAnimatorStateInfo(0).IsName("AttackMotion");
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (isAttacking)
+        if (encounter != null)
         {
-            // 공격 중에는 방향을 바꾸지 않음
-            mover.Stop();
-            return;
+            if (encounter.CheckEncounter(distanceToPlayer) || encounter.IsEncountering)
+                return;
         }
 
-        float distance = Vector2.Distance(transform.position, player.position);
-        float currentRange = (meleeArea != null) ? meleeArea.radius : 1.0f;
-
-        if (distance <= currentRange)
+        if (distanceToPlayer <= stats.enemyData.attackRange)
         {
             FlipTowardsPlayer();
             mover.Stop();
-            if (Time.time >= lastAttackTime + stats.enemyData.attackCooldown)
-            {
-                Attack();
-            }
+            if (Time.time >= lastAttackTime + stats.enemyData.attackCooldown) Attack();
         }
-        else if (distance <= stats.detectionRange)
+
+        else if (distanceToPlayer <= stats.enemyData.detectionRange || (encounter != null && encounter.IsForceChasing))
         {
-            FlipTowardsPlayer(); // 걷는 도중에도 방향 전환 실행
+            FlipTowardsPlayer();
             Vector2 direction = (player.position - transform.position).normalized;
-            mover.Move(direction, stats.enemyData.moveSpeed);
+
+            float currentSpeed = (encounter != null && encounter.IsChasing)
+                                 ? stats.enemyData.moveSpeed
+                                 : stats.enemyData.wanderSpeed;
+
+            mover.Move(direction, currentSpeed);
         }
         else
         {
+            if (encounter != null) encounter.ResetEncounter();
             HandlePatrol();
         }
     }
@@ -76,9 +76,7 @@ public class MonsterAttack : MonoBehaviour
     void FlipTowardsPlayer()
     {
         float diff = player.position.x - transform.position.x;
-
         if (Mathf.Abs(diff) < 0.2f) return;
-
         float directionX = (diff > 0) ? 1f : -1f;
         ApplyFlip(directionX);
     }
@@ -93,7 +91,6 @@ public class MonsterAttack : MonoBehaviour
             {
                 wanderDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
                 wanderTimer = stats.wanderDuration;
-
                 if (Mathf.Abs(wanderDirection.x) > 0.1f)
                 {
                     float dirX = (wanderDirection.x > 0) ? 1f : -1f;
@@ -106,18 +103,12 @@ public class MonsterAttack : MonoBehaviour
                 wanderTimer = stats.waitDuration;
             }
         }
-
-        if (!isWaiting)
-        {
-            mover.Move(wanderDirection, stats.wanderSpeed);
-        }
+        if (!isWaiting) mover.Move(wanderDirection, stats.wanderSpeed);
     }
 
     void ApplyFlip(float x)
     {
-        // [수정] transform.root 대신 transform(Visuals)의 스케일만 변경
         float targetX = Mathf.Abs(originalScale.x) * x;
-
         if (transform.localScale.x != targetX)
         {
             transform.localScale = new Vector3(targetX, originalScale.y, originalScale.z);
@@ -126,7 +117,17 @@ public class MonsterAttack : MonoBehaviour
 
     void Attack()
     {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("AttackMotion")) return;
         lastAttackTime = Time.time;
         anim.SetTrigger("Attack");
+    }
+
+    public void TriggerAttackDamage()
+    {
+        if (meleeArea != null && stats != null && stats.enemyData != null)
+        {
+            meleeArea.OnMonsterHit(stats.enemyData.damage);
+            Debug.Log("애니메이션 이벤트를 통해 MeleeArea 공격 판정 실행!");
+        }
     }
 }

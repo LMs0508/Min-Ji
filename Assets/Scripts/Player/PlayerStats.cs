@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 namespace Game.Player
 {
@@ -28,6 +29,9 @@ namespace Game.Player
         [Header("UI & Effect")]
         public GameObject damageTextPrefab;
         public Transform popupPoint;
+        [SerializeField] private float hitFlashDuration = 0.15f;
+
+        private SpriteRenderer sr;
 
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
@@ -111,7 +115,35 @@ namespace Game.Player
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
 
             SpawnDamageText(amount);
+            StopCoroutine("HitFlashRoutine");
+            StartCoroutine("HitFlashRoutine");
         }
+
+        private IEnumerator HitFlashRoutine()
+        {
+            SpriteRenderer[] allSrs = GetComponentsInParent<SpriteRenderer>();
+
+            if (allSrs == null || allSrs.Length == 0)
+            {
+                allSrs = GetComponentsInChildren<SpriteRenderer>();
+            }
+
+            if (allSrs != null && allSrs.Length > 0)
+            {
+                foreach (var sr in allSrs)
+                {
+                    sr.color = Color.red;
+                }
+
+                yield return new WaitForSeconds(hitFlashDuration);
+
+                foreach (var sr in allSrs)
+                {
+                    sr.color = Color.white;
+                }
+            }
+        }
+
 
         private void SpawnDamageText(float damage)
         {

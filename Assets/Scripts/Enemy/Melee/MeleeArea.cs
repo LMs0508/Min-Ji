@@ -11,10 +11,8 @@ public class MeleeArea : MonoBehaviour
 
     public void CheckAttack(float attackDamage)
     {
-        damage = attackDamage;
-
-        // 공격 판정 로직 (기존과 동일)
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
+
         foreach (var hit in hits)
         {
             if (hit.CompareTag(targetTag))
@@ -24,8 +22,8 @@ public class MeleeArea : MonoBehaviour
 
                 if (pStats != null)
                 {
-                    pStats.TakeDamage(damage);
-                    Debug.Log($"<color=green>[공격 성공]</color> {hit.name}에게 {damage} 데미지!");
+                    pStats.TakeDamage(attackDamage);
+                    Debug.Log($"<color=red>[타격 성공]</color> 무기 위치({transform.position})에서 {hit.name} 피격!");
                     return;
                 }
             }

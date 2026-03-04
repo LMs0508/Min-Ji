@@ -217,8 +217,12 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         targetPos.z = 0;
         Vector2 direction = (Vector2)targetPos - (Vector2)origin;
         if (direction.magnitude > maxJumpDistance) targetPos = origin + (Vector3)(direction.normalized * maxJumpDistance);
-        RaycastHit2D hit = Physics2D.Raycast(origin, ((Vector2)targetPos - (Vector2)origin).normalized, Vector2.Distance(origin, targetPos), LayerMask.GetMask("Wall"));
-        return (hit.collider != null) ? (Vector3)hit.point - (Vector3)(((Vector2)targetPos - (Vector2)origin).normalized * 0.5f) : targetPos;
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction.normalized, Vector2.Distance(origin, targetPos));
+        if (hit.collider != null && hit.collider.CompareTag("Wall"))
+        {
+            return (Vector3)hit.point - (Vector3)(direction.normalized * 0.5f);
+        }
+        return targetPos;
     }
 
     private void UpdateSortingOrder()
