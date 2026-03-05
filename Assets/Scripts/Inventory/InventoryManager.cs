@@ -90,6 +90,46 @@ public class InventoryManager : MonoBehaviour
         return total;
     }
 
+    // 인벤토리 매니저에 추가할 함수
+    public void DropItem(ItemData item, int amount = 1)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+
+        // 버릴 개수(amount)만큼 반복해서 프리팹을 생성합니다.
+        for (int i = 0; i < amount; i++)
+        {
+            if (item.prefab != null)
+            {
+                // 모든 아이템이 한곳에 겹치지 않도록 랜덤한 위치 살짝 추가
+                Vector3 randomOffset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
+                Vector3 dropPos = player.transform.position + new Vector3(0.5f, 0, 0) + randomOffset;
+
+                GameObject droppedObj = Instantiate(item.prefab, dropPos, Quaternion.identity);
+
+                var pickup = droppedObj.GetComponent<ItemPickup>();
+                if (pickup != null) pickup.itemData = item;
+            }
+        }
+
+        // 인벤토리 데이터에서 해당 수량만큼 삭제
+        RemoveItem(item, amount);
+    }
+
+    public void SwapSlots(int indexA, int indexB, ItemType type)
+    {
+        List<InventorySlot> targetList = (type == ItemType.Consumable) ? consumableSlots : questSlots;
+
+        if (indexA < targetList.Count && indexB < targetList.Count)
+        {
+            InventorySlot temp = targetList[indexA];
+            targetList[indexA] = targetList[indexB];
+            targetList[indexB] = temp;
+
+            RefreshUI(); // UI 새로고침하여 바뀐 순서 적용
+        }
+    }
+
     private void RefreshUI()
     {
         // UI가 만들어지면 여기서 호출할 예정입니다.

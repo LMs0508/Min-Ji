@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Cainos.PixelArtTopDown_Basic
 {
@@ -12,7 +13,7 @@ namespace Cainos.PixelArtTopDown_Basic
         private Vector2 targetPosition;
         private bool isMoving = false;
         public float stoppingDistance = 0.1f;
-
+        private bool isDraggingFromUI = false;
         private void Start()
         {
             animator = GetComponent<Animator>();
@@ -22,16 +23,36 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private void Update()
         {
-            // 마우스 우클릭을 "눌렀을 때(Down)" 한 번만 이펙트 생성
+            // 1. 마우스를 처음 눌렀을 때 (Down)
             if (Input.GetMouseButtonDown(1))
             {
-                ShowClickEffect();
+                // 만약 UI 위에서 눌렀다면 "이 드래그는 이동용이 아님"을 기록
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    isDraggingFromUI = true;
+                    return;
+                }
+                else
+                {
+                    isDraggingFromUI = false;
+                    ShowClickEffect();
+                }
             }
 
-            // 우클릭을 "누르고 있는 동안"은 계속 목표지점 갱신
-            if (Input.GetMouseButton(1))
+            // 2. 마우스를 떼었을 때 (Up)
+            if (Input.GetMouseButtonUp(1))
             {
-                SetTargetPosition();
+                isDraggingFromUI = false;
+            }
+
+            // 3. UI에서 시작한 드래그가 아닐 때만 이동 로직 실행
+            if (!isDraggingFromUI)
+            {
+                // 누르고 있는 동안 타겟 갱신
+                if (Input.GetMouseButton(1))
+                {
+                    SetTargetPosition();
+                }
             }
 
             MoveToTarget();

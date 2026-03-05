@@ -15,10 +15,10 @@ MonoBehaviour:
   itemName: "\uBE68\uAC04\uBB3C\uC57D"
   itemType: 3
   icon: {fileID: 6645150295735445707, guid: fb5d826ae0a4ee04cb5bbde8c2b6fe1b, type: 3}
-  description: "\uCCB4\uB825\uC744 \uC18C\uB7C9 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  description: "\uCCB4\uB825\uC744 50 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   isStackable: 1
   maxStack: 99
   value: 50
-  prefab: {fileID: 0}
+  prefab: {fileID: 8310106576656926958, guid: e5e7a4b661c95ef4ca9f55b9d15b2be6, type: 3}
   consumableType: 1
   duration: 0

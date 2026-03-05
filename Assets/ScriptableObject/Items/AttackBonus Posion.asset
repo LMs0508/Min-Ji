@@ -19,6 +19,6 @@ MonoBehaviour:
   isStackable: 1
   maxStack: 5
   value: 1.2
-  prefab: {fileID: 0}
+  prefab: {fileID: 4994820010823310676, guid: 9cbec4eba8719a44291a5e75a218cf8b, type: 3}
   consumableType: 4
   duration: 30
