@@ -14,6 +14,10 @@ public class NPCDialogue : MonoBehaviour
     private float nextInteractTime = 0f;
     private bool playerNear;
 
+    [Header("Quest")]
+    public bool hasQuest;
+    public QuestData quest;
+
     void Update()
     {
         if (!playerNear) return;
@@ -25,9 +29,15 @@ public class NPCDialogue : MonoBehaviour
         // 대화가 끝난 직후 쿨다운(같은 NPC만 적용)
         if (Time.unscaledTime < nextInteractTime) return;
 
+        //if (Input.GetKeyDown(interactKey))
+        //{
+        //    DialogueManager.Instance.StartDialogue(this, npcName, lines);
+        //}
+
         if (Input.GetKeyDown(interactKey))
         {
-            DialogueManager.Instance.StartDialogue(this, npcName, lines);
+            // 대화 시작 시 퀘스트 여부를 넘겨줌
+            DialogueManager.Instance.StartDialogue(this, npcName, lines, hasQuest);
         }
     }
 
