@@ -10594,6 +10594,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestManager
   activeQuests: []
+  iconPrefab: {fileID: 8452700118831268836, guid: 16dd2eed29b21dc4198a48e88160bf18,
+    type: 3}
+  canStartIcon: {fileID: 5411678868155756923, guid: 9cf5f927850bf324292dba8a6b00cf40,
+    type: 3}
+  inProgressIcon: {fileID: 21300000, guid: d37f1b5669f0c81428a71b8be1226595, type: 3}
+  canCompleteIcon: {fileID: 21300000, guid: cc0b5358e72e09840933a13e6b90f688, type: 3}
   questListParent: {fileID: 1548387303}
   questPrefab: {fileID: 6463825415135363796, guid: 55a9bf2e14988c447b4811b7f4b92e50,
     type: 3}

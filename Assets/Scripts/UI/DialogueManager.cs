@@ -47,8 +47,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (!open) return;
 
-        // 선택지가 떠 있을 때는 스페이스바로 대화가 넘어가지 않게 방지
-        if (selectionPanel != null && selectionPanel.activeSelf) return;
+        // [수정] 수락창이 떠 있을 때 스페이스바(nextKey) 입력을 무시하여 
+        // 유저가 반드시 버튼을 클릭하도록 유도합니다.
+        if (hasQuest && selectionPanel != null && selectionPanel.activeSelf) return;
 
         if (Input.GetKeyDown(nextKey))
         {
@@ -97,11 +98,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueText != null) dialogueText.text = lines[index];
 
-        // [추가] 마지막 대화 줄인지 확인하여 힌트 텍스트 제어
+        // 마지막 대사 줄인지 확인
+        bool isLastLine = (index >= lines.Length - 1);
+
+        // [핵심 추가] 퀘스트를 포함한 대화이고, 마지막 줄에 도달했다면 즉시 수락창을 켭니다.
+        if (hasQuest && isLastLine)
+        {
+            if (selectionPanel != null) selectionPanel.SetActive(true);
+        }
+
+        // 힌트 텍스트 제어
         if (hintText != null)
         {
-            // 마지막 줄에 도달했거나 퀘스트가 포함된 마지막 문장이면 힌트를 숨깁니다.
-            bool isLastLine = (index >= lines.Length - 1);
+            // 마지막 줄일 때는 버튼이 나오므로 "Space" 안내(힌트)를 숨깁니다.
             hintText.SetActive(!isLastLine);
         }
     }

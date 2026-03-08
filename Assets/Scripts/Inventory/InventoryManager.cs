@@ -132,8 +132,13 @@ public class InventoryManager : MonoBehaviour
 
     private void RefreshUI()
     {
-        // UI가 만들어지면 여기서 호출할 예정입니다.
         var ui = FindFirstObjectByType<InventoryUI>();
         if (ui != null) ui.UpdateUI();
+
+        // [추가] 인벤토리가 변할 때 퀘스트 목록도 실시간으로 다시 계산하도록 함
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.UpdateQuestUI();
+        }
     }
 }
