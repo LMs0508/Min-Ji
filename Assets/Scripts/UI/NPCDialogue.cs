@@ -14,8 +14,8 @@ public class NPCDialogue : MonoBehaviour
     private float nextInteractTime = 0f;
     private bool playerNear;
 
-    [Header("Quest")]
-    public bool hasQuest;
+    [Header("Quest Settings")]
+    public bool hasQuest; // 변수명을 hasQuest로 통일합니다.
     public QuestData quest;
 
     void Update()
@@ -29,14 +29,9 @@ public class NPCDialogue : MonoBehaviour
         // 대화가 끝난 직후 쿨다운(같은 NPC만 적용)
         if (Time.unscaledTime < nextInteractTime) return;
 
-        //if (Input.GetKeyDown(interactKey))
-        //{
-        //    DialogueManager.Instance.StartDialogue(this, npcName, lines);
-        //}
-
         if (Input.GetKeyDown(interactKey))
         {
-            // 대화 시작 시 퀘스트 여부를 넘겨줌
+            // [수정] 선언된 변수명(hasQuest)을 사용하고, 퀘스트 데이터도 함께 넘겨줍니다.
             DialogueManager.Instance.StartDialogue(this, npcName, lines, hasQuest);
         }
     }

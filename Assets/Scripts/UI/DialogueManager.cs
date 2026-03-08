@@ -11,25 +11,18 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
 
     [Header("Quest UI")]
-    public GameObject selectionPanel; // 수락/거절 버튼이 있는 패널
+    public GameObject selectionPanel; // 수락/거절 버튼 패널
 
-    private bool hasQuest; // 현재 대화에 퀘스트가 포함되어 있는지
+    private bool hasQuest;
 
     [Header("Input")]
-    public KeyCode nextKey = KeyCode.Space; // "Next"도 Space
+    public KeyCode nextKey = KeyCode.Space;
 
     private string[] lines;
     private int index;
     private bool open;
 
-    private NPCDialogue currentCaller; // <-- 누가 시작했는지 저장
-
-    void Start()
-    {
-        if (panel != null) panel.SetActive(false);
-        open = false;
-    }
-
+    private NPCDialogue currentCaller;
 
     void Awake()
     {
@@ -39,12 +32,21 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         Instance = this;
-        // DontDestroyOnLoad(gameObject); // 필요하면 사용
+    }
+
+    void Start()
+    {
+        if (panel != null) panel.SetActive(false);
+        if (selectionPanel != null) selectionPanel.SetActive(false);
+        open = false;
     }
 
     void Update()
     {
         if (!open) return;
+
+        // 선택지가 떠 있을 때는 스페이스바로 대화가 넘어가지 않게 방지
+        if (selectionPanel != null && selectionPanel.activeSelf) return;
 
         if (Input.GetKeyDown(nextKey))
         {
@@ -61,11 +63,11 @@ public class DialogueManager : MonoBehaviour
         currentCaller = caller;
         lines = newLines;
         index = 0;
-        hasQuest = containsQuest; // 퀘스트 포함 여부 저장
+        hasQuest = containsQuest;
 
         open = true;
         if (panel != null) panel.SetActive(true);
-        if (selectionPanel != null) selectionPanel.SetActive(false); // 처음엔 버튼 숨김
+        if (selectionPanel != null) selectionPanel.SetActive(false);
 
         if (nameText != null) nameText.text = npcName;
         ShowCurrentLine();
@@ -93,17 +95,24 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        // 퀘스트가 있는 대화였다면 버튼 패널을 띄우고 종료하지 않음
         if (hasQuest)
         {
-            if (selectionPanel != null) selectionPanel.SetActive(true);
+            // 퀘스트가 이미 수락된 상태인지 체크 (중복 수락 방지)
+            if (currentCaller != null && currentCaller.quest.isAccepted)
+            {
+                CloseDialogue();
+            }
+            else
+            {
+                if (selectionPanel != null) selectionPanel.SetActive(true);
+            }
             return;
         }
 
         CloseDialogue();
     }
 
-    public void CloseDialogue() // 실제 창을 닫는 로직 분리
+    public void CloseDialogue()
     {
         open = false;
         if (panel != null) panel.SetActive(false);
@@ -117,12 +126,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // 버튼에 연결할 함수들
+    // [수정] 수락 버튼 클릭 시 실행
     public void OnAcceptQuest()
     {
         if (currentCaller != null)
         {
-            QuestManager.Instance.AddQuest(currentCaller.quest); // 퀘스트 추가
+            // 수락하는 시점에 퀘스트 상태 초기화
+            currentCaller.quest.isAccepted = true;
+            currentCaller.quest.isCompleted = false; // 처음엔 무조건 미완료(회색 체크)
+
+            QuestManager.Instance.AddQuest(currentCaller.quest);
         }
         CloseDialogue();
     }

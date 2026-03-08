@@ -42145,8 +42145,17 @@ MonoBehaviour:
   - "\uC548"
   - "\uB155"
   - ...
+  - "\uC2DC\uC791\uD558\uAE30\uC5D0 \uC55E\uC11C \uAC04\uB2E8\uD55C \uD018\uC2A4\uD2B8\uB97C
+    \uC8FC\uACA0\uB124."
   interactKey: 32
   reInteractCooldown: 0.5
+  hasQuest: 1
+  quest:
+    questTitle: "\uBB3C\uC57D 3\uAC1C \uC90D\uAE30."
+    questDescription: "\uBB3C\uC57D\uC744 \uC885\uB958 \uC0C1\uAD00\uC5C6\uC774 3\uAC1C\uB97C
+      \uC8FC\uC6CC\uBCF4\uC138\uC694."
+    isAccepted: 0
+    isCompleted: 0
 --- !u!58 &1264825505
 CircleCollider2D:
   m_ObjectHideFlags: 0
