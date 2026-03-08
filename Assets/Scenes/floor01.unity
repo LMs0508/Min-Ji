@@ -42152,8 +42152,11 @@ MonoBehaviour:
   hasQuest: 1
   quest:
     questTitle: "\uBB3C\uC57D 3\uAC1C \uC90D\uAE30."
-    questDescription: "\uBB3C\uC57D\uC744 \uC885\uB958 \uC0C1\uAD00\uC5C6\uC774 3\uAC1C\uB97C
-      \uC8FC\uC6CC\uBCF4\uC138\uC694."
+    questDescription: "\uBB3C\uC57D3\uAC1C \uC90D\uAE30"
+    type: 2
+    targetID: "\uBE68\uAC04\uBB3C\uC57D"
+    targetAmount: 3
+    currentAmount: 0
     isAccepted: 0
     isCompleted: 0
 --- !u!58 &1264825505

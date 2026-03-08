@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject panel;
     public TMP_Text nameText;
     public TMP_Text dialogueText;
+    public GameObject hintText;
 
     [Header("Quest UI")]
     public GameObject selectionPanel; // 수락/거절 버튼 패널
@@ -23,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     private bool open;
 
     private NPCDialogue currentCaller;
+
 
     void Awake()
     {
@@ -69,6 +71,9 @@ public class DialogueManager : MonoBehaviour
         if (panel != null) panel.SetActive(true);
         if (selectionPanel != null) selectionPanel.SetActive(false);
 
+        // 대화 시작 시 첫 문장이 마지막이 아니라면 힌트 텍스트를 보여줍니다.
+        if (hintText != null) hintText.SetActive(newLines.Length > 1);
+
         if (nameText != null) nameText.text = npcName;
         ShowCurrentLine();
 
@@ -91,25 +96,31 @@ public class DialogueManager : MonoBehaviour
     void ShowCurrentLine()
     {
         if (dialogueText != null) dialogueText.text = lines[index];
+
+        // [추가] 마지막 대화 줄인지 확인하여 힌트 텍스트 제어
+        if (hintText != null)
+        {
+            // 마지막 줄에 도달했거나 퀘스트가 포함된 마지막 문장이면 힌트를 숨깁니다.
+            bool isLastLine = (index >= lines.Length - 1);
+            hintText.SetActive(!isLastLine);
+        }
     }
 
     void EndDialogue()
     {
+        // 대화가 끝났으므로 힌트는 무조건 숨깁니다.
+        if (hintText != null) hintText.SetActive(false);
+
         if (hasQuest)
         {
-            // 퀘스트가 이미 수락된 상태인지 체크 (중복 수락 방지)
-            if (currentCaller != null && currentCaller.quest.isAccepted)
-            {
-                CloseDialogue();
-            }
-            else
-            {
-                if (selectionPanel != null) selectionPanel.SetActive(true);
-            }
-            return;
+            if (selectionPanel != null) selectionPanel.SetActive(true);
+            // 수락/거절 단계에서는 Space 입력이 대화를 닫지 않도록 
+            // 이전 Update문에서 selectionPanel.activeSelf 체크를 유지해야 합니다.
         }
-
-        CloseDialogue();
+        else
+        {
+            CloseDialogue();
+        }
     }
 
     public void CloseDialogue()

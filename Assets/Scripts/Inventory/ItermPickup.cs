@@ -20,15 +20,20 @@ public class ItemPickup : MonoBehaviour
             case ItemType.Melee:
             case ItemType.Magic:
             case ItemType.Ranged:
-                // 스킬이나 무기는 기존처럼 슬롯 선택 UI 오픈
                 OpenSlotSelectUI();
                 break;
 
             case ItemType.Consumable:
             case ItemType.Quest:
-                // 소비/퀘스트 템은 인벤토리에 즉시 추가
                 if (InventoryManager.Instance.AddItem(itemData))
                 {
+                    // [추가] 아이템을 성공적으로 주웠을 때 QuestManager에게 알림
+                    if (QuestManager.Instance != null)
+                    {
+                        // QuestType.ItemCollect(수집) 타입으로, 아이템 이름을 ID로 전달
+                        QuestManager.Instance.ProgressQuest(QuestType.ItemCollect, itemData.itemName, 1);
+                    }
+
                     Destroy(gameObject);
                 }
                 break;
