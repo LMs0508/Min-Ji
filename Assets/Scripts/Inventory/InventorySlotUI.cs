@@ -56,37 +56,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
-    private void UseItem()
+    private void UseItem() // 기존의 복잡한 로직 삭제
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-        var stats = player.GetComponentInChildren<PlayerStats>();
-        if (stats == null) return;
-
-        // 아이템 종류에 따라 다른 함수 실행
-        switch (currentItem.consumableType)
-        {
-            case ConsumableType.Health:
-                stats.Heal(currentItem.value); // value를 회복량으로 사용
-                break;
-
-            case ConsumableType.Mana:
-                stats.RestoreMana(currentItem.value); // value를 마나 회복량으로 사용
-                break;
-
-            case ConsumableType.SpeedBoost:
-                // value를 이속 배율로, duration을 시간으로 사용
-                stats.ApplySpeedBuff(currentItem.value, currentItem.duration);
-                break;
-        
-            case ConsumableType.AttackBuff:
-                stats.ApplyAttackBuff(currentItem.value, currentItem.duration);
-                break;
-        }
-
-        Debug.Log($"{currentItem.itemName} 사용됨: {currentItem.consumableType} 효과");
-        InventoryManager.Instance.RemoveItem(currentItem, 1);
+        // 중앙 매니저에게 모든 권한 위임
+        InventoryManager.Instance.UseItem(currentItem);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -173,11 +146,6 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                                             currentItem.itemType);
     }
 
-    // 마우스가 UI 레이어 위에 있는지 체크하는 보조 함수
-    private bool IsPointerOverUI(PointerEventData eventData)
-    {
-        return eventData.pointerCurrentRaycast.gameObject != null;
-    }
 
     private void DropItem()
     {
@@ -209,21 +177,4 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
-  
-
-    private QuickSlotUI GetQuickSlotUnderMouse()
-    {
-        // 레이캐스트를 통해 마우스 아래의 QuickSlotUI를 찾습니다.
-        PointerEventData pointerData = new PointerEventData(EventSystem.current);
-        pointerData.position = Input.mousePosition;
-        var results = new System.Collections.Generic.List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        foreach (var result in results)
-        {
-            QuickSlotUI slot = result.gameObject.GetComponent<QuickSlotUI>();
-            if (slot != null) return slot;
-        }
-        return null;
-    }
 }

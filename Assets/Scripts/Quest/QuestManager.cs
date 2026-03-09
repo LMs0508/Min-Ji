@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI; // Image 컴포넌트 사용을 위해 필요
+using UnityEngine.UI;
 using TMPro;
-
 
 public class QuestManager : MonoBehaviour
 {
@@ -11,36 +10,26 @@ public class QuestManager : MonoBehaviour
     public List<QuestData> activeQuests = new List<QuestData>();
 
     [Header("Global NPC Icon Settings")]
-    public GameObject iconPrefab;   // FloatingIcon이 붙어있는 프리팹
-    public Sprite canStartIcon;     // 물음표
-    public Sprite inProgressIcon;   // 펼쳐진 책
-    public Sprite canCompleteIcon;  // 덮힌 책 
+    public GameObject iconPrefab;
+    public Sprite canStartIcon;
+    public Sprite inProgressIcon;
+    public Sprite canCompleteIcon;
 
     [Header("UI Settings")]
     public Transform questListParent;
     public GameObject questPrefab;
 
     [Header("Quest Icons")]
-    public Sprite grayCheckIcon;   // 회색 체크 (진행 중)
-    public Sprite greenCheckIcon;  // 초록 체크 (완료)
+    public Sprite grayCheckIcon;
+    public Sprite greenCheckIcon;
+
+    [Header("Quest UI Colors")]
+    public Color inProgressColor = Color.white;
+    public Color completedColor = new Color(0.2f, 1f, 0.2f);
 
     void Awake()
     {
         Instance = this;
-    }
-
-    void Update()
-    {
-        // 수락된 퀘스트 중 시간 제한이 있는 것들 체크
-        foreach (var q in activeQuests)
-        {
-            if (q.isAccepted && !q.isCompleted && q.type == QuestType.TimeLimit)
-            {
-                // targetAmount를 초(Second) 단위로 사용 (예: 60초)
-                // 시간 안에 목표를 달성해야 하는 로직은 별도로 짜야 하지만, 
-                // 여기서는 단순 생존 시간 퀘스트 예시입니다.
-            }
-        }
     }
 
     public void AddQuest(QuestData newQuest)
@@ -48,55 +37,64 @@ public class QuestManager : MonoBehaviour
         if (!activeQuests.Contains(newQuest))
         {
             newQuest.isAccepted = true;
-            newQuest.isCompleted = false; // 새로 받은 퀘스트는 미완료 상태
+            newQuest.isCompleted = false;
             activeQuests.Add(newQuest);
             UpdateQuestUI();
         }
     }
 
-    // 퀘스트 완료 처리용 함수 (예: 몬스터를 다 잡았을 때 호출)
-    public void CompleteQuest(string title)
+    // 모든 목표가 달성되었는지 체크하는 핵심 함수
+    public void CheckQuestCompletion(QuestData q)
     {
-        foreach (var q in activeQuests)
+        bool allObjectivesDone = true;
+
+        foreach (var obj in q.objectives)
         {
-            if (q.questTitle == title)
+            // 수집형 아이템은 실시간으로 인벤토리 개수 확인
+            if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
             {
-                q.isCompleted = true;
-                UpdateQuestUI(); // 상태가 변했으니 UI 갱신
-                break;
+                obj.currentAmount = InventoryManager.Instance.GetItemTotalCount(obj.targetItem);
+            }
+
+            if (obj.currentAmount < obj.targetAmount)
+            {
+                allObjectivesDone = false;
             }
         }
+
+        q.isCompleted = allObjectivesDone;
     }
-   
 
     public void ProgressQuest(QuestType type, string id, int amount = 1)
     {
-        Debug.Log($"퀘스트 체크 중: {type} / {id}"); // 호출이 되는지 확인
         foreach (var q in activeQuests)
         {
-            if (q.isAccepted && !q.isCompleted && q.type == type && q.targetID == id)
+            if (q.isAccepted && !q.isCompleted)
             {
-                q.currentAmount += amount;
-                Debug.Log($"{q.questTitle} 진행도 상승! : {q.currentAmount}/{q.targetAmount}");
-                UpdateQuestUI();
-            }
+                bool progressMade = false;
+                foreach (var obj in q.objectives)
+                {
+                    // 타입과 ID가 일치하는 목표 수치 증가 (수집형 제외)
+                    if (obj.type != QuestType.ItemCollect && obj.type == type && obj.targetID == id)
+                    {
+                        obj.currentAmount += amount;
+                        if (obj.currentAmount > obj.targetAmount) obj.currentAmount = obj.targetAmount;
+                        progressMade = true;
+                    }
+                }
 
-            if (q.currentAmount >= q.targetAmount)
-            {
-                q.isCompleted = true;
-
-                // 여기에 성공 시 실행하고 싶은 코드를 추가하세요!
-                Debug.Log("퀘스트 성공! 보상을 지급합니다.");
-                // 예: GoldManager.Instance.AddGold(100); 
-                // 이제 데이터가 true가 되었으므로 UpdateUI를 부르면 초록 체크가 뜹니다.
-                UpdateQuestUI();
+                if (progressMade)
+                {
+                    CheckQuestCompletion(q);
+                    UpdateQuestUI();
+                }
             }
         }
-
     }
 
     public void UpdateQuestUI()
     {
+        // 기존 UI 항목 삭제
         foreach (Transform child in questListParent)
         {
             Destroy(child.gameObject);
@@ -104,28 +102,25 @@ public class QuestManager : MonoBehaviour
 
         foreach (var q in activeQuests)
         {
-            // [추가] 수집형(ItemCollect) 퀘스트라면 인벤토리 실제 개수와 동기화
-            if (q.type == QuestType.ItemCollect && q.targetItem != null)
-            {
-                q.currentAmount = InventoryManager.Instance.GetItemTotalCount(q.targetItem);
-
-                // 개수가 부족해지면 다시 미완료 상태로 변경
-                if (q.currentAmount < q.targetAmount)
-                {
-                    q.isCompleted = false;
-                }
-                else
-                {
-                    q.isCompleted = true;
-                }
-            }
+            // UI 생성 전 상태 업데이트
+            CheckQuestCompletion(q);
 
             GameObject item = Instantiate(questPrefab, questListParent);
             TMP_Text title = item.GetComponentInChildren<TMP_Text>();
 
-            // 실시간 개수 반영 (예: 2/3)
             if (title != null)
-                title.text = $"{q.questTitle} ({q.currentAmount}/{q.targetAmount})";
+            {
+                // 여러 목표를 텍스트로 합치기
+                string statusText = $"<b>{q.questTitle}</b>";
+                foreach (var obj in q.objectives)
+                {
+                    string colorHex = (obj.currentAmount >= obj.targetAmount) ? "#32CD32" : "#FFFFFF";
+                    statusText += $"\n<color={colorHex}>- {obj.targetID} ({obj.currentAmount}/{obj.targetAmount})</color>";
+                }
+
+                title.text = statusText;
+                title.color = q.isCompleted ? completedColor : inProgressColor;
+            }
 
             Image iconImage = item.transform.Find("Icon")?.GetComponent<Image>();
             if (iconImage != null)
@@ -134,6 +129,7 @@ public class QuestManager : MonoBehaviour
             }
         }
 
+        // 모든 NPC 아이콘 갱신
         NPCDialogue[] allNPCs = Object.FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None);
         foreach (var npc in allNPCs)
         {
@@ -146,7 +142,7 @@ public class QuestManager : MonoBehaviour
         if (activeQuests.Contains(quest))
         {
             activeQuests.Remove(quest);
-            UpdateQuestUI(); // UI 갱신해서 목록에서 삭제
+            UpdateQuestUI();
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-// 1. 퀘스트 종류를 정의하는 열거형 (Enum)
 public enum QuestType
 {
     ItemConsume,    // 아이템 소비
@@ -11,28 +11,45 @@ public enum QuestType
 }
 
 [System.Serializable]
+public class QuestObjective // [추가] 개별 목표 클래스
+{
+    public QuestType type;
+    public ItemData targetItem; // 수집형일 경우 필수
+    public string targetID;
+    public int targetAmount;
+    public int currentAmount;
+    public bool isReached;      // 이 목표를 달성했는지 여부
+}
+
+[System.Serializable]
+public class QuestReward // [추가] 개별 보상 클래스
+{
+    public ItemData rewardItem;
+    public int rewardAmount = 1;
+}
+
+[System.Serializable]
 public class QuestData
 {
-    public string questTitle;       // 퀘스트 제목
-    [TextArea]
-    public string questDescription; // 퀘스트 설명
+    public string questTitle;
+    [TextArea] public string questDescription;
 
-    [Header("Quest Goal")]
-    public QuestType type;          // 퀘스트 타입 (Enum)
-    public ItemData targetItem;     // 목표 아이템 데이터 (인벤토리 확인용)
-    public string targetID;         // 목표 ID (문자열 이름표)
-    public int targetAmount;        // 목표 수량
-    public int currentAmount;       // 현재 수량
+    [Header("Quest Dialogues")] // [추가] 이 퀘스트 전용 대사들
+    [TextArea(2, 4)] public string[] startLines;      // 퀘스트 수락 시
+    [TextArea(2, 4)] public string[] processingLines; // 진행 중일 때
+    [TextArea(2, 4)] public string[] completedLines;  // 완료 보고 시
+
+    [Header("Quest Goals")]
+    public QuestObjective[] objectives;
 
     [Header("Quest Options")]
-    public bool StealItem = true; // true면 가져가고, false면 확인만 함
+    public bool StealItem = true;
 
     [Header("Status")]
-    public bool isAccepted = false;  // 수락 여부
-    public bool isCompleted = false; // 수치 달성 여부 (3/3 등)
-    public bool isFinished = false;  // 최종 보상 수령 여부
+    public bool isAccepted = false;
+    public bool isCompleted = false;
+    public bool isFinished = false;
 
-    [Header("Reward")]
-    public ItemData rewardItem;      // 보상 아이템
-    public int rewardAmount = 1;     // 보상 개수
+    [Header("Rewards")]
+    public QuestReward[] rewards;
 }

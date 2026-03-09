@@ -1159,6 +1159,311 @@ Transform:
   - {fileID: 1510906743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &672409850
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672409851}
+  - component: {fileID: 672409854}
+  - component: {fileID: 672409853}
+  - component: {fileID: 672409852}
+  m_Layer: 20
+  m_Name: DialogRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &672409851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672409850}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 676353163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &672409852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672409850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f7a06080893c14b823cc2d6251c2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName: "\uC5EC\uC2E0"
+  questList:
+  - questTitle: "\uADFC\uAC70\uB9AC&\uC6D0\uAC70\uB9AC\uBAAC\uC2A4\uD130 \uCC98\uCE58"
+    questDescription: "\uADFC\uAC70\uB9AC \uBAAC\uC2A4\uD130\uC640 \uC6D0\uAC70\uB9AC
+      \uBAAC\uC2A4\uD130\uB97C \uAC01\uAC01 1\uB9C8\uB9AC\uC529 \uCC98\uCE58\uD558\uC138\uC694"
+    startLines:
+    - "\uC57C. \uC7E4\uB124 \uBB50\uB0D0?"
+    - "\uC65C \uBAAC\uC2A4\uD130\uAC00 \uC5EC\uAE30\uC11C \uC54C\uC9F1\uAC70\uB9AC\uC9C0?"
+    - "\uC800\uAC83\uB4E4\uC880 \uCE58\uC6B0\uACE0\uC640\uC918."
+    processingLines:
+    - "\uC544\uC9C1\uB3C4 \uBABB\uD588\uC5B4? \uB290\uB824\uD130\uC838\uAC00\uC9C0\uACE4...."
+    completedLines:
+    - "\uC654\uB0D0?? \uC88B\uC740\uB370? \uB108?"
+    objectives:
+    - type: 1
+      targetItem: {fileID: 0}
+      targetID: MeleeSkeleton
+      targetAmount: 1
+      currentAmount: 0
+      isReached: 0
+    - type: 1
+      targetItem: {fileID: 0}
+      targetID: RangeGoblin
+      targetAmount: 1
+      currentAmount: 0
+      isReached: 0
+    StealItem: 0
+    isAccepted: 0
+    isCompleted: 0
+    isFinished: 0
+    rewards:
+    - rewardItem: {fileID: 0}
+      rewardAmount: 0
+  normalLines:
+  - "\uC5EC\uAE30\uC11C\uB294 \uD560\uC218\uC788\uB294\uAC70 \uB2E4\uD588\uC5B4...
+    \uB2E4\uC74C\uCE35\uC73C\uB85C "
+  interactKey: 32
+  reInteractCooldown: 0.5
+--- !u!58 &672409853
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672409850}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.000000059604645}
+  m_Radius: 0.49999997
+--- !u!212 &672409854
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672409850}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!1001 &676353161
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5391186442010338111, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750450, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750455, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_Name
+      value: PF Props - Statue 01 (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 672409851}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7947911505737750455, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 676353164}
+  m_SourcePrefab: {fileID: 100100000, guid: d730038d263986f4dac93230e1dd62b0, type: 3}
+--- !u!1 &676353162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7947911505737750455, guid: d730038d263986f4dac93230e1dd62b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 676353161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &676353163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 676353161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &676353164
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676353162}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &686922632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42236,39 +42541,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
   npcName: "\uC5EC\uC2E0"
-  lines:
-  - "\uB204\uAD6C\uC5EC."
-  - "\uCC98\uC74C\uC628 \uC560\uC5EC?"
-  - "\uADF8\uB7FC \uBE68\uAC04\uBB3C\uC57D 3\uAC1C\uB9CC \uC880 \uAC00\uC838\uC640\uC8FC\uAC8C...."
-  processingLines:
-  - "\uBE68\uB791\uBE68\uB791 \uBAA8\uC544\uC624\uAC8C\uB098..."
-  completedLines:
-  - "\uBC8C\uC368 \uB05D\uB0C8\uB294\uAC00?"
-  - "\uACE0\uB9D9\uB124 \uC774\uAC74 \uD30C\uB780\uBB3C\uC57D\uC774\uB77C\uB124."
-  - "\uC870\uC2EC\uD788 \uC4F0\uC138..."
-  missingItemLines:
-  - "\uC544\uC9C1 \uBD80\uC871\uD558\uC9C0 \uC54A\uC740\uAC00...."
-  normalLines:
-  - "\uC5C4..."
-  - "\uBE68\uAC04\uBB3C\uC57D...."
-  - "\uB9DB\uC788\uB2E4....."
-  interactKey: 32
-  reInteractCooldown: 0.5
-  hasQuest: 1
-  quest:
-    questTitle: "\uBE68\uAC04\uBB3C\uC57D 3\uAC1C \uC218\uC9D1"
-    questDescription: "\uBE68\uAC04\uBB3C\uC57D\uC744 3\uAC1C \uBAA8\uC544\uC624\uB77C"
-    type: 2
-    targetItem: {fileID: 11400000, guid: 47d6dec27a8297b4889fdf45fe256c38, type: 2}
-    targetID: "\uBE68\uAC04\uBB3C\uC57D"
-    targetAmount: 3
-    currentAmount: 0
+  questList:
+  - questTitle: "\uBE68\uAC04\uD3EC\uC158 2\uAC1C \uC218\uC9D1"
+    questDescription: "\uBE68\uAC04\uD3EC\uC158\uC744 2\uAC1C \uC11D\uC0C1\uC5D0\uAC8C
+      \uAC00\uC838\uC624\uC138\uC694"
+    startLines:
+    - "\uD760...."
+    - "\uAC70\uAE30\uB108...."
+    - "\uBE68\uAC04\uD3EC\uC158\uC788\uC5B4?"
+    - "\uC5C6\uB2E4\uACE0?"
+    - "\uADF8\uB7FC \uAD6C\uD574\uC640."
+    - ....
+    - "\uBB50\uD574? \uAD6C\uD574\uC624\uB77C\uB2C8\uAE4C?"
+    processingLines:
+    - "\uBE68\uB791\uBE68\uB791 \uAD6C\uD574\uC640\uB77C...."
+    completedLines:
+    - "\uC774\uAC78 \uC9C4\uC9DC \uAD6C\uD574\uC624\uB124? \u314B\u314B\u314B\u314B"
+    - "\u3147\u314B"
+    objectives:
+    - type: 2
+      targetItem: {fileID: 11400000, guid: 47d6dec27a8297b4889fdf45fe256c38, type: 2}
+      targetID: "\uBE68\uAC04\uD3EC\uC158"
+      targetAmount: 2
+      currentAmount: 0
+      isReached: 0
     StealItem: 1
     isAccepted: 0
     isCompleted: 0
     isFinished: 0
-    rewardItem: {fileID: 11400000, guid: 59366db4e2cd7084b8f77a4d7b5bdafc, type: 2}
-    rewardAmount: 2
+    rewards:
+    - rewardItem: {fileID: 11400000, guid: 53544e0418389c64492d5ad5548a1503, type: 2}
+      rewardAmount: 2
+  - questTitle: "\uD30C\uB780\uD3EC\uC1582\uAC1C\uC218\uC9D1"
+    questDescription: "\uD30C\uB780\uD3EC\uC158\uC744 2\uAC1C \uC11D\uC0C1\uC5D0\uAC8C
+      \uAC00\uC838\uC624\uC138\uC694"
+    startLines:
+    - "\uC774\uBC88\uC5D0\uB294 \uD30C\uB780\uD3EC\uC158 2\uAC1C\uB9CC \u314E\u314E"
+    - ......
+    - "\uBB50...."
+    - "\uAC00\uC838\uC640"
+    processingLines:
+    - "\uBE68\uB791\uBE68\uB791 \uAD6C\uD574\uC640\uB77C...."
+    completedLines:
+    - "\uC774\uC57C\u314B\u314B\u314B\u314B \uB108\uBB34 \uACE0\uB9D9\uACE0..."
+    - "\uD798\uD3EC\uC158\uC740 \uC5BB\uC744\uC218\uB3C4\uC5C6\uB294 \uD3EC\uC158\uC774\uC57C.
+      \uACE0\uB9C8\uC6CC\uD574. \uC54C\uACA0\uC9C0?"
+    objectives:
+    - type: 2
+      targetItem: {fileID: 11400000, guid: 59366db4e2cd7084b8f77a4d7b5bdafc, type: 2}
+      targetID: "\uD30C\uB780\uD3EC\uC158"
+      targetAmount: 2
+      currentAmount: 0
+      isReached: 0
+    StealItem: 1
+    isAccepted: 0
+    isCompleted: 0
+    isFinished: 0
+    rewards:
+    - rewardItem: {fileID: 11400000, guid: 53544e0418389c64492d5ad5548a1503, type: 2}
+      rewardAmount: 2
+  normalLines:
+  - "\uC5C4..."
+  - "\uBE68\uAC04\uBB3C\uC57D.... \uD30C\uB780\uBB3C\uC57D......"
+  - "\uB9DB\uC788\uB2E4....."
+  interactKey: 32
+  reInteractCooldown: 0.5
 --- !u!58 &1264825505
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -43972,6 +44309,7 @@ SceneRoots:
   - {fileID: 1030404751}
   - {fileID: 1199574558}
   - {fileID: 14703047}
+  - {fileID: 676353161}
   - {fileID: 787438707}
   - {fileID: 1068611699}
   - {fileID: 1426383740}

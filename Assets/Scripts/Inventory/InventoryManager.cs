@@ -130,6 +130,37 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void UseItem(ItemData item)
+    {
+        if (item == null) return;
+
+        // 1. 플레이어 상태 확인
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+        var stats = player.GetComponentInChildren<Game.Player.PlayerStats>();
+        if (stats == null) return;
+
+        // 2. 아이템 효과 적용 (모든 사용처 공통)
+        switch (item.consumableType)
+        {
+            case ConsumableType.Health: stats.Heal(item.value); break;
+            case ConsumableType.Mana: stats.RestoreMana(item.value); break;
+            case ConsumableType.SpeedBoost: stats.ApplySpeedBuff(item.value, item.duration); break;
+            case ConsumableType.AttackBuff: stats.ApplyAttackBuff(item.value, item.duration); break;
+        }
+
+        // 3. 퀘스트 시스템 알림 (중앙에서 한 번만 보고!)
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.ProgressQuest(QuestType.ItemConsume, item.itemName, 1);
+        }
+
+        // 4. 아이템 수량 실제 차감
+        RemoveItem(item, 1);
+
+        Debug.Log($"중앙 제어: {item.itemName} 사용 및 퀘스트 보고 완료");
+    }
+
     private void RefreshUI()
     {
         var ui = FindFirstObjectByType<InventoryUI>();

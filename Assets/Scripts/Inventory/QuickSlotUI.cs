@@ -126,23 +126,12 @@ public class QuickSlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandle
 
     public ItemData GetAssignedItem() => assignedItem;
 
-    private void UseAssignedItem()
+    private void UseAssignedItem() // 기존의 복잡한 로직 삭제
     {
         if (assignedItem == null) return;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-        var stats = player.GetComponentInChildren<Game.Player.PlayerStats>();
-        if (stats == null) return;
 
-        switch (assignedItem.consumableType)
-        {
-            case ConsumableType.Health: stats.Heal(assignedItem.value); break;
-            case ConsumableType.Mana: stats.RestoreMana(assignedItem.value); break;
-            case ConsumableType.SpeedBoost: stats.ApplySpeedBuff(assignedItem.value, assignedItem.duration); break;
-            case ConsumableType.AttackBuff: stats.ApplyAttackBuff(assignedItem.value, assignedItem.duration); break;
-        }
-
-        InventoryManager.Instance.RemoveItem(assignedItem, 1);
+        // 중앙 매니저에게 모든 권한 위임
+        InventoryManager.Instance.UseItem(assignedItem);
     }
 
     public void ClearSlot()

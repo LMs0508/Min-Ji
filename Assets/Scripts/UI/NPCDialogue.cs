@@ -1,30 +1,25 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NPCDialogue : MonoBehaviour
 {
     private SpriteRenderer iconRenderer;
     public string npcName = "NPC";
 
-    [Header("Quest Mode Dialogue")]
-    [TextArea(2, 4)] public string[] lines;             // 처음 퀘스트 줄 때 대사
-    [TextArea(2, 4)] public string[] processingLines;    // 진행 중일 때 대사
-    [TextArea(2, 4)] public string[] completedLines;     // 목표 달성 후 보고 대사
-    [TextArea(2, 4)] public string[] missingItemLines;   // 아이템 부족할 때 대사 (선택 사항)
+    [Header("Quest System")]
+    // 이제 단일 'quest' 변수는 삭제되었습니다. 인스펙터가 깨끗해질 거예요!
+    public List<QuestData> questList = new List<QuestData>();
+    private int currentQuestIndex = 0;
 
-    [Header("Normal Mode Dialogue")]
-    [TextArea(2, 4)] public string[] normalLines;        // [추가] 퀘스트 완료 후 일반 NPC 대사
+    [Header("Normal Dialogue")]
+    [TextArea(2, 4)] public string[] normalLines; // 모든 퀘스트가 끝난 후 대사
 
     public KeyCode interactKey = KeyCode.Space;
-
-    [Header("Cooldown")]
     public float reInteractCooldown = 0.5f;
     private float nextInteractTime = 0f;
     private bool playerNear;
 
-    [Header("Quest Settings")]
-    public bool hasQuest;
-    public QuestData quest;
-
+    private QuestData CurrentQuest => (currentQuestIndex < questList.Count) ? questList[currentQuestIndex] : null;
 
     void Start()
     {
@@ -43,107 +38,89 @@ public class NPCDialogue : MonoBehaviour
 
         if (Input.GetKeyDown(interactKey))
         {
-            // --- 1. 퀘스트 모드 (hasQuest가 true일 때만 진입) ---
-            if (hasQuest)
+            QuestData q = CurrentQuest;
+
+            if (q != null) // 진행할 퀘스트가 남아있다면
             {
-                if (quest.isAccepted && quest.isCompleted)
+                if (q.isAccepted && q.isCompleted)
                 {
-                    // 목표 달성 상태: 완료 대사 후 보상 지급
-                    DialogueManager.Instance.StartDialogue(this, npcName, completedLines, false);
-                    GiveRewardAndFinish();
+                    // 퀘스트 데이터에 들어있는 '완료 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.completedLines, false);
+                    GiveRewardAndNextQuest();
                 }
-                else if (quest.isAccepted && !quest.isCompleted)
+                else if (q.isAccepted && !q.isCompleted)
                 {
-                    // 진행 중 상태
-                    DialogueManager.Instance.StartDialogue(this, npcName, processingLines, false);
+                    // 퀘스트 데이터에 들어있는 '진행 중 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.processingLines, false);
                 }
                 else
                 {
-                    // 수락 전 상태: 퀘스트 수락 창 포함하여 대화 시작
-                    DialogueManager.Instance.StartDialogue(this, npcName, lines, true);
+                    // 퀘스트 데이터에 들어있는 '시작 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.startLines, true);
                 }
             }
-            // --- 2. 일반 모드 (퀘스트를 다 깼거나 처음부터 없을 때) ---
-            else
+            else // 모든 퀘스트 완료 시
             {
-                if (normalLines != null && normalLines.Length > 0)
-                {
-                    DialogueManager.Instance.StartDialogue(this, npcName, normalLines, false);
-                }
-                else
-                {
-                    Debug.Log("일반 대화 내용이 비어있습니다.");
-                }
+                DialogueManager.Instance.StartDialogue(this, npcName, normalLines, false);
             }
         }
     }
 
-    void GiveRewardAndFinish()
+    void GiveRewardAndNextQuest()
     {
-        // 아이템 회수 로직
-        if (quest.StealItem && quest.targetItem != null)
+        QuestData q = CurrentQuest;
+        if (q == null) return;
+
+        // 아이템 회수
+        if (q.StealItem)
         {
-            InventoryManager.Instance.RemoveItem(quest.targetItem, quest.targetAmount);
+            foreach (var obj in q.objectives)
+            {
+                if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
+                    InventoryManager.Instance.RemoveItem(obj.targetItem, obj.targetAmount);
+            }
         }
 
-        // 보상 지급 로직
-        if (quest.rewardItem != null)
+        // 보상 지급
+        if (q.rewards != null)
         {
-            InventoryManager.Instance.AddItem(quest.rewardItem, quest.rewardAmount);
+            foreach (var reward in q.rewards)
+            {
+                if (reward.rewardItem != null)
+                    InventoryManager.Instance.AddItem(reward.rewardItem, reward.rewardAmount);
+            }
         }
 
-        QuestManager.Instance.RemoveQuest(quest);
-
-        // 중요: hasQuest를 false로 만들어 다음 대화부터 일반 모드로 전환
-        hasQuest = false;
-
+        QuestManager.Instance.RemoveQuest(q);
+        currentQuestIndex++;
         UpdateQuestIcon();
     }
 
-    public void NotifyDialogueClosed()
-    {
-        nextInteractTime = Time.unscaledTime + reInteractCooldown;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) playerNear = true;
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) playerNear = false;
-    }
-
-
+    // 아이콘 상태 업데이트
     public void UpdateQuestIcon()
     {
-        // 1. 아이콘 렌더러가 없거나, NPC가 더 이상 줄 퀘스트가 없다면(hasQuest가 false면) 아이콘을 끈다.
         if (iconRenderer == null) return;
+        QuestData q = CurrentQuest;
 
-        if (!hasQuest)
+        if (q == null)
         {
             iconRenderer.gameObject.SetActive(false);
             return;
         }
 
-        // 2. 퀘스트가 있는 경우에만 아이콘을 활성화하고 상태를 체크한다.
         iconRenderer.gameObject.SetActive(true);
 
-        if (quest.isAccepted && quest.isCompleted)
-        {
-            //  완료 보고 가능 (가방에 물건 다 있음)
+        if (q.isAccepted && q.isCompleted)
             iconRenderer.sprite = QuestManager.Instance.canCompleteIcon;
-        }
-        else if (quest.isAccepted && !quest.isCompleted)
-        {
-            //  진행 중 (수락은 했으나 물건 부족)
+        else if (q.isAccepted && !q.isCompleted)
             iconRenderer.sprite = QuestManager.Instance.inProgressIcon;
-        }
         else
-        {
-            //  시작 가능 (아직 안 받음)
             iconRenderer.sprite = QuestManager.Instance.canStartIcon;
-        }
     }
+
+    public void NotifyDialogueClosed() => nextInteractTime = Time.unscaledTime + reInteractCooldown;
+    public QuestData GetCurrentQuest() => CurrentQuest;
+
+    void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = true; }
+    void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = false; }
 }

@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject selectionPanel; // 수락/거절 버튼 패널
 
     private bool hasQuest;
+    private QuestData pendingQuest; // [추가] 수락을 기다리는 현재 퀘스트 데이터
 
     [Header("Input")]
     public KeyCode nextKey = KeyCode.Space;
@@ -24,7 +25,6 @@ public class DialogueManager : MonoBehaviour
     private bool open;
 
     private NPCDialogue currentCaller;
-
 
     void Awake()
     {
@@ -47,8 +47,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!open) return;
 
-        // [수정] 수락창이 떠 있을 때 스페이스바(nextKey) 입력을 무시하여 
-        // 유저가 반드시 버튼을 클릭하도록 유도합니다.
+        // 수락창이 떠 있을 때는 스페이스바 입력을 무시
         if (hasQuest && selectionPanel != null && selectionPanel.activeSelf) return;
 
         if (Input.GetKeyDown(nextKey))
@@ -59,6 +58,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool IsOpen() => open;
 
+    // [수정] 대화 시작 시 QuestData를 매개변수로 직접 받도록 변경
     public void StartDialogue(NPCDialogue caller, string npcName, string[] newLines, bool containsQuest = false)
     {
         if (newLines == null || newLines.Length == 0) return;
@@ -68,11 +68,20 @@ public class DialogueManager : MonoBehaviour
         index = 0;
         hasQuest = containsQuest;
 
+        // [추가] NPC가 가진 현재 퀘스트 정보를 가져옴
+        if (hasQuest && caller != null)
+        {
+            pendingQuest = caller.GetCurrentQuest();
+        }
+        else
+        {
+            pendingQuest = null;
+        }
+
         open = true;
         if (panel != null) panel.SetActive(true);
         if (selectionPanel != null) selectionPanel.SetActive(false);
 
-        // 대화 시작 시 첫 문장이 마지막이 아니라면 힌트 텍스트를 보여줍니다.
         if (hintText != null) hintText.SetActive(newLines.Length > 1);
 
         if (nameText != null) nameText.text = npcName;
@@ -98,33 +107,26 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueText != null) dialogueText.text = lines[index];
 
-        // 마지막 대사 줄인지 확인
         bool isLastLine = (index >= lines.Length - 1);
 
-        // [핵심 추가] 퀘스트를 포함한 대화이고, 마지막 줄에 도달했다면 즉시 수락창을 켭니다.
         if (hasQuest && isLastLine)
         {
             if (selectionPanel != null) selectionPanel.SetActive(true);
         }
 
-        // 힌트 텍스트 제어
         if (hintText != null)
         {
-            // 마지막 줄일 때는 버튼이 나오므로 "Space" 안내(힌트)를 숨깁니다.
             hintText.SetActive(!isLastLine);
         }
     }
 
     void EndDialogue()
     {
-        // 대화가 끝났으므로 힌트는 무조건 숨깁니다.
         if (hintText != null) hintText.SetActive(false);
 
         if (hasQuest)
         {
             if (selectionPanel != null) selectionPanel.SetActive(true);
-            // 수락/거절 단계에서는 Space 입력이 대화를 닫지 않도록 
-            // 이전 Update문에서 selectionPanel.activeSelf 체크를 유지해야 합니다.
         }
         else
         {
@@ -144,19 +146,29 @@ public class DialogueManager : MonoBehaviour
             currentCaller.NotifyDialogueClosed();
             currentCaller = null;
         }
+        pendingQuest = null; // 초기화
     }
 
-    // [수정] 수락 버튼 클릭 시 실행
+    // [핵심 수정] 수락 버튼 클릭 시 리스트 방식에 맞춰 동작
     public void OnAcceptQuest()
     {
-        if (currentCaller != null)
+        // NPC의 GetCurrentQuest()를 통해 받아온 pendingQuest를 사용
+        if (pendingQuest != null)
         {
-            // 수락하는 시점에 퀘스트 상태 초기화
-            currentCaller.quest.isAccepted = true;
-            currentCaller.quest.isCompleted = false; // 처음엔 무조건 미완료(회색 체크)
+            // 수락하는 시점에 상태 초기화
+            pendingQuest.isAccepted = true;
+            pendingQuest.isCompleted = false;
 
-            QuestManager.Instance.AddQuest(currentCaller.quest);
+            // 퀘스트 매니저에 추가
+            QuestManager.Instance.AddQuest(pendingQuest);
+
+            // NPC 아이콘 갱신 (수락했으므로 책 아이콘 등으로 변경)
+            if (currentCaller != null)
+            {
+                currentCaller.UpdateQuestIcon();
+            }
         }
+
         CloseDialogue();
     }
 

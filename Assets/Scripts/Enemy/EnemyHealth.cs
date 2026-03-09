@@ -21,15 +21,12 @@ public class EnemyHealth : MonoBehaviour
     void Awake()
     {
         stats = GetComponent<EnemyStats>();
-
         sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Start()
     {
-
         currentHealth = stats.maxHealth;
-
 
         if (hpSlider != null)
         {
@@ -43,14 +40,11 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-
     public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
 
-
         currentHealth -= damage;
-
 
         if (hpSlider != null)
         {
@@ -64,13 +58,12 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
+
     public void TakeDamage(float damage, Vector2 knockbackDir)
     {
         if (currentHealth <= 0) return;
 
-
         currentHealth -= damage;
-
 
         if (hpSlider != null)
         {
@@ -116,10 +109,19 @@ public class EnemyHealth : MonoBehaviour
         if (sr != null) sr.color = Color.white;
         isHit = false;
     }
+
     private void Die()
     {
         if (isDead) return;
         isDead = true;
+
+        // [핵심 추가] 몬스터가 죽는 시점에 QuestManager에게 사냥 성공 보고
+        if (QuestManager.Instance != null && stats != null && stats.enemyData != null)
+        {
+            // MonsterHunt 타입으로, EnemyData에 적힌 이름을 ID로 전달하여 카운트를 올립니다.
+            QuestManager.Instance.ProgressQuest(QuestType.MonsterHunt, stats.enemyData.enemyName, 1);
+            Debug.Log($"퀘스트 보고됨: {stats.enemyData.enemyName} 사냥 완료");
+        }
 
         currentHealth = -1000;
         if (hpSlider != null) hpSlider.gameObject.SetActive(false);
@@ -136,7 +138,6 @@ public class EnemyHealth : MonoBehaviour
                 if (param.type == AnimatorControllerParameterType.Trigger)
                     anim.ResetTrigger(param.name);
             }
-  
 
             anim.SetBool("isWalking", false);
             anim.SetBool("isDead", true);
@@ -153,7 +154,6 @@ public class EnemyHealth : MonoBehaviour
             script.enabled = false;
         }
 
-        // [수정] 여기서 즉시 끄지 않고, 아래 코루틴에서 처리합니다.
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
@@ -162,10 +162,8 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator FadeOutAndDestroy()
     {
-        // [추가] 애니메이션이 시작될 수 있도록 한 프레임 쉽니다.
         yield return null;
 
-        // [추가] 이제 안전하게 물리 시뮬레이션을 끕니다.
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -173,7 +171,7 @@ public class EnemyHealth : MonoBehaviour
             rb.simulated = false;
         }
 
-        yield return new WaitForSeconds(1f); // 시체가 유지되는 시간
+        yield return new WaitForSeconds(1f);
 
         float fadeDuration = 0.5f;
         float currentTime = 0f;
