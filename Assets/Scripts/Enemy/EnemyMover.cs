@@ -7,6 +7,7 @@ public class EnemyMover : MonoBehaviour
     private Animator anim;
     public Transform visuals;
     private bool isFacingRight = true;
+    private EnemyHealth health;
 
     private bool isStunned = false;
     public bool IsStunned => isStunned;
@@ -15,10 +16,13 @@ public class EnemyMover : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        health = GetComponent<EnemyHealth>();
     }
 
     void Update()
     {
+        if (health != null && health.IsDead) return;
+
         if (isStunned && rb.linearVelocity.magnitude < 0.1f)
         {
             Debug.Log($"<color=yellow>[경고]</color> {gameObject.name}가 넉백 힘을 받았으나, 누군가에 의해 정지되었습니다!");
@@ -33,7 +37,7 @@ public class EnemyMover : MonoBehaviour
 
     public void Move(Vector2 direction, float speed)
     {
-        if (isStunned) return;
+        if (isStunned || (health != null && health.IsDead)) return;
 
         rb.linearVelocity = direction * speed;
         FlipSprite(direction.x);
@@ -41,7 +45,7 @@ public class EnemyMover : MonoBehaviour
 
     public void Stop()
     {
-        if (isStunned) return;
+        if (isStunned || (health != null && health.IsDead)) return;
         rb.linearVelocity = Vector2.zero;
     }
 
@@ -70,22 +74,25 @@ public class EnemyMover : MonoBehaviour
 
     public void LookAt(Vector2 direction)
     {
-        if (isStunned) return;
+        if (isStunned || (health != null && health.IsDead)) return;
         FlipSprite(direction.x);
     }
 
     private void FlipSprite(float xInput)
     {
-        // 속도가 거의 0일때는 방향 전환하지 않는걸로
-        if (Mathf.Abs(xInput) < 0.05f)
-            return;
-        if ((xInput<0 && isFacingRight) || (xInput >0 && !isFacingRight))
+        if (health != null && health.IsDead) return;
+        if (Mathf.Abs(xInput) < 0.05f) return;
+
+        bool movingRight = xInput > 0;
+
+        if (movingRight != isFacingRight)
         {
-            isFacingRight = !isFacingRight;
-            if(visuals != null)
+            isFacingRight = movingRight;
+
+            if (visuals != null)
             {
                 Vector3 scale = visuals.localScale;
-                scale.x *= -1;
+                scale.x = Mathf.Abs(scale.x) * (movingRight ? 1 : -1);
                 visuals.localScale = scale;
             }
         }

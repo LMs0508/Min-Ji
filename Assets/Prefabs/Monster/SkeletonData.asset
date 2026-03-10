@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: MeleeSkeleton
   maxHealth: 100
-  moveSpeed: 2
-  damage: 5
+  moveSpeed: 4
+  damage: 20
   knockbackForce: 2
   detectionRange: 5
-  stopDistance: 1.25
+  stopDistance: 1.5
   wanderSpeed: 1
   wanderDuration: 1
   waitDuration: 0.5
   spawnInterval: 5
-  attackDamage: 5
-  attackRange: 1.5
-  attackCooldown: 0.75
+  attackRange: 2
+  attackCooldown: 1
