@@ -121,29 +121,49 @@ namespace Game.Player
 
         private IEnumerator HitFlashRoutine()
         {
-            SpriteRenderer[] allSrs = GetComponentsInParent<SpriteRenderer>();
-
-            if (allSrs == null || allSrs.Length == 0)
-            {
-                allSrs = GetComponentsInChildren<SpriteRenderer>();
-            }
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
 
             if (allSrs != null && allSrs.Length > 0)
             {
+                // 1. 현재 '활성화' 되어 눈에 보이는 것들만 붉게 바꿉니다.
                 foreach (var sr in allSrs)
                 {
-                    sr.color = Color.red;
+                    if (sr != null && sr.gameObject.activeInHierarchy)
+                    {
+                        sr.color = Color.red;
+                    }
                 }
 
                 yield return new WaitForSeconds(hitFlashDuration);
 
                 foreach (var sr in allSrs)
                 {
-                    sr.color = Color.white;
+                    if (sr != null) sr.color = Color.white;
                 }
             }
         }
 
+        public void ForceResetVisual()
+        {
+            foreach (var sr in GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                if (sr != null) sr.color = Color.white;
+            }
+        }
+
+        private void OnDisable()
+        {
+            ResetAllColors();
+        }
+
+        public void ResetAllColors()
+        {
+            SpriteRenderer[] allSrs = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var sr in allSrs)
+            {
+                if (sr != null) sr.color = Color.white;
+            }
+        }
 
         private void SpawnDamageText(float damage)
         {

@@ -107,8 +107,8 @@ TextureImporter:
         y: 0
         width: 1001
         height: 2371
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4451122, y: 0.52660567}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e99bbc9701b270b40b316c2fbe57320d
     internalID: 0
     vertices: []
     indices: 

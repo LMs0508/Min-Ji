@@ -123,7 +123,16 @@ public class SkillSlotsPrefab : MonoBehaviour
     {
         if (slot >= 0 && slot < 4 && equippedSkill[slot] != null)
         {
-            equippedSkill[slot].TryUse(gameObject);
+            bool isSuccess = equippedSkill[slot].TryUse(gameObject);
+            if (isSuccess)
+            {
+                // 부모(Player)에게 붙어있는 컨트롤러를 찾습니다.
+                var controller = GetComponentInParent<Cainos.PixelArtTopDown_Basic.TopDownCharacterController>();
+                if (controller != null)
+                {
+                    controller.ActivateWeaponMode(5f); // 5초 동안 무기 모드 유지
+                }
+            }
         }
     }
 }

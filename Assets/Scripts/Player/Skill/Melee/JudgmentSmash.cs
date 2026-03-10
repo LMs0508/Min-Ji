@@ -14,6 +14,11 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     public Sprite Icon => icon;
     public float skillManaCost = 20f;
 
+    [Header("스킬 전용 플레이어 외형")]
+    public GameObject spriteA;
+    public GameObject spriteB;
+    public GameObject spriteC;
+
     [Header("스킬 셋팅")]
     public float maxJumpDistance = 5f;
     public float cooldown = 10f;
@@ -36,7 +41,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     public float jumpHeight = 5f;
     public float riseDuration = 0.15f;
     public float pauseTime = 0.5f;
-    public float fallDuration = 0.1f;
+    public float fallSpeed = 30f;
 
     [Header("Combat Settings")]
     public float explosionRadius = 3f;
@@ -87,51 +92,35 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     {
         isExecuting = true;
 
-        // [핵심] 스킬 시작 시 항상 '일반' 속성으로 리셋하고 시작합니다.
-        chargeVFX = defaultCharge; riseVFX = defaultRise;
-        airVFX = defaultAir; fallVFX = defaultFall;
+        // --- 초기 세팅 ---
+        var controller = owner.GetComponent<TopDownCharacterController>();
+        var rb = owner.GetComponentInChildren<Rigidbody2D>();
+        parentAnim = owner.GetComponentInChildren<Animator>();
+        playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
 
-        // 속성 체크 및 강화기 실행 (화속성이라면 여기서 VFX가 불꽃으로 교체됨)
         var playerElement = owner.GetComponentInChildren<PlayerElement>();
         ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
         var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
 
         activeEnhancer?.OnStart(owner);
 
-        // 위치 설정 및 컴포넌트 가져오기
-        transform.position = owner.transform.position + new Vector3(0, 0.25f, 0);
-        var controller = owner.GetComponentInChildren<TopDownCharacterController>();
-        var rb = owner.GetComponentInChildren<Rigidbody2D>();
-        parentAnim = owner.GetComponentInChildren<Animator>();
-        playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
-
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
+        SetPlayerCoreVisual(owner, false);
 
-        // 1. 기 모으기
+        // --- 1. 기 모으기 (HolyCircleVFX) ---
         SetVFX(chargeVFX);
-        if (parentAnim != null) parentAnim.SetTrigger("OnJudgment");
+        SetSkillSprite(spriteA); // 1번 전용 스프라이트 활성화
         yield return new WaitForSeconds(0.2f);
 
-        // 2. 수직 상승
+        // --- 2. 수직 상승 (Judgement_RiseVFX) ---
         SetVFX(riseVFX);
+        SetSkillSprite(spriteB); // 2번 전용 스프라이트 활성화
         Vector3 startPos = owner.transform.position;
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
         yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
 
-        // 3. 공중 정지 및 조준
         SetVFX(airVFX);
-        if (landingIndicatorPrefab != null)
-        {
-            spawnedIndicator = Instantiate(landingIndicatorPrefab);
-            SpriteRenderer indicatorSR = spawnedIndicator.GetComponent<SpriteRenderer>();
-            if (indicatorSR != null && playerRenderer != null)
-            {
-                indicatorSR.sortingLayerID = playerRenderer.sortingLayerID;
-                indicatorSR.sortingOrder = playerRenderer.sortingOrder - 1;
-            }
-        }
-
         float elapsed = 0;
         Vector3 currentTargetPos = startPos;
         while (elapsed < pauseTime)
@@ -142,31 +131,105 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             yield return null;
         }
 
-        // 4. 낙하
+
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
+
+        SetSkillSprite(null);
         SetVFX(fallVFX);
+
+        // 1. 애니메이션 실제 길이 측정
+        float actualAnimDuration = 0.5f;
+        Animator fallAnim = fallVFX.GetComponent<Animator>();
+        if (fallAnim != null)
+        {
+            fallAnim.Play("Judgement_FallVFX", 0, 0f);
+            yield return null;
+            actualAnimDuration = fallAnim.GetCurrentAnimatorStateInfo(0).length;
+        }
+
         if (parentAnim != null) parentAnim.SetTrigger("OnFall");
 
-        float fallElapsed = 0;
+        // 2. 물리적 낙하 시간 계산 (거리 / 속도)
         Vector3 fallStartPos = owner.transform.position;
-        while (fallElapsed < fallDuration)
+        float distance = Vector3.Distance(fallStartPos, currentTargetPos);
+        float physicalMoveDuration = distance / fallSpeed; // 거리에 상관없이 일정한 속도
+
+        float totalWaitTime = Mathf.Max(physicalMoveDuration, actualAnimDuration);
+        float fallTimeCounter = 0f;
+        bool hasHitGround = false;
+
+        while (fallTimeCounter < totalWaitTime)
         {
-            fallElapsed += Time.deltaTime;
-            owner.transform.position = Vector3.Lerp(fallStartPos, currentTargetPos, fallElapsed / fallDuration);
+            fallTimeCounter += Time.deltaTime;
+
+            if (!hasHitGround)
+            {
+                float moveT = physicalMoveDuration > 0 ? fallTimeCounter / physicalMoveDuration : 1f;
+                owner.transform.position = Vector3.Lerp(fallStartPos, currentTargetPos, Mathf.Min(moveT, 1f));
+
+                if (moveT >= 1f)
+                {
+                    owner.transform.position = currentTargetPos;
+                    hasHitGround = true;
+                }
+            }
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
-        owner.transform.position = currentTargetPos;
 
-        // 5. 폭발
+            // --- Stage 5: 폭발 및 착지 포즈 ---
         Explode(owner, currentTargetPos);
-        yield return new WaitForSeconds(0.2f);
         DisableAllVFX();
 
-        activeEnhancer?.OnEnd(owner);
+        SetSkillSprite(spriteC);
+        yield return new WaitForSeconds(0.5f);
 
-        if (controller != null) controller.enabled = true;
+        // --- 마무리 ---
+        SetSkillSprite(null);
+        RestorePlayerVisual(owner, controller);
+        activeEnhancer?.OnEnd(owner);
         isExecuting = false;
+    }
+
+    private void RestorePlayerVisual(GameObject owner, TopDownCharacterController controller)
+    {
+        if (playerRenderer != null) playerRenderer.enabled = true;
+        foreach (Transform child in owner.transform)
+        {
+            if (child.name == "SkillHolder" || child.gameObject == gameObject) continue;
+
+            child.gameObject.SetActive(true);
+            SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.color = Color.white;
+        }
+        if (controller != null)
+        {
+            controller.enabled = true;
+            owner.SendMessage("StopAndShowIdle", SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    private void SetPlayerCoreVisual(GameObject owner, bool show)
+    {
+        if (playerRenderer != null) playerRenderer.enabled = show;
+
+        if (!show)
+        {
+            foreach (Transform child in owner.transform)
+            {
+                if (child.name == "SkillHolder" || child.gameObject == gameObject) continue;
+                child.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void SetSkillSprite(GameObject target)
+    {
+        if (spriteA) spriteA.SetActive(false);
+        if (spriteB) spriteB.SetActive(false);
+        if (spriteC) spriteC.SetActive(false);
+
+        if (target != null) target.SetActive(true);
     }
 
     private void Explode(GameObject owner, Vector3 position)
