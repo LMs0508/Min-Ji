@@ -14,6 +14,7 @@ public class SlotSelectUI : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+
     // 매 프레임 단축키 입력을 확인합니다.
     private void Update()
     {

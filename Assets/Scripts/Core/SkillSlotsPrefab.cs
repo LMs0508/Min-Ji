@@ -5,11 +5,12 @@ public class SkillSlotsPrefab : MonoBehaviour
 {
     public GameObject[] equippedObj = new GameObject[4];
     public ISkill[] equippedSkill = new ISkill[4];
-    // 여기에 바닥에 떨어질 아이템 프리팹들이 저장됩니다.
     public GameObject[] equippedPickupPrefab = new GameObject[4];
 
-    public Transform skillHolder;
+    [Header("스킬 게이지 UI (Q, W, E, R 순서대로 4개)")]
+    public SkillGaugeUI[] slotGauges = new SkillGaugeUI[4];
 
+    public Transform skillHolder;
     public event Action<int, GameObject> OnEquipped;
     public event Action<int, float> OnCooldownChanged;
 
@@ -24,52 +25,60 @@ public class SkillSlotsPrefab : MonoBehaviour
         }
     }
 
-    // 핵심: 스킬 장착 및 교체 로직
     public void Equip(GameObject skillPrefab, GameObject pickupPrefab, int slot)
     {
         if (slot < 0 || slot >= 4) return;
 
-        // 기존 스킬 드롭 로직
         if (equippedObj[slot] != null)
         {
-            // Missing 방지 체크
             if (equippedPickupPrefab[slot] != null)
             {
                 Vector3 dropPos = transform.position + new Vector3(1f, 0, 0);
                 Instantiate(equippedPickupPrefab[slot], dropPos, Quaternion.identity);
-                Debug.Log($"<color=yellow>{equippedPickupPrefab[slot].name} 드롭 성공</color>");
-            }
-            else
-            {
-                Debug.LogWarning("드롭할 프리팹 정보가 유실되었습니다(Missing).");
             }
             Destroy(equippedObj[slot]);
         }
 
-        // 새 스킬 세팅
         GameObject inst = Instantiate(skillPrefab, skillHolder);
         inst.SetActive(true);
 
         equippedObj[slot] = inst;
         equippedSkill[slot] = inst.GetComponent<ISkill>();
-
-        // 이 시점에 pickupPrefab이 null인지 확인
-        if (pickupPrefab == null) Debug.LogError("전달받은 pickupPrefab이 이미 NULL입니다!");
-
         equippedPickupPrefab[slot] = pickupPrefab;
+
+        // [게이지 연결] 스킬 장착 시점에 자동으로 슬롯에 맞는 UI 연결
+        ConnectGaugeToSkill(inst, slot);
 
         OnEquipped?.Invoke(slot, skillPrefab);
     }
 
+    private void ConnectGaugeToSkill(GameObject inst, int slot)
+    {
+        if (slotGauges.Length <= slot || slotGauges[slot] == null) return;
+
+        // WeaponCharge 체크
+        var wc = inst.GetComponent<WeaponCharge>();
+        if (wc != null) wc.chargeGaugeUI = slotGauges[slot];
+
+        // DashEarthEnhancer 체크 (인핸서가 여러개일 수 있으므로 GetComponent 확인)
+        var earthDash = inst.GetComponent<DashEarthEnhancer>();
+        if (earthDash != null) earthDash.dashGaugeUI = slotGauges[slot];
+    }
+
     private void Update()
     {
-        // 키 입력 처리 (Q, W, E, R)
-        if (Input.GetKeyDown(KeyCode.Q)) Use(0);
-        if (Input.GetKeyDown(KeyCode.W)) Use(1);
-        if (Input.GetKeyDown(KeyCode.E)) Use(2);
-        if (Input.GetKeyDown(KeyCode.R)) Use(3);
+        bool isCtrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
-        // 쿨다운 UI 업데이트 이벤트 발송
+        // Ctrl이 눌려있지 않을 때만 Q, W, E, R 입력으로 스킬 사용
+        if (!isCtrlPressed)
+        {
+            if (Input.GetKeyDown(KeyCode.Q)) Use(0);
+            if (Input.GetKeyDown(KeyCode.W)) Use(1);
+            if (Input.GetKeyDown(KeyCode.E)) Use(2);
+            if (Input.GetKeyDown(KeyCode.R)) Use(3);
+        }
+
+        // 쿨다운 업데이트 (기존의 비율 계산 방식 유지)
         for (int i = 0; i < 4; i++)
         {
             var s = equippedSkill[i];
@@ -78,6 +87,8 @@ public class SkillSlotsPrefab : MonoBehaviour
                 OnCooldownChanged?.Invoke(i, 0f);
                 continue;
             }
+
+            // [중요] 남은 시간 / 전체 시간 비율로 계산하여 UI에 전달
             float fill = s.CooldownRemaining / s.Cooldown;
             OnCooldownChanged?.Invoke(i, fill);
         }
@@ -87,7 +98,15 @@ public class SkillSlotsPrefab : MonoBehaviour
     {
         if (slot >= 0 && slot < 4 && equippedSkill[slot] != null)
         {
-            equippedSkill[slot].TryUse(gameObject);
+            // 스킬 사용 시도
+            bool success = equippedSkill[slot].TryUse(gameObject);
+
+            // 성공했다면 즉시 쿨타임 UI가 반응하도록 이벤트 발송
+            if (success)
+            {
+                float fill = equippedSkill[slot].CooldownRemaining / equippedSkill[slot].Cooldown;
+                OnCooldownChanged?.Invoke(slot, fill);
+            }
         }
     }
 }

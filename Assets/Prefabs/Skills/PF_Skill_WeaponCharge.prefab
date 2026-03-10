@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fca994af5091c4e81dbfbd84c9b9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCharge
+  chargeGaugeUI: {fileID: 0}
   icon: {fileID: 4120006714373311370, guid: 484b6555e08118345a4f36038d56afff, type: 3}
   maxChargeDuration: 2
   cooldown: 0
@@ -92,8 +93,6 @@ MonoBehaviour:
   effect0: {fileID: 2476078371306863763}
   effect50: {fileID: 8307476233555437773}
   effect100: {fileID: 1994977261651083295}
-  chargeSprite0: {fileID: 0}
-  attackSprite0: {fileID: 0}
   rotationOffset: 0
   handObjectName: RightHand
   handOffset: {x: 0.5, y: 0, z: 0}

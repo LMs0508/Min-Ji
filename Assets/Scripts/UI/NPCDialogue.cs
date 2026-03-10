@@ -1,49 +1,126 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NPCDialogue : MonoBehaviour
 {
+    private SpriteRenderer iconRenderer;
     public string npcName = "NPC";
-    [TextArea(2, 4)]
-    public string[] lines;
+
+    [Header("Quest System")]
+    // 이제 단일 'quest' 변수는 삭제되었습니다. 인스펙터가 깨끗해질 거예요!
+    public List<QuestData> questList = new List<QuestData>();
+    private int currentQuestIndex = 0;
+
+    [Header("Normal Dialogue")]
+    [TextArea(2, 4)] public string[] normalLines; // 모든 퀘스트가 끝난 후 대사
 
     public KeyCode interactKey = KeyCode.Space;
-
-    [Header("Cooldown (after dialogue closes)")]
     public float reInteractCooldown = 0.5f;
-
     private float nextInteractTime = 0f;
     private bool playerNear;
 
+    private QuestData CurrentQuest => (currentQuestIndex < questList.Count) ? questList[currentQuestIndex] : null;
+
+    void Start()
+    {
+        if (QuestManager.Instance != null && QuestManager.Instance.iconPrefab != null)
+        {
+            GameObject iconObj = Instantiate(QuestManager.Instance.iconPrefab, transform);
+            iconObj.transform.localPosition = new Vector3(0, 1.5f, 0);
+            iconRenderer = iconObj.GetComponent<SpriteRenderer>();
+        }
+        UpdateQuestIcon();
+    }
+
     void Update()
     {
-        if (!playerNear) return;
-        if (DialogueManager.Instance == null) return;
-
-        // 대화 중이면 NPC가 다시 시작 못하게
-        if (DialogueManager.Instance.IsOpen()) return;
-
-        // 대화가 끝난 직후 쿨다운(같은 NPC만 적용)
-        if (Time.unscaledTime < nextInteractTime) return;
+        if (!playerNear || DialogueManager.Instance.IsOpen() || Time.unscaledTime < nextInteractTime) return;
 
         if (Input.GetKeyDown(interactKey))
         {
-            DialogueManager.Instance.StartDialogue(this, npcName, lines);
+            QuestData q = CurrentQuest;
+
+            if (q != null) // 진행할 퀘스트가 남아있다면
+            {
+                if (q.isAccepted && q.isCompleted)
+                {
+                    // 퀘스트 데이터에 들어있는 '완료 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.completedLines, false);
+                    GiveRewardAndNextQuest();
+                }
+                else if (q.isAccepted && !q.isCompleted)
+                {
+                    // 퀘스트 데이터에 들어있는 '진행 중 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.processingLines, false);
+                }
+                else
+                {
+                    // 퀘스트 데이터에 들어있는 '시작 대사' 사용
+                    DialogueManager.Instance.StartDialogue(this, npcName, q.startLines, true);
+                }
+            }
+            else // 모든 퀘스트 완료 시
+            {
+                DialogueManager.Instance.StartDialogue(this, npcName, normalLines, false);
+            }
         }
     }
 
-    // DialogueManager가 "대화 종료"할 때 호출해줌
-    public void NotifyDialogueClosed()
+    void GiveRewardAndNextQuest()
     {
-        nextInteractTime = Time.unscaledTime + reInteractCooldown;
+        QuestData q = CurrentQuest;
+        if (q == null) return;
+
+        // 아이템 회수
+        if (q.StealItem)
+        {
+            foreach (var obj in q.objectives)
+            {
+                if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
+                    InventoryManager.Instance.RemoveItem(obj.targetItem, obj.targetAmount);
+            }
+        }
+
+        // 보상 지급
+        if (q.rewards != null)
+        {
+            foreach (var reward in q.rewards)
+            {
+                if (reward.rewardItem != null)
+                    InventoryManager.Instance.AddItem(reward.rewardItem, reward.rewardAmount);
+            }
+        }
+
+        QuestManager.Instance.RemoveQuest(q);
+        currentQuestIndex++;
+        UpdateQuestIcon();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // 아이콘 상태 업데이트
+    public void UpdateQuestIcon()
     {
-        if (other.CompareTag("Player")) playerNear = true;
+        if (iconRenderer == null) return;
+        QuestData q = CurrentQuest;
+
+        if (q == null)
+        {
+            iconRenderer.gameObject.SetActive(false);
+            return;
+        }
+
+        iconRenderer.gameObject.SetActive(true);
+
+        if (q.isAccepted && q.isCompleted)
+            iconRenderer.sprite = QuestManager.Instance.canCompleteIcon;
+        else if (q.isAccepted && !q.isCompleted)
+            iconRenderer.sprite = QuestManager.Instance.inProgressIcon;
+        else
+            iconRenderer.sprite = QuestManager.Instance.canStartIcon;
     }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) playerNear = false;
-    }
+    public void NotifyDialogueClosed() => nextInteractTime = Time.unscaledTime + reInteractCooldown;
+    public QuestData GetCurrentQuest() => CurrentQuest;
+
+    void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = true; }
+    void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = false; }
 }

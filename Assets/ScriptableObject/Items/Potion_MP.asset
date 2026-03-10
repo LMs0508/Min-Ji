@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2dbe16adfd78941ae550eac9a4cb03, type: 3}
+  m_Name: Potion_MP
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: "\uD30C\uB780\uBB3C\uC57D"
+  itemType: 3
+  icon: {fileID: 1794495261392068382, guid: e5422b9064cab2042bf85603f96c2d34, type: 3}
+  description: "\uB9C8\uB098\uB97C \uC18C\uB7C9 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  isStackable: 1
+  maxStack: 99
+  value: 50
+  prefab: {fileID: 9078661445622820558, guid: e5b92c1b994d61745b7c77a70afbf6e2, type: 3}
+  consumableType: 2
+  duration: 0

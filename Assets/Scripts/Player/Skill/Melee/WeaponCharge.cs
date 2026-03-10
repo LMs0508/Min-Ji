@@ -8,6 +8,8 @@ using Game.Core;
 public class WeaponCharge : MonoBehaviour, ISkill
 {
     [Header("UI")]
+    public SkillGaugeUI chargeGaugeUI; // 여기에 게이지 프리팹/오브젝트 연결
+
     [SerializeField] private Sprite icon;
     public Sprite Icon => icon;
 
@@ -70,13 +72,23 @@ public class WeaponCharge : MonoBehaviour, ISkill
         ToggleAllEffects(false, false, false);
 
         float elapsed = 0f;
+        // [수정] 차징 시작 시 게이지 초기화
+        if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(0, maxChargeDuration);
+
         while (elapsed < maxChargeDuration && (keyToHold == KeyCode.None || Input.GetKey(keyToHold)))
         {
             elapsed += Time.deltaTime;
+
+            // [수정] 매 프레임 게이지 UI 업데이트 (0 -> 2초로 차오름)
+            if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(elapsed, maxChargeDuration);
+
             UpdateDirection(GetHandPosition(owner));
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
+
+        // 차징 종료 후 게이지 숨기기
+        if (chargeGaugeUI != null) chargeGaugeUI.Hide();
 
         float finalRatio = Mathf.Clamp01(elapsed / maxChargeDuration);
         GameObject targetEffect = (finalRatio >= 1.0f) ? effect100 : (finalRatio >= 0.5f ? effect50 : effect0);
@@ -87,10 +99,6 @@ public class WeaponCharge : MonoBehaviour, ISkill
             targetEffect.SetActive(true);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             SyncPivotTransform(targetEffect, GetHandPosition(owner), angle);
-
-            // 바람 속성 강화 적용
-            var wind = activeEnhancer as WeaponChargeWindEnhancer;
-            if (wind != null) wind.ApplyWindChargeEffect(finalRatio);
 
             yield return StartCoroutine(PlayAnimationWithFollow(targetEffect, owner, damageMult));
 
@@ -140,32 +148,21 @@ public class WeaponCharge : MonoBehaviour, ISkill
         {
             if (hitEnemiesHistory.Contains(enemy.gameObject)) continue;
 
-            EnemyHealth health = enemy.GetComponent<EnemyHealth>();
-            if (health != null)
+            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
                 int finalDamage = Mathf.RoundToInt(playerStats.Attack.Value * damageMult);
                 Vector2 rawDir = (enemy.transform.position - owner.transform.position);
                 Vector2 knockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
 
-                // [넉백 강화 로직] JudgmentSmash를 참고하여 속도 강제 제어
                 Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
                 if (rb != null && knockbackForce > 0)
                 {
-                    rb.linearVelocity = Vector2.zero; // 현재 AI가 주입하는 속도 초기화
-                    rb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse); // 즉각적인 힘 전달
+                    rb.linearVelocity = Vector2.zero;
+                    rb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
                 }
 
-                // [경직 부여] 공격 중이라도 AI의 이동 스크립트를 꺼버림
-                if (stunDuration > 0)
-                {
-                    EnemyMover mover = enemy.GetComponent<EnemyMover>();
-                    if (mover != null) mover.ApplyStun(stunDuration); // 이동 로직 일시 중지
-
-                    Animator enemyAnim = enemy.GetComponentInChildren<Animator>();
-                    if (enemyAnim != null) enemyAnim.SetTrigger("Hit"); // 피격 애니메이션 강제 실행
-                }
-
-                health.TakeDamage(finalDamage, knockbackDir);
+                enemyHealth.TakeDamage(finalDamage); // 수정된 EnemyHealth에 맞춰 호출
                 hitEnemiesHistory.Add(enemy.gameObject);
             }
         }
