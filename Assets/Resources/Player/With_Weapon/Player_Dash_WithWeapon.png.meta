@@ -1,0 +1,273 @@
+fileFormatVersion: 2
+guid: 0373dcc1421f17549b428cfb84c6f0cc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4931691342991962154
+    second: Player_Dash_WithWeapon_0
+  - first:
+      213: 8943410578164569084
+    second: Player_Dash_WithWeapon_1
+  - first:
+      213: 7682645429197014327
+    second: Player_Dash_WithWeapon_2
+  - first:
+      213: 5131252873315935315
+    second: Player_Dash_WithWeapon_3
+  - first:
+      213: -3172491787752785240
+    second: Player_Dash_WithWeapon_4
+  - first:
+      213: 6102997221636465961
+    second: Player_Dash_WithWeapon_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 450
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 1360
+        width: 576
+        height: 746
+      alignment: 9
+      pivot: {x: 0.7119696, y: 0.5409163}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df481f4adc1f8bb0800000000000000
+      internalID: -4931691342991962154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_1
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 1337
+        width: 543
+        height: 745
+      alignment: 9
+      pivot: {x: 0.6499012, y: 0.5191198}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf358ff59806d1c70800000000000000
+      internalID: 8943410578164569084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_2
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 1338
+        width: 517
+        height: 720
+      alignment: 9
+      pivot: {x: 0.65743953, y: 0.5254362}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735019e305d3e9a60800000000000000
+      internalID: 7682645429197014327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 269
+        width: 484
+        height: 724
+      alignment: 9
+      pivot: {x: 0.655561, y: 0.5421597}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 354e2be3d4fd53740800000000000000
+      internalID: 5131252873315935315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_4
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 259
+        width: 554
+        height: 735
+      alignment: 9
+      pivot: {x: 0.63223225, y: 0.5276857}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aab622178b09f3d0800000000000000
+      internalID: -3172491787752785240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon_5
+      rect:
+        serializedVersion: 2
+        x: 1174
+        y: 259
+        width: 562
+        height: 734
+      alignment: 9
+      pivot: {x: 0.69190407, y: 0.5277236}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92566d453a332b450800000000000000
+      internalID: 6102997221636465961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e1e433695aaae614d82d674665a0deab
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_Dash_WithWeapon_0: -4931691342991962154
+      Player_Dash_WithWeapon_1: 8943410578164569084
+      Player_Dash_WithWeapon_2: 7682645429197014327
+      Player_Dash_WithWeapon_3: 5131252873315935315
+      Player_Dash_WithWeapon_4: -3172491787752785240
+      Player_Dash_WithWeapon_5: 6102997221636465961
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

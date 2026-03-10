@@ -6,65 +6,79 @@ public class MonsterAttack : MonoBehaviour
     private EnemyMover mover;
     private Animator anim;
     private EnemyStats stats;
+    private MeleeArea meleeArea;
+    private EnemyEncounter encounter;
 
-    private Rigidbody2D rb;
-    public Transform player;
-    public float attackRange;
+    [HideInInspector]
+    private Transform player;
 
     private float wanderTimer;
     private Vector2 wanderDirection;
     private bool isWaiting = false;
-
-    public float attackCooldown;
-    public float moveSpeed;
     private float lastAttackTime;
+
+    private Vector3 originalScale;
 
     void Start()
     {
         mover = GetComponentInParent<EnemyMover>();
         stats = GetComponentInParent<EnemyStats>();
         anim = GetComponent<Animator>();
-        if (player == null )
+        meleeArea = GetComponentInChildren<MeleeArea>();
+        encounter = GetComponent<EnemyEncounter>();
+
+        originalScale = transform.localScale;
+
+        if (player == null)
         {
             GameObject go = GameObject.FindGameObjectWithTag("Player");
-            if(go != null )
-            {
-                player = go.transform;
-            }
+            if (go != null) player = go.transform;
         }
     }
 
     void Update()
     {
-        if (player == null || mover == null || anim == null) return;
+        if (player == null || stats == null || stats.enemyData == null) return;
 
-        bool isAttacking = anim.GetCurrentAnimatorStateInfo(0).IsName("AttackMotion") ||
-                       anim.GetNextAnimatorStateInfo(0).IsName("AttackMotion");
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (isAttacking)
-        {// 공격 중이면 이동을 멈추게 하는 코드
-            mover.Stop();
-            return; 
-        }
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        if (distance <= stats.enemyData.attackRange)
+        if (encounter != null)
         {
-            mover.Stop();
-            if (Time.time >= lastAttackTime + stats.enemyData.attackCooldown)
-            {
-                Attack();
-            }
+            if (encounter.CheckEncounter(distanceToPlayer) || encounter.IsEncountering)
+                return;
         }
-        else if(distance <= stats.detectionRange)
+
+        if (distanceToPlayer <= stats.enemyData.attackRange)
         {
+            FlipTowardsPlayer();
+            mover.Stop();
+            if (Time.time >= lastAttackTime + stats.enemyData.attackCooldown) Attack();
+        }
+
+        else if (distanceToPlayer <= stats.enemyData.detectionRange || (encounter != null && encounter.IsForceChasing))
+        {
+            FlipTowardsPlayer();
             Vector2 direction = (player.position - transform.position).normalized;
-            mover.Move(direction, stats.enemyData.moveSpeed);
+
+            float currentSpeed = (encounter != null && encounter.IsChasing)
+                                 ? stats.enemyData.moveSpeed
+                                 : stats.enemyData.wanderSpeed;
+
+            mover.Move(direction, currentSpeed);
         }
         else
         {
+            if (encounter != null) encounter.ResetEncounter();
             HandlePatrol();
         }
+    }
+
+    void FlipTowardsPlayer()
+    {
+        float diff = player.position.x - transform.position.x;
+        if (Mathf.Abs(diff) < 0.2f) return;
+        float directionX = (diff > 0) ? 1f : -1f;
+        ApplyFlip(directionX);
     }
 
     void HandlePatrol()
@@ -77,6 +91,11 @@ public class MonsterAttack : MonoBehaviour
             {
                 wanderDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
                 wanderTimer = stats.wanderDuration;
+                if (Mathf.Abs(wanderDirection.x) > 0.1f)
+                {
+                    float dirX = (wanderDirection.x > 0) ? 1f : -1f;
+                    ApplyFlip(dirX);
+                }
             }
             else
             {
@@ -84,46 +103,31 @@ public class MonsterAttack : MonoBehaviour
                 wanderTimer = stats.waitDuration;
             }
         }
+        if (!isWaiting) mover.Move(wanderDirection, stats.wanderSpeed);
+    }
 
-        if (!isWaiting)
+    void ApplyFlip(float x)
+    {
+        float targetX = Mathf.Abs(originalScale.x) * x;
+        if (transform.localScale.x != targetX)
         {
-            mover.Move(wanderDirection, stats.wanderSpeed);
+            transform.localScale = new Vector3(targetX, originalScale.y, originalScale.z);
         }
     }
 
     void Attack()
     {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("AttackMotion")) return;
         lastAttackTime = Time.time;
         anim.SetTrigger("Attack");
     }
 
-    public void OnMonsterHit()
+    public void TriggerAttackDamage()
     {
-        if (stats == null || player == null)
+        if (meleeArea != null && stats != null && stats.enemyData != null)
         {
-            return;
-        }
-        float currentDistance = Vector2.Distance(transform.position, player.position);
-        float range = stats.enemyData.attackRange;
-        if (currentDistance <= range + 0.5f)
-        {
-            var pStats = player.GetComponentInChildren<Game.Player.PlayerStats>();
-            if (pStats != null)
-            {
-                float dmg = stats.enemyData.damage;
-                pStats.TakeDamage(dmg);
-                Debug.Log($"{dmg} 데미지");
-            }
+            meleeArea.OnMonsterHit(stats.enemyData.damage);
+            Debug.Log("애니메이션 이벤트를 통해 MeleeArea 공격 판정 실행!");
         }
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        // 원의 색상을 빨간색으로 설정
-        Gizmos.color = Color.red;
-
-        // 현재 위치를 중심으로 attackRange 반지름만큼의 선으로 된 구(원)를 그림
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
-
 }

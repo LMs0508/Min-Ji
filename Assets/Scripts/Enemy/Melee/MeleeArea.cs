@@ -1,23 +1,38 @@
 using UnityEngine;
+using Game.Player;
 
 public class MeleeArea : MonoBehaviour
 {
     [Header("공격 판정 설정")]
     public float radius = 0.5f;
-    public LayerMask targetLayer; // 누구를 공격할지(Player)
+    public string targetTag = "Player";
 
-    private int damage;
+    private float damage;
 
-    public void CheckAttack(int attackDamage)
+    public void CheckAttack(float attackDamage)
     {
-        damage = attackDamage;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, radius, targetLayer);
-        
-        if(hit != null)
+        foreach (var hit in hits)
         {
-            Debug.Log($"{hit.name}에게 {damage} 데미지를 입혔습니다!");
+            if (hit.CompareTag(targetTag))
+            {
+                PlayerStats pStats = hit.GetComponent<PlayerStats>();
+                if (pStats == null) pStats = hit.GetComponentInChildren<PlayerStats>();
+
+                if (pStats != null)
+                {
+                    pStats.TakeDamage(attackDamage);
+                    Debug.Log($"<color=red>[타격 성공]</color> 무기 위치({transform.position})에서 {hit.name} 피격!");
+                    return;
+                }
+            }
         }
+    }
+
+    public void OnMonsterHit(float attackDamage)
+    {
+        CheckAttack(attackDamage);
     }
 
     private void OnDrawGizmosSelected()
