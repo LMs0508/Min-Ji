@@ -6,6 +6,7 @@ public class PlayerVisualHandler : MonoBehaviour
 {
     [Header("모드 설정")]
     public float combatModeDuration = 5f;
+    public bool isForcedCombatMode = false;
 
     [Header("일반 모드 (Walk)")]
     public GameObject walkFront;
@@ -57,7 +58,7 @@ public class PlayerVisualHandler : MonoBehaviour
         bool moving = controller.IsMoving;
         GameObject nextVisual = null;
 
-        if (isCombatMode)
+        if (isCombatMode || isForcedCombatMode)
         {
             if (bodyRenderer) bodyRenderer.enabled = false;
 

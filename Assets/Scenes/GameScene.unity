@@ -3283,6 +3283,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2727704921449879569, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: attack.baseValue
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4021966030366290591, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: blindPanel
@@ -3384,6 +3389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualHandler
   combatModeDuration: 5
+  isForcedCombatMode: 0
   walkFront: {fileID: 544317761}
   walkBack: {fileID: 1962845876}
   walkRight: {fileID: 1052165174}

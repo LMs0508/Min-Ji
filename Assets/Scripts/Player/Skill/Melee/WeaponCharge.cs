@@ -41,11 +41,20 @@ public class WeaponCharge : MonoBehaviour, ISkill
     private Vector2 lookDirection = Vector2.right;
     private Camera mainCam;
     private Transform cachedHand;
+    private float baseRadius = 0f;
 
     public float Cooldown => cooldown;
     public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
 
-    private void Awake() { mainCam = Camera.main; }
+    private void Awake() 
+    {
+        mainCam = Camera.main;
+        if (effect0 != null)
+        {
+            var col = effect0.GetComponentInChildren<CircleCollider2D>();
+            if (col != null) baseRadius = col.radius;
+        }
+    }
 
     public bool TryUse(GameObject owner)
     {
@@ -68,7 +77,11 @@ public class WeaponCharge : MonoBehaviour, ISkill
 
     private IEnumerator ChargeSequence(GameObject owner, KeyCode keyToHold)
     {
-        if (visualHandler) visualHandler.TriggerCombatMode();
+        if (visualHandler)
+        {
+            visualHandler.isForcedCombatMode = true;
+            visualHandler.TriggerCombatMode(); // 타이머도 일단 작동시킴
+        }
         ToggleAllEffects(false, false, false);
 
         float elapsed = 0f;
@@ -83,13 +96,21 @@ public class WeaponCharge : MonoBehaviour, ISkill
         GameObject targetEffect = (finalRatio >= 1.0f) ? effect100 : (finalRatio >= 0.5f ? effect50 : effect0);
         float damageMult = (finalRatio >= 1.0f) ? 2.5f : (finalRatio >= 0.5f ? 1.5f : 1.0f);
 
+        float radiusMultiplier = 1.0f;
+        if (targetEffect == effect50) radiusMultiplier = 2f;
+        else if (targetEffect == effect100) radiusMultiplier = 3f;
+
         if (targetEffect)
         {
             if (finalRatio >= 0.5f) yield return new WaitForSeconds(0.3f);
 
             // [최적화] 분리된 데미지 스크립트 가져오기 및 셋업
             WeaponChargeDamage dmgScript = targetEffect.GetComponentInChildren<WeaponChargeDamage>();
-            if (dmgScript) dmgScript.Setup(owner, playerStats, damageMult, knockbackForce, enemyLayer);
+            if (dmgScript)
+            {
+                float calculatedRadius = baseRadius * radiusMultiplier;
+                dmgScript.Setup(owner, playerStats, damageMult, knockbackForce, enemyLayer, calculatedRadius);
+            }
 
             if (visualHandler) visualHandler.enabled = false;
             SetNormalVisualsVisible(owner, false);
@@ -116,7 +137,9 @@ public class WeaponCharge : MonoBehaviour, ISkill
             if (skillPlayerVisual) skillPlayerVisual.SetActive(false);
             if (visualHandler) visualHandler.enabled = true;
             SetNormalVisualsVisible(owner, true);
+            if (controller) controller.enabled = true;
         }
+        if (visualHandler) visualHandler.isForcedCombatMode = false;
     }
 
     private IEnumerator PlayAttackAnimation(GameObject target, WeaponChargeDamage dmgScript, GameObject owner, GameObject visual)

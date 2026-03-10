@@ -31,6 +31,7 @@ namespace Game.Player
         public Transform popupPoint;
         [SerializeField] private float hitFlashDuration = 0.15f;
 
+        private PlayerVisualHandler visualHandler;
         private SpriteRenderer sr;
 
         [Header("Base Stats")]
@@ -70,6 +71,11 @@ namespace Game.Player
         {
             currentHP = MaxHP.Value;
             currentMP = MaxMP.Value;
+            visualHandler = GetComponent<PlayerVisualHandler>();
+            if (visualHandler == null)
+            {
+                visualHandler = GetComponentInParent<PlayerVisualHandler>();
+            }
             ClampResources();
         }
 
@@ -118,7 +124,10 @@ namespace Game.Player
             float finalDamage = amount * (1f - reductionPercent);
             currentHP = Mathf.Max(currentHP - finalDamage, 0f);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
-
+            if (visualHandler != null)
+            {
+                visualHandler.TriggerCombatMode();
+            }
             SpawnDamageText(amount);
             StopCoroutine("HitFlashRoutine");
             StartCoroutine("HitFlashRoutine");

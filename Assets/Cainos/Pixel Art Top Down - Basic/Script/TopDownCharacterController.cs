@@ -10,7 +10,6 @@ namespace Cainos.PixelArtTopDown_Basic
         public float stoppingDistance = 0.1f;
         public GameObject clickEffectPrefab;
 
-        // 다른 스크립트에서 읽어갈 데이터 (Read-Only)
         public bool IsMoving { get; private set; }
         public Vector2 MoveDirection { get; private set; }
 
