@@ -3273,6 +3273,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2009179115372391809, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 2009179115372391809, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_VertexColorAlwaysGammaSpace
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4021966030366290591, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: blindPanel
