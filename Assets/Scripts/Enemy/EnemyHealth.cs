@@ -146,6 +146,14 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
+        // [핵심 추가] 몬스터가 죽는 시점에 QuestManager에게 사냥 성공 보고
+        if (QuestManager.Instance != null && stats != null && stats.enemyData != null)
+        {
+            // MonsterHunt 타입으로, EnemyData에 적힌 이름을 ID로 전달하여 카운트를 올립니다.
+            QuestManager.Instance.ProgressQuest(QuestType.MonsterHunt, stats.enemyData.enemyName, 1);
+            Debug.Log($"퀘스트 보고됨: {stats.enemyData.enemyName} 사냥 완료");
+        }
+
         // 1. 모든 코루틴 즉시 중단 (피격/조우 연출 중지)
         StopAllCoroutines();
 
