@@ -3203,6 +3203,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353577761104875233, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: 'slotGauges.Array.data[0]'
@@ -3273,6 +3278,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2009179115372391809, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 4021966030366290591, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: blindPanel
@@ -3292,6 +3302,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 4
       addedObject: {fileID: 546535825}
+    - targetCorrespondingSourceObject: {fileID: 5686332469554187310, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 546535838}
   m_SourcePrefab: {fileID: 100100000, guid: 6961d4dbb06700941be0d29e73f16f7d, type: 3}
 --- !u!114 &546535821 stripped
 MonoBehaviour:
@@ -3345,14 +3359,6 @@ MonoBehaviour:
   stoppingDistance: 0.1
   clickEffectPrefab: {fileID: 7433390272444043429, guid: b3e5042a52fc427488cf425d140d305a,
     type: 3}
-  walkFront: {fileID: 544317761}
-  walkBack: {fileID: 1962845876}
-  walkRight: {fileID: 1052165174}
-  walkLeft: {fileID: 1528825572}
-  withWeaponIdle: {fileID: 1599173388}
-  dashRight: {fileID: 1589261297}
-  dashLeft: {fileID: 936431645}
-  skillHolder: {fileID: 1927850879}
 --- !u!114 &546535830 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
@@ -3365,6 +3371,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae936246a55f67e499ec155c8aafbb95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotsPrefab
+--- !u!114 &546535838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546535824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907af5d2a6e96d149bb9442f3fc527ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualHandler
+  combatModeDuration: 5
+  walkFront: {fileID: 544317761}
+  walkBack: {fileID: 1962845876}
+  walkRight: {fileID: 1052165174}
+  walkLeft: {fileID: 1528825572}
+  withWeaponIdle: {fileID: 1599173388}
+  dashRight: {fileID: 1589261297}
+  dashLeft: {fileID: 936431645}
+  WeaponHolder: {fileID: 1927850879}
 --- !u!1 &603640757
 GameObject:
   m_ObjectHideFlags: 0

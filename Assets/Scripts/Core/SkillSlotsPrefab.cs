@@ -14,8 +14,12 @@ public class SkillSlotsPrefab : MonoBehaviour
     public event Action<int, GameObject> OnEquipped;
     public event Action<int, float> OnCooldownChanged;
 
+    private PlayerVisualHandler visualHandler;
+
     private void Awake()
     {
+        visualHandler = GetComponent<PlayerVisualHandler>();
+
         if (skillHolder == null)
         {
             GameObject go = new GameObject("SkillHolder");
@@ -104,6 +108,11 @@ public class SkillSlotsPrefab : MonoBehaviour
             // 성공했다면 즉시 쿨타임 UI가 반응하도록 이벤트 발송
             if (success)
             {
+                if (visualHandler != null)
+                {
+                    visualHandler.TriggerCombatMode();
+                }
+
                 float fill = equippedSkill[slot].CooldownRemaining / equippedSkill[slot].Cooldown;
                 OnCooldownChanged?.Invoke(slot, fill);
             }
