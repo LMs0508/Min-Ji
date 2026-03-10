@@ -85,7 +85,6 @@ public class WeaponCharge : MonoBehaviour, ISkill
 
         if (targetEffect)
         {
-            if (controller) controller.enabled = false;
             if (finalRatio >= 0.5f) yield return new WaitForSeconds(0.3f);
 
             // [최적화] 분리된 데미지 스크립트 가져오기 및 셋업
@@ -117,7 +116,6 @@ public class WeaponCharge : MonoBehaviour, ISkill
             if (skillPlayerVisual) skillPlayerVisual.SetActive(false);
             if (visualHandler) visualHandler.enabled = true;
             SetNormalVisualsVisible(owner, true);
-            if (controller) controller.enabled = true;
         }
     }
 
@@ -216,14 +214,6 @@ public class WeaponCharge : MonoBehaviour, ISkill
         if (Input.GetKey(KeyCode.E)) return KeyCode.E;
         if (Input.GetKey(KeyCode.R)) return KeyCode.R;
         return KeyCode.None;
-    }
-
-    // --- 디버그용 기즈모 ---
-    private void OnDrawGizmos()
-    {
-        DrawGizmoFor(effect0, Color.red);
-        DrawGizmoFor(effect50, Color.yellow);
-        DrawGizmoFor(effect100, Color.green);
     }
 
     private void DrawGizmoFor(GameObject effect, Color color)
