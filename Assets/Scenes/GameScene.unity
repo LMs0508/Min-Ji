@@ -3203,6 +3203,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: 'slotGauges.Array.data[0]'
+      value: 
+      objectReference: {fileID: 445023983}
+    - target: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: 'slotGauges.Array.data[1]'
+      value: 
+      objectReference: {fileID: 807477076}
+    - target: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: 'slotGauges.Array.data[2]'
+      value: 
+      objectReference: {fileID: 343850300}
+    - target: {fileID: 904047641604795600, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: 'slotGauges.Array.data[3]'
+      value: 
+      objectReference: {fileID: 731492376}
     - target: {fileID: 1775091175777281360, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: m_LocalPosition.x
