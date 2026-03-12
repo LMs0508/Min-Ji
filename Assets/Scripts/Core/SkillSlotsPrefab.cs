@@ -14,8 +14,12 @@ public class SkillSlotsPrefab : MonoBehaviour
     public event Action<int, GameObject> OnEquipped;
     public event Action<int, float> OnCooldownChanged;
 
+    private PlayerVisualHandler visualHandler;
+
     private void Awake()
     {
+        visualHandler = GetComponent<PlayerVisualHandler>();
+
         if (skillHolder == null)
         {
             GameObject go = new GameObject("SkillHolder");
@@ -57,8 +61,8 @@ public class SkillSlotsPrefab : MonoBehaviour
         if (slotGauges.Length <= slot || slotGauges[slot] == null) return;
 
         // WeaponCharge 체크
-        //var wc = inst.GetComponent<WeaponCharge>();
-        //if (wc != null) wc.chargeGaugeUI = slotGauges[slot];
+        var wc = inst.GetComponent<WeaponCharge>();
+        if (wc != null) wc.chargeGaugeUI = slotGauges[slot];
 
         // DashEarthEnhancer 체크 (인핸서가 여러개일 수 있으므로 GetComponent 확인)
         var earthDash = inst.GetComponent<DashEarthEnhancer>();
@@ -104,6 +108,11 @@ public class SkillSlotsPrefab : MonoBehaviour
             // 성공했다면 즉시 쿨타임 UI가 반응하도록 이벤트 발송
             if (success)
             {
+                if (visualHandler != null)
+                {
+                    visualHandler.TriggerCombatMode();
+                }
+
                 float fill = equippedSkill[slot].CooldownRemaining / equippedSkill[slot].Cooldown;
                 OnCooldownChanged?.Invoke(slot, fill);
             }

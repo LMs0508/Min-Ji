@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 727380646752696351}
   - component: {fileID: 2848872274139357406}
   - component: {fileID: 5755312483882683077}
+  - component: {fileID: 3032333524095051625}
+  - component: {fileID: 4639280803714093822}
   m_Layer: 21
   m_Name: WeaponCharge(50%)
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.254351, y: 1.3223791, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5346989661969007644}
@@ -81,7 +83,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -44025399
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3779318580612044701, guid: 43bfa082330f3534da826e4b19f6b426,
     type: 3}
@@ -142,6 +144,30 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.84340143, y: -0.028024673}
   m_Radius: 5.52443
+--- !u!114 &3032333524095051625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195349617043621129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d5d2d092b0d9a48b33d5fde028e51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponChargeDamage
+--- !u!114 &4639280803714093822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195349617043621129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
 --- !u!1 &7469405716740438379
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +178,8 @@ GameObject:
   m_Component:
   - component: {fileID: 33904726523387264}
   - component: {fileID: 7957635349921120567}
+  - component: {fileID: 1905885491569898152}
+  - component: {fileID: 608312907763210173}
   m_Layer: 21
   m_Name: 50%-3
   m_TagString: Untagged
@@ -168,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 7469405716740438379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -234,6 +262,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!58 &1905885491569898152
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469405716740438379}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.84340143, y: -0.028024673}
+  m_Radius: 7
+--- !u!114 &608312907763210173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469405716740438379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
 --- !u!1 &9116352706850809549
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +320,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1002320049759976136}
   - component: {fileID: 3819345195387594587}
+  - component: {fileID: 2064897534896114508}
+  - component: {fileID: 8171876428575229857}
   m_Layer: 21
   m_Name: 50%-2
   m_TagString: Untagged
@@ -260,7 +338,7 @@ Transform:
   m_GameObject: {fileID: 9116352706850809549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,6 +403,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!58 &2064897534896114508
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9116352706850809549}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.84340096, y: -0.028024673}
+  m_Radius: 7
+--- !u!114 &8171876428575229857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9116352706850809549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
 --- !u!1 &9148692817327285150
 GameObject:
   m_ObjectHideFlags: 0

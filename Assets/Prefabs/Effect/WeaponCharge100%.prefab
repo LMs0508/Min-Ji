@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8634324695093102819}
   - component: {fileID: 1640111017985879127}
+  - component: {fileID: 2481839033073406258}
+  - component: {fileID: 1126192473736085911}
   m_Layer: 21
-  m_Name: 50%-2
+  m_Name: 100%-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 83943365768483281}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -91,6 +93,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!58 &2481839033073406258
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83943365768483281}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.77379036, y: -0.13820457}
+  m_Radius: 9.580772
+--- !u!114 &1126192473736085911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83943365768483281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
 --- !u!1 &1601852544912560403
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,8 +151,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1301949271658809335}
   - component: {fileID: 3266754451923419757}
+  - component: {fileID: 2378077658804627348}
+  - component: {fileID: 8224121107384798200}
   m_Layer: 21
-  m_Name: 50%-3
+  m_Name: 100%-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 1601852544912560403}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -183,6 +235,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!58 &2378077658804627348
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601852544912560403}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.77379036, y: -0.13820457}
+  m_Radius: 9.580772
+--- !u!114 &8224121107384798200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601852544912560403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
 --- !u!1 &6016387298275398507
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +413,8 @@ GameObject:
   - component: {fileID: 409306766215111978}
   - component: {fileID: 8088083441163776372}
   - component: {fileID: 9127076247654376523}
+  - component: {fileID: 5882686596469336964}
+  - component: {fileID: 5582452595313422090}
   m_Layer: 21
   m_Name: WeaponCharge(100%)
   m_TagString: Untagged
@@ -329,8 +431,8 @@ Transform:
   m_GameObject: {fileID: 8435651337230067212}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
+  m_LocalScale: {x: 1.2353901, y: 1.2376139, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 906190657758308737}
@@ -382,7 +484,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -44025399
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7292236270196928859, guid: 803b2a9556121d8419b6cfd6a8eca8c4,
     type: 3}
@@ -443,3 +545,27 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.77379036, y: -0.13820457}
   m_Radius: 7.5807724
+--- !u!114 &5882686596469336964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435651337230067212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d5d2d092b0d9a48b33d5fde028e51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponChargeDamage
+--- !u!114 &5582452595313422090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435651337230067212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf983c895acc61468cf0197f87eccd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillHitbox
