@@ -32,6 +32,7 @@ namespace Game.Player
         [SerializeField] private float hitFlashDuration = 0.15f;
 
         private SpriteRenderer sr;
+        private Coroutine hitFlashCoroutine;
 
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
@@ -109,8 +110,9 @@ namespace Game.Player
         {
             currentMP = Mathf.Min(currentMP + amount, maxMP.Value);
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
-            
+
         }
+
         public void TakeDamage(float amount)
         {
             if (amount <= 0f) return;
@@ -120,12 +122,20 @@ namespace Game.Player
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
 
             SpawnDamageText(amount);
-            StopCoroutine("HitFlashRoutine");
-            StartCoroutine("HitFlashRoutine");
+
+            // [핵심 수정] 맞을 때마다 기존 코루틴을 멈추고 무조건 전체 하얀색으로 한 번 초기화!
+            if (hitFlashCoroutine != null)
+            {
+                StopCoroutine(hitFlashCoroutine);
+            }
+            ForceResetVisual();
+
+            hitFlashCoroutine = StartCoroutine(HitFlashRoutine());
         }
 
         private IEnumerator HitFlashRoutine()
         {
+            // 플레이어 최상위 오브젝트부터 모든 스프라이트를 가져옵니다.
             SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
 
             if (allSrs != null && allSrs.Length > 0)
@@ -133,7 +143,8 @@ namespace Game.Player
                 // 1. 현재 '활성화' 되어 눈에 보이는 것들만 붉게 바꿉니다.
                 foreach (var sr in allSrs)
                 {
-                    if (sr != null && sr.gameObject.activeInHierarchy)
+                    // [추가] 그림자(Shadow)나 이펙트 등은 붉게 변하지 않도록 예외 처리
+                    if (sr != null && sr.gameObject.activeInHierarchy && sr.gameObject.name != "Shadow")
                     {
                         sr.color = Color.red;
                     }
@@ -141,16 +152,20 @@ namespace Game.Player
 
                 yield return new WaitForSeconds(hitFlashDuration);
 
+                // 2. 시간이 지나면 다시 하얗게
                 foreach (var sr in allSrs)
                 {
                     if (sr != null) sr.color = Color.white;
                 }
             }
+
+            hitFlashCoroutine = null;
         }
 
+        // [핵심 수정] 아래 초기화 함수들이 플레이어 전체(transform.root)를 탐색하도록 수정했습니다.
         public void ForceResetVisual()
         {
-            foreach (var sr in GetComponentsInChildren<SpriteRenderer>(true))
+            foreach (var sr in transform.root.GetComponentsInChildren<SpriteRenderer>(true))
             {
                 if (sr != null) sr.color = Color.white;
             }
@@ -163,7 +178,7 @@ namespace Game.Player
 
         public void ResetAllColors()
         {
-            SpriteRenderer[] allSrs = GetComponentsInChildren<SpriteRenderer>();
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
             foreach (var sr in allSrs)
             {
                 if (sr != null) sr.color = Color.white;
@@ -214,6 +229,7 @@ namespace Game.Player
 
         private Coroutine speedBuffCoroutine;
         private Coroutine attackBuffCoroutine;
+        private Coroutine defenseBuffCoroutine;
 
         // 이동 속도 버프 적용
         public void ApplySpeedBuff(float multiplier, float duration)
@@ -254,7 +270,25 @@ namespace Game.Player
             attack.Divide(multiplier);
             attackBuffCoroutine = null;
         }
-    
+
+        public void ApplyDefenseBuff(float multiplier, float duration)
+        {
+            if (defenseBuffCoroutine != null)
+            {
+                StopCoroutine(defenseBuffCoroutine);
+                defense.Divide(multiplier); // 중첩 방지 원복
+            }
+            defenseBuffCoroutine = StartCoroutine(DefenseBuffRoutine(multiplier, duration));
+        }
+
+        private IEnumerator DefenseBuffRoutine(float multiplier, float duration)
+        {
+            defense.Multiply(multiplier);
+            yield return new WaitForSeconds(duration);
+            defense.Divide(multiplier);
+            defenseBuffCoroutine = null;
+        }
+
 
         public void ClampResources()
         {

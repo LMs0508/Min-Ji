@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78881d2681cbc8846a1d5d57af81bfde, type: 3}
+  m_Name: ChargedAttackSkill
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillName: 
+  icon: {fileID: 0}
+  description: 
+  cooldown: 1
+  isActive: 0
+  isBuff: 0
+  useCharge: 0
+  useStack: 1
+  damageType: 0
+  damageRatio: 1
+  buffDuration: 3
+  speedMultiplier: 1
+  attackSpeedBoost: 0
+  attackBuffMultiplier: 1.2
+  maxChargeStages: 3
+  stageTimeThresholds:
+  - 0.5
+  - 1.5
+  - 2.5
+  stageMultipliers:
+  - 1
+  - 2
+  - 3
+  stageRanges:
+  - 1
+  - 2
+  - 3
+  maxStacks: 3
+  stackEffect: 0
+  stackBonusDamage: 0.5
+  skillPrefab: {fileID: 0}

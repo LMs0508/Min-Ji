@@ -20,20 +20,26 @@ public class ItemPickup : MonoBehaviour
             case ItemType.Melee:
             case ItemType.Magic:
             case ItemType.Ranged:
-                OpenSlotSelectUI();
+                // 플레이어에게서 WeaponManager를 찾습니다.
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                var weaponManager = player?.GetComponent<WeaponManager>();
+
+                if (weaponManager != null)
+                {
+                    // WeaponData로 형변환하여 전달 (아이템 데이터가 무기 데이터라면 가능)
+                    if (itemData is WeaponData weaponData)
+                    {
+                        weaponManager.EquipWeapon(weaponData);
+                        Destroy(gameObject); // 주운 무기 오브젝트 제거
+                    }
+                }
                 break;
 
             case ItemType.Consumable:
             case ItemType.Quest:
+                // 기존 인벤토리 로직 유지
                 if (InventoryManager.Instance.AddItem(itemData))
                 {
-                    // [추가] 아이템을 성공적으로 주웠을 때 QuestManager에게 알림
-                    if (QuestManager.Instance != null)
-                    {
-                        // QuestType.ItemCollect(수집) 타입으로, 아이템 이름을 ID로 전달
-                        QuestManager.Instance.ProgressQuest(QuestType.ItemCollect, itemData.itemName, 1);
-                    }
-
                     Destroy(gameObject);
                 }
                 break;
