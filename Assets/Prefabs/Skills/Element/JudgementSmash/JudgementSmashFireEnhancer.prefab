@@ -44,10 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2691526714ec50d44a515ff64ddd202e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashFireEnhancer
-  fireCharge: {fileID: 0}
-  fireRise: {fileID: 0}
-  fireAir: {fileID: 0}
-  fireFall: {fileID: 0}
+  fireCharge: {fileID: 7922307891942876863, guid: fe5caac0b35be89468d61556af16c7b0,
+    type: 3}
+  fireRise: {fileID: 3147437153643321267, guid: 2f1ab12fe268a4d499e9ea0f74364894,
+    type: 3}
+  fireAir: {fileID: 4686570195209003666, guid: bd11f4008c8892d468c57867a3d22f41, type: 3}
+  fireFall: {fileID: 5558626563883923733, guid: b9140ca1f1d006548bb77b049f7d7e39,
+    type: 3}
   fireTrailPrefab: {fileID: 0}
   groundFirePrefab: {fileID: 0}
   explosionRadius: 3
