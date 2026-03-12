@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Cainos.PixelArtTopDown_Basic
 {
-    //when object enter or exit the trigger, put it to the assigned layer and sorting layers base on the direction
-    //used in the stairs objects for player to travel between layers
-
     public class StairsLayerTrigger : MonoBehaviour
     {
-        public Direction direction;                                 //direction of the stairs
+        public Direction direction;
         [Space]
         public string layerUpper;
         public string sortingLayerUpper;
@@ -19,41 +14,51 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (direction == Direction.South && other.transform.position.y < transform.position.y) SetLayerAndSortingLayer(other.gameObject, layerUpper, sortingLayerUpper);
-            else
-            if (direction == Direction.West && other.transform.position.x < transform.position.x) SetLayerAndSortingLayer(other.gameObject, layerUpper, sortingLayerUpper);
-            else
-            if (direction == Direction.East && other.transform.position.x > transform.position.x) SetLayerAndSortingLayer(other.gameObject, layerUpper, sortingLayerUpper);
-
+            if (other.CompareTag("Player"))
+            {
+                if (direction == Direction.South && other.transform.position.y < transform.position.y)
+                    UpdatePlayerLayer(other.gameObject, layerUpper, sortingLayerUpper);
+                else if (direction == Direction.West && other.transform.position.x < transform.position.x)
+                    UpdatePlayerLayer(other.gameObject, layerUpper, sortingLayerUpper);
+                else if (direction == Direction.East && other.transform.position.x > transform.position.x)
+                    UpdatePlayerLayer(other.gameObject, layerUpper, sortingLayerUpper);
+            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (direction == Direction.South && other.transform.position.y < transform.position.y) SetLayerAndSortingLayer(other.gameObject, layerLower, sortingLayerLower);
-            else
-            if (direction == Direction.West && other.transform.position.x < transform.position.x) SetLayerAndSortingLayer(other.gameObject, layerLower, sortingLayerLower);
-            else
-            if (direction == Direction.East && other.transform.position.x > transform.position.x) SetLayerAndSortingLayer(other.gameObject, layerLower, sortingLayerLower);
-        }
-
-        private void SetLayerAndSortingLayer( GameObject target, string layer, string sortingLayer )
-        {
-            target.layer = LayerMask.NameToLayer(layer);
-
-            target.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
-            SpriteRenderer[] srs = target.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sr in srs)
+            if (other.CompareTag("Player"))
             {
-                sr.sortingLayerName = sortingLayer;
+                if (direction == Direction.South && other.transform.position.y < transform.position.y)
+                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
+                else if (direction == Direction.West && other.transform.position.x < transform.position.x)
+                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
+                else if (direction == Direction.East && other.transform.position.x > transform.position.x)
+                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
             }
         }
 
-        public enum Direction
+        // 핵심 수정 부분
+        private void UpdatePlayerLayer(GameObject target, string layerName, string sortingLayerName)
         {
-            North,
-            South,
-            West,
-            East
-        }    
+            // 1. 물리 레이어 변경 (2층 벽과 충돌하기 위함)
+            target.layer = LayerMask.NameToLayer(layerName);
+
+            // 2. 플레이어에게 붙인 PlayerLayerSync 스크립트를 찾아 모든 스프라이트 레이어 변경
+            // GetComponentInParent를 쓰는 이유는 콜라이더가 자식에 있을 수 있기 때문입니다.
+            PlayerLayerSync sync = target.GetComponentInParent<PlayerLayerSync>();
+            if (sync != null)
+            {
+                sync.UpdateAllSortingLayers(sortingLayerName);
+            }
+            else
+            {
+                // 만약 스크립트를 못 찾았다면 직접 변경 시도 (비상용)
+                SpriteRenderer[] srs = target.GetComponentsInChildren<SpriteRenderer>(true);
+                foreach (var sr in srs) sr.sortingLayerName = sortingLayerName;
+            }
+        }
+
+        public enum Direction { North, South, West, East }
     }
 }

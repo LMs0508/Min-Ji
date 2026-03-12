@@ -64,12 +64,4 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    private void OpenSlotSelectUI()
-    {
-        var slotUI = FindFirstObjectByType<SlotSelectUI>();
-        var slots = FindFirstObjectByType<SkillSlotsPrefab>();
-        // 기존 Equip 로직 호출...
-        slotUI.Open(slots, itemData.prefab, itemData.prefab);
-        Destroy(gameObject);
-    }
 }
