@@ -1,253 +1,296 @@
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Game.Player;
 using Game.Core;
-using Cainos.PixelArtTopDown_Basic;
 
 public class WeaponCharge : MonoBehaviour, ISkill
 {
-    [Header("공격 모션 설정")]
-    public GameObject skillPlayerVisual;
-    public Vector3 skillVisualOffset;
+    [Header("Skill Data (스크립터블 오브젝트 할당)")]
+    public SkillData skillData;
 
-    [Header("UI 설정")]
-    [SerializeField] private Sprite icon;
-    public Sprite Icon => icon;
+    [Header("UI & Cost")]
+    public float skillManaCost = 15f;
+    [HideInInspector] public SkillGaugeUI chargeGaugeUI;
 
-    [Header("스킬 능력치")]
-    public float maxChargeDuration = 2.0f;
-    public float cooldown = 5.0f;
-    public float skillManaCost = 15.0f;
-    public LayerMask enemyLayer;
+    public Sprite Icon => skillData != null ? skillData.icon : null;
+    public float Cooldown => skillData != null ? skillData.cooldown : 0f;
+    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + Cooldown) - Time.time);
 
-    [Header("이펙트 설정 (각각 WeaponChargeDamage 포함)")]
-    public float effectScale = 1.0f;
-    public GameObject effect0, effect50, effect100;
+    [Header("시각 효과 (VFX)")]
+    public GameObject chargingVFX;
 
-    [Header("공격 위치 설정")]
-    public string handObjectName = "RightHand";
-    public Vector3 handOffset = new Vector3(0.5f, 0f, 0f);
+    [Header("0% Settings (Stage 0)")]
+    public GameObject obj0Percent;
+    public GameObject playerAnim0Percent;
+    public float duration0Percent = 0.5f;
 
-    [Header("물리 효과")]
-    public float knockbackForce = 5.0f;
+    [Header("50% Settings (Stage 1)")]
+    public GameObject obj50Percent;
+    public GameObject playerAnim50Percent;
+    public float duration50Percent = 1.5f;
+
+    [Header("100% Settings (Stage 2)")]
+    public GameObject obj100Percent;
+    public GameObject playerAnim100Percent;
+    public float duration100Percent = 2.0f;
+
+    [Header("Combat Options")]
+    public float knockbackForce = 10f;
     public float stunDuration = 0.5f;
 
-    private PlayerVisualHandler visualHandler;
-    private TopDownCharacterController controller;
     private float lastUsedTime = -999f;
-    private PlayerStats playerStats;
-    private Vector2 lookDirection = Vector2.right;
-    private Camera mainCam;
-    private Transform cachedHand;
-    private float baseRadius = 0f;
+    private bool isCharging = false;
+    private bool isExecuting = false;
 
-    public float Cooldown => cooldown;
-    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
+    private SpriteRenderer playerRenderer;
+    private int currentCalculatedDamage;
+    private Vector2 currentAttackDirection;
 
-    private void Awake() 
+    private void Awake()
     {
-        mainCam = Camera.main;
-        if (effect0 != null)
-        {
-            var col = effect0.GetComponentInChildren<CircleCollider2D>();
-            if (col != null) baseRadius = col.radius;
-        }
+        DisableAllVisuals();
     }
 
     public bool TryUse(GameObject owner)
     {
-        if (owner == null || Time.time < lastUsedTime + cooldown) return false;
+        if (owner == null || isCharging || isExecuting || skillData == null) return false;
+        if (Time.time < lastUsedTime + Cooldown) return false;
 
-        playerStats = owner.GetComponentInChildren<PlayerStats>();
-        if (playerStats == null || !playerStats.SpendMP(skillManaCost)) return false;
-
-        visualHandler = owner.GetComponent<PlayerVisualHandler>();
-        controller = owner.GetComponent<TopDownCharacterController>();
-        cachedHand = FindChildRecursive(owner.transform, handObjectName);
-
+        var stats = owner.GetComponentInChildren<PlayerStats>();
         var runner = owner.GetComponent<CoroutineRunner>();
-        if (runner == null) return false;
 
-        lastUsedTime = Time.time;
-        runner.StartCoroutine(ChargeSequence(owner, GetCurrentPressedKey()));
+        if (stats == null || runner == null) return false;
+        if (!stats.SpendMP(skillManaCost)) return false;
+
+        playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
+
+        runner.StartCoroutine(ChargeRoutine(owner, stats));
         return true;
     }
 
-    private IEnumerator ChargeSequence(GameObject owner, KeyCode keyToHold)
+    private IEnumerator ChargeRoutine(GameObject owner, PlayerStats stats)
     {
-        if (visualHandler)
-        {
-            visualHandler.isForcedCombatMode = true;
-            visualHandler.TriggerCombatMode(); // 타이머도 일단 작동시킴
-        }
-        ToggleAllEffects(false, false, false);
+        isCharging = true;
+        float chargeTimer = 0f;
 
-        float elapsed = 0f;
-        while (elapsed < maxChargeDuration && (keyToHold == KeyCode.None || Input.GetKey(keyToHold)))
+        float maxChargeTime = 2f;
+        if (skillData.stageTimeThresholds != null && skillData.stageTimeThresholds.Length > 0)
         {
-            elapsed += Time.deltaTime;
-            UpdateLookDirection(owner);
+            maxChargeTime = skillData.stageTimeThresholds[skillData.stageTimeThresholds.Length - 1];
+        }
+
+        var playerElement = owner.GetComponentInChildren<PlayerElement>();
+        ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
+        var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
+
+        activeEnhancer?.OnStart(owner);
+
+        KeyCode activeKey = KeyCode.None;
+        if (Input.GetKey(KeyCode.Q)) activeKey = KeyCode.Q;
+        else if (Input.GetKey(KeyCode.W)) activeKey = KeyCode.W;
+        else if (Input.GetKey(KeyCode.E)) activeKey = KeyCode.E;
+        else if (Input.GetKey(KeyCode.R)) activeKey = KeyCode.R;
+
+        if (chargeGaugeUI != null)
+        {
+            chargeGaugeUI.Show();
+            chargeGaugeUI.SetGauge(0, maxChargeTime);
+        }
+
+        // [수정된 부분] 켜지기 1프레임 전부터 플레이어 위치로 완벽하게 고정시킴
+        if (chargingVFX != null)
+        {
+            chargingVFX.transform.position = owner.transform.position;
+            chargingVFX.SetActive(true);
+        }
+
+        while (activeKey != KeyCode.None && Input.GetKey(activeKey))
+        {
+            chargeTimer += Time.deltaTime;
+            chargeTimer = Mathf.Clamp(chargeTimer, 0f, maxChargeTime);
+
+            if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(chargeTimer, maxChargeTime);
+            activeEnhancer?.OnUpdate(owner);
+
+            // [수정된 부분] 매 프레임 플레이어 위치를 쫓아가며, 마우스 방향에 맞춰 차징 이펙트도 좌우 반전
+            if (chargingVFX != null)
+            {
+                chargingVFX.transform.position = owner.transform.position;
+
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                bool isFacingRight = mousePos.x >= owner.transform.position.x;
+                Vector3 vfxScale = chargingVFX.transform.localScale;
+                vfxScale.x = Mathf.Abs(vfxScale.x) * (isFacingRight ? 1f : -1f);
+                chargingVFX.transform.localScale = vfxScale;
+            }
+
             yield return null;
         }
 
-        float finalRatio = Mathf.Clamp01(elapsed / maxChargeDuration);
-        GameObject targetEffect = (finalRatio >= 1.0f) ? effect100 : (finalRatio >= 0.5f ? effect50 : effect0);
-        float damageMult = (finalRatio >= 1.0f) ? 2.5f : (finalRatio >= 0.5f ? 1.5f : 1.0f);
-
-        float radiusMultiplier = 1.0f;
-        if (targetEffect == effect50) radiusMultiplier = 2f;
-        else if (targetEffect == effect100) radiusMultiplier = 3f;
-
-        if (targetEffect)
+        if (chargingVFX != null)
         {
-            if (finalRatio >= 0.5f) yield return new WaitForSeconds(0.3f);
-
-            // [최적화] 분리된 데미지 스크립트 가져오기 및 셋업
-            WeaponChargeDamage dmgScript = targetEffect.GetComponentInChildren<WeaponChargeDamage>();
-            if (dmgScript)
-            {
-                float calculatedRadius = baseRadius * radiusMultiplier;
-                dmgScript.Setup(owner, playerStats, damageMult, knockbackForce, enemyLayer, calculatedRadius);
-            }
-
-            if (visualHandler) visualHandler.enabled = false;
-            SetNormalVisualsVisible(owner, false);
-
-            if (skillPlayerVisual)
-            {
-                skillPlayerVisual.SetActive(true);
-                UpdateAttackVisualTransform(owner);
-                Animator vfxPlayerAnim = skillPlayerVisual.GetComponent<Animator>();
-                if (vfxPlayerAnim)
-                {
-                    vfxPlayerAnim.speed = (targetEffect == effect0) ? 2.0f : 1.0f;
-                    vfxPlayerAnim.SetTrigger("OnWeaponCharge");
-                }
-            }
-
-            targetEffect.SetActive(true);
-            SyncEffectTransform(targetEffect, owner);
-
-            // [전달] 데미지 스크립트를 넘겨 매 프레임 판정 수행
-            yield return StartCoroutine(PlayAttackAnimation(targetEffect, dmgScript, owner, skillPlayerVisual));
-
-            targetEffect.SetActive(false);
-            if (skillPlayerVisual) skillPlayerVisual.SetActive(false);
-            if (visualHandler) visualHandler.enabled = true;
-            SetNormalVisualsVisible(owner, true);
-            if (controller) controller.enabled = true;
+            chargingVFX.SetActive(false);
         }
-        if (visualHandler) visualHandler.isForcedCombatMode = false;
-    }
 
-    private IEnumerator PlayAttackAnimation(GameObject target, WeaponChargeDamage dmgScript, GameObject owner, GameObject visual)
-    {
-        Animator vfxAnim = target.GetComponentInChildren<Animator>();
-        float timer = 0f;
+        float chargePercent = chargeTimer / maxChargeTime;
 
-        if (vfxAnim) vfxAnim.SetTrigger("OnAttack");
-        yield return new WaitForEndOfFrame();
-
-        float duration = vfxAnim ? vfxAnim.GetCurrentAnimatorStateInfo(0).length / vfxAnim.speed : 0.5f;
-
-        while (timer < duration)
+        if (activeEnhancer is WeaponChargeWindEnhancer windEnhancer)
         {
-            timer += Time.deltaTime;
-            if (owner)
+            windEnhancer.ApplyWindChargeEffect(chargePercent);
+        }
+
+        if (chargeGaugeUI != null) chargeGaugeUI.Hide();
+        isCharging = false;
+
+        yield return StartCoroutine(ExecuteAttackRoutine(owner, stats, chargeTimer, activeEnhancer));
+    }
+
+    private IEnumerator ExecuteAttackRoutine(GameObject owner, PlayerStats stats, float chargeTimer, ISkillElementEnhancer activeEnhancer)
+    {
+        isExecuting = true;
+
+        SetPlayerCoreVisual(owner, false);
+
+        int stageIndex = 0;
+        GameObject activeParentObj = null;
+        GameObject activePlayerAnim = null;
+        float currentAnimDuration = 0f;
+
+        if (skillData.stageTimeThresholds.Length >= 3)
+        {
+            if (chargeTimer >= skillData.stageTimeThresholds[2])
             {
-                target.transform.position = GetHandPosition(owner);
-                UpdateAttackVisualTransform(owner);
-                // [호출] 분리된 스크립트의 히트 체크 실행
-                if (dmgScript) dmgScript.CheckHit();
+                stageIndex = 2;
+                activeParentObj = obj100Percent;
+                activePlayerAnim = playerAnim100Percent;
+                currentAnimDuration = duration100Percent;
             }
-            yield return null;
+            else if (chargeTimer >= skillData.stageTimeThresholds[1])
+            {
+                stageIndex = 1;
+                activeParentObj = obj50Percent;
+                activePlayerAnim = playerAnim50Percent;
+                currentAnimDuration = duration50Percent;
+            }
+            else
+            {
+                stageIndex = 0;
+                activeParentObj = obj0Percent;
+                activePlayerAnim = playerAnim0Percent;
+                currentAnimDuration = duration0Percent;
+            }
+        }
+
+        float baseDamage = stats.Attack.Value * skillData.damageRatio;
+        float currentMultiplier = skillData.stageMultipliers.Length > stageIndex ? skillData.stageMultipliers[stageIndex] : 1f;
+        currentCalculatedDamage = Mathf.RoundToInt(baseDamage * currentMultiplier);
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        Vector3 attackOrigin = owner.transform.position;
+
+        bool isFacingRight = mousePos.x >= attackOrigin.x;
+        currentAttackDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        if (activeParentObj != null)
+        {
+            activeParentObj.transform.position = attackOrigin;
+
+            Vector3 effectScale = activeParentObj.transform.localScale;
+            effectScale.x = Mathf.Abs(effectScale.x) * (isFacingRight ? 1f : -1f);
+            activeParentObj.transform.localScale = effectScale;
+            activeParentObj.transform.rotation = Quaternion.identity;
+
+            activeParentObj.SetActive(true);
+
+            Animator skillAnim = activeParentObj.GetComponent<Animator>();
+            if (skillAnim == null) skillAnim = activeParentObj.GetComponentInChildren<Animator>();
+
+            if (skillAnim != null)
+            {
+                skillAnim.SetTrigger("OnAttack");
+            }
+        }
+
+        if (activePlayerAnim != null)
+        {
+            activePlayerAnim.transform.position = attackOrigin;
+
+            Vector3 playerAnimScale = activePlayerAnim.transform.localScale;
+            playerAnimScale.x = Mathf.Abs(playerAnimScale.x) * (isFacingRight ? 1f : -1f);
+            activePlayerAnim.transform.localScale = playerAnimScale;
+
+            activePlayerAnim.SetActive(true);
+
+            Animator playerAnim = activePlayerAnim.GetComponent<Animator>();
+            if (playerAnim == null) playerAnim = activePlayerAnim.GetComponentInChildren<Animator>();
+
+            if (playerAnim != null)
+            {
+                playerAnim.SetTrigger("OnAttack");
+            }
+        }
+
+        yield return new WaitForSeconds(currentAnimDuration);
+
+        DisableAllVisuals();
+        SetPlayerCoreVisual(owner, true);
+
+        var visualHandler = owner.GetComponent<PlayerVisualHandler>();
+        if (visualHandler != null) visualHandler.TriggerCombatMode();
+
+        activeEnhancer?.OnEnd(owner);
+
+        lastUsedTime = Time.time;
+        isExecuting = false;
+    }
+
+    public void PerformHitboxDamage(Collider2D enemyCollider)
+    {
+        EnemyHealth healthScript = enemyCollider.GetComponent<EnemyHealth>();
+        if (healthScript != null)
+        {
+            healthScript.TakeDamage(currentCalculatedDamage, currentAttackDirection);
+
+            Rigidbody2D rb = enemyCollider.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(currentAttackDirection * knockbackForce, ForceMode2D.Impulse);
+            }
+
+            if (!healthScript.IsDead)
+            {
+                Animator enemyAnim = enemyCollider.GetComponentInChildren<Animator>();
+                if (enemyAnim != null) enemyAnim.SetTrigger("Hit");
+
+                EnemyMover mover = enemyCollider.GetComponent<EnemyMover>();
+                if (mover != null) mover.ApplyStun(stunDuration);
+            }
         }
     }
 
-    private void UpdateLookDirection(GameObject owner)
+    private void DisableAllVisuals()
     {
-        Vector3 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        float diffX = mousePos.x - owner.transform.position.x;
-        lookDirection = new Vector2(diffX >= 0 ? 1f : -1f, 0);
+        if (chargingVFX != null) chargingVFX.SetActive(false);
+        if (obj0Percent) obj0Percent.SetActive(false);
+        if (obj50Percent) obj50Percent.SetActive(false);
+        if (obj100Percent) obj100Percent.SetActive(false);
+
+        if (playerAnim0Percent) playerAnim0Percent.SetActive(false);
+        if (playerAnim50Percent) playerAnim50Percent.SetActive(false);
+        if (playerAnim100Percent) playerAnim100Percent.SetActive(false);
     }
 
-    private void UpdateAttackVisualTransform(GameObject owner)
+    private void SetPlayerCoreVisual(GameObject owner, bool show)
     {
-        if (skillPlayerVisual == null) return;
-        Vector3 currentOffset = skillVisualOffset;
-        currentOffset.x *= lookDirection.x;
-        skillPlayerVisual.transform.position = owner.transform.position + currentOffset;
+        if (playerRenderer != null) playerRenderer.enabled = show;
 
-        Vector3 vScale = Vector3.one * effectScale;
-        vScale.x *= lookDirection.x;
-        skillPlayerVisual.transform.localScale = vScale;
-    }
-
-    private void SetNormalVisualsVisible(GameObject owner, bool isVisible)
-    {
         foreach (Transform child in owner.transform)
         {
-            if (skillPlayerVisual != null && child.gameObject == skillPlayerVisual) continue;
-            if (child.name.Contains("Player") || child.name.Contains("Weapon") || child.name.Contains("Dash") || child.name.Contains("Walk"))
-                child.gameObject.SetActive(isVisible);
-        }
-        var mainSR = owner.GetComponent<SpriteRenderer>();
-        if (mainSR) mainSR.enabled = isVisible;
-    }
-
-    private void SyncEffectTransform(GameObject effectObj, GameObject owner)
-    {
-        effectObj.transform.position = GetHandPosition(owner);
-        Vector3 effectScaleVec = Vector3.one * effectScale;
-        effectScaleVec.x = Mathf.Abs(effectScaleVec.x) * lookDirection.x;
-        effectObj.transform.localScale = effectScaleVec;
-        effectObj.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
-    }
-
-    private Vector3 GetHandPosition(GameObject owner)
-    {
-        if (cachedHand != null) return cachedHand.position;
-        return owner.transform.position + new Vector3(handOffset.x * lookDirection.x, handOffset.y, handOffset.z);
-    }
-
-    private Transform FindChildRecursive(Transform parent, string name)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name) return child;
-            Transform result = FindChildRecursive(child, name);
-            if (result != null) return result;
-        }
-        return null;
-    }
-
-    private void ToggleAllEffects(bool s0, bool s50, bool s100)
-    {
-        if (effect0) effect0.SetActive(s0);
-        if (effect50) effect50.SetActive(s50);
-        if (effect100) effect100.SetActive(s100);
-    }
-
-    private KeyCode GetCurrentPressedKey()
-    {
-        if (Input.GetKey(KeyCode.Q)) return KeyCode.Q;
-        if (Input.GetKey(KeyCode.W)) return KeyCode.W;
-        if (Input.GetKey(KeyCode.E)) return KeyCode.E;
-        if (Input.GetKey(KeyCode.R)) return KeyCode.R;
-        return KeyCode.None;
-    }
-
-    private void DrawGizmoFor(GameObject effect, Color color)
-    {
-        if (effect == null) return;
-        CircleCollider2D col = effect.GetComponentInChildren<CircleCollider2D>();
-        if (col)
-        {
-            Gizmos.color = color;
-            Vector3 center = GetHandPosition(gameObject) + (Vector3)col.offset;
-            Gizmos.DrawWireSphere(center, col.radius * effectScale);
+            if (child.name == "SkillHolder" || child.name == "Shadow" || child.gameObject == gameObject) continue;
+            child.gameObject.SetActive(show);
         }
     }
 }

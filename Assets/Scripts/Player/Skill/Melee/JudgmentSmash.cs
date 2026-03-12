@@ -9,10 +9,12 @@ using Game.Core;
 
 public class JudgmentSmash : MonoBehaviour, ISkill
 {
+    [Header("Skill Data (스크립터블 오브젝트 할당)")]
+    public SkillData skillData; // [추가] 기획 데이터 연결
+
     [Header("UI & Cost")]
-    [SerializeField] private Sprite icon;
-    public Sprite Icon => icon;
     public float skillManaCost = 20f;
+    public Sprite Icon => skillData != null ? skillData.icon : null;
 
     [Header("스킬 전용 플레이어 외형")]
     public GameObject spriteA;
@@ -21,7 +23,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
     [Header("스킬 셋팅")]
     public float maxJumpDistance = 5f;
-    public float cooldown = 10f;
     private float lastUsedTime = -999f;
 
     [Header("조준점 설정")]
@@ -34,7 +35,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     public GameObject airVFX;
     public GameObject fallVFX;
 
-    // 강화기(Enhancer)가 교체하기 전의 '일반' 이펙트를 기억하는 백업용
     [HideInInspector] public GameObject defaultCharge, defaultRise, defaultAir, defaultFall;
 
     [Header("Movement Settings")]
@@ -51,12 +51,12 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     private Animator parentAnim;
     private bool isExecuting = false;
 
-    public float Cooldown => cooldown;
-    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
+    // [수정] 쿨다운을 SkillData에서 가져옴
+    public float Cooldown => skillData != null ? skillData.cooldown : 0f;
+    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + Cooldown) - Time.time);
 
     void Awake()
     {
-        // 처음 설정된 일반(Normal) 이펙트들을 백업해둡니다.
         defaultCharge = chargeVFX; defaultRise = riseVFX;
         defaultAir = airVFX; defaultFall = fallVFX;
     }
@@ -73,8 +73,8 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
     public bool TryUse(GameObject owner)
     {
-        if (owner == null || isExecuting) return false;
-        if (Time.time < lastUsedTime + cooldown) return false;
+        if (owner == null || isExecuting || skillData == null) return false;
+        if (Time.time < lastUsedTime + Cooldown) return false;
 
         var stats = owner.GetComponentInChildren<PlayerStats>();
         var runner = owner.GetComponent<CoroutineRunner>();
@@ -92,30 +92,63 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     {
         isExecuting = true;
 
-        // --- 초기 세팅 ---
         var controller = owner.GetComponent<TopDownCharacterController>();
         var rb = owner.GetComponentInChildren<Rigidbody2D>();
         parentAnim = owner.GetComponentInChildren<Animator>();
         playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
 
-        var playerElement = owner.GetComponentInChildren<PlayerElement>();
-        ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
-        var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
+        // ==============================================================
+        // [핵심 수정] SkillData를 활용한 속성(Enhancer) 동적 생성 로직
+        // ==============================================================
+        ISkillElementEnhancer activeEnhancer = null;
+        GameObject enhancerInst = null; // 스킬 종류 후 삭제를 위해 저장해둠
 
+        if (skillData != null && skillData.isElementReactive)
+        {
+            var playerElement = owner.GetComponentInChildren<PlayerElement>();
+            ElementType currentElement = playerElement != null && playerElement.HasElement ? playerElement.CurrentElement : skillData.defaultElement;
+
+            GameObject targetEnhancerPrefab = null;
+
+            // 현재 속성에 맞는 프리팹 찾기
+            switch (currentElement)
+            {
+                case ElementType.Fire: targetEnhancerPrefab = skillData.fireEnhancerPrefab; break;
+                case ElementType.Water: targetEnhancerPrefab = skillData.waterEnhancerPrefab; break;
+                case ElementType.Earth: targetEnhancerPrefab = skillData.earthEnhancerPrefab; break;
+                case ElementType.Wind: targetEnhancerPrefab = skillData.windEnhancerPrefab; break;
+            }
+
+            // 프리팹이 있다면 스킬 자식으로 소환해서 연결
+            if (targetEnhancerPrefab != null)
+            {
+                enhancerInst = Instantiate(targetEnhancerPrefab, transform);
+                activeEnhancer = enhancerInst.GetComponent<ISkillElementEnhancer>();
+            }
+        }
+
+        // (안전장치) SkillData에 안 넣었지만 기존처럼 스킬 자체에 컴포넌트가 붙어있을 경우
+        if (activeEnhancer == null)
+        {
+            var playerElement = owner.GetComponentInChildren<PlayerElement>();
+            ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
+            activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
+        }
+
+        // 인핸서 시작 (VFX 교체 등)
         activeEnhancer?.OnStart(owner);
+        // ==============================================================
 
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
         SetPlayerCoreVisual(owner, false);
 
-        // --- 1. 기 모으기 (HolyCircleVFX) ---
         SetVFX(chargeVFX);
-        SetSkillSprite(spriteA); // 1번 전용 스프라이트 활성화
+        SetSkillSprite(spriteA);
         yield return new WaitForSeconds(0.2f);
 
-        // --- 2. 수직 상승 (Judgement_RiseVFX) ---
         SetVFX(riseVFX);
-        SetSkillSprite(spriteB); // 2번 전용 스프라이트 활성화
+        SetSkillSprite(spriteB);
         Vector3 startPos = owner.transform.position;
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
         yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
@@ -131,13 +164,11 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             yield return null;
         }
 
-
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
 
         SetSkillSprite(null);
         SetVFX(fallVFX);
 
-        // 1. 애니메이션 실제 길이 측정
         float actualAnimDuration = 0.5f;
         Animator fallAnim = fallVFX.GetComponent<Animator>();
         if (fallAnim != null)
@@ -149,10 +180,9 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (parentAnim != null) parentAnim.SetTrigger("OnFall");
 
-        // 2. 물리적 낙하 시간 계산 (거리 / 속도)
         Vector3 fallStartPos = owner.transform.position;
         float distance = Vector3.Distance(fallStartPos, currentTargetPos);
-        float physicalMoveDuration = distance / fallSpeed; // 거리에 상관없이 일정한 속도
+        float physicalMoveDuration = distance / fallSpeed;
 
         float totalWaitTime = Mathf.Max(physicalMoveDuration, actualAnimDuration);
         float fallTimeCounter = 0f;
@@ -173,21 +203,24 @@ public class JudgmentSmash : MonoBehaviour, ISkill
                     hasHitGround = true;
                 }
             }
+            // 낙하하는 동안 속성 인핸서 업데이트 (기존 로직 유지)
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
 
-            // --- Stage 5: 폭발 및 착지 포즈 ---
         Explode(owner, currentTargetPos);
         DisableAllVFX();
 
         SetSkillSprite(spriteC);
         yield return new WaitForSeconds(0.5f);
 
-        // --- 마무리 ---
         SetSkillSprite(null);
         RestorePlayerVisual(owner, controller);
+
+        // [추가] 스킬 종료 후 소환했던 Enhancer 객체를 깔끔하게 삭제
         activeEnhancer?.OnEnd(owner);
+        if (enhancerInst != null) Destroy(enhancerInst);
+
         isExecuting = false;
     }
 
@@ -236,7 +269,10 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     {
         var stats = owner.GetComponentInChildren<PlayerStats>();
         float playerAttack = (stats != null) ? stats.Attack.Value : 20f;
-        int finalDamage = Mathf.RoundToInt(playerAttack * 2f);
+
+        // [핵심 수정] 2f로 고정되어있던 계수를 SkillData에서 가져옴 (안 넣었을 경우 기본 2배)
+        float damageMultiplier = skillData != null ? skillData.damageRatio : 2.0f;
+        int finalDamage = Mathf.RoundToInt(playerAttack * damageMultiplier);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(position, explosionRadius);
         foreach (Collider2D hit in hitColliders)
@@ -298,7 +334,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
     private void DisableAllVFX()
     {
-        // 모든 이펙트를 명시적으로 끕니다. (백업본까지 포함하여 모두 끔)
         if (defaultCharge) defaultCharge.SetActive(false); if (defaultRise) defaultRise.SetActive(false);
         if (defaultAir) defaultAir.SetActive(false); if (defaultFall) defaultFall.SetActive(false);
         if (chargeVFX) chargeVFX.SetActive(false); if (riseVFX) riseVFX.SetActive(false);

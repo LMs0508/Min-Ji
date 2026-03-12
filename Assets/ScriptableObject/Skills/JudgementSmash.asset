@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78881d2681cbc8846a1d5d57af81bfde, type: 3}
+  m_Name: JudgementSmash
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillName: JudgementSmash
+  icon: {fileID: -1025219060167273282, guid: 7cc1fd4fd9bc72d43864dee394d53d89, type: 3}
+  description: 
+  cooldown: 1
+  isActive: 1
+  isBuff: 0
+  useCharge: 0
+  useStack: 0
+  isElementReactive: 1
+  defaultElement: 0
+  fireEnhancerPrefab: {fileID: 0}
+  waterEnhancerPrefab: {fileID: 0}
+  earthEnhancerPrefab: {fileID: 0}
+  windEnhancerPrefab: {fileID: 0}
+  damageType: 0
+  damageRatio: 1.5
+  buffDuration: 5
+  speedMultiplier: 1
+  attackSpeedBoost: 0
+  attackBuffMultiplier: 1
+  armor: 1.2
+  cooltimeReduce: 1
+  maxChargeStages: 3
+  stageTimeThresholds:
+  - 0
+  - 1
+  - 2
+  stageMultipliers:
+  - 1
+  - 2
+  - 3
+  stageRanges:
+  - 1
+  - 2
+  - 3
+  maxStacks: 3
+  stackEffect: 0
+  stackBonusDamage: 0.5
+  skillPrefab: {fileID: 6937305669529462694, guid: 1660026949bbb5a499c098182ea50aa4,
+    type: 3}
