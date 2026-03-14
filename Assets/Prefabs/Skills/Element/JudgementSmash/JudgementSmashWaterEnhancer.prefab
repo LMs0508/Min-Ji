@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727ae1df5ae1ce348b2bb2429f3fd334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashWaterEnhancer
-  whirlwindPrefab: {fileID: 0}
+  whirlwindPrefab: {fileID: 7502610146362537723, guid: ba5ad53ad662f7346b4fd73666b7c14e,
+    type: 3}

@@ -22,10 +22,14 @@ MonoBehaviour:
   useStack: 0
   isElementReactive: 1
   defaultElement: 0
-  fireEnhancerPrefab: {fileID: 0}
-  waterEnhancerPrefab: {fileID: 0}
-  earthEnhancerPrefab: {fileID: 0}
-  windEnhancerPrefab: {fileID: 0}
+  fireEnhancerPrefab: {fileID: 5294955900493390210, guid: b7ad6d112d2f1e644a578333fe49e2af,
+    type: 3}
+  waterEnhancerPrefab: {fileID: 1258533338136033330, guid: bb8f54d4d6c69cf4abc0c1d5470996dc,
+    type: 3}
+  earthEnhancerPrefab: {fileID: 4937136067963055059, guid: 3e6c761cb1e98654ebfdacaf5c135009,
+    type: 3}
+  windEnhancerPrefab: {fileID: 6173297824533353180, guid: 5221a1c0f4fd30c4090789c594c2ffaa,
+    type: 3}
   damageType: 0
   damageRatio: 1.5
   buffDuration: 5

@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8c8d187a4ece24885a2f6d8f7265d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JudgementSmashEarthEnhancer
-  barrierPrefab: {fileID: 0}
+  barrierPrefab: {fileID: 3816884053376061786, guid: 31de74460adc67340970825909958c52,
+    type: 3}
