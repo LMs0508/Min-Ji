@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   itemName: "\uB871\uC18C\uB4DC"
   itemType: 0
-  icon: {fileID: 0}
+  icon: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358, type: 3}
   description: 
   isStackable: 0
   maxStack: 10
@@ -30,7 +30,7 @@ MonoBehaviour:
   hpRegen: 0
   mpRegen: 0
   playerSpeed: 1
-  attackRange: 8
+  attackRange: 2
   projectilePrefab: {fileID: 0}
   projectileSpeed: 10
   magicPower: 0

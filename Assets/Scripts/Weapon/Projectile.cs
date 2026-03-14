@@ -38,11 +38,15 @@ public class Projectile : MonoBehaviour
         // 1. 적에게 데미지 입히기 (태그가 Enemy인 경우)
         if (collision.CompareTag("Enemy"))
         {
-            // 적 스크립트에서 TakeDamage 같은 함수를 호출
-            // collision.GetComponent<EnemyHealth>()?.TakeDamage(damage);
-
-            Debug.Log($"적에게 {damage}의 데미지를 입혔습니다!");
-            Destroy(gameObject); // 적중 시 소멸
+            // 적의 체력 관리 스크립트를 가져옵니다.
+            var enemy = collision.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                // 계산되어 넘어온 80% 데미지를 입힙니다.
+                enemy.TakeDamage(damage);
+                Debug.Log($"적중! 데미지: {damage} (플레이어 공격력의 80%)");
+            }
+            Destroy(gameObject);
         }
 
         // 2. 벽에 부딪혔을 때

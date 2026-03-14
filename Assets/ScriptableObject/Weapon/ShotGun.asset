@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   itemName: ShotGun
   itemType: 2
-  icon: {fileID: 0}
+  icon: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e, type: 3}
   description: "\uC804\uBC29\uC73C\uB85C 4\uBC1C\uC758 \uCD1D\uC54C\uC744 \uBC1C\uC0AC\uD558\uB294
     \uC0F7\uAC74"
   isStackable: 0
   maxStack: 10
   value: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 1087611674661398319, guid: 0b72784dc89342443b6498350d6e8e5a, type: 3}
   consumableType: 0
   duration: 0
   weaponType: 1
@@ -31,8 +31,9 @@ MonoBehaviour:
   hpRegen: 0
   mpRegen: 0
   playerSpeed: 1
-  attackRange: 4
-  projectilePrefab: {fileID: 0}
+  attackRange: 5
+  projectilePrefab: {fileID: 7812917982885449017, guid: a7363e8215ab62a48bbbb6b81377c1ad,
+    type: 3}
   projectileSpeed: 15
   magicPower: 0
   manaRegenBonus: 0

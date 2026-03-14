@@ -18,7 +18,15 @@ public class WeaponManager : MonoBehaviour
         stats = GetComponentInParent<PlayerStats>();
         if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
-
+    public float GetCurrentPlayerAttack()
+    {
+        if (stats != null && stats.Attack != null)
+        {
+            // 현재 최종 공격력(기본값 + 보너스)을 반환합니다.
+            return stats.Attack.Value;
+        }
+        return 0;
+    }
     public void EquipWeapon(WeaponData newWeapon)
     {
         if (newWeapon == null || stats == null)
