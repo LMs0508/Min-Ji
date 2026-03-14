@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: d3a3d4d7192f8984381590a417850799
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8705278477933546395
+    second: Player_Die_VFX_0
+  - first:
+      213: -8796252843596977744
+    second: Player_Die_VFX_1
+  - first:
+      213: 4660245523946943405
+    second: Player_Die_VFX_2
+  - first:
+      213: 1100721900985723555
+    second: Player_Die_VFX_3
+  - first:
+      213: 6773497165308454496
+    second: Player_Die_VFX_4
+  - first:
+      213: -1281854228638281138
+    second: Player_Die_VFX_5
+  - first:
+      213: 449973488317170663
+    second: Player_Die_VFX_6
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 800
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_Die_VFX_0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 1109
+        width: 756
+        height: 1224
+      alignment: 9
+      pivot: {x: 0.47308323, y: 0.91063917}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b051437ac5fc870800000000000000
+      internalID: 8705278477933546395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Die_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 1136
+        width: 961
+        height: 1178
+      alignment: 9
+      pivot: {x: 0.49999973, y: 0.92321944}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da336fcec948ca040800000000000000
+      internalID: 4660245523946943405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Die_VFX_3
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 170
+        width: 1683
+        height: 829
+      alignment: 9
+      pivot: {x: 0.49879086, y: 0.9988076}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aa2fb0bcbc864f00800000000000000
+      internalID: 1100721900985723555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ecb6199f64b3deb438d89609dc65e6c0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_Die_VFX_0: 8705278477933546395
+      Player_Die_VFX_1: -8796252843596977744
+      Player_Die_VFX_2: 4660245523946943405
+      Player_Die_VFX_3: 1100721900985723555
+      Player_Die_VFX_4: 6773497165308454496
+      Player_Die_VFX_5: -1281854228638281138
+      Player_Die_VFX_6: 449973488317170663
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
