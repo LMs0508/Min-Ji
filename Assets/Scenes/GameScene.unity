@@ -3272,6 +3272,12 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2727704921449879569, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: deathPrefab
+      value: 
+      objectReference: {fileID: 5255035500908123704, guid: 3df3568a3f2d13641b1a69f4a4838161,
+        type: 3}
     - target: {fileID: 4021966030366290591, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: blindPanel

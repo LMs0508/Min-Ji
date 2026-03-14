@@ -171,11 +171,17 @@ namespace Game.Player
 
             // 2. [핵심] 기존의 모든 비주얼(몸체, 무기 등)을 완전히 숨김
             // Shadow를 제외한 모든 자식 오브젝트를 비활성화합니다.
-            foreach (Transform child in transform.root)
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var s in allSrs)
             {
-                if (child.name != "Shadow")
+                if (s.gameObject.name != "Shadow" && !s.gameObject.name.Contains("DamageText"))
                 {
-                    child.gameObject.SetActive(false);
+                    Color c = s.color;
+                    c.a = 0f;
+                    s.color = c;
+
+                    // 혹시 몰라 enabled도 같이 끕니다.
+                    s.enabled = false;
                 }
             }
 
