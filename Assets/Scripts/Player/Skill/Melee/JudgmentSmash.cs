@@ -189,7 +189,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             actualAnimDuration = fallAnim.GetCurrentAnimatorStateInfo(0).length;
         }
 
-        if (parentAnim != null) parentAnim.SetTrigger("OnFall");
+        SafeSetTrigger(parentAnim, "OnFall");
 
         Vector3 fallStartPos = peakPos; // 하강 시작 위치는 공중
         float distance = Vector3.Distance(fallStartPos, currentTargetPos);
@@ -211,10 +211,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             yield return null;
         }
 
-        // ==============================================================
-        // [5. Impact Phase (착지 및 폭발)]
-        // 바닥에 닿는 이 순간, 무적 상태로 대기하던 플레이어를 목표 지점으로 강제 순간이동 시킵니다.
-        // ==============================================================
         owner.transform.position = currentTargetPos;
 
         Explode(owner, currentTargetPos);
@@ -327,8 +323,8 @@ public class JudgmentSmash : MonoBehaviour, ISkill
                     if (!healthScript.IsDead)
                     {
                         Animator enemyAnim = hit.GetComponentInChildren<Animator>();
-                        if (enemyAnim != null) enemyAnim.SetTrigger("Hit");
-
+                        SafeSetTrigger(enemyAnim, "Hit");
+                        
                         EnemyMover mover = hit.GetComponent<EnemyMover>();
                         if (mover != null) mover.ApplyStun(1.0f);
                     }
@@ -375,5 +371,19 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (defaultAir) defaultAir.SetActive(false); if (defaultFall) defaultFall.SetActive(false);
         if (chargeVFX) chargeVFX.SetActive(false); if (riseVFX) riseVFX.SetActive(false);
         if (airVFX) airVFX.SetActive(false); if (fallVFX) fallVFX.SetActive(false);
+    }
+
+    private void SafeSetTrigger(Animator anim, string triggerName)
+    {
+        if (anim == null || anim.runtimeAnimatorController == null) return;
+
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == triggerName && param.type == AnimatorControllerParameterType.Trigger)
+            {
+                anim.SetTrigger(triggerName);
+                break;
+            }
+        }
     }
 }

@@ -89,12 +89,6 @@ public class PlayerVisualHandler : MonoBehaviour
             if (nextVisual) nextVisual.SetActive(true);
             currentVisual = nextVisual;
         }
-
-        if (currentVisual != null)
-        {
-            Animator anim = currentVisual.GetComponent<Animator>();
-            if (anim) anim.SetBool("IsMoving", moving);
-        }
     }
 
     private void UpdateSwordSorting(GameObject nextVisual)

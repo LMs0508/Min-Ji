@@ -48,8 +48,10 @@ public class WeaponChargeDamage : MonoBehaviour
         // [수정] 인스펙터 값이 아닌, Setup에서 계산된 finalRadius를 사용합니다.
         // 공식: $R_{hit} = R_{final} \times |LossyScale.x|$
         float actualDetectionRadius = finalRadius * Mathf.Abs(transform.lossyScale.x);
-
-        int count = Physics2D.OverlapCircleNonAlloc(center, actualDetectionRadius, hitResults, enemyLayer);
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useLayerMask = true;
+        filter.layerMask = enemyLayer;
+        int count = Physics2D.OverlapCircle(center, actualDetectionRadius, filter, hitResults);
 
         for (int i = 0; i < count; i++)
         {

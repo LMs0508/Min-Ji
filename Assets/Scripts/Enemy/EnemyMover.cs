@@ -63,8 +63,11 @@ public class EnemyMover : MonoBehaviour
 
         if (anim != null)
         {
-            anim.Play("Idle", 0, 0f);
-            anim.SetBool("isWalking", false);
+            if (anim.HasState(0, Animator.StringToHash("Idle")))
+            {
+                anim.Play("Idle", 0, 0f);
+            }
+            SafeSetBool(anim, "isWalking", false);
         }
 
         yield return new WaitForSeconds(duration);
@@ -94,6 +97,20 @@ public class EnemyMover : MonoBehaviour
                 Vector3 scale = visuals.localScale;
                 scale.x = Mathf.Abs(scale.x) * (movingRight ? 1 : -1);
                 visuals.localScale = scale;
+            }
+        }
+    }
+
+    private void SafeSetBool(Animator animator, string paramName, bool value)
+    {
+        if (animator == null) return;
+
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            if (param.name == paramName && param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool(paramName, value);
+                break;
             }
         }
     }

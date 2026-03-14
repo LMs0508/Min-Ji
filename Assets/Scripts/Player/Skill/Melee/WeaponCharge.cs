@@ -207,10 +207,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
             Animator skillAnim = activeParentObj.GetComponent<Animator>();
             if (skillAnim == null) skillAnim = activeParentObj.GetComponentInChildren<Animator>();
 
-            if (skillAnim != null)
-            {
-                skillAnim.SetTrigger("OnAttack");
-            }
+            SafeSetTrigger(skillAnim, "OnAttack");
         }
 
         if (activePlayerAnim != null)
@@ -226,10 +223,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
             Animator playerAnim = activePlayerAnim.GetComponent<Animator>();
             if (playerAnim == null) playerAnim = activePlayerAnim.GetComponentInChildren<Animator>();
 
-            if (playerAnim != null)
-            {
-                playerAnim.SetTrigger("OnAttack");
-            }
+            SafeSetTrigger(playerAnim, "OnAttack");
         }
 
         yield return new WaitForSeconds(currentAnimDuration);
@@ -263,7 +257,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
             if (!healthScript.IsDead)
             {
                 Animator enemyAnim = enemyCollider.GetComponentInChildren<Animator>();
-                if (enemyAnim != null) enemyAnim.SetTrigger("Hit");
+                SafeSetTrigger(enemyAnim, "Hit");
 
                 EnemyMover mover = enemyCollider.GetComponent<EnemyMover>();
                 if (mover != null) mover.ApplyStun(stunDuration);
@@ -291,6 +285,20 @@ public class WeaponCharge : MonoBehaviour, ISkill
         {
             if (child.name == "SkillHolder" || child.name == "Shadow" || child.gameObject == gameObject) continue;
             child.gameObject.SetActive(show);
+        }
+    }
+
+    private void SafeSetTrigger(Animator anim, string triggerName)
+    {
+        if (anim == null) return;
+
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == triggerName)
+            {
+                anim.SetTrigger(triggerName);
+                break;
+            }
         }
     }
 }
