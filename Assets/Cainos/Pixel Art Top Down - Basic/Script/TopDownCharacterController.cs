@@ -74,5 +74,12 @@ namespace Cainos.PixelArtTopDown_Basic
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
             Destroy(Instantiate(clickEffectPrefab, worldPos, Quaternion.identity), 0.5f);
         }
+
+        public void StopMovement()
+        {
+            targetPosition = transform.position;
+            IsMoving = false;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+        }
     }
 }
