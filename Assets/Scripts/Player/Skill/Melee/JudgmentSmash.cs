@@ -10,7 +10,7 @@ using Game.Core;
 public class JudgmentSmash : MonoBehaviour, ISkill
 {
     [Header("Skill Data (스크립터블 오브젝트 할당)")]
-    public SkillData skillData; // [추가] 기획 데이터 연결
+    public SkillData skillData;
 
     [Header("UI & Cost")]
     public float skillManaCost = 20f;
@@ -51,7 +51,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     private Animator parentAnim;
     private bool isExecuting = false;
 
-    // [수정] 쿨다운을 SkillData에서 가져옴
     public float Cooldown => skillData != null ? skillData.cooldown : 0f;
     public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + Cooldown) - Time.time);
 
@@ -97,11 +96,8 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         parentAnim = owner.GetComponentInChildren<Animator>();
         playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
 
-        // ==============================================================
-        // [핵심 수정] SkillData를 활용한 속성(Enhancer) 동적 생성 로직
-        // ==============================================================
         ISkillElementEnhancer activeEnhancer = null;
-        GameObject enhancerInst = null; // 스킬 종류 후 삭제를 위해 저장해둠
+        GameObject enhancerInst = null;
 
         if (skillData != null && skillData.isElementReactive)
         {
@@ -110,7 +106,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
             GameObject targetEnhancerPrefab = null;
 
-            // 현재 속성에 맞는 프리팹 찾기
             switch (currentElement)
             {
                 case ElementType.Fire: targetEnhancerPrefab = skillData.fireEnhancerPrefab; break;
@@ -119,7 +114,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
                 case ElementType.Wind: targetEnhancerPrefab = skillData.windEnhancerPrefab; break;
             }
 
-            // 프리팹이 있다면 스킬 자식으로 소환해서 연결
             if (targetEnhancerPrefab != null)
             {
                 enhancerInst = Instantiate(targetEnhancerPrefab, transform);
@@ -127,7 +121,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             }
         }
 
-        // (안전장치) SkillData에 안 넣었지만 기존처럼 스킬 자체에 컴포넌트가 붙어있을 경우
         if (activeEnhancer == null)
         {
             var playerElement = owner.GetComponentInChildren<PlayerElement>();
@@ -135,25 +128,24 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
         }
 
-        // 인핸서 시작 (VFX 교체 등)
         activeEnhancer?.OnStart(owner);
-        // ==============================================================
 
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
         SetPlayerCoreVisual(owner, false);
 
-        SetVFX(chargeVFX);
-        SetSkillSprite(spriteA);
+        // [핵심 변경] 애니메이션과 VFX를 켤 때 항상 플레이어 위치(owner.transform)를 기준으로 켭니다.
+        SetVFX(chargeVFX, owner.transform);
+        SetSkillSprite(spriteA, owner.transform);
         yield return new WaitForSeconds(0.2f);
 
-        SetVFX(riseVFX);
-        SetSkillSprite(spriteB);
+        SetVFX(riseVFX, owner.transform);
+        SetSkillSprite(spriteB, owner.transform);
         Vector3 startPos = owner.transform.position;
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
         yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
 
-        SetVFX(airVFX);
+        SetVFX(airVFX, owner.transform);
         float elapsed = 0;
         Vector3 currentTargetPos = startPos;
         while (elapsed < pauseTime)
@@ -166,14 +158,14 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
 
-        SetSkillSprite(null);
-        SetVFX(fallVFX);
+        SetSkillSprite(null, owner.transform);
+        SetVFX(fallVFX, owner.transform);
 
         float actualAnimDuration = 0.5f;
         Animator fallAnim = fallVFX.GetComponent<Animator>();
         if (fallAnim != null)
         {
-            fallAnim.Play("Judgement_FallVFX", 0, 0f);
+            // [복구 완료] 불 속성 오류를 일으켰던 애니메이션 이름 강제 지정(Play) 코드를 제거했습니다.
             yield return null;
             actualAnimDuration = fallAnim.GetCurrentAnimatorStateInfo(0).length;
         }
@@ -203,7 +195,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
                     hasHitGround = true;
                 }
             }
-            // 낙하하는 동안 속성 인핸서 업데이트 (기존 로직 유지)
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
@@ -211,13 +202,12 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         Explode(owner, currentTargetPos);
         DisableAllVFX();
 
-        SetSkillSprite(spriteC);
+        SetSkillSprite(spriteC, owner.transform);
         yield return new WaitForSeconds(0.5f);
 
-        SetSkillSprite(null);
+        SetSkillSprite(null, owner.transform);
         RestorePlayerVisual(owner, controller);
 
-        // [추가] 스킬 종료 후 소환했던 Enhancer 객체를 깔끔하게 삭제
         activeEnhancer?.OnEnd(owner);
         if (enhancerInst != null) Destroy(enhancerInst);
 
@@ -256,13 +246,18 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         }
     }
 
-    private void SetSkillSprite(GameObject target)
+    // [핵심 변경] 스킬 스프라이트를 켤 때 플레이어의 좌표로 강제 정렬합니다.
+    private void SetSkillSprite(GameObject target, Transform referenceTransform)
     {
         if (spriteA) spriteA.SetActive(false);
         if (spriteB) spriteB.SetActive(false);
         if (spriteC) spriteC.SetActive(false);
 
-        if (target != null) target.SetActive(true);
+        if (target != null)
+        {
+            target.transform.position = referenceTransform.position;
+            target.SetActive(true);
+        }
     }
 
     private void Explode(GameObject owner, Vector3 position)
@@ -270,7 +265,6 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         var stats = owner.GetComponentInChildren<PlayerStats>();
         float playerAttack = (stats != null) ? stats.Attack.Value : 20f;
 
-        // [핵심 수정] 2f로 고정되어있던 계수를 SkillData에서 가져옴 (안 넣었을 경우 기본 2배)
         float damageMultiplier = skillData != null ? skillData.damageRatio : 2.0f;
         int finalDamage = Mathf.RoundToInt(playerAttack * damageMultiplier);
 
@@ -330,7 +324,16 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (sg != null && playerRenderer != null) { sg.sortingLayerID = playerRenderer.sortingLayerID; sg.sortingOrder = playerRenderer.sortingOrder + 1; }
     }
 
-    private void SetVFX(GameObject target) { DisableAllVFX(); if (target != null) target.SetActive(true); }
+    // [핵심 변경] VFX를 켤 때 플레이어의 좌표로 강제 정렬합니다.
+    private void SetVFX(GameObject target, Transform referenceTransform)
+    {
+        DisableAllVFX();
+        if (target != null)
+        {
+            target.transform.position = referenceTransform.position;
+            target.SetActive(true);
+        }
+    }
 
     private void DisableAllVFX()
     {
