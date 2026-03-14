@@ -96,6 +96,10 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         parentAnim = owner.GetComponentInChildren<Animator>();
         playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
 
+        // [추가] 무적 상태를 위해 플레이어의 모든 콜라이더를 찾아서 끕니다.
+        Collider2D[] playerColliders = owner.GetComponentsInChildren<Collider2D>();
+        foreach (var col in playerColliders) col.enabled = false;
+
         ISkillElementEnhancer activeEnhancer = null;
         GameObject enhancerInst = null;
 
@@ -132,81 +136,98 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
-        SetPlayerCoreVisual(owner, false);
+        SetPlayerCoreVisual(owner, false); // 본체 투명화
 
-        // [핵심 변경] 애니메이션과 VFX를 켤 때 항상 플레이어 위치(owner.transform)를 기준으로 켭니다.
-        SetVFX(chargeVFX, owner.transform);
-        SetSkillSprite(spriteA, owner.transform);
-        yield return new WaitForSeconds(0.2f);
-
-        SetVFX(riseVFX, owner.transform);
-        SetSkillSprite(spriteB, owner.transform);
         Vector3 startPos = owner.transform.position;
         Vector3 peakPos = startPos + Vector3.up * jumpHeight;
-        yield return StartCoroutine(MoveLinear(owner.transform, startPos, peakPos, riseDuration));
+        Vector3 currentVisualPos = startPos; // 가상의 스프라이트/VFX 위치
 
-        SetVFX(airVFX, owner.transform);
+        // [1. Charge Phase]
+        SetVFX(chargeVFX, currentVisualPos);
+        SetSkillSprite(spriteA, currentVisualPos);
+        yield return new WaitForSeconds(0.2f);
+
+        // [2. Rise Phase (상승)] 본체는 두고 시각 요소만 위로 올립니다.
+        SetVFX(riseVFX, currentVisualPos);
+        SetSkillSprite(spriteB, currentVisualPos);
         float elapsed = 0;
+        while (elapsed < riseDuration)
+        {
+            currentVisualPos = Vector3.Lerp(startPos, peakPos, elapsed / riseDuration);
+            UpdateActiveVisualsPosition(currentVisualPos);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        currentVisualPos = peakPos;
+        UpdateActiveVisualsPosition(currentVisualPos);
+
+        // [3. Air Phase (공중 체공)] 시각 요소는 공중에 고정.
+        SetVFX(airVFX, currentVisualPos);
+        elapsed = 0;
         Vector3 currentTargetPos = startPos;
         while (elapsed < pauseTime)
         {
             currentTargetPos = GetAdjustedTargetPositionByTag(startPos);
             if (spawnedIndicator != null) spawnedIndicator.transform.position = currentTargetPos;
+
+            UpdateActiveVisualsPosition(currentVisualPos);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
 
-        SetSkillSprite(null, owner.transform);
-        SetVFX(fallVFX, owner.transform);
+        // [4. Fall Phase (하강)]
+        SetSkillSprite(null, currentVisualPos);
+        SetVFX(fallVFX, currentVisualPos);
 
         float actualAnimDuration = 0.5f;
         Animator fallAnim = fallVFX.GetComponent<Animator>();
         if (fallAnim != null)
         {
-            // [복구 완료] 불 속성 오류를 일으켰던 애니메이션 이름 강제 지정(Play) 코드를 제거했습니다.
             yield return null;
             actualAnimDuration = fallAnim.GetCurrentAnimatorStateInfo(0).length;
         }
 
         if (parentAnim != null) parentAnim.SetTrigger("OnFall");
 
-        Vector3 fallStartPos = owner.transform.position;
+        Vector3 fallStartPos = peakPos; // 하강 시작 위치는 공중
         float distance = Vector3.Distance(fallStartPos, currentTargetPos);
         float physicalMoveDuration = distance / fallSpeed;
 
         float totalWaitTime = Mathf.Max(physicalMoveDuration, actualAnimDuration);
         float fallTimeCounter = 0f;
-        bool hasHitGround = false;
 
         while (fallTimeCounter < totalWaitTime)
         {
             fallTimeCounter += Time.deltaTime;
+            float moveT = physicalMoveDuration > 0 ? fallTimeCounter / physicalMoveDuration : 1f;
 
-            if (!hasHitGround)
-            {
-                float moveT = physicalMoveDuration > 0 ? fallTimeCounter / physicalMoveDuration : 1f;
-                owner.transform.position = Vector3.Lerp(fallStartPos, currentTargetPos, Mathf.Min(moveT, 1f));
+            // 시각 요소만 목표 지점(currentTargetPos)으로 하강시킵니다.
+            currentVisualPos = Vector3.Lerp(fallStartPos, currentTargetPos, Mathf.Min(moveT, 1f));
+            UpdateActiveVisualsPosition(currentVisualPos);
 
-                if (moveT >= 1f)
-                {
-                    owner.transform.position = currentTargetPos;
-                    hasHitGround = true;
-                }
-            }
             activeEnhancer?.OnUpdate(owner);
             yield return null;
         }
 
+        // ==============================================================
+        // [5. Impact Phase (착지 및 폭발)]
+        // 바닥에 닿는 이 순간, 무적 상태로 대기하던 플레이어를 목표 지점으로 강제 순간이동 시킵니다.
+        // ==============================================================
+        owner.transform.position = currentTargetPos;
+
         Explode(owner, currentTargetPos);
         DisableAllVFX();
 
-        SetSkillSprite(spriteC, owner.transform);
+        SetSkillSprite(spriteC, currentTargetPos);
         yield return new WaitForSeconds(0.5f);
 
-        SetSkillSprite(null, owner.transform);
+        SetSkillSprite(null, currentTargetPos);
         RestorePlayerVisual(owner, controller);
+
+        // [복구] 스킬이 끝났으므로 콜라이더를 켜서 다시 타격받을 수 있게 합니다.
+        foreach (var col in playerColliders) col.enabled = true;
 
         activeEnhancer?.OnEnd(owner);
         if (enhancerInst != null) Destroy(enhancerInst);
@@ -228,6 +249,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (controller != null)
         {
             controller.enabled = true;
+            controller.StopMovement();
             owner.SendMessage("StopAndShowIdle", SendMessageOptions.DontRequireReceiver);
         }
     }
@@ -246,8 +268,8 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         }
     }
 
-    // [핵심 변경] 스킬 스프라이트를 켤 때 플레이어의 좌표로 강제 정렬합니다.
-    private void SetSkillSprite(GameObject target, Transform referenceTransform)
+    // [변경] Transform 대신 Vector3 좌표를 받아 직접 위치를 설정하도록 수정했습니다.
+    private void SetSkillSprite(GameObject target, Vector3 pos)
     {
         if (spriteA) spriteA.SetActive(false);
         if (spriteB) spriteB.SetActive(false);
@@ -255,9 +277,22 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (target != null)
         {
-            target.transform.position = referenceTransform.position;
+            target.transform.position = pos;
             target.SetActive(true);
         }
+    }
+
+    // [추가] 매 프레임마다 현재 켜져있는 이펙트와 스프라이트들의 위치를 동기화합니다.
+    private void UpdateActiveVisualsPosition(Vector3 pos)
+    {
+        if (spriteA && spriteA.activeSelf) spriteA.transform.position = pos;
+        if (spriteB && spriteB.activeSelf) spriteB.transform.position = pos;
+        if (spriteC && spriteC.activeSelf) spriteC.transform.position = pos;
+
+        if (chargeVFX && chargeVFX.activeSelf) chargeVFX.transform.position = pos;
+        if (riseVFX && riseVFX.activeSelf) riseVFX.transform.position = pos;
+        if (airVFX && airVFX.activeSelf) airVFX.transform.position = pos;
+        if (fallVFX && fallVFX.activeSelf) fallVFX.transform.position = pos;
     }
 
     private void Explode(GameObject owner, Vector3 position)
@@ -324,13 +359,12 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (sg != null && playerRenderer != null) { sg.sortingLayerID = playerRenderer.sortingLayerID; sg.sortingOrder = playerRenderer.sortingOrder + 1; }
     }
 
-    // [핵심 변경] VFX를 켤 때 플레이어의 좌표로 강제 정렬합니다.
-    private void SetVFX(GameObject target, Transform referenceTransform)
+    private void SetVFX(GameObject target, Vector3 pos)
     {
         DisableAllVFX();
         if (target != null)
         {
-            target.transform.position = referenceTransform.position;
+            target.transform.position = pos;
             target.SetActive(true);
         }
     }
@@ -341,12 +375,5 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (defaultAir) defaultAir.SetActive(false); if (defaultFall) defaultFall.SetActive(false);
         if (chargeVFX) chargeVFX.SetActive(false); if (riseVFX) riseVFX.SetActive(false);
         if (airVFX) airVFX.SetActive(false); if (fallVFX) fallVFX.SetActive(false);
-    }
-
-    private IEnumerator MoveLinear(Transform target, Vector3 start, Vector3 end, float duration)
-    {
-        float elapsed = 0;
-        while (elapsed < duration) { target.position = Vector3.Lerp(start, end, elapsed / duration); elapsed += Time.deltaTime; yield return null; }
-        target.position = end;
     }
 }
