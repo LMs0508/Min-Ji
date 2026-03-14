@@ -30,9 +30,8 @@ MonoBehaviour:
   hpRegen: 0
   mpRegen: 0
   playerSpeed: 1
-  attackRange: 5
-  projectilePrefab: {fileID: 7644844962797297292, guid: 0e160497ecfd389408c6c8ea16503c52,
-    type: 3}
+  attackRange: 8
+  projectilePrefab: {fileID: 0}
   projectileSpeed: 10
   magicPower: 0
   manaRegenBonus: 0

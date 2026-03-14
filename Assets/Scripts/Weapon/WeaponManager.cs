@@ -6,56 +6,94 @@ public class WeaponManager : MonoBehaviour
     [Header("현재 장착 정보")]
     public WeaponData currentWeapon;
 
+    [Header("참조 설정")]
+    public Transform weaponHoldPoint; // 플레이어 손 위치 (Transform)
+
+    private WeaponBase equippedWeaponInstance; // 실제 소환된 무기 스크립트
     private PlayerStats stats;
 
     private void Awake()
     {
-        stats = GetComponent<PlayerStats>();
+        // 부모나 자식 어디에 있든 PlayerStats를 찾습니다.
+        stats = GetComponentInParent<PlayerStats>();
+        if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
 
     public void EquipWeapon(WeaponData newWeapon)
     {
-        if (newWeapon == null || stats == null) return;
-
-        // 1. 기존 무기가 있다면 바닥에 버리고 스탯 원복
-        if (currentWeapon != null)
+        if (newWeapon == null || stats == null)
         {
-            DropCurrentWeapon(); // 추가된 함수
-            ApplyWeaponStats(currentWeapon, false);
+            Debug.LogError("WeaponData 또는 PlayerStats를 찾을 수 없습니다!");
+            return;
         }
 
-        // 2. 새 무기 장착 및 스탯 적용
+        // 1. 기존 무기 제거 (바닥 드롭 + 스탯 원복 + 오브젝트 파괴)
+        if (currentWeapon != null)
+        {
+            DropCurrentWeapon();
+            ApplyWeaponStats(currentWeapon, false);
+
+            if (equippedWeaponInstance != null)
+            {
+                Destroy(equippedWeaponInstance.gameObject);
+                equippedWeaponInstance = null;
+            }
+        }
+
+        // 2. 데이터 할당 및 스탯 적용
         currentWeapon = newWeapon;
         ApplyWeaponStats(currentWeapon, true);
 
-        Debug.Log($"{newWeapon.itemName}을(를) 장착했습니다!");
+        // 3. 무기 프리팹 소환 (비주얼 및 로직 담당)
+        if (currentWeapon.prefab != null && weaponHoldPoint != null)
+        {
+            GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
+            // 소환된 프리팹에서 무기 로직 스크립트를 가져옵니다.
+            equippedWeaponInstance = go.GetComponent<WeaponBase>();
+
+            // 소환된 무기에 데이터를 주입해줍니다.
+            if (equippedWeaponInstance != null)
+            {
+                equippedWeaponInstance.data = currentWeapon;
+            }
+        }
+
+        Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
+    }
+
+    // A키 입력 시 호출될 함수
+    public void OnAttack(Vector2 dir)
+    {
+        if (equippedWeaponInstance != null)
+        {
+            equippedWeaponInstance.ExecuteAttack(dir);
+        }
+        else
+        {
+            Debug.LogWarning("장착된 무기 프리팹이 없어 공격할 수 없습니다.");
+        }
     }
 
     private void DropCurrentWeapon()
     {
-        if (currentWeapon == null) return;
+        if (currentWeapon == null || currentWeapon.prefab == null) return;
 
-        // ItemData에 등록된 prefab(필드 드롭용 오브젝트)을 소환합니다.
-        if (currentWeapon.prefab != null)
-        {
-            // 플레이어 발치에서 조금 떨어진 위치에 생성
-            Vector3 dropPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), -0.5f, 0);
-            GameObject droppedItem = Instantiate(currentWeapon.prefab, dropPos, Quaternion.identity);
+        // 플레이어 발치에 아이템 드롭
+        Vector3 dropPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), -0.5f, 0);
+        GameObject droppedItem = Instantiate(currentWeapon.prefab, dropPos, Quaternion.identity);
 
-            // 새로 생성된 아이템의 데이터를 현재 장착 해제하는 무기 데이터로 설정
-            var pickup = droppedItem.GetComponent<ItemPickup>();
-            if (pickup != null) pickup.itemData = currentWeapon;
-        }
+        // 중요: 드롭된 물체는 '발사' 로직이 아닌 '줍기' 로직이 활성화되어야 합니다.
+        // 프리팹에 ItemPickup이 붙어있어야 합니다.
+        var pickup = droppedItem.GetComponent<ItemPickup>();
+        if (pickup != null) pickup.itemData = currentWeapon;
     }
 
     private void ApplyWeaponStats(WeaponData data, bool isEquip)
     {
-        // [중요] 배율(Multiplier) 스탯은 중첩 계산이 꼬이기 쉬우므로 
-        // 무기를 해제할 때는 단순히 나누는게 아니라 원복 로직이 중요합니다.
+        if (stats == null) return;
 
         if (isEquip)
         {
-            // 장착 시: 보너스는 더하고, 배율은 곱함
             stats.Attack.AddBonus(data.attackDamage);
             stats.AttackSpeed.Multiply(data.attackSpeedMultiplier);
             stats.Defense.Multiply(data.armorStats);
@@ -66,8 +104,6 @@ public class WeaponManager : MonoBehaviour
         }
         else
         {
-            // 해제 시: 정확히 장착했던 수치만큼 다시 뺌/나눔
-            // (이 로직은 PlayerStats의 Stat 클래스가 Divide와 Remove를 지원하므로 사용 가능)
             stats.Attack.RemoveBonus(data.attackDamage);
             stats.AttackSpeed.Divide(data.attackSpeedMultiplier);
             stats.Defense.Divide(data.armorStats);
