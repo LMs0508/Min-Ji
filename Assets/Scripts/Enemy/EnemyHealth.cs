@@ -178,7 +178,7 @@ public class EnemyHealth : MonoBehaviour
         MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
         foreach (var script in scripts)
         {
-            if (script == this || script is Animator) continue;
+            if (script == this) continue;
             script.enabled = false;
         }
 
@@ -198,13 +198,16 @@ public class EnemyHealth : MonoBehaviour
             enemyAnim.speed = 1f;
 
             // 모든 공격/이동 파라미터를 명시적으로 끕니다.
-            enemyAnim.SetBool("isDead", true);
-            enemyAnim.SetBool("isWalking", false);
-            enemyAnim.SetBool("isAttacking", false);
-            enemyAnim.ResetTrigger("Attack");
+            SafeSetBool(enemyAnim, "isDead", true);
+            SafeSetBool(enemyAnim, "isWalking", false);
+            SafeSetBool(enemyAnim, "isAttacking", false);
+            SafeResetTrigger(enemyAnim, "Attack");
 
             // 어떤 트랜지션도 무시하고 즉시 "Die" 실행
-            enemyAnim.Play("Die", 0, 0f);
+            if (enemyAnim.HasState(0, Animator.StringToHash("Die")))
+            {
+                enemyAnim.Play("Die", 0, 0f);
+            }
         }
 
         StartCoroutine(FadeOutAndDestroy());
@@ -244,5 +247,33 @@ public class EnemyHealth : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject);
+    }
+
+    private void SafeSetBool(Animator anim, string paramName, bool value)
+    {
+        if (anim == null) return;
+
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == paramName && param.type == AnimatorControllerParameterType.Bool)
+            {
+                anim.SetBool(paramName, value);
+                break;
+            }
+        }
+    }
+
+    private void SafeResetTrigger(Animator anim, string paramName)
+    {
+        if (anim == null) return;
+
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == paramName && param.type == AnimatorControllerParameterType.Trigger)
+            {
+                anim.ResetTrigger(paramName);
+                break;
+            }
+        }
     }
 }

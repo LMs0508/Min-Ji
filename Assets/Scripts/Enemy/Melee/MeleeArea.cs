@@ -23,7 +23,6 @@ public class MeleeArea : MonoBehaviour
                 if (pStats != null)
                 {
                     pStats.TakeDamage(attackDamage);
-                    Debug.Log($"<color=red>[타격 성공]</color> 무기 위치({transform.position})에서 {hit.name} 피격!");
                     return;
                 }
             }

@@ -127,7 +127,6 @@ public class MonsterAttack : MonoBehaviour
         if (meleeArea != null && stats != null && stats.enemyData != null)
         {
             meleeArea.OnMonsterHit(stats.enemyData.damage);
-            Debug.Log("애니메이션 이벤트를 통해 MeleeArea 공격 판정 실행!");
         }
     }
 }

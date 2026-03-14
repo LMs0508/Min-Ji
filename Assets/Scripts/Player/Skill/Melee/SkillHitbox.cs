@@ -20,9 +20,7 @@ public class SkillHitbox : MonoBehaviour
         if (myCollider != null)
         {
             List<Collider2D> overlaps = new List<Collider2D>();
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.NoFilter(); // 일단 겹치는 건 다 가져옴
-
+            ContactFilter2D filter = ContactFilter2D.noFilter;
             Physics2D.OverlapCollider(myCollider, filter, overlaps);
 
             foreach (var hitCollider in overlaps)

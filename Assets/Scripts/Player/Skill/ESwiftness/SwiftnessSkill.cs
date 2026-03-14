@@ -77,11 +77,8 @@ public class SwiftnessSkill : MonoBehaviour, ISkill
         Debug.Log($"[디버그] 스킬에 붙은 강화기 총 개수: {enhancers.Length}");
 
         ISkillElementEnhancer activeEnhancer = enhancers.FirstOrDefault(e => e.TargetElement == currentElement);
-        if (activeEnhancer != null)
+        if (activeEnhancer == null && currentElement != ElementType.None)
             Debug.Log($"[디버그] {currentElement} 강화기 찾음! 실행합니다.");
-        else
-            Debug.LogWarning($"[디버그] {currentElement}에 맞는 강화기를 찾지 못했습니다.");
-
 
 
         // [원소 효과 시작]
