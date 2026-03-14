@@ -19,7 +19,7 @@ MonoBehaviour:
   isStackable: 0
   maxStack: 10
   value: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 7644844962797297292, guid: 0e160497ecfd389408c6c8ea16503c52, type: 3}
   consumableType: 0
   duration: 0
   weaponType: 0
@@ -31,7 +31,8 @@ MonoBehaviour:
   mpRegen: 0
   playerSpeed: 1
   attackRange: 5
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 7644844962797297292, guid: 0e160497ecfd389408c6c8ea16503c52,
+    type: 3}
   projectileSpeed: 10
   magicPower: 0
   manaRegenBonus: 0
