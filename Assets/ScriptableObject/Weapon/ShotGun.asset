@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
   m_Name: ShotGun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  itemName: ShotGun
+  itemName: "\uC0F7\uAC74"
   itemType: 2
   icon: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e, type: 3}
   description: "\uC804\uBC29\uC73C\uB85C 4\uBC1C\uC758 \uCD1D\uC54C\uC744 \uBC1C\uC0AC\uD558\uB294
@@ -37,3 +37,4 @@ MonoBehaviour:
   projectileSpeed: 15
   magicPower: 0
   manaRegenBonus: 0
+  canCharge: 0

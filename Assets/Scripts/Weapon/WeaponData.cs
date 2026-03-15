@@ -29,4 +29,5 @@ public class WeaponData : ItemData // ItemData를 상속받음
     [Header("▼ 추가 옵션")]
     public float magicPower = 0f;    // 마도구용 주문력
     public float manaRegenBonus = 0f; // 마나 재생 추가치
+    public bool canCharge = false;
 }
