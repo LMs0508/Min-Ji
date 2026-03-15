@@ -26,6 +26,17 @@ public class WeaponManager : MonoBehaviour
         }
         return 0;
     }
+    public float GetCurrentPlayerMagic()
+    {
+        if (stats != null && stats.Magic != null)
+        {
+            // 보너스 마력 20이 포함된 최종 Value를 반환합니다.
+            return stats.Magic.Value;
+        }
+        return 0;
+    }
+
+
     public void EquipWeapon(WeaponData newWeapon)
     {
         if (newWeapon == null || stats == null)
@@ -124,6 +135,7 @@ public class WeaponManager : MonoBehaviour
         if (isEquip)
         {
             stats.Attack.AddBonus(data.attackDamage);
+            stats.Magic.AddBonus(data.magicPower);
             stats.AttackSpeed.Multiply(data.attackSpeedMultiplier);
             stats.Defense.Multiply(data.armorStats);
             stats.CooldownReduction.AddBonus(data.cooldownStats);
@@ -134,6 +146,7 @@ public class WeaponManager : MonoBehaviour
         else
         {
             stats.Attack.RemoveBonus(data.attackDamage);
+            stats.Magic.RemoveBonus(data.magicPower);
             stats.AttackSpeed.Divide(data.attackSpeedMultiplier);
             stats.Defense.Divide(data.armorStats);
             stats.CooldownReduction.RemoveBonus(data.cooldownStats);
