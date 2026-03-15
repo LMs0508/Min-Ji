@@ -170,6 +170,8 @@ public class JudgmentSmash : MonoBehaviour, ISkill
             currentTargetPos = GetAdjustedTargetPositionByTag(startPos);
             if (spawnedIndicator != null) spawnedIndicator.transform.position = currentTargetPos;
 
+            UpdateVisualFlip(owner.transform.position, currentTargetPos);
+
             UpdateActiveVisualsPosition(currentVisualPos);
             elapsed += Time.deltaTime;
             yield return null;
@@ -178,6 +180,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
 
         // [4. Fall Phase (하강)]
+        UpdateVisualFlip(owner.transform.position, currentTargetPos);
         SetSkillSprite(null, currentVisualPos);
         SetVFX(fallVFX, currentVisualPos);
 
@@ -230,9 +233,32 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         isExecuting = false;
     }
+    private void UpdateVisualFlip(Vector3 startPos, Vector3 targetPos)
+    {
+        float flipX = (targetPos.x < startPos.x) ? -1f : 1f;
 
+        ApplyFlip(spriteA, flipX);
+        ApplyFlip(spriteB, flipX);
+        ApplyFlip(spriteC, flipX);
+        ApplyFlip(chargeVFX, flipX);
+        ApplyFlip(riseVFX, flipX);
+        ApplyFlip(airVFX, flipX);
+        ApplyFlip(fallVFX, flipX);
+    }
+
+    private void ApplyFlip(GameObject obj, float flipX)
+    {
+        if (obj != null)
+        {
+            Vector3 scale = obj.transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * flipX;
+            obj.transform.localScale = scale;
+        }
+    }
     private void RestorePlayerVisual(GameObject owner, TopDownCharacterController controller)
     {
+        UpdateVisualFlip(Vector3.zero, Vector3.right);
+
         if (playerRenderer != null) playerRenderer.enabled = true;
         foreach (Transform child in owner.transform)
         {

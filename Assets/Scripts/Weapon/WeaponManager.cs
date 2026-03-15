@@ -18,6 +18,7 @@ public class WeaponManager : MonoBehaviour
         stats = GetComponentInParent<PlayerStats>();
         if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
+
     public float GetCurrentPlayerAttack()
     {
         if (stats != null && stats.Attack != null)
@@ -27,16 +28,16 @@ public class WeaponManager : MonoBehaviour
         }
         return 0;
     }
+
     public float GetCurrentPlayerMagic()
     {
         if (stats != null && stats.Magic != null)
         {
-            // 보너스 마력 20이 포함된 최종 Value를 반환합니다.
+            // 최종 마력을 반환합니다.
             return stats.Magic.Value;
         }
         return 0;
     }
-
 
     public void EquipWeapon(WeaponData newWeapon)
     {
@@ -67,10 +68,15 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon.prefab != null && weaponHoldPoint != null)
         {
             GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
-            // 소환된 프리팹에서 무기 로직 스크립트를 가져옵니다.
             equippedWeaponInstance = go.GetComponent<WeaponBase>();
 
-            // 소환된 무기에 데이터를 주입해줍니다.
+            // 장착된 무기 프리팹의 아이템 줍기 기능과 기본 이미지는 끕니다.
+            ItemPickup pickup = go.GetComponent<ItemPickup>();
+            if (pickup != null) pickup.enabled = false;
+
+            SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.enabled = false;
+
             if (equippedWeaponInstance != null)
             {
                 equippedWeaponInstance.data = currentWeapon;
@@ -85,6 +91,13 @@ public class WeaponManager : MonoBehaviour
     {
         if (equippedWeaponInstance != null)
         {
+            // [핵심 추가] 공격 시 즉시 전투 태세(Combat Mode)를 활성화합니다.
+            PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+            if (visualHandler != null)
+            {
+                visualHandler.TriggerCombatMode();
+            }
+
             equippedWeaponInstance.ExecuteAttack(dir, multiplier);
         }
         else
@@ -93,16 +106,61 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    // 공격 애니메이션 시 플레이어 본체를 숨기는 함수
+    public void TogglePlayerVisuals(bool isVisible)
+    {
+        // 1. PlayerVisualHandler 업데이트 원천 차단 (좀비 현상 방지)
+        PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+        if (visualHandler != null)
+        {
+            visualHandler.isVisualLocked = !isVisible;
+        }
+
+        // 2. 스프라이트 렌더러 처리
+        SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+
+        foreach (SpriteRenderer sr in srs)
+        {
+            string objName = sr.gameObject.name;
+
+            // 예외 항목 체크
+            if (objName == "Shadow" || objName.Contains("DamageText") || objName.Contains("Die"))
+                continue;
+
+            // 현재 장착된 무기 이펙트는 끄지 않습니다.
+            if (equippedWeaponInstance != null && sr.transform.IsChildOf(equippedWeaponInstance.transform))
+                continue;
+
+            // [핵심 예외] 등 뒤의 무기(WeaponHolder)는 PlayerVisualHandler가 제어하도록 내버려둡니다.
+            if (visualHandler != null && visualHandler.WeaponHolder != null)
+            {
+                if (sr.transform.IsChildOf(visualHandler.WeaponHolder))
+                    continue;
+            }
+
+            sr.enabled = isVisible;
+        }
+
+        // 3. 본체 애니메이터 제어 (Idle 강제 재생 방지)
+        Animator[] anims = transform.root.GetComponentsInChildren<Animator>(true);
+        foreach (Animator anim in anims)
+        {
+            if (anim.gameObject.name.Contains("Die")) continue;
+
+            if (equippedWeaponInstance != null && anim.transform.IsChildOf(equippedWeaponInstance.transform))
+                continue;
+
+            anim.enabled = isVisible;
+        }
+    }
+
     private void DropCurrentWeapon()
     {
         if (currentWeapon == null || currentWeapon.prefab == null) return;
 
-        // 플레이어 발치에 아이템 드롭
         Vector3 dropPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), -0.5f, 0);
         GameObject droppedItem = Instantiate(currentWeapon.prefab, dropPos, Quaternion.identity);
 
-        // 중요: 드롭된 물체는 '발사' 로직이 아닌 '줍기' 로직이 활성화되어야 합니다.
-        // 프리팹에 ItemPickup이 붙어있어야 합니다.
         var pickup = droppedItem.GetComponent<ItemPickup>();
         if (pickup != null) pickup.itemData = currentWeapon;
     }

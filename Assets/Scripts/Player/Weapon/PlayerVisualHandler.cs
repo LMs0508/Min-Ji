@@ -8,6 +8,9 @@ public class PlayerVisualHandler : MonoBehaviour
     public float combatModeDuration = 5f;
     public bool isForcedCombatMode = false;
 
+    // [핵심 추가] WeaponManager에서 공격 중일 때 시각 업데이트를 잠그기 위한 변수
+    public bool isVisualLocked = false;
+
     [Header("일반 모드 (Walk)")]
     public GameObject walkFront;
     public GameObject walkBack, walkRight, walkLeft;
@@ -23,8 +26,6 @@ public class PlayerVisualHandler : MonoBehaviour
     private bool isCombatMode = false;
     private Coroutine combatTimer;
 
-    public bool isVisualLocked = false;
-
     private void Awake()
     {
         controller = GetComponent<TopDownCharacterController>();
@@ -33,7 +34,9 @@ public class PlayerVisualHandler : MonoBehaviour
 
     private void Update()
     {
+        // [핵심 추가] 잠금 상태일 때는 아래의 애니메이션 업데이트 로직을 아예 실행하지 않습니다.
         if (isVisualLocked) return;
+
         UpdateAnimationState();
     }
 
@@ -46,12 +49,12 @@ public class PlayerVisualHandler : MonoBehaviour
     private IEnumerator CombatModeRoutine()
     {
         isCombatMode = true;
-        SetSwordVisible(false);
+        SetSwordVisible(false); // 전투 모드 돌입 시 등 뒤의 검 숨김
 
         yield return new WaitForSeconds(combatModeDuration);
 
         isCombatMode = false;
-        SetSwordVisible(true);
+        SetSwordVisible(true); // 일상 모드 복귀 시 등 뒤의 검 표시
         combatTimer = null;
     }
 
@@ -80,6 +83,8 @@ public class PlayerVisualHandler : MonoBehaviour
             else
             {
                 nextVisual = null;
+                // [주의] 이 부분이 정자세 이미지를 강제로 켜는 부분인데, 
+                // 이제 Update문 상단의 isVisualLocked 덕분에 공격 중에는 실행되지 않습니다.
                 if (bodyRenderer) bodyRenderer.enabled = true;
             }
         }
@@ -111,6 +116,7 @@ public class PlayerVisualHandler : MonoBehaviour
             }
         }
     }
+
     private void SetSwordVisible(bool visible)
     {
         if (WeaponHolder == null) return;
