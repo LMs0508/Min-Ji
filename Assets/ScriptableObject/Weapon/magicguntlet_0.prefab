@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1490271077727402912}
   - component: {fileID: 5970162772784139269}
   - component: {fileID: 8884578913708318273}
-  - component: {fileID: 6770810076496791108}
-  - component: {fileID: 3999572580784299079}
+  - component: {fileID: -4239815059651002843}
+  - component: {fileID: 4525571594387701497}
   m_Layer: 0
-  m_Name: magicstaff_0
+  m_Name: magicguntlet_0
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,8 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
-    type: 3}
+  m_Sprite: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -107,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aaab60b7b6f36747b3436de3f173ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: f5c97b031f9b07846a1279230969a8b8, type: 2}
---- !u!68 &6770810076496791108
+  itemData: {fileID: 11400000, guid: 8ef65d3389912bb4e8a501ccf8af9326, type: 2}
+--- !u!68 &-4239815059651002843
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,25 +144,30 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -6.8587475, y: -10.9987755}
-  - {x: -8.289971, y: -9.875787}
-  - {x: 2.495283, y: 5.5871253}
-  - {x: 2.09141, y: 6.7218175}
-  - {x: 3.8015418, y: 10.154819}
-  - {x: 5.2066927, y: 10.787173}
-  - {x: 5.682568, y: 9.912555}
-  - {x: 7.2530775, y: 10.722656}
-  - {x: 7.133653, y: 8.791001}
-  - {x: 7.915029, y: 8.7355995}
-  - {x: 8.007574, y: 7.035403}
-  - {x: 5.1737347, y: 4.364563}
-  - {x: 4.074396, y: 4.4378433}
-  - {x: -6.809186, y: -11.044796}
+  - {x: -4.8485403, y: -0.7573009}
+  - {x: -7.5946493, y: 1.4063175}
+  - {x: -9.248885, y: 3.8034434}
+  - {x: -7.814349, y: 7.55164}
+  - {x: -4.941967, y: 9.816381}
+  - {x: 0.04207225, y: 8.456526}
+  - {x: 4.7275167, y: 9.769159}
+  - {x: 7.3192472, y: 8.221443}
+  - {x: 9.178711, y: 4.2907524}
+  - {x: 8.021368, y: 2.0318713}
+  - {x: 5.134493, y: -0.7324482}
+  - {x: 8.74636, y: -3.687983}
+  - {x: 7.3773694, y: -6.6162558}
+  - {x: 4.6311383, y: -8.947203}
+  - {x: 1.337226, y: -9.854073}
+  - {x: -3.2535763, y: -9.146927}
+  - {x: -6.8002625, y: -6.8145947}
+  - {x: -8.274826, y: -3.1075482}
+  - {x: -4.828086, y: -0.8414457}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &3999572580784299079
+--- !u!114 &4525571594387701497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6284631861351537978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae81188740f2e243a27d466966d9e87, type: 3}
+  m_Script: {fileID: 11500000, guid: cb7b8c8900d8c664f8930472aae1f0f4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MagicStaff
-  data: {fileID: 11400000, guid: f5c97b031f9b07846a1279230969a8b8, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::MagicGauntlet
+  data: {fileID: 11400000, guid: 8ef65d3389912bb4e8a501ccf8af9326, type: 2}

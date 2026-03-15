@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   itemName: "\uB9C8\uBC95\uC9C0\uD321\uC774"
   itemType: 1
-  icon: {fileID: 0}
+  icon: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa, type: 3}
   description: "\uC8FC\uBB38\uB825 10\uC744 \uAC00\uC9C0\uACE0\uC788\uB294 \uB9C8\uBC95\uC8FC\uBB38\uB825"
   isStackable: 0
   maxStack: 10
   value: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 6284631861351537978, guid: ad653f875579d474995a4cb9875d8ddf, type: 3}
   consumableType: 0
   duration: 0
   weaponType: 2
@@ -31,8 +31,9 @@ MonoBehaviour:
   mpRegen: 1
   playerSpeed: 1.5
   attackRange: 8
-  projectilePrefab: {fileID: 0}
-  projectileSpeed: 3
-  magicPower: 10
+  projectilePrefab: {fileID: 7812917982885449017, guid: bc11eb3eaeb77574aadbcb520cd1923f,
+    type: 3}
+  projectileSpeed: 6
+  magicPower: 20
   manaRegenBonus: 1
-  canCharge: 0
+  canCharge: 1
