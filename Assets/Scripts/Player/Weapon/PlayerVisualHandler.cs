@@ -23,6 +23,8 @@ public class PlayerVisualHandler : MonoBehaviour
     private bool isCombatMode = false;
     private Coroutine combatTimer;
 
+    public bool isVisualLocked = false;
+
     private void Awake()
     {
         controller = GetComponent<TopDownCharacterController>();
@@ -31,6 +33,7 @@ public class PlayerVisualHandler : MonoBehaviour
 
     private void Update()
     {
+        if (isVisualLocked) return;
         UpdateAnimationState();
     }
 

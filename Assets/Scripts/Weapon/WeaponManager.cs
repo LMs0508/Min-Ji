@@ -14,6 +14,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
+        // 부모나 자식 어디에 있든 PlayerStats를 찾습니다.
         stats = GetComponentInParent<PlayerStats>();
         if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
@@ -55,14 +56,10 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon.prefab != null && weaponHoldPoint != null)
         {
             GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
+            // 소환된 프리팹에서 무기 로직 스크립트를 가져옵니다.
             equippedWeaponInstance = go.GetComponent<WeaponBase>();
 
-            ItemPickup pickup = go.GetComponent<ItemPickup>();
-            if (pickup != null) pickup.enabled = false;
-
-            SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
-            if (sr != null) sr.enabled = false;
-
+            // 소환된 무기에 데이터를 주입해줍니다.
             if (equippedWeaponInstance != null)
             {
                 equippedWeaponInstance.data = currentWeapon;
@@ -82,24 +79,6 @@ public class WeaponManager : MonoBehaviour
         else
         {
             Debug.LogWarning("장착된 무기 프리팹이 없어 공격할 수 없습니다.");
-        }
-    }
-
-    public void TogglePlayerVisuals(bool isVisible)
-    {
-        SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
-
-        foreach (SpriteRenderer sr in srs)
-        {
-            string objName = sr.gameObject.name;
-
-            if (objName == "Shadow" || objName.Contains("DamageText") || objName.Contains("Die"))
-                continue;
-
-            if (equippedWeaponInstance != null && sr.transform.IsChildOf(equippedWeaponInstance.transform))
-                continue;
-
-            sr.enabled = isVisible;
         }
     }
 
