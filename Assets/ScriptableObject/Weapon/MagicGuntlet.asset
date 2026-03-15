@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
+  m_Name: MagicGuntlet
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  itemName: "\uB9C8\uBC95\uAC74\uD2C0\uB81B"
+  itemType: 1
+  icon: {fileID: 0}
+  description: "\uADFC\uC811\uACF5\uACA9\uC744 \uC790\uC8FC\uD558\uB294 \uB9C8\uBC95\uB3C4\uAD6C"
+  isStackable: 0
+  maxStack: 10
+  value: 0
+  prefab: {fileID: 0}
+  consumableType: 0
+  duration: 0
+  weaponType: 0
+  attackDamage: 10
+  attackSpeedMultiplier: 1.5
+  armorStats: 0.8
+  cooldownStats: 1.2
+  hpRegen: 1
+  mpRegen: 1
+  playerSpeed: 1.2
+  attackRange: 3
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 10
+  magicPower: 8
+  manaRegenBonus: 1
+  canCharge: 0
