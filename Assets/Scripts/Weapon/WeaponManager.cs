@@ -22,7 +22,6 @@ public class WeaponManager : MonoBehaviour
     {
         if (stats != null && stats.Attack != null)
         {
-            // 현재 최종 공격력(기본값 + 보너스)을 반환합니다.
             return stats.Attack.Value;
         }
         return 0;
@@ -32,7 +31,6 @@ public class WeaponManager : MonoBehaviour
     {
         if (stats != null && stats.Magic != null)
         {
-            // 보너스 마력 20이 포함된 최종 Value를 반환합니다.
             return stats.Magic.Value;
         }
         return 0;
@@ -46,7 +44,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        // 1. 기존 무기 제거 (바닥 드롭 + 스탯 원복 + 오브젝트 파괴)
+        // 1. 기존 무기 제거
         if (currentWeapon != null)
         {
             DropCurrentWeapon();
@@ -63,7 +61,7 @@ public class WeaponManager : MonoBehaviour
         currentWeapon = newWeapon;
         ApplyWeaponStats(currentWeapon, true);
 
-        // 3. 무기 프리팹 소환 (비주얼 및 로직 담당)
+        // 3. 무기 프리팹 소환
         if (currentWeapon.prefab != null && weaponHoldPoint != null)
         {
             GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
@@ -84,30 +82,14 @@ public class WeaponManager : MonoBehaviour
         Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
     }
 
-<<<<<<< Updated upstream
-    // A키 입력 시 호출될 함수
-    public void OnAttack(Vector2 dir)
-    {
-        if (equippedWeaponInstance != null)
-        {
-            equippedWeaponInstance.ExecuteAttack(dir);
-=======
     // =========================================================
-    // A키 입력 시 호출될 함수 (전투 태세 돌입 추가)
+    // OnAttack: 전투 태세 돌입 및 공격 실행
     // =========================================================
     public void OnAttack(Vector2 dir, float multiplier)
     {
         if (equippedWeaponInstance != null)
         {
-            // [핵심 추가] 공격할 때 즉시 '전투 태세(Combat Mode)'로 돌입합니다!
-            PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
-            if (visualHandler != null)
-            {
-                visualHandler.TriggerCombatMode();
-            }
-
             equippedWeaponInstance.ExecuteAttack(dir, multiplier);
->>>>>>> Stashed changes
         }
         else
         {
@@ -115,9 +97,11 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    // =========================================================
+    // TogglePlayerVisuals: 공격 애니메이션 시 본체 숨김 (정석 방식)
+    // =========================================================
     public void TogglePlayerVisuals(bool isVisible)
     {
-        // 1. PlayerVisualHandler 업데이트 원천 차단
         PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
         if (visualHandler != null)
         {
@@ -129,27 +113,29 @@ public class WeaponManager : MonoBehaviour
         {
             string objName = sr.gameObject.name;
 
+            // 예외 처리: 그림자, 데미지 텍스트, 사망 연출
             if (objName == "Shadow" || objName.Contains("DamageText") || objName.Contains("Die"))
                 continue;
 
+            // 현재 무기 프리팹 내부의 스프라이트는 끄지 않음
             if (equippedWeaponInstance != null && sr.transform.IsChildOf(equippedWeaponInstance.transform))
                 continue;
 
+            // [핵심] 등 뒤의 무기(WeaponHolder)는 PlayerVisualHandler가 관리하므로 건드리지 않음
             if (visualHandler != null && visualHandler.WeaponHolder != null)
             {
                 if (sr.transform.IsChildOf(visualHandler.WeaponHolder))
-                    continue; // 켜지도 끄지도 않고 무시하고 넘어갑니다.
+                    continue;
             }
+
             sr.enabled = isVisible;
         }
 
-        // 3. 플레이어 본체 애니메이터 끄기 (좀비 현상 완벽 방어)
+        // 플레이어 본체 애니메이터 제어 (Idle 좀비 현상 방지)
         Animator[] anims = transform.root.GetComponentsInChildren<Animator>(true);
         foreach (Animator anim in anims)
         {
-            string objName = anim.gameObject.name;
-
-            if (objName.Contains("Die")) continue;
+            if (anim.gameObject.name.Contains("Die")) continue;
 
             if (equippedWeaponInstance != null && anim.transform.IsChildOf(equippedWeaponInstance.transform))
                 continue;
@@ -162,12 +148,9 @@ public class WeaponManager : MonoBehaviour
     {
         if (currentWeapon == null || currentWeapon.prefab == null) return;
 
-        // 플레이어 발치에 아이템 드롭
         Vector3 dropPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), -0.5f, 0);
         GameObject droppedItem = Instantiate(currentWeapon.prefab, dropPos, Quaternion.identity);
 
-        // 중요: 드롭된 물체는 '발사' 로직이 아닌 '줍기' 로직이 활성화되어야 합니다.
-        // 프리팹에 ItemPickup이 붙어있어야 합니다.
         var pickup = droppedItem.GetComponent<ItemPickup>();
         if (pickup != null) pickup.itemData = currentWeapon;
     }
