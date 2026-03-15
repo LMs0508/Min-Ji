@@ -14,10 +14,10 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        // 부모나 자식 어디에 있든 PlayerStats를 찾습니다.
         stats = GetComponentInParent<PlayerStats>();
         if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
+
     public float GetCurrentPlayerAttack()
     {
         if (stats != null && stats.Attack != null)
@@ -27,6 +27,17 @@ public class WeaponManager : MonoBehaviour
         }
         return 0;
     }
+
+    public float GetCurrentPlayerMagic()
+    {
+        if (stats != null && stats.Magic != null)
+        {
+            // 보너스 마력 20이 포함된 최종 Value를 반환합니다.
+            return stats.Magic.Value;
+        }
+        return 0;
+    }
+
     public void EquipWeapon(WeaponData newWeapon)
     {
         if (newWeapon == null || stats == null)
@@ -56,10 +67,14 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon.prefab != null && weaponHoldPoint != null)
         {
             GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
-            // 소환된 프리팹에서 무기 로직 스크립트를 가져옵니다.
             equippedWeaponInstance = go.GetComponent<WeaponBase>();
 
-            // 소환된 무기에 데이터를 주입해줍니다.
+            ItemPickup pickup = go.GetComponent<ItemPickup>();
+            if (pickup != null) pickup.enabled = false;
+
+            SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.enabled = false;
+
             if (equippedWeaponInstance != null)
             {
                 equippedWeaponInstance.data = currentWeapon;
@@ -69,16 +84,77 @@ public class WeaponManager : MonoBehaviour
         Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
     }
 
+<<<<<<< Updated upstream
     // A키 입력 시 호출될 함수
     public void OnAttack(Vector2 dir)
     {
         if (equippedWeaponInstance != null)
         {
             equippedWeaponInstance.ExecuteAttack(dir);
+=======
+    // =========================================================
+    // A키 입력 시 호출될 함수 (전투 태세 돌입 추가)
+    // =========================================================
+    public void OnAttack(Vector2 dir, float multiplier)
+    {
+        if (equippedWeaponInstance != null)
+        {
+            // [핵심 추가] 공격할 때 즉시 '전투 태세(Combat Mode)'로 돌입합니다!
+            PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+            if (visualHandler != null)
+            {
+                visualHandler.TriggerCombatMode();
+            }
+
+            equippedWeaponInstance.ExecuteAttack(dir, multiplier);
+>>>>>>> Stashed changes
         }
         else
         {
             Debug.LogWarning("장착된 무기 프리팹이 없어 공격할 수 없습니다.");
+        }
+    }
+
+    public void TogglePlayerVisuals(bool isVisible)
+    {
+        // 1. PlayerVisualHandler 업데이트 원천 차단
+        PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+        if (visualHandler != null)
+        {
+            visualHandler.isVisualLocked = !isVisible;
+        }
+
+        SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (SpriteRenderer sr in srs)
+        {
+            string objName = sr.gameObject.name;
+
+            if (objName == "Shadow" || objName.Contains("DamageText") || objName.Contains("Die"))
+                continue;
+
+            if (equippedWeaponInstance != null && sr.transform.IsChildOf(equippedWeaponInstance.transform))
+                continue;
+
+            if (visualHandler != null && visualHandler.WeaponHolder != null)
+            {
+                if (sr.transform.IsChildOf(visualHandler.WeaponHolder))
+                    continue; // 켜지도 끄지도 않고 무시하고 넘어갑니다.
+            }
+            sr.enabled = isVisible;
+        }
+
+        // 3. 플레이어 본체 애니메이터 끄기 (좀비 현상 완벽 방어)
+        Animator[] anims = transform.root.GetComponentsInChildren<Animator>(true);
+        foreach (Animator anim in anims)
+        {
+            string objName = anim.gameObject.name;
+
+            if (objName.Contains("Die")) continue;
+
+            if (equippedWeaponInstance != null && anim.transform.IsChildOf(equippedWeaponInstance.transform))
+                continue;
+
+            anim.enabled = isVisible;
         }
     }
 
@@ -103,6 +179,7 @@ public class WeaponManager : MonoBehaviour
         if (isEquip)
         {
             stats.Attack.AddBonus(data.attackDamage);
+            stats.Magic.AddBonus(data.magicPower);
             stats.AttackSpeed.Multiply(data.attackSpeedMultiplier);
             stats.Defense.Multiply(data.armorStats);
             stats.CooldownReduction.AddBonus(data.cooldownStats);
@@ -113,6 +190,7 @@ public class WeaponManager : MonoBehaviour
         else
         {
             stats.Attack.RemoveBonus(data.attackDamage);
+            stats.Magic.RemoveBonus(data.magicPower);
             stats.AttackSpeed.Divide(data.attackSpeedMultiplier);
             stats.Defense.Divide(data.armorStats);
             stats.CooldownReduction.RemoveBonus(data.cooldownStats);

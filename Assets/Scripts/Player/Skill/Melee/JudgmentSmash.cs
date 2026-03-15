@@ -178,6 +178,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (spawnedIndicator != null) Destroy(spawnedIndicator);
 
         // [4. Fall Phase (하강)]
+        UpdateVisualFlip(owner.transform.position, currentTargetPos);
         SetSkillSprite(null, currentVisualPos);
         SetVFX(fallVFX, currentVisualPos);
 
@@ -231,8 +232,37 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         isExecuting = false;
     }
 
+    private void UpdateVisualFlip(Vector3 startPos, Vector3 targetPos)
+    {
+        // 목표 지점이 시작 지점보다 왼쪽이면 -1 (반전), 오른쪽이면 1 (정방향)
+        float flipX = (targetPos.x < startPos.x) ? -1f : 1f;
+
+        // 모든 시각 요소 오브젝트의 Scale X값을 수정
+        ApplyFlip(spriteA, flipX);
+        ApplyFlip(spriteB, flipX);
+        ApplyFlip(spriteC, flipX);
+
+        ApplyFlip(chargeVFX, flipX);
+        ApplyFlip(riseVFX, flipX);
+        ApplyFlip(airVFX, flipX);
+        ApplyFlip(fallVFX, flipX);
+    }
+
+    private void ApplyFlip(GameObject obj, float flipX)
+    {
+        if (obj != null)
+        {
+            Vector3 scale = obj.transform.localScale;
+            // 절대값에 방향을 곱하여 크기는 유지하고 방향만 바꿉니다.
+            scale.x = Mathf.Abs(scale.x) * flipX;
+            obj.transform.localScale = scale;
+        }
+    }
+
     private void RestorePlayerVisual(GameObject owner, TopDownCharacterController controller)
     {
+        UpdateVisualFlip(Vector3.zero, Vector3.right);
+
         if (playerRenderer != null) playerRenderer.enabled = true;
         foreach (Transform child in owner.transform)
         {
