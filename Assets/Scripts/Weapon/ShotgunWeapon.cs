@@ -14,7 +14,7 @@ public class ShotgunWeapon : WeaponBase
 
     private Vector2 currentDirection;
 
-    public override void ExecuteAttack(Vector2 direction)
+    public override void ExecuteAttack(Vector2 direction, float multiplier)
     {
         if (isAttacking) return;
 

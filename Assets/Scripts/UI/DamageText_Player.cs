@@ -28,7 +28,7 @@ public class DamageText_Player : MonoBehaviour
     {
         if (textMesh != null)
         {
-            textMesh.text = damage.ToString();
+            textMesh.text = Mathf.RoundToInt(damage).ToString();
             // 레이어 순서를 강제로 맨 앞으로 뺍니다.
             if (canvas != null)
             {

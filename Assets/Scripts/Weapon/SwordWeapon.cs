@@ -15,7 +15,7 @@ public class SwordWeapon : WeaponBase
     // 공격 중인지 체크해서 연타 방지
     private bool isAttacking = false;
 
-    public override void ExecuteAttack(Vector2 direction)
+    public override void ExecuteAttack(Vector2 direction, float multiplier)
     {
         // 이미 공격 중이면 중복 실행 방지
         if (isAttacking) return;

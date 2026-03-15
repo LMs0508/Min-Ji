@@ -73,11 +73,11 @@ public class WeaponManager : MonoBehaviour
     }
 
     // A키 입력 시 호출될 함수
-    public void OnAttack(Vector2 dir)
+    public void OnAttack(Vector2 dir, float multiplier)
     {
         if (equippedWeaponInstance != null)
         {
-            equippedWeaponInstance.ExecuteAttack(dir);
+            equippedWeaponInstance.ExecuteAttack(dir, multiplier);
         }
         else
         {

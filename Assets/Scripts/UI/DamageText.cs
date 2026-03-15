@@ -29,7 +29,7 @@ public class DamageText : MonoBehaviour
     {
         if (textMesh != null)
         {
-            textMesh.text = damage.ToString();
+            textMesh.text = Mathf.RoundToInt(damage).ToString();
         }
 
         // =========================================================
