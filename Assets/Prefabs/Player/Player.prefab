@@ -466,6 +466,8 @@ MonoBehaviour:
     multiplier: 1
   currentHP: 100
   currentMP: 500
+  deathPrefab: {fileID: 5255035500908123704, guid: 3df3568a3f2d13641b1a69f4a4838161,
+    type: 3}
 --- !u!1 &4784206055040887918
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualHandler
   combatModeDuration: 5
   isForcedCombatMode: 0
+  isVisualLocked: 0
   walkFront: {fileID: 2296140907656225641}
   walkBack: {fileID: 6652898631678060565}
   walkRight: {fileID: 7262463974926355902}
@@ -1039,7 +1042,7 @@ Transform:
   m_GameObject: {fileID: 5966706007712149675}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06614506, y: 0.26109233, z: 0}
+  m_LocalPosition: {x: 0.13058877, y: 0.25188604, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1109,7 +1112,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358,
+  m_Sprite: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1132,10 +1135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 7.259404e-11
-  m_labelHash: 2.6845975e-21
+  m_CategoryHash: 1.2023465e-33
+  m_labelHash: 1.4446706e-31
   m_SpriteKey: 0
-  m_SpriteHash: 213789410
+  m_SpriteHash: 185068708
 --- !u!1 &6652898631678060565
 GameObject:
   m_ObjectHideFlags: 0

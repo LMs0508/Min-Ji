@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PlayerAttackInput : MonoBehaviour
 {
     private WeaponManager weaponManager;
     private float chargeTimer = 0f;
+    public event Action<float> OnChargeChanged;
     private void Awake()
     {
         // 같은 오브젝트에 붙어있는 WeaponManager를 가져옵니다.
@@ -16,12 +18,18 @@ public class PlayerAttackInput : MonoBehaviour
 
         if (weaponManager.currentWeapon.canCharge)
         {
-            if (Input.GetKey(KeyCode.A)) chargeTimer += Time.deltaTime;
+            if (Input.GetKey(KeyCode.A)) {
+                chargeTimer += Time.deltaTime;
+                float ratio = Mathf.Clamp01(chargeTimer / 1.0f);
+                OnChargeChanged?.Invoke(ratio);
+            }
+
             if (Input.GetKeyUp(KeyCode.A))
             {
                 float ratio = Mathf.Clamp01(chargeTimer / 1.0f);
                 ExecuteAttack(1.0f + (ratio * 0.5f)); // 차징 배율 전달
                 chargeTimer = 0f;
+                OnChargeChanged?.Invoke(0f);
             }
         }
         else
