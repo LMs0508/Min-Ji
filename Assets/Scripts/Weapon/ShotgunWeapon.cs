@@ -3,22 +3,28 @@ using UnityEngine;
 
 public class ShotgunWeapon : WeaponBase
 {
-    [Header("���־� & �ִϸ��̼�")]
-    public GameObject attackVisualObject;
+    [Header("비주얼 & 애니메이션 오브젝트")]
+    public GameObject attackVisualUp;
+    public GameObject attackVisualDown;
+    public GameObject attackVisualSide;
+    
     public float attackDuration = 0.5f;
 
-    [Header("�߻� ����")]
-    public Transform firePoint;
+    [Header("발사 설정 (방향별 총구 위치)")]
+    public Transform firePointUp;    // 위쪽 공격 시 총알 시작점
+    public Transform firePointDown;  // 아래쪽 공격 시 총알 시작점
+    public Transform firePointSide;  // 좌우 공격 시 총알 시작점
 
     private bool isAttacking = false;
-
     private Vector2 currentDirection;
+    private float currentMultiplier = 1f;
 
     public override void ExecuteAttack(Vector2 direction, float multiplier)
     {
         if (isAttacking) return;
 
         currentDirection = direction;
+        currentMultiplier = multiplier; 
 
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm != null)
@@ -32,44 +38,75 @@ public class ShotgunWeapon : WeaponBase
         isAttacking = true;
         wm.TogglePlayerVisuals(false);
 
-        if (attackVisualObject != null)
+        // 혹시 켜져있을지 모르는 모든 이펙트를 끕니다.
+        if (attackVisualUp != null) attackVisualUp.SetActive(false);
+        if (attackVisualDown != null) attackVisualDown.SetActive(false);
+        if (attackVisualSide != null) attackVisualSide.SetActive(false);
+
+        // 마우스 방향에 따라 알맞은 오브젝트 1개만 켭니다.
+        if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
         {
-            attackVisualObject.SetActive(true);
-            attackVisualObject.transform.position = wm.transform.position;
-
-            Vector3 scale = attackVisualObject.transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
-            attackVisualObject.transform.localScale = scale;
-
-            Animator anim = attackVisualObject.GetComponent<Animator>();
-            if (anim != null) anim.Play("Attack", 0, 0f);
+            if (direction.y > 0)
+            {
+                if (attackVisualUp != null) attackVisualUp.SetActive(true);
+            }
+            else
+            {
+                if (attackVisualDown != null) attackVisualDown.SetActive(true);
+            }
+        }
+        else
+        {
+            if (attackVisualSide != null)
+            {
+                attackVisualSide.SetActive(true);
+                
+                // 좌우 오브젝트일 때는 마우스 위치(왼쪽/오른쪽)에 맞춰 플립(Scale X) 적용
+                Vector3 scale = attackVisualSide.transform.localScale;
+                scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
+                attackVisualSide.transform.localScale = scale;
+            }
         }
 
-        // �߻�� �̺�Ʈ�� �˾Ƽ� ���ִϱ�, ���⼭�� �׳� �ִϸ��̼��� ���� �������� ������ ��ٸ��ϴ�.
         yield return new WaitForSeconds(attackDuration);
 
-        if (attackVisualObject != null)
-        {
-            attackVisualObject.SetActive(false);
-        }
+        // 공격이 끝나면 다시 모두 끕니다.
+        if (attackVisualUp != null) attackVisualUp.SetActive(false);
+        if (attackVisualDown != null) attackVisualDown.SetActive(false);
+        if (attackVisualSide != null) attackVisualSide.SetActive(false);
 
         wm.TogglePlayerVisuals(true);
         isAttacking = false;
     }
 
+    // 애니메이션 이벤트에서 호출되는 실제 발사 로직
     public void FireBullet()
     {
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm == null) return;
 
         float playerAtk = wm.GetCurrentPlayerAttack();
-        float finalDamage = playerAtk * 0.8f;
+        float finalDamage = playerAtk * currentMultiplier; 
 
-        // �����ص״� ���콺 ������ ���� ���ϴ�.
         float baseAngle = Mathf.Atan2(currentDirection.y, currentDirection.x) * Mathf.Rad2Deg;
         float[] spreads = { -15f, -5f, 5f, 15f };
 
-        Vector3 spawnPosition = (firePoint != null) ? firePoint.position : transform.position;
+        // =========================================================
+        // [핵심 추가] 쏜 방향에 맞춰 알맞은 FirePoint를 가져옵니다!
+        // =========================================================
+        Transform activeFirePoint = transform; // 기본값
+        
+        if (Mathf.Abs(currentDirection.y) > Mathf.Abs(currentDirection.x))
+        {
+            if (currentDirection.y > 0) activeFirePoint = firePointUp;
+            else activeFirePoint = firePointDown;
+        }
+        else
+        {
+            activeFirePoint = firePointSide;
+        }
+
+        Vector3 spawnPosition = (activeFirePoint != null) ? activeFirePoint.position : transform.position;
 
         foreach (float offset in spreads)
         {

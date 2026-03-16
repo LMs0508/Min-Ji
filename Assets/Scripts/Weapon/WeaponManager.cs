@@ -84,7 +84,17 @@ public class WeaponManager : MonoBehaviour
                 equippedWeaponInstance.data = currentWeapon;
             }
         }
-        OnWeaponChanged?.Invoke(currentWeapon);  
+
+        // =========================================================
+        // [변경] 등 뒤의 무기 스프라이트 교체를 PlayerVisualHandler에게 위임합니다!
+        // =========================================================
+        PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+        if (visualHandler != null)
+        {
+            visualHandler.ChangeBackWeapon(newWeapon);
+        }
+
+        OnWeaponChanged?.Invoke(currentWeapon);
         Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
     }
 
@@ -93,7 +103,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (equippedWeaponInstance != null)
         {
-            // [핵심 추가] 공격 시 즉시 전투 태세(Combat Mode)를 활성화합니다.
+            // 공격 시 즉시 전투 태세(Combat Mode)를 활성화합니다.
             PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
             if (visualHandler != null)
             {

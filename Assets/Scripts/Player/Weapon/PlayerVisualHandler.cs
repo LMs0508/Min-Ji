@@ -4,18 +4,16 @@ using Cainos.PixelArtTopDown_Basic;
 
 public class PlayerVisualHandler : MonoBehaviour
 {
-    [Header("¸ğµå ¼³Á¤")]
+    [Header("ëª¨ë“œ ì„¤ì •")]
     public float combatModeDuration = 5f;
     public bool isForcedCombatMode = false;
-
-    // [ÇÙ½É Ãß°¡] WeaponManager¿¡¼­ °ø°İ ÁßÀÏ ¶§ ½Ã°¢ ¾÷µ¥ÀÌÆ®¸¦ Àá±×±â À§ÇÑ º¯¼ö
     public bool isVisualLocked = false;
 
-    [Header("ÀÏ¹İ ¸ğµå (Walk)")]
+    [Header("ì¼ë°˜ ëª¨ë“œ (Walk)")]
     public GameObject walkFront;
     public GameObject walkBack, walkRight, walkLeft;
 
-    [Header("ÀüÅõ ¸ğµå (WithWeapon)")]
+    [Header("ì „íˆ¬ ëª¨ë“œ (WithWeapon)")]
     public GameObject withWeaponIdle;
     public GameObject dashRight, dashLeft;
     public Transform WeaponHolder;
@@ -25,18 +23,25 @@ public class PlayerVisualHandler : MonoBehaviour
     private GameObject currentVisual;
     private bool isCombatMode = false;
     private Coroutine combatTimer;
+    
+    // [ì‹ ê·œ ì¶”ê°€] WeaponHolderë¥¼ ê´€ë¦¬í•  ì „ë‹´ ìŠ¤í¬ë¦½íŠ¸ ì—°ê²°ìš©
+    private BackWeaponVisual backWeaponVisual; 
 
     private void Awake()
     {
         controller = GetComponent<TopDownCharacterController>();
         bodyRenderer = GetComponent<SpriteRenderer>();
+
+        // ìì‹ì— ìˆëŠ” BackWeaponVisualì„ ìë™ìœ¼ë¡œ ì°¾ìŠµë‹ˆë‹¤.
+        if (WeaponHolder != null)
+        {
+            backWeaponVisual = WeaponHolder.GetComponent<BackWeaponVisual>();
+        }
     }
 
     private void Update()
     {
-        // [ÇÙ½É Ãß°¡] Àá±İ »óÅÂÀÏ ¶§´Â ¾Æ·¡ÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç ¾÷µ¥ÀÌÆ® ·ÎÁ÷À» ¾Æ¿¹ ½ÇÇàÇÏÁö ¾Ê½À´Ï´Ù.
         if (isVisualLocked) return;
-
         UpdateAnimationState();
     }
 
@@ -49,13 +54,32 @@ public class PlayerVisualHandler : MonoBehaviour
     private IEnumerator CombatModeRoutine()
     {
         isCombatMode = true;
-        SetSwordVisible(false); // ÀüÅõ ¸ğµå µ¹ÀÔ ½Ã µî µÚÀÇ °Ë ¼û±è
+        SetSwordVisible(false); // ì „íˆ¬ ëª¨ë“œ ëŒì… ì‹œ ë“± ë’¤ ë¬´ê¸° ìˆ¨ê¹€
 
         yield return new WaitForSeconds(combatModeDuration);
 
         isCombatMode = false;
-        SetSwordVisible(true); // ÀÏ»ó ¸ğµå º¹±Í ½Ã µî µÚÀÇ °Ë Ç¥½Ã
+        SetSwordVisible(true);  // ì¼ìƒ ë³µê·€ ì‹œ ë“± ë’¤ ë¬´ê¸° í‘œì‹œ
         combatTimer = null;
+    }
+
+    // ì™¸ë¶€(WeaponManager)ì—ì„œ ë¬´ê¸°ë¥¼ ë°”ê¿¨ì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+    public void ChangeBackWeapon(WeaponData weapon)
+    {
+        // ì´ì œ ë³µì¡í•œ ë¡œì§ ì—†ì´ ì „ë‹´ ìŠ¤í¬ë¦½íŠ¸ì—ê²Œ ì¿¨í•˜ê²Œ ë„˜ê¹ë‹ˆë‹¤.
+        if (backWeaponVisual != null)
+        {
+            backWeaponVisual.ChangeWeapon(weapon);
+        }
+    }
+
+    private void SetSwordVisible(bool visible)
+    {
+        // ì „ë‹´ ìŠ¤í¬ë¦½íŠ¸ì—ê²Œ ì¼œê³  ë„ë¼ê³  ì§€ì‹œ
+        if (backWeaponVisual != null)
+        {
+            backWeaponVisual.SetVisible(visible);
+        }
     }
 
     private void UpdateAnimationState()
@@ -67,7 +91,6 @@ public class PlayerVisualHandler : MonoBehaviour
         if (isCombatMode || isForcedCombatMode)
         {
             if (bodyRenderer) bodyRenderer.enabled = false;
-
             if (moving) nextVisual = (dir.x > 0) ? dashRight : dashLeft;
             else nextVisual = withWeaponIdle;
         }
@@ -76,15 +99,12 @@ public class PlayerVisualHandler : MonoBehaviour
             if (moving)
             {
                 if (bodyRenderer) bodyRenderer.enabled = false;
-
                 if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) nextVisual = (dir.x > 0) ? walkRight : walkLeft;
                 else nextVisual = (dir.y > 0) ? walkBack : walkFront;
             }
             else
             {
                 nextVisual = null;
-                // [ÁÖÀÇ] ÀÌ ºÎºĞÀÌ Á¤ÀÚ¼¼ ÀÌ¹ÌÁö¸¦ °­Á¦·Î ÄÑ´Â ºÎºĞÀÎµ¥, 
-                // ÀÌÁ¦ Update¹® »ó´ÜÀÇ isVisualLocked ´öºĞ¿¡ °ø°İ Áß¿¡´Â ½ÇÇàµÇÁö ¾Ê½À´Ï´Ù.
                 if (bodyRenderer) bodyRenderer.enabled = true;
             }
         }
@@ -104,25 +124,16 @@ public class PlayerVisualHandler : MonoBehaviour
         if (WeaponHolder == null || isCombatMode) return;
 
         int offset = (nextVisual == walkBack) ? 1 : -1;
-
         SpriteRenderer targetSR = (nextVisual != null) ? nextVisual.GetComponent<SpriteRenderer>() : bodyRenderer;
 
         if (targetSR != null)
         {
-            foreach (var sr in WeaponHolder.GetComponentsInChildren<SpriteRenderer>())
+            SpriteRenderer holderSR = WeaponHolder.GetComponent<SpriteRenderer>();
+            if (holderSR != null)
             {
-                sr.sortingLayerName = targetSR.sortingLayerName;
-                sr.sortingOrder = targetSR.sortingOrder + offset;
+                holderSR.sortingLayerName = targetSR.sortingLayerName;
+                holderSR.sortingOrder = targetSR.sortingOrder + offset;
             }
-        }
-    }
-
-    private void SetSwordVisible(bool visible)
-    {
-        if (WeaponHolder == null) return;
-        foreach (var sr in WeaponHolder.GetComponentsInChildren<SpriteRenderer>())
-        {
-            sr.enabled = visible;
         }
     }
 }

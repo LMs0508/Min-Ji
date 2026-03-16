@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1490271077727402912}
   - component: {fileID: 5970162772784139269}
   - component: {fileID: 8884578913708318273}
-  - component: {fileID: -4239815059651002843}
   - component: {fileID: 4525571594387701497}
+  - component: {fileID: 2979314829651534152}
   m_Layer: 0
   m_Name: magicguntlet_0
   m_TagString: Item
@@ -107,7 +107,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   itemData: {fileID: 11400000, guid: 8ef65d3389912bb4e8a501ccf8af9326, type: 2}
---- !u!68 &-4239815059651002843
+--- !u!114 &4525571594387701497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284631861351537978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7b8c8900d8c664f8930472aae1f0f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MagicGauntlet
+  data: {fileID: 11400000, guid: 8ef65d3389912bb4e8a501ccf8af9326, type: 2}
+--- !u!68 &2979314829651534152
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,46 +150,62 @@ EdgeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -4.8485403, y: -0.7573009}
-  - {x: -7.5946493, y: 1.4063175}
-  - {x: -9.248885, y: 3.8034434}
-  - {x: -7.814349, y: 7.55164}
-  - {x: -4.941967, y: 9.816381}
-  - {x: 0.04207225, y: 8.456526}
-  - {x: 4.7275167, y: 9.769159}
-  - {x: 7.3192472, y: 8.221443}
-  - {x: 9.178711, y: 4.2907524}
-  - {x: 8.021368, y: 2.0318713}
-  - {x: 5.134493, y: -0.7324482}
-  - {x: 8.74636, y: -3.687983}
-  - {x: 7.3773694, y: -6.6162558}
-  - {x: 4.6311383, y: -8.947203}
-  - {x: 1.337226, y: -9.854073}
-  - {x: -3.2535763, y: -9.146927}
-  - {x: -6.8002625, y: -6.8145947}
-  - {x: -8.274826, y: -3.1075482}
-  - {x: -4.828086, y: -0.8414457}
+  - {x: 0.28498948, y: -0.0036475658}
+  - {x: 0.2388215, y: -0.029530525}
+  - {x: 0.43454218, y: -0.18558788}
+  - {x: 0.36764002, y: -0.3224063}
+  - {x: 0.2181983, y: -0.4507892}
+  - {x: 0.09185505, y: -0.48360062}
+  - {x: 0.055342674, y: -0.4662938}
+  - {x: 0.01683712, y: -0.3914957}
+  - {x: -0.014720917, y: -0.3967173}
+  - {x: -0.04260826, y: -0.46007586}
+  - {x: -0.119755745, y: -0.46501565}
+  - {x: -0.23051834, y: -0.41929388}
+  - {x: -0.33097553, y: -0.32895207}
+  - {x: -0.38007927, y: -0.25989342}
+  - {x: -0.40986633, y: -0.17093515}
+  - {x: -0.25688744, y: -0.03949094}
+  - {x: -0.3871727, y: 0.08494592}
+  - {x: -0.45717812, y: 0.20292544}
+  - {x: -0.42112637, y: 0.2657082}
+  - {x: -0.41967678, y: 0.3153782}
+  - {x: -0.36719036, y: 0.35800433}
+  - {x: -0.37033272, y: 0.39684725}
+  - {x: -0.31690693, y: 0.44033408}
+  - {x: -0.28632164, y: 0.4251573}
+  - {x: -0.2727747, y: 0.46182346}
+  - {x: -0.21991062, y: 0.48910427}
+  - {x: -0.12384987, y: 0.40912127}
+  - {x: -0.11601448, y: 0.43718457}
+  - {x: -0.05199814, y: 0.44156218}
+  - {x: 0.0010757446, y: 0.41104436}
+  - {x: 0.0978775, y: 0.44801807}
+  - {x: 0.13254833, y: 0.4185202}
+  - {x: 0.18425894, y: 0.4704156}
+  - {x: 0.23962975, y: 0.49241447}
+  - {x: 0.2867236, y: 0.43756437}
+  - {x: 0.33695793, y: 0.4339404}
+  - {x: 0.37561846, y: 0.38596845}
+  - {x: 0.35731792, y: 0.35363126}
+  - {x: 0.40670443, y: 0.332906}
+  - {x: 0.4164319, y: 0.29781628}
+  - {x: 0.40583754, y: 0.26390004}
+  - {x: 0.43326378, y: 0.24720979}
+  - {x: 0.4492488, y: 0.21295404}
+  - {x: 0.4394884, y: 0.17571473}
+  - {x: 0.40766048, y: 0.14055085}
+  - {x: 0.40394878, y: 0.11570263}
+  - {x: 0.35786915, y: 0.076803446}
+  - {x: 0.28432703, y: -0.0058095455}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &4525571594387701497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6284631861351537978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7b8c8900d8c664f8930472aae1f0f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MagicGauntlet
-  data: {fileID: 11400000, guid: 8ef65d3389912bb4e8a501ccf8af9326, type: 2}
