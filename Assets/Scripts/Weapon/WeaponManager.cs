@@ -1,5 +1,10 @@
 using UnityEngine;
 using Game.Player;
+<<<<<<< Updated upstream
+=======
+using System;
+using UnityEngine.U2D.Animation;
+>>>>>>> Stashed changes
 
 public class WeaponManager : MonoBehaviour
 {
@@ -82,11 +87,62 @@ public class WeaponManager : MonoBehaviour
                 equippedWeaponInstance.data = currentWeapon;
             }
         }
+<<<<<<< Updated upstream
 
         Debug.Log($"<color=yellow>{newWeapon.name}</color> ���� �� ������ ��ȯ �Ϸ�!");
     }
 
     // AŰ �Է� �� ȣ��� �Լ�
+=======
+        PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+        if (visualHandler != null)
+        {
+            visualHandler.ChangeBackWeapon(newWeapon);
+        }        
+        OnWeaponChanged?.Invoke(currentWeapon);  
+        Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
+    }
+
+    private void UpdateBackWeaponSprite(WeaponData weapon)
+    {
+        PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
+        if (visualHandler != null && visualHandler.WeaponHolder != null)
+        {
+            SpriteResolver resolver = visualHandler.WeaponHolder.GetComponent<SpriteResolver>();
+            SpriteRenderer sr = visualHandler.WeaponHolder.GetComponent<SpriteRenderer>();
+
+            if (resolver != null && sr != null)
+            {
+                // [예외 처리] 무기 이름이 "Magicguntlet"이면 등 뒤 스프라이트를 투명하게 숨깁니다.
+                if (weapon.itemName == "Magicguntlet")
+                {
+                    Color c = sr.color;
+                    c.a = 0f; 
+                    sr.color = c;
+                    return; // 카테고리 변경을 하지 않고 바로 종료
+                }
+                
+                // Magicguntlet이 아니라면 투명도를 다시 원래대로(100%) 돌려놓습니다.
+                Color normalColor = sr.color;
+                normalColor.a = 1f;
+                sr.color = normalColor;
+
+                // ItemType을 기반으로 Sprite Library의 Category 이름 결정
+                string categoryName = "";
+                switch (weapon.itemType)
+                {
+                    case ItemType.Melee: categoryName = "Melee"; break;
+                    case ItemType.Ranged: categoryName = "Range"; break;
+                    case ItemType.Magic: categoryName = "Magic"; break;
+                }
+
+                // 무기 이름(itemName)을 Label 이름으로 사용하여 스프라이트를 변경합니다.
+                resolver.SetCategoryAndLabel(categoryName, weapon.itemName);
+            }
+        }
+    }
+    // A키 입력 시 호출될 함수
+>>>>>>> Stashed changes
     public void OnAttack(Vector2 dir, float multiplier)
     {
         if (equippedWeaponInstance != null)

@@ -26,7 +26,7 @@ AnimationClip:
     - time: 0.25
       value: {fileID: -4955033226922538836, guid: dbd4eaaa46504634dbe0e797713b7f22,
         type: 3}
-    - time: 0.5
+    - time: 0.41666666
       value: {fileID: -8063396054278292459, guid: dbd4eaaa46504634dbe0e797713b7f22,
         type: 3}
     attribute: m_Sprite
@@ -59,7 +59,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -78,4 +78,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.41666666
+    functionName: TriggerFire
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
