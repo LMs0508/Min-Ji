@@ -1,12 +1,14 @@
 using UnityEngine;
 using Game.Player;
-using System;
+using System; // [복구] Action 이벤트를 사용하기 위해 꼭 필요합니다!
 
 public class WeaponManager : MonoBehaviour
 {
     [Header("현재 장착 정보")]
     public WeaponData currentWeapon;
-    public static event Action<WeaponData> OnWeaponChanged;
+    
+    // [복구] UI에 무기가 변경되었음을 알리는 이벤트
+    public static event Action<WeaponData> OnWeaponChanged; 
 
     [Header("참조 설정")]
     public Transform weaponHoldPoint; // 플레이어 손 위치 (Transform)
@@ -16,7 +18,6 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        // 부모나 자식 어디에 있든 PlayerStats를 찾습니다.
         stats = GetComponentInParent<PlayerStats>();
         if (stats == null) stats = GetComponentInChildren<PlayerStats>();
     }
@@ -49,7 +50,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        // 1. 기존 무기 제거 (바닥 드롭 + 스탯 원복 + 오브젝트 파괴)
+        // 1. 기존 무기 제거
         if (currentWeapon != null)
         {
             DropCurrentWeapon();
@@ -66,13 +67,12 @@ public class WeaponManager : MonoBehaviour
         currentWeapon = newWeapon;
         ApplyWeaponStats(currentWeapon, true);
 
-        // 3. 무기 프리팹 소환 (비주얼 및 로직 담당)
+        // 3. 무기 프리팹 소환
         if (currentWeapon.prefab != null && weaponHoldPoint != null)
         {
             GameObject go = Instantiate(currentWeapon.prefab, weaponHoldPoint);
             equippedWeaponInstance = go.GetComponent<WeaponBase>();
 
-            // 장착된 무기 프리팹의 아이템 줍기 기능과 기본 이미지는 끕니다.
             ItemPickup pickup = go.GetComponent<ItemPickup>();
             if (pickup != null) pickup.enabled = false;
 
@@ -86,7 +86,7 @@ public class WeaponManager : MonoBehaviour
         }
 
         // =========================================================
-        // [변경] 등 뒤의 무기 스프라이트 교체를 PlayerVisualHandler에게 위임합니다!
+        // 등 뒤 무기 교체 로직
         // =========================================================
         PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
         if (visualHandler != null)
@@ -94,7 +94,9 @@ public class WeaponManager : MonoBehaviour
             visualHandler.ChangeBackWeapon(newWeapon);
         }
 
+        // [복구] UI 스크립트에게 무기가 바뀌었다고 신호를 보냅니다!
         OnWeaponChanged?.Invoke(currentWeapon);
+
         Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
     }
 
@@ -121,29 +123,24 @@ public class WeaponManager : MonoBehaviour
     // 공격 애니메이션 시 플레이어 본체를 숨기는 함수
     public void TogglePlayerVisuals(bool isVisible)
     {
-        // 1. PlayerVisualHandler 업데이트 원천 차단 (좀비 현상 방지)
         PlayerVisualHandler visualHandler = transform.root.GetComponentInChildren<PlayerVisualHandler>();
         if (visualHandler != null)
         {
             visualHandler.isVisualLocked = !isVisible;
         }
 
-        // 2. 스프라이트 렌더러 처리
         SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
-
         foreach (SpriteRenderer sr in srs)
         {
             string objName = sr.gameObject.name;
 
-            // 예외 항목 체크
             if (objName == "Shadow" || objName.Contains("DamageText") || objName.Contains("Die"))
                 continue;
 
-            // 현재 장착된 무기 이펙트는 끄지 않습니다.
             if (equippedWeaponInstance != null && sr.transform.IsChildOf(equippedWeaponInstance.transform))
                 continue;
 
-            // [핵심 예외] 등 뒤의 무기(WeaponHolder)는 PlayerVisualHandler가 제어하도록 내버려둡니다.
+            // 등 뒤의 무기(WeaponHolder)는 건드리지 않음
             if (visualHandler != null && visualHandler.WeaponHolder != null)
             {
                 if (sr.transform.IsChildOf(visualHandler.WeaponHolder))
@@ -153,7 +150,6 @@ public class WeaponManager : MonoBehaviour
             sr.enabled = isVisible;
         }
 
-        // 3. 본체 애니메이터 제어 (Idle 강제 재생 방지)
         Animator[] anims = transform.root.GetComponentsInChildren<Animator>(true);
         foreach (Animator anim in anims)
         {

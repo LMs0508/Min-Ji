@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
   m_Name: LongSword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  itemName: "\uB871\uC18C\uB4DC"
+  itemName: LongSword
   itemType: 0
   icon: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358, type: 3}
   description: 
@@ -35,3 +35,4 @@ MonoBehaviour:
   projectileSpeed: 10
   magicPower: 0
   manaRegenBonus: 0
+  canCharge: 0
