@@ -3287,6 +3287,21 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_labelHash
+      value: 2.6845975e-21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_SpriteHash
+      value: 37869162
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_CategoryHash
+      value: 2.0501835e-30
+      objectReference: {fileID: 0}
     - target: {fileID: 4021966030366290591, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: blindPanel
@@ -3372,10 +3387,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8575712049908103604, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5966706007712149675, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1713894310}
   m_SourcePrefab: {fileID: 100100000, guid: 6961d4dbb06700941be0d29e73f16f7d, type: 3}
 --- !u!114 &546535821 stripped
 MonoBehaviour:
@@ -8315,6 +8340,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673494882}
   m_CullTransparentMesh: 1
+--- !u!1 &1713894305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5966706007712149675, guid: 6961d4dbb06700941be0d29e73f16f7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 546535820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1713894310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713894305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003146b8f5fafbb4993c2c3c37a37825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackWeaponVisual
 --- !u!1 &1805791672
 GameObject:
   m_ObjectHideFlags: 0

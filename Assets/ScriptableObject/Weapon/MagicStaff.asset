@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
   m_Name: MagicStaff
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  itemName: "\uB9C8\uBC95\uC9C0\uD321\uC774"
+  itemName: MagicStaff
   itemType: 1
   icon: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa, type: 3}
   description: "\uC8FC\uBB38\uB825 10\uC744 \uAC00\uC9C0\uACE0\uC788\uB294 \uB9C8\uBC95\uC8FC\uBB38\uB825"

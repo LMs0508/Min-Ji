@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  itemName: "\uCD08\uC815\uBC00\uC800\uACA9\uCD1D"
+  itemName: Sniper
   itemType: 2
   icon: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff, type: 3}
   description: 

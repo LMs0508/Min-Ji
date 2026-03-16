@@ -220,11 +220,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_AT(Shotgun_Front)_VFX_0
       objectReference: {fileID: 0}
-    - target: {fileID: 663332104437994785, guid: df8a51bc603ab0c4a91dc7f066fe9004,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2072878879048625921, guid: df8a51bc603ab0c4a91dc7f066fe9004,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -278,11 +273,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 663332104437994785, guid: df8a51bc603ab0c4a91dc7f066fe9004,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6727642743322428479}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df8a51bc603ab0c4a91dc7f066fe9004, type: 3}
 --- !u!4 &3116226020765925102 stripped
 Transform:
@@ -296,18 +287,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4033913916232733167}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6727642743322428479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4526107031344317646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3062c9cafe4df494e86075978662070c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventHandler
 --- !u!4 &6917768995202037341 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6339816387979306930, guid: df8a51bc603ab0c4a91dc7f066fe9004,
@@ -327,11 +306,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_AT(Shotgun_Back)_VFX
       objectReference: {fileID: 0}
-    - target: {fileID: 3149479390370965199, guid: 2fd7df2834d488842be0c072bec0c69d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6070515278333289860, guid: 2fd7df2834d488842be0c072bec0c69d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -385,11 +359,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3149479390370965199, guid: 2fd7df2834d488842be0c072bec0c69d,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4633807765624772922}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fd7df2834d488842be0c072bec0c69d, type: 3}
 --- !u!4 &1469010940698718482 stripped
 Transform:
@@ -409,18 +379,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4637639789798053014}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4633807765624772922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7775752832616559193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3062c9cafe4df494e86075978662070c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventHandler
 --- !u!1001 &8575140861331541670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -433,6 +391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_AT(Range1)_VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887741839668018057, guid: ffae7fd566b9f7d4a81b7d623d06c359,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4680761228882567052, guid: ffae7fd566b9f7d4a81b7d623d06c359,
         type: 3}

@@ -17,8 +17,8 @@ MonoBehaviour:
     m_Hash: 237393061
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: BasicSword
-      m_Hash: 491444139
+    - m_Name: LongSword
+      m_Hash: 68829670
       m_Sprite: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358,
         type: 3}
       m_FromMain: 0
@@ -57,8 +57,8 @@ MonoBehaviour:
       m_FromMain: 0
       m_SpriteOverride: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
         type: 3}
-    - m_Name: Magicguntlet
-      m_Hash: 5422682
+    - m_Name: MagicGuntlet
+      m_Hash: 267356102
       m_Sprite: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276,
         type: 3}
       m_FromMain: 0
@@ -67,5 +67,5 @@ MonoBehaviour:
     m_FromMain: 0
     m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 639092952364668420
+  m_ModificationHash: 639093015640440847
   m_Version: 1

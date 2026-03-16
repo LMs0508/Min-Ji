@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
   m_Name: MagicGuntlet
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  itemName: "\uB9C8\uBC95\uAC74\uD2C0\uB81B"
+  itemName: MagicGuntlet
   itemType: 1
   icon: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276, type: 3}
   description: "\uADFC\uC811\uACF5\uACA9\uC744 \uC790\uC8FC\uD558\uB294 \uB9C8\uBC95\uB3C4\uAD6C"

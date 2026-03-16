@@ -33,7 +33,7 @@ public class ShotgunWeapon : WeaponBase
         }
     }
 
-    private IEnumerator AttackRoutine(WeaponManager wm, Vector2 direction)
+  private IEnumerator AttackRoutine(WeaponManager wm, Vector2 direction)
     {
         isAttacking = true;
         wm.TogglePlayerVisuals(false);
@@ -43,22 +43,31 @@ public class ShotgunWeapon : WeaponBase
         if (attackVisualDown != null) attackVisualDown.SetActive(false);
         if (attackVisualSide != null) attackVisualSide.SetActive(false);
 
-        // 마우스 방향에 따라 알맞은 오브젝트 1개만 켭니다.
+        // 마우스 방향에 따라 알맞은 오브젝트 1개를 플레이어 위치로 옮긴 후 켭니다.
         if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
         {
             if (direction.y > 0)
             {
-                if (attackVisualUp != null) attackVisualUp.SetActive(true);
+                if (attackVisualUp != null)
+                {
+                    attackVisualUp.transform.position = wm.transform.position; // [복구] 위치 동기화
+                    attackVisualUp.SetActive(true);
+                }
             }
             else
             {
-                if (attackVisualDown != null) attackVisualDown.SetActive(true);
+                if (attackVisualDown != null)
+                {
+                    attackVisualDown.transform.position = wm.transform.position; // [복구] 위치 동기화
+                    attackVisualDown.SetActive(true);
+                }
             }
         }
         else
         {
             if (attackVisualSide != null)
             {
+                attackVisualSide.transform.position = wm.transform.position; // [복구] 위치 동기화
                 attackVisualSide.SetActive(true);
                 
                 // 좌우 오브젝트일 때는 마우스 위치(왼쪽/오른쪽)에 맞춰 플립(Scale X) 적용

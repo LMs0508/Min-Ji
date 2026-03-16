@@ -18,24 +18,25 @@ public class PlayerVisualHandler : MonoBehaviour
     public GameObject dashRight, dashLeft;
     public Transform WeaponHolder;
 
+    private Animator playerAnimator;
     private TopDownCharacterController controller;
     private SpriteRenderer bodyRenderer;
     private GameObject currentVisual;
     private bool isCombatMode = false;
     private Coroutine combatTimer;
     
-    // [신규 추가] WeaponHolder를 관리할 전담 스크립트 연결용
     private BackWeaponVisual backWeaponVisual; 
 
     private void Awake()
     {
         controller = GetComponent<TopDownCharacterController>();
         bodyRenderer = GetComponent<SpriteRenderer>();
+        playerAnimator = GetComponent<Animator>();
 
-        // 자식에 있는 BackWeaponVisual을 자동으로 찾습니다.
+        // [수정] 자식 오브젝트에 실수로 넣었을 경우를 대비해 GetComponentInChildren 사용
         if (WeaponHolder != null)
         {
-            backWeaponVisual = WeaponHolder.GetComponent<BackWeaponVisual>();
+            backWeaponVisual = WeaponHolder.GetComponentInChildren<BackWeaponVisual>();
         }
     }
 
@@ -55,7 +56,6 @@ public class PlayerVisualHandler : MonoBehaviour
     {
         isCombatMode = true;
         SetSwordVisible(false); // 전투 모드 돌입 시 등 뒤 무기 숨김
-
         yield return new WaitForSeconds(combatModeDuration);
 
         isCombatMode = false;
@@ -63,22 +63,41 @@ public class PlayerVisualHandler : MonoBehaviour
         combatTimer = null;
     }
 
-    // 외부(WeaponManager)에서 무기를 바꿨을 때 호출되는 함수
-    public void ChangeBackWeapon(WeaponData weapon)
+   public void ChangeBackWeapon(WeaponData weapon)
     {
-        // 이제 복잡한 로직 없이 전담 스크립트에게 쿨하게 넘깁니다.
         if (backWeaponVisual != null)
         {
             backWeaponVisual.ChangeWeapon(weapon);
+            
+            if (isCombatMode) SetSwordVisible(false);
+        }
+
+        if (playerAnimator != null && weapon.weaponAnimatorOverride != null)
+        {
+            playerAnimator.runtimeAnimatorController = weapon.weaponAnimatorOverride;
         }
     }
 
     private void SetSwordVisible(bool visible)
     {
-        // 전담 스크립트에게 켜고 끄라고 지시
+        // 1. 전담 스크립트가 있다면 그것을 통해 제어
         if (backWeaponVisual != null)
         {
             backWeaponVisual.SetVisible(visible);
+        }
+
+        // =========================================================
+        // 2. [핵심 복구] 스크립트 인식에 실패했거나, 자식에 스프라이트가 
+        // 흩어져 있는 경우를 대비해 강력하게 강제로 다 꺼버립니다!
+        // =========================================================
+        if (WeaponHolder != null)
+        {
+            SpriteRenderer[] srs = WeaponHolder.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var sr in srs)
+            {
+                // 건틀렛(투명도 0)인 상태에서 켜져도 알파값이 0이라 어차피 안 보이니 안전합니다.
+                sr.enabled = visible;
+            }
         }
     }
 
@@ -128,8 +147,8 @@ public class PlayerVisualHandler : MonoBehaviour
 
         if (targetSR != null)
         {
-            SpriteRenderer holderSR = WeaponHolder.GetComponent<SpriteRenderer>();
-            if (holderSR != null)
+            // 자식에 있는 모든 스프라이트 렌더러의 Sorting을 잡아줍니다.
+            foreach (var holderSR in WeaponHolder.GetComponentsInChildren<SpriteRenderer>())
             {
                 holderSR.sortingLayerName = targetSR.sortingLayerName;
                 holderSR.sortingOrder = targetSR.sortingOrder + offset;
