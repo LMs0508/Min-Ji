@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
   m_Library:
-  - m_Name: Weapon
-    m_Hash: 782213840
+  - m_Name: Melee
+    m_Hash: 237393061
     m_CategoryList: []
     m_OverrideEntries:
     - m_Name: BasicSword
@@ -26,6 +26,46 @@ MonoBehaviour:
         type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 1
+  - m_Name: Range
+    m_Hash: 306607437
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Shotgun
+      m_Hash: 554920573
+      m_Sprite: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e,
+        type: 3}
+    - m_Name: Sniper
+      m_Hash: 696536573
+      m_Sprite: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff,
+        type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Magic
+    m_Hash: 147310122
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: MagicStaff
+      m_Hash: 205227882
+      m_Sprite: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
+        type: 3}
+    - m_Name: Magicguntlet
+      m_Hash: 5422682
+      m_Sprite: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276,
+        type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 639086081023752863
+  m_ModificationHash: 639092952364668420
   m_Version: 1

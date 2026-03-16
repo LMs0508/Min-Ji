@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: fa7f6b6ad76c3454ab08f4e0fe006daa
+guid: 0815948744faae64c9df20905ed1e448
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2287089127996492967
-    second: magicstaff_0
+      213: 1691141342946715268
+    second: Player_AT(Shotgun_Front)_VFX_0
+  - first:
+      213: -2781495724517783052
+    second: Player_AT(Shotgun_Front)_VFX_1
+  - first:
+      213: -8489784248240487261
+    second: Player_AT(Shotgun_Front)_VFX_2
+  - first:
+      213: 1447527427084231954
+    second: Player_AT(Shotgun_Front)_VFX_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 2000
+  spritePixelsToUnits: 600
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: magicstaff_0
+      name: Player_AT(Shotgun_Front)_VFX_0
       rect:
         serializedVersion: 2
-        x: 79
-        y: 70
-        width: 1583
-        height: 2108
+        x: 200
+        y: 1272
+        width: 567
+        height: 1007
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9537c1c3e80a240e0800000000000000
-      internalID: -2287089127996492967
+      spriteID: 486e0536714287710800000000000000
+      internalID: 1691141342946715268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_AT(Shotgun_Front)_VFX_1
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 1229
+        width: 545
+        height: 1058
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f989d320642669d0800000000000000
+      internalID: -2781495724517783052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_AT(Shotgun_Front)_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 34
+        width: 500
+        height: 1083
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a44beff43a3e2a80800000000000000
+      internalID: -8489784248240487261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_AT(Shotgun_Front)_VFX_3
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 36
+        width: 601
+        height: 1081
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 215adfd8686a61410800000000000000
+      internalID: 1447527427084231954
       vertices: []
       indices: 
       edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      magicstaff_0: -2287089127996492967
+      Player_AT(Shotgun_Front)_VFX_0: 1691141342946715268
+      Player_AT(Shotgun_Front)_VFX_1: -2781495724517783052
+      Player_AT(Shotgun_Front)_VFX_2: -8489784248240487261
+      Player_AT(Shotgun_Front)_VFX_3: 1447527427084231954
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
