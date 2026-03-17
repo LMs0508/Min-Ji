@@ -31,6 +31,8 @@ MonoBehaviour:
   hpRegen: 0
   mpRegen: 0
   playerSpeed: 1
+  weaponAnimatorOverride: {fileID: 22100000, guid: f3853127f9943134c83c075a81729758,
+    type: 2}
   attackRange: 5
   projectilePrefab: {fileID: 7812917982885449017, guid: a7363e8215ab62a48bbbb6b81377c1ad,
     type: 3}
