@@ -3300,7 +3300,7 @@ PrefabInstance:
     - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: m_labelHash
-      value: 1.8132872e-36
+      value: 4.9946473e-19
       objectReference: {fileID: 0}
     - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
@@ -3310,7 +3310,7 @@ PrefabInstance:
     - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: m_CategoryHash
-      value: 2.0501835e-30
+      value: 6.262237e-28
       objectReference: {fileID: 0}
     - target: {fileID: 3282726058680450742, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
