@@ -57,17 +57,17 @@ public class PlayerVisualHandler : MonoBehaviour
         // =========================================================
         // [복구 완료] 이동 방향에 따라 등 뒤 무기의 앞뒤 레이어를 정렬합니다!
         // =========================================================
-        UpdateWeaponSorting(dir);
+        UpdateWeaponSorting(dir, isMoving);
     }
 
-    private void UpdateWeaponSorting(Vector2 dir)
+    private void UpdateWeaponSorting(Vector2 dir, bool isMoving)
     {
         if (WeaponHolder == null || bodyAnimator == null) return;
 
         SpriteRenderer bodySR = bodyAnimator.GetComponent<SpriteRenderer>();
         if (bodySR != null)
         {
-            bool isLookingUp = (Mathf.Abs(dir.y) > Mathf.Abs(dir.x)) && (dir.y > 0);
+            bool isLookingUp = isMoving && (Mathf.Abs(dir.y) > Mathf.Abs(dir.x)) && (dir.y > 0);
             int offset = isLookingUp ? 1 : -1;
 
             foreach (var sr in WeaponHolder.GetComponentsInChildren<SpriteRenderer>())
