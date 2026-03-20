@@ -100,6 +100,29 @@ public class WeaponManager : MonoBehaviour
         Debug.Log($"<color=yellow>{newWeapon.name}</color> 장착 및 프리팹 소환 완료!");
     }
 
+    // 블렌드 트리 다중 이벤트 완벽 차단용 플래그
+    private bool hasFiredThisAttack = false;
+
+    // 공격을 새로 시작할 때 무기 스크립트에서 호출하여 발사 권한을 충전합니다.
+    public void StartNewAttack()
+    {
+        hasFiredThisAttack = false; 
+    }
+
+    // 애니메이션 이벤트(PlayerAnimationEventRelay)에서 발사 명령을 받을 함수
+    public void FireCurrentWeapon()
+    {
+        // [핵심] 이미 총알을 쐈다면 시간차로 들어오는 불필요한 이벤트는 완벽히 무시합니다.
+        if (hasFiredThisAttack) return;
+        hasFiredThisAttack = true;
+
+        if (equippedWeaponInstance != null)
+        {
+            // [핵심] 오직 현재 손에 들고 있는 무기 프리팹에게만 발사(FireBullet) 명령을 보냅니다!
+            equippedWeaponInstance.SendMessage("FireBullet", SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
     // A키 입력 시 호출될 함수
     public void OnAttack(Vector2 dir, float multiplier)
     {

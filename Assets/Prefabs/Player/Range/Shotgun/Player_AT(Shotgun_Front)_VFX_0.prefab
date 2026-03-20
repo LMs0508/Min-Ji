@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2072878879048625921}
   - component: {fileID: 867689407632220374}
   - component: {fileID: 8930970820258313404}
-  - component: {fileID: 4831218820945061937}
   m_Layer: 0
   m_Name: Player_AT(Shotgun_Front)_VFX_0
   m_TagString: Untagged
@@ -117,18 +116,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4831218820945061937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663332104437994785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3062c9cafe4df494e86075978662070c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventHandler
 --- !u!1 &6565460133297695125
 GameObject:
   m_ObjectHideFlags: 0

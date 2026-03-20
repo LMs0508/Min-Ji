@@ -1,0 +1,390 @@
+fileFormatVersion: 2
+guid: fd059bd891599924599b89e642e8abc2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2683448814339324653
+    second: Player_MagicStaff_Walk_VFX_0
+  - first:
+      213: -3230861619648773621
+    second: Player_MagicStaff_Walk_VFX_1
+  - first:
+      213: 7244351862490615136
+    second: Player_MagicStaff_Walk_VFX_2
+  - first:
+      213: 8029627749791820683
+    second: Player_MagicStaff_Walk_VFX_3
+  - first:
+      213: -348442136397665649
+    second: Player_MagicStaff_Walk_VFX_4
+  - first:
+      213: -3278930736083133328
+    second: Player_MagicStaff_Walk_VFX_5
+  - first:
+      213: 8378396892193453486
+    second: Player_MagicStaff_Walk_VFX_6
+  - first:
+      213: 6719974187831927760
+    second: Player_MagicStaff_Walk_VFX_7
+  - first:
+      213: 1796661862679352129
+    second: Player_MagicStaff_Walk_VFX_8
+  - first:
+      213: 2578796769818534125
+    second: Player_MagicStaff_Walk_VFX_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 400
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_0
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 847
+        width: 434
+        height: 637
+      alignment: 9
+      pivot: {x: 0.64151865, y: 0.5451323}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3158c58558972cad0800000000000000
+      internalID: -2683448814339324653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_1
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 811
+        width: 456
+        height: 638
+      alignment: 9
+      pivot: {x: 0.65761715, y: 0.54301333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b02446a897ca923d0800000000000000
+      internalID: -3230861619648773621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 817
+        width: 460
+        height: 641
+      alignment: 9
+      pivot: {x: 0.65908736, y: 0.53873473}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06d41bff2ab198460800000000000000
+      internalID: 7244351862490615136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_3
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 815
+        width: 478
+        height: 631
+      alignment: 9
+      pivot: {x: 0.6421611, y: 0.5538454}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8be5f845e7fe6f60800000000000000
+      internalID: 8029627749791820683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_4
+      rect:
+        serializedVersion: 2
+        x: 2252
+        y: 815
+        width: 478
+        height: 631
+      alignment: 9
+      pivot: {x: 0.6448949, y: 0.55798745}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a2d3b19b51a2bf0800000000000000
+      internalID: -348442136397665649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_5
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 94
+        width: 511
+        height: 606
+      alignment: 9
+      pivot: {x: 0.65343904, y: 0.5431283}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07c97a83ed5ee72d0800000000000000
+      internalID: -3278930736083133328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_6
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 85
+        width: 513
+        height: 610
+      alignment: 9
+      pivot: {x: 0.65284085, y: 0.5449878}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea57d62359b064470800000000000000
+      internalID: 8378396892193453486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_7
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 84
+        width: 511
+        height: 609
+      alignment: 9
+      pivot: {x: 0.65088177, y: 0.5429158}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3248d7be4224d50800000000000000
+      internalID: 6719974187831927760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_8
+      rect:
+        serializedVersion: 2
+        x: 1676
+        y: 86
+        width: 511
+        height: 614
+      alignment: 9
+      pivot: {x: 0.6508815, y: 0.5446948}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1439e7ae1760fe810800000000000000
+      internalID: 1796661862679352129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_MagicStaff_Walk_VFX_9
+      rect:
+        serializedVersion: 2
+        x: 2229
+        y: 85
+        width: 504
+        height: 615
+      alignment: 9
+      pivot: {x: 0.65297735, y: 0.5488718}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de065f4cff9b9c320800000000000000
+      internalID: 2578796769818534125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3f450d223ac1bfb4fafe77454d230f90
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_MagicStaff_Walk_VFX_0: -2683448814339324653
+      Player_MagicStaff_Walk_VFX_1: -3230861619648773621
+      Player_MagicStaff_Walk_VFX_2: 7244351862490615136
+      Player_MagicStaff_Walk_VFX_3: 8029627749791820683
+      Player_MagicStaff_Walk_VFX_4: -348442136397665649
+      Player_MagicStaff_Walk_VFX_5: -3278930736083133328
+      Player_MagicStaff_Walk_VFX_6: 8378396892193453486
+      Player_MagicStaff_Walk_VFX_7: 6719974187831927760
+      Player_MagicStaff_Walk_VFX_8: 1796661862679352129
+      Player_MagicStaff_Walk_VFX_9: 2578796769818534125
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

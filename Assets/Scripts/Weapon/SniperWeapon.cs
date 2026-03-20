@@ -26,6 +26,8 @@ public class SniperWeapon : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm != null)
         {
+            wm.StartNewAttack(); // [추가] 새로운 공격 시작! 발사 권한 충전
+
             // 2. 비주얼 핸들러를 통한 애니메이션 재생 및 방향 잠금
             PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
             if (visualHandler != null)

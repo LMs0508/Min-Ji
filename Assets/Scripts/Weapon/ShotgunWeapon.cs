@@ -29,6 +29,8 @@ public class ShotgunWeapon : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm != null)
         {
+            wm.StartNewAttack(); // [추가] 새로운 공격 시작! 발사 권한 충전
+
             PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
             if (visualHandler != null)
             {

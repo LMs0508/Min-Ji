@@ -9,8 +9,8 @@ public class PlayerAnimationEventRelay : MonoBehaviour
         
         if (wm != null)
         {
-            // 무기에게 발사 명령 전달!
-            wm.BroadcastMessage("FireBullet", SendMessageOptions.DontRequireReceiver);
+            // 하위의 모든 오브젝트에 방송(Broadcast)하지 않고 오직 현재 무기만 호출
+            wm.FireCurrentWeapon();
         }
     }
 }
