@@ -86,6 +86,15 @@ public class MagicStaff : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm == null) return;
 
+        // 몸통 반전 상태에 맞춰 무기(및 자식인 firePoint) 방향 동기화
+        if (visualHandler != null && visualHandler.bodyAnimator != null)
+        {
+            float bodyScaleX = visualHandler.bodyAnimator.transform.localScale.x;
+            Vector3 weaponScale = transform.localScale;
+            weaponScale.x = Mathf.Abs(weaponScale.x) * (bodyScaleX < 0 ? -1f : 1f);
+            transform.localScale = weaponScale;
+        }
+
         float currentAtk = wm.GetCurrentPlayerAttack();
         float currentMag = wm.GetCurrentPlayerMagic();
 

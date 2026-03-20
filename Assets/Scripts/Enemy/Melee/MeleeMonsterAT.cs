@@ -17,7 +17,7 @@ public class MeleeMonsterAT : MonoBehaviour
             float damage = stats.enemyData.damage;
             meleeArea.CheckAttack(damage);
 
-            Debug.Log($"<color=cyan>[ÀÌº¥Æ®]</color> °ø°İ ½ÇÇà! µ¥¹ÌÁö: {damage}");
+            Debug.Log($"<color=cyan>[ì´ë²¤íŠ¸]</color> ê³µê²© ì‹¤í–‰! ë°ë¯¸ì§€: {damage}");
         }
     }
 }

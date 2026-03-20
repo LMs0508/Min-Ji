@@ -129,7 +129,7 @@ public class PlayerVisualHandler : MonoBehaviour
         }
     }
 
-    public void PlayAttackAnimation(Vector2 attackDir)
+    public void PlayAttackAnimation(Vector2 attackDir, int comboStep = 0)
     {
         if (bodyAnimator == null) return;
 
@@ -146,6 +146,9 @@ public class PlayerVisualHandler : MonoBehaviour
         // 혹시 남아있을지 모르는 FlipX 귀신 박멸
         SpriteRenderer sr = bodyAnimator.GetComponent<SpriteRenderer>();
         if (sr != null) sr.flipX = false; 
+
+        // 콤보 단계(1타=0, 2타=1, 3타=2)를 애니메이터에 전달
+        bodyAnimator.SetInteger("ComboStep", comboStep);
 
         bodyAnimator.SetFloat("MoveX", attackDir.x);
         bodyAnimator.SetFloat("MoveY", attackDir.y);

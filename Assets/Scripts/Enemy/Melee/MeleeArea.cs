@@ -3,7 +3,7 @@ using Game.Player;
 
 public class MeleeArea : MonoBehaviour
 {
-    [Header("°ø°İ ÆÇÁ¤ ¼³Á¤")]
+    [Header("ê³µê²© íŒì • ì„¤ì •")]
     public float radius = 0.5f;
     public string targetTag = "Player";
 

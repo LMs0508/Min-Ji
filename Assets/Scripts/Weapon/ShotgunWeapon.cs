@@ -66,6 +66,16 @@ public class ShotgunWeapon : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm == null) return;
 
+        // 몸통 반전 상태에 맞춰 무기 방향 동기화 (FirePoint 위치 보정)
+        PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
+        if (visualHandler != null && visualHandler.bodyAnimator != null)
+        {
+            float bodyScaleX = visualHandler.bodyAnimator.transform.localScale.x;
+            Vector3 weaponScale = transform.localScale;
+            weaponScale.x = Mathf.Abs(weaponScale.x) * (bodyScaleX < 0 ? -1f : 1f);
+            transform.localScale = weaponScale;
+        }
+
         // 1. 방향에 맞는 FirePoint 선택
         Transform activeFirePoint = transform; // 기본값
         

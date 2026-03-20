@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3267428234512917242}
   - component: {fileID: 6015308505252444565}
   - component: {fileID: 7036005725292620177}
+  - component: {fileID: -5043634788494567617}
   m_Layer: 0
   m_Name: Player_AT(MagicStaff)
   m_TagString: Untagged
@@ -116,6 +117,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5043634788494567617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425347180058732932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8294aa3c8210362409b0441a067342f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationEventRelay
 --- !u!1 &481211725024894173
 GameObject:
   m_ObjectHideFlags: 0
