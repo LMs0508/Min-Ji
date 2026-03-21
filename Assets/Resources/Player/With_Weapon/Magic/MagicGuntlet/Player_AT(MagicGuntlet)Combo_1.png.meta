@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 10c47a517751b474292db6854eccf75d
+guid: c454501547831a14e8f6d88c1348c096
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6469568485727483296
-    second: Player_AT(MagicGuntlet)Combo_0_0
+      213: 7408528764670767663
+    second: Player_AT(MagicGuntlet)Combo_2_0
   - first:
-      213: 2352461528005708298
-    second: Player_AT(MagicGuntlet)Combo_0_1
+      213: 62496014400436870
+    second: Player_AT(MagicGuntlet)Combo_2_1
   - first:
-      213: 5132464592461107003
-    second: Player_AT(MagicGuntlet)Combo_0_2
+      213: 8842887802808938976
+    second: Player_AT(MagicGuntlet)Combo_2_2
   - first:
-      213: 636816441637691809
-    second: Player_AT(MagicGuntlet)Combo_0_3
+      213: 5265781650537885793
+    second: Player_AT(MagicGuntlet)Combo_2_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 295
+  spritePixelsToUnits: 540
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -122,67 +122,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_AT(MagicGuntlet)Combo_0_0
+      name: Player_AT(MagicGuntlet)Combo_2_0
       rect:
         serializedVersion: 2
-        x: 59
-        y: 609
-        width: 327
-        height: 537
+        x: 189
+        y: 1165
+        width: 591
+        height: 965
       alignment: 9
-      pivot: {x: 0.54012334, y: 0.51954615}
+      pivot: {x: 0.4508214, y: 0.5267721}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a539d1b24688c950800000000000000
-      internalID: 6469568485727483296
+      spriteID: f22f67ec8a160d660800000000000000
+      internalID: 7408528764670767663
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_AT(MagicGuntlet)Combo_0_1
+      name: Player_AT(MagicGuntlet)Combo_2_1
       rect:
         serializedVersion: 2
-        x: 486
-        y: 588
-        width: 410
-        height: 562
+        x: 1111
+        y: 1165
+        width: 809
+        height: 953
       alignment: 9
-      pivot: {x: 0.45946565, y: 0.5342406}
+      pivot: {x: 0.40419593, y: 0.5203319}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a0a8d8cbb4f95a020800000000000000
-      internalID: 2352461528005708298
+      spriteID: 68a37324bc70ed000800000000000000
+      internalID: 62496014400436870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_AT(MagicGuntlet)Combo_0_2
+      name: Player_AT(MagicGuntlet)Combo_2_2
       rect:
         serializedVersion: 2
-        x: 35
-        y: 3
-        width: 541
-        height: 585
+        x: 91
+        y: 74
+        width: 949
+        height: 976
       alignment: 9
-      pivot: {x: 0.37873995, y: 0.5224279}
+      pivot: {x: 0.3553748, y: 0.53805125}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3f0ae79a5d2a3740800000000000000
-      internalID: 5132464592461107003
+      spriteID: 0e1bf03ea9f38ba70800000000000000
+      internalID: 8842887802808938976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_AT(MagicGuntlet)Combo_2_3
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 70
+        width: 790
+        height: 958
+      alignment: 9
+      pivot: {x: 0.39167202, y: 0.5337097}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 160b4190380d31940800000000000000
+      internalID: 5265781650537885793
       vertices: []
       indices: 
       edges: []
@@ -191,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: bde08f6ad58f8c240afb50e70727b472
+    spriteID: 399c7569f9ee8984aa46f24444bf5038
     internalID: 0
     vertices: []
     indices: 
@@ -201,10 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player_AT(MagicGuntlet)Combo_0_0: 6469568485727483296
-      Player_AT(MagicGuntlet)Combo_0_1: 2352461528005708298
-      Player_AT(MagicGuntlet)Combo_0_2: 5132464592461107003
-      Player_AT(MagicGuntlet)Combo_0_3: 636816441637691809
+      Player_AT(MagicGuntlet)Combo_2_0: 7408528764670767663
+      Player_AT(MagicGuntlet)Combo_2_1: 62496014400436870
+      Player_AT(MagicGuntlet)Combo_2_2: 8842887802808938976
+      Player_AT(MagicGuntlet)Combo_2_3: 5265781650537885793
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
