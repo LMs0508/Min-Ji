@@ -129,7 +129,8 @@ public class PlayerVisualHandler : MonoBehaviour
         }
     }
 
-    public void PlayAttackAnimation(Vector2 attackDir, int comboStep = 0)
+    // 일반 무기들은 콤보가 없으므로 기본값을 -1로 설정하여 건틀릿과 분리합니다.
+    public void PlayAttackAnimation(Vector2 attackDir, int comboStep = -1)
     {
         if (bodyAnimator == null) return;
 

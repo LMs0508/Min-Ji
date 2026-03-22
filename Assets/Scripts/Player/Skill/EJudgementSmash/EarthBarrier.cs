@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class EarthBarrier : MonoBehaviour
 {
-    [Header("À§Ä¡ ¼³Á¤")]
+    [Header("ìœ„ì¹˜ ì„¤ì •")]
     public Vector3 positionOffset = new Vector3(0, 0.5f, 0);
 
-    [Header("µ¥¹ÌÁö ¼³Á¤")]
+    [Header("ë°ë¯¸ì§€ ì„¤ì •")]
     public int damage = 5;
     public float damageInterval = 0.1f;
     private float timer;

@@ -226,7 +226,11 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         RestorePlayerVisual(owner, controller);
 
         // [복구] 스킬이 끝났으므로 콜라이더를 켜서 다시 타격받을 수 있게 합니다.
-        foreach (var col in playerColliders) col.enabled = true;
+        foreach (var col in playerColliders)
+        {
+            if (col != null)
+                col.enabled = true;
+        }
 
         activeEnhancer?.OnEnd(owner);
         if (enhancerInst != null) Destroy(enhancerInst);

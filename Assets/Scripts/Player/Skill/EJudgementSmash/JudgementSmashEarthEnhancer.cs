@@ -5,7 +5,7 @@ public class JudgementSmashEarthEnhancer : MonoBehaviour, ISkillElementEnhancer
 {
     public ElementType TargetElement => ElementType.Earth;
 
-    [Header("º£¸®¾î ¼³Á¤")]
+    [Header("ë² ë¦¬ì–´ ì„¤ì •")]
     public GameObject barrierPrefab;
 
     public void OnStart(GameObject owner)
