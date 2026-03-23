@@ -29,6 +29,14 @@ public class ShotgunWeapon : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm != null)
         {
+            wm.StartNewAttack(); // [추가] 새로운 공격 시작! 발사 권한 충전
+
+            PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
+            if (visualHandler != null)
+            {
+                visualHandler.isAttacking = true;
+                visualHandler.PlayAttackAnimation(direction);
+            }
             StartCoroutine(AttackRoutine(wm, direction));
         }
     }
@@ -36,46 +44,6 @@ public class ShotgunWeapon : WeaponBase
   private IEnumerator AttackRoutine(WeaponManager wm, Vector2 direction)
     {
         isAttacking = true;
-        wm.TogglePlayerVisuals(false);
-
-        // 혹시 켜져있을지 모르는 모든 이펙트를 끕니다.
-        if (attackVisualUp != null) attackVisualUp.SetActive(false);
-        if (attackVisualDown != null) attackVisualDown.SetActive(false);
-        if (attackVisualSide != null) attackVisualSide.SetActive(false);
-
-        // 마우스 방향에 따라 알맞은 오브젝트 1개를 플레이어 위치로 옮긴 후 켭니다.
-        if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
-        {
-            if (direction.y > 0)
-            {
-                if (attackVisualUp != null)
-                {
-                    attackVisualUp.transform.position = wm.transform.position; // [복구] 위치 동기화
-                    attackVisualUp.SetActive(true);
-                }
-            }
-            else
-            {
-                if (attackVisualDown != null)
-                {
-                    attackVisualDown.transform.position = wm.transform.position; // [복구] 위치 동기화
-                    attackVisualDown.SetActive(true);
-                }
-            }
-        }
-        else
-        {
-            if (attackVisualSide != null)
-            {
-                attackVisualSide.transform.position = wm.transform.position; // [복구] 위치 동기화
-                attackVisualSide.SetActive(true);
-                
-                // 좌우 오브젝트일 때는 마우스 위치(왼쪽/오른쪽)에 맞춰 플립(Scale X) 적용
-                Vector3 scale = attackVisualSide.transform.localScale;
-                scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
-                attackVisualSide.transform.localScale = scale;
-            }
-        }
 
         yield return new WaitForSeconds(attackDuration);
 
@@ -84,9 +52,13 @@ public class ShotgunWeapon : WeaponBase
         if (attackVisualDown != null) attackVisualDown.SetActive(false);
         if (attackVisualSide != null) attackVisualSide.SetActive(false);
 
-        wm.TogglePlayerVisuals(true);
-        isAttacking = false;
-    }
+        PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
+        if (visualHandler != null)
+        {
+            visualHandler.isAttacking = false;
+        }
+        isAttacking = false;    
+        }
 
     // 애니메이션 이벤트에서 호출되는 실제 발사 로직
     public void FireBullet()
@@ -94,15 +66,17 @@ public class ShotgunWeapon : WeaponBase
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm == null) return;
 
-        float playerAtk = wm.GetCurrentPlayerAttack();
-        float finalDamage = playerAtk * currentMultiplier; 
+        // 몸통 반전 상태에 맞춰 무기 방향 동기화 (FirePoint 위치 보정)
+        PlayerVisualHandler visualHandler = wm.GetComponent<PlayerVisualHandler>();
+        if (visualHandler != null && visualHandler.bodyAnimator != null)
+        {
+            float bodyScaleX = visualHandler.bodyAnimator.transform.localScale.x;
+            Vector3 weaponScale = transform.localScale;
+            weaponScale.x = Mathf.Abs(weaponScale.x) * (bodyScaleX < 0 ? -1f : 1f);
+            transform.localScale = weaponScale;
+        }
 
-        float baseAngle = Mathf.Atan2(currentDirection.y, currentDirection.x) * Mathf.Rad2Deg;
-        float[] spreads = { -15f, -5f, 5f, 15f };
-
-        // =========================================================
-        // [핵심 추가] 쏜 방향에 맞춰 알맞은 FirePoint를 가져옵니다!
-        // =========================================================
+        // 1. 방향에 맞는 FirePoint 선택
         Transform activeFirePoint = transform; // 기본값
         
         if (Mathf.Abs(currentDirection.y) > Mathf.Abs(currentDirection.x))
@@ -115,10 +89,25 @@ public class ShotgunWeapon : WeaponBase
             activeFirePoint = firePointSide;
         }
 
-        Vector3 spawnPosition = (activeFirePoint != null) ? activeFirePoint.position : transform.position;
+        // 2. [핵심 수정] 만약 선택된 FirePoint가 없다면 에러 로그를 찍고 함수를 종료하게 해서 원인을 찾습니다.
+        if (activeFirePoint == null)
+        {
+            Debug.LogError($"<color=red>보시오! {name}의 FirePoint가 연결되지 않았습니다!</color>");
+            return;
+        }
+
+        // 3. 총알 생성 위치 확정 (오브젝트의 실제 월드 좌표 사용)
+        Vector3 spawnPosition = activeFirePoint.position;
+
+        // --- 발사 로직 시작 ---
+        float playerAtk = wm.GetCurrentPlayerAttack();
+        float finalDamage = playerAtk * currentMultiplier; 
+        float baseAngle = Mathf.Atan2(currentDirection.y, currentDirection.x) * Mathf.Rad2Deg;
+        float[] spreads = { -15f, -5f, 5f, 15f };
 
         foreach (float offset in spreads)
         {
+            // spawnPosition(FirePoint의 위치)에서 정확히 생성!
             GameObject bullet = Instantiate(data.projectilePrefab, spawnPosition, Quaternion.identity);
 
             float finalAngle = baseAngle + offset;

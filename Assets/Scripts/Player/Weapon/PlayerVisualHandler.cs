@@ -7,6 +7,7 @@ public class PlayerVisualHandler : MonoBehaviour
     [Header("설정")]
     public float combatModeDuration = 5f;
     public bool isVisualLocked = false;
+    public bool isAttacking = false;
     
     public Animator bodyAnimator; 
     public Transform WeaponHolder;
@@ -24,7 +25,7 @@ public class PlayerVisualHandler : MonoBehaviour
         if (WeaponHolder != null) backWeaponVisual = WeaponHolder.GetComponentInChildren<BackWeaponVisual>();
         
         if (bodyAnimator == null) bodyAnimator = GetComponentInChildren<Animator>();
-        if (bodyAnimator != null)
+        if (bodyAnimator != null && baseController == null)
         {
             baseController = bodyAnimator.runtimeAnimatorController;
         }
@@ -42,21 +43,23 @@ public class PlayerVisualHandler : MonoBehaviour
 
         if (isMoving)
         {
-            bodyAnimator.SetFloat("MoveX", dir.x);
-            bodyAnimator.SetFloat("MoveY", dir.y);
+            if (!isAttacking)
+            {
+                bodyAnimator.SetFloat("MoveX", dir.x);
+                bodyAnimator.SetFloat("MoveY", dir.y);
 
-            // 좌우 이동 시 PlayerBody의 좌우 반전(Flip) 자동 처리
-            // if (Mathf.Abs(dir.x) > 0.01f)
-            // {
-            //     Vector3 scale = bodyAnimator.transform.localScale;
-            //     scale.x = Mathf.Abs(scale.x) * (dir.x < 0 ? -1f : 1f);
-            //     bodyAnimator.transform.localScale = scale;
-            // }
+                // =========================================================
+                // 1. [평소 이동 시] 키보드 방향에 따라 몸통 뒤집기!
+                // =========================================================
+                if (Mathf.Abs(dir.x) > 0.01f)
+                {
+                    Vector3 scale = bodyAnimator.transform.localScale;
+                    scale.x = Mathf.Abs(scale.x) * (dir.x < 0 ? -1f : 1f);
+                    bodyAnimator.transform.localScale = scale;
+                }
+            }
         }
 
-        // =========================================================
-        // [복구 완료] 이동 방향에 따라 등 뒤 무기의 앞뒤 레이어를 정렬합니다!
-        // =========================================================
         UpdateWeaponSorting(dir, isMoving);
     }
 
@@ -87,12 +90,12 @@ public class PlayerVisualHandler : MonoBehaviour
     private IEnumerator CombatModeRoutine()
     {
         isCombatMode = true;
-        SetSwordVisible(false); // 전투 시 등 뒤 무기 숨김
+        SetSwordVisible(false);
 
         yield return new WaitForSeconds(combatModeDuration);
 
         isCombatMode = false;
-        SetSwordVisible(true);  // 일상 복귀 시 무기 표시
+        SetSwordVisible(true);
         combatTimer = null;
     }
 
@@ -107,13 +110,11 @@ public class PlayerVisualHandler : MonoBehaviour
         {
             if (weapon != null && weapon.weaponAnimatorOverride != null)
             {
-                // 무기 전용 애니메이션 세트로 덮어씌웁니다.
                 bodyAnimator.runtimeAnimatorController = weapon.weaponAnimatorOverride;
                 Debug.Log($"<color=lime>{weapon.itemName} 애니메이션 장착 완료!</color>");
             }
             else
             {
-                // 장착 해제했거나 오버라이드가 없는 무기면 다시 순정(맨손) 상태로 복구합니다.
                 bodyAnimator.runtimeAnimatorController = baseController;
             }
         }
@@ -126,5 +127,33 @@ public class PlayerVisualHandler : MonoBehaviour
         {
             foreach (var sr in WeaponHolder.GetComponentsInChildren<SpriteRenderer>()) sr.enabled = visible;
         }
+    }
+
+    // 일반 무기들은 콤보가 없으므로 기본값을 -1로 설정하여 건틀릿과 분리합니다.
+    public void PlayAttackAnimation(Vector2 attackDir, int comboStep = -1)
+    {
+        if (bodyAnimator == null) return;
+
+        // =========================================================
+        // 2. [공격 시] 마우스 방향에 맞춰 몸통 뒤집기!
+        // =========================================================
+        if (Mathf.Abs(attackDir.x) > 0.01f)
+        {
+            Vector3 scale = bodyAnimator.transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (attackDir.x < 0 ? -1f : 1f);
+            bodyAnimator.transform.localScale = scale;
+        }
+
+        // 혹시 남아있을지 모르는 FlipX 귀신 박멸
+        SpriteRenderer sr = bodyAnimator.GetComponent<SpriteRenderer>();
+        if (sr != null) sr.flipX = false; 
+
+        // 콤보 단계(1타=0, 2타=1, 3타=2)를 애니메이터에 전달
+        bodyAnimator.SetInteger("ComboStep", comboStep);
+
+        bodyAnimator.SetFloat("MoveX", attackDir.x);
+        bodyAnimator.SetFloat("MoveY", attackDir.y);
+        
+        bodyAnimator.SetTrigger("Attack");
     }
 }
