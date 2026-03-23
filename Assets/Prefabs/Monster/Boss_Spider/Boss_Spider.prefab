@@ -136,8 +136,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1205994917035377150}
   - component: {fileID: 7273998744682829639}
+  - component: {fileID: 3156655829538966816}
   m_Layer: 24
-  m_Name: Legs_Back_Right_1
+  m_Name: Legs_Back_Right_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 1542197554228203190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 1.5, z: 0}
+  m_LocalPosition: {x: 3.9, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -218,6 +219,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &3156655829538966816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542197554228203190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.45
+  stepSpeed: 6
+  stepHeight: 0.17
 --- !u!1 &2360870487317177827
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,8 +245,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8698401990866470511}
   - component: {fileID: 8080674751940603973}
+  - component: {fileID: 2895966103333306011}
   m_Layer: 24
-  m_Name: Legs_Front_Left_2
+  m_Name: Legs_Front_Left_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 2360870487317177827}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9, y: -2.6, z: 0}
+  m_LocalPosition: {x: -1.8, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -310,6 +328,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2895966103333306011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360870487317177827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.3
+  stepSpeed: 12
+  stepHeight: 0.1
 --- !u!1 &3021397015185703497
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +354,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3847919017552914355}
   - component: {fileID: 5603655676679040861}
+  - component: {fileID: 762901206085619061}
   m_Layer: 24
-  m_Name: Legs_Front_Right_2
+  m_Name: Legs_Front_Right_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,7 +371,7 @@ Transform:
   m_GameObject: {fileID: 3021397015185703497}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9, y: -2.6, z: 0}
+  m_LocalPosition: {x: 1.8, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -402,6 +437,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &762901206085619061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021397015185703497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.3
+  stepSpeed: 12
+  stepHeight: 0.1
 --- !u!1 &3335097782727308775
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,8 +463,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2873784810010422534}
   - component: {fileID: 7104559572958658227}
+  - component: {fileID: 3475282706770021351}
   m_Layer: 24
-  m_Name: Legs_Back_Left_2
+  m_Name: Legs_Back_Left_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,7 +480,7 @@ Transform:
   m_GameObject: {fileID: 3335097782727308775}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6, y: 0.4, z: 0}
+  m_LocalPosition: {x: -3.5, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -494,6 +546,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &3475282706770021351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335097782727308775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.4
+  stepSpeed: 8
+  stepHeight: 0.15
 --- !u!1 &4111869911072410946
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,8 +663,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8831618991455311406}
   - component: {fileID: 8468203366258644904}
+  - component: {fileID: 9220286802302051373}
   m_Layer: 24
-  m_Name: Legs_Front_Left_1
+  m_Name: Legs_Front_Left_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,7 +680,7 @@ Transform:
   m_GameObject: {fileID: 4710666161620749733}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3, y: -0.5, z: 0}
+  m_LocalPosition: {x: -3.1, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -677,6 +746,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &9220286802302051373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710666161620749733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.35
+  stepSpeed: 10
+  stepHeight: 0.13
 --- !u!1 &5295992415942172806
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,8 +772,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6604805891092089503}
   - component: {fileID: 7211585160559693610}
+  - component: {fileID: 7462109732290326}
   m_Layer: 24
-  m_Name: Legs_Back_Left_1
+  m_Name: Legs_Back_Left_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,7 +789,7 @@ Transform:
   m_GameObject: {fileID: 5295992415942172806}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 1.5, z: 0}
+  m_LocalPosition: {x: -3.9, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -769,6 +855,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7462109732290326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295992415942172806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.45
+  stepSpeed: 6
+  stepHeight: 0.17
 --- !u!1 &6760673766312348493
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,8 +881,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8946107710754527868}
   - component: {fileID: 3861093708888914521}
+  - component: {fileID: 8138105304331844770}
   m_Layer: 24
-  m_Name: Legs_Back_Right_2
+  m_Name: Legs_Back_Right_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,6 +964,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &8138105304331844770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760673766312348493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.4
+  stepSpeed: 8
+  stepHeight: 0.15
 --- !u!1 &7286148876102697258
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,6 +989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9013937003925450676}
+  - component: {fileID: 1552970883385174599}
   m_Layer: 24
   m_Name: Boss_Spider
   m_TagString: Enemy
@@ -896,6 +1016,31 @@ Transform:
   - {fileID: 5618400706168437641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1552970883385174599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7286148876102697258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd68b66319b0144196d44a3272ed9b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpiderBossController
+  currentState: 0
+  targetPlayer: {fileID: 0}
+  moveSpeed: 2
+  meleeAttackRange: 3
+  rangeAttackRange: 8
+  attackCooldown: 3
+  frontLegs:
+  - {fileID: 2895966103333306011}
+  - {fileID: 762901206085619061}
+  middleLegs:
+  - {fileID: 9220286802302051373}
+  - {fileID: 84907879139915136}
+  middleLegAttackRange: 4.5
 --- !u!1 &7597072025384897917
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,8 +1051,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6701291148371142153}
   - component: {fileID: 8867924789198945446}
+  - component: {fileID: 84907879139915136}
   m_Layer: 24
-  m_Name: Legs_Front_Right_1
+  m_Name: Legs_Front_Right_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -922,7 +1068,7 @@ Transform:
   m_GameObject: {fileID: 7597072025384897917}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3, y: -0.5, z: 0}
+  m_LocalPosition: {x: 3.1, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -988,6 +1134,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &84907879139915136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7597072025384897917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b3077b0cee2334d812d4ded6efdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralSpiderLeg
+  body: {fileID: 2017206850524736677}
+  stepDistance: 0.35
+  stepSpeed: 10
+  stepHeight: 0.13
 --- !u!1 &8314641990192785985
 GameObject:
   m_ObjectHideFlags: 0
