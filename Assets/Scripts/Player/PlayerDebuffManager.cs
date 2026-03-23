@@ -154,7 +154,7 @@ public class PlayerDebuffManager : MonoBehaviour
     {
         if (blindPanel == null) return;
         if (blindFadeCoroutine != null) StopCoroutine(blindFadeCoroutine);
-        blindFadeCoroutine = StartCoroutine(FadeBlind(isApply ? 0.8f : 0f));
+        blindFadeCoroutine = StartCoroutine(FadeBlind(isApply ? 0.99f : 0f));
     }
 
     private IEnumerator FadeBlind(float targetAlpha)
