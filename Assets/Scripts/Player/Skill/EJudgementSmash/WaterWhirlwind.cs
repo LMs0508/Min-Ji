@@ -11,16 +11,16 @@ public class WaterWhirlwind : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            // 1. µ¥¹ÌÁö ·ÎÁ÷
+            // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             timer += Time.deltaTime;
             if (timer >= damageInterval)
             {
-                EnemyHealth health = collision.GetComponent<EnemyHealth>();
+                EnemyHealth health = collision.GetComponentInParent<EnemyHealth>();
                 if (health != null) health.TakeDamage(damage);
                 timer = 0f;
             }
 
-            // 2. [Æ¯¼ö È¿°ú] ÀûÀ» È¸¿À¸® Áß¾ÓÀ¸·Î »ìÂ¦ ²ø¾î´ç±è
+            // 2. [Æ¯ï¿½ï¿½ È¿ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

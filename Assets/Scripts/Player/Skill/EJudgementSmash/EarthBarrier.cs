@@ -27,7 +27,8 @@ public class EarthBarrier : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= damageInterval)
             {
-                EnemyHealth health = collision.GetComponent<EnemyHealth>();
+                // [핵심 수정] 보스처럼 충돌체가 자식에 있는 경우를 위해 부모에서 스크립트를 찾도록 변경합니다!
+                EnemyHealth health = collision.GetComponentInParent<EnemyHealth>();
                 if (health != null)
                 {
                     Vector2 pushDir = (collision.transform.position - transform.position).normalized;

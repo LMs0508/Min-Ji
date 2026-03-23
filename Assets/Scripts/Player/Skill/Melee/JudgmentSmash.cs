@@ -330,13 +330,18 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         int finalDamage = Mathf.RoundToInt(playerAttack * damageMultiplier);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(position, explosionRadius);
+        // [핵심 추가] 다중 콜리더를 가진 보스가 여러 번 맞는 것을 방지하기 위한 HashSet
+        HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
+
         foreach (Collider2D hit in hitColliders)
         {
             if (hit.CompareTag("Enemy"))
             {
-                EnemyHealth healthScript = hit.GetComponent<EnemyHealth>();
-                if (healthScript != null)
+                // [핵심 수정] 부모로 올라가서 스크립트를 찾고, 이미 때린 적은 건너뜁니다!
+                EnemyHealth healthScript = hit.GetComponentInParent<EnemyHealth>();
+                if (healthScript != null && !damagedEnemies.Contains(healthScript))
                 {
+                    damagedEnemies.Add(healthScript);
                     Vector2 rawDir = (Vector2)hit.transform.position - (Vector2)position;
                     Vector2 finalKnockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
                     if (finalKnockbackDir.y > 0) finalKnockbackDir.y += 0.2f;

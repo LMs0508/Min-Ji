@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             // 적의 체력 관리 스크립트를 가져옵니다.
-            var enemy = collision.GetComponent<EnemyHealth>();
+            var enemy = collision.GetComponentInParent<EnemyHealth>();
             if (enemy != null)
             {
                 // 계산되어 넘어온 80% 데미지를 입힙니다.

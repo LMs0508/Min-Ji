@@ -6,18 +6,18 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
 {
     public ElementType TargetElement => ElementType.Fire;
 
-    [Header("È­¼Ó¼º Àü¿ë ÀÌÆåÆ® (ÀÎ½ºÆåÅÍ¿¡¼­ Á÷Á¢ ³ÖÀ¸¼¼¿ä)")]
+    [Header("È­ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® (ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)")]
     public GameObject fireCharge;
     public GameObject fireRise;
     public GameObject fireAir;
     public GameObject fireFall;
 
-    [Header("ºÒ²É ¿¬Ãâ ¼³Á¤")]
+    [Header("ï¿½Ò²ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public GameObject fireTrailPrefab;
     public GameObject groundFirePrefab;
     public float explosionRadius = 3f;
 
-    [Header("È­»ó(Burn) ¼³Á¤")]
+    [Header("È­ï¿½ï¿½(Burn) ï¿½ï¿½ï¿½ï¿½")]
     public int burnDamage = 5;
     public float burnDuration = 3f;
 
@@ -32,8 +32,8 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
 
         if (baseSkill != null)
         {
-            // [ÇÙ½É 1] ÇÁ·ÎÁ§Æ® Ã¢ÀÇ ÇÁ¸®ÆÕÀ» ±×´ë·Î ³Ö¾úÀ» °æ¿ì¸¦ ´ëºñÇØ, 
-            // ¾À¿¡ ½ÇÃ¼°¡ ¾øÀ¸¸é Áï½Ã ÀÚµ¿ »ý¼º(Instantiate)ÇØ¼­ ÀÚ½ÄÀ¸·Î ¸¸µì´Ï´Ù.
+            // [ï¿½Ù½ï¿½ 1] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½(Instantiate)ï¿½Ø¼ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
             fireCharge = SafeInstantiate(fireCharge, this.transform);
             fireRise = SafeInstantiate(fireRise, this.transform);
             fireAir = SafeInstantiate(fireAir, this.transform);
@@ -46,18 +46,18 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
         }
     }
 
-    // ÇÁ¸®ÆÕÀÎÁö ¾À ¿ÀºêÁ§Æ®ÀÎÁö ÆÇº°ÇÏ°í ¾ÈÀüÇÏ°Ô »ý¼ºÇØÁÖ´Â ¸¶¹ýÀÇ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private GameObject SafeInstantiate(GameObject obj, Transform parent)
     {
         if (obj == null) return null;
-        // scene.IsValid()°¡ false¸é ÇÏÀÌ¾î¶óÅ°(¾À)¿¡ ¾ø´Â ¿øº» ÇÁ¸®ÆÕÀÌ¶ó´Â ¶æ!
+        // scene.IsValid()ï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Å°(ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ ï¿½ï¿½!
         if (!obj.scene.IsValid())
         {
             GameObject inst = Instantiate(obj, parent);
-            inst.SetActive(false); // »ý¼º Á÷ÈÄ¿¡´Â ÀÏ´Ü ¼û°ÜµÒ
+            inst.SetActive(false); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Üµï¿½
             return inst;
         }
-        return obj; // ÀÌ¹Ì ¾À¿¡ ÀÖ´Â ÀÚ½Ä ¿ÀºêÁ§Æ®¸é ±×´ë·Î »ç¿ë
+        return obj; // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½×´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public void OnUpdate(GameObject owner)
@@ -92,7 +92,7 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
         {
             if (hit.CompareTag("Enemy"))
             {
-                EnemyHealth health = hit.GetComponent<EnemyHealth>();
+                EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
                 if (health != null)
                 {
                     health.StartCoroutine(ApplyBurnEffect(health, burnDamage, burnDuration));

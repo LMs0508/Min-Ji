@@ -38,11 +38,13 @@ public class EnemyHealth : MonoBehaviour
         {
             hpSlider.maxValue = stats.maxHealth;
             hpSlider.value = currentHealth;
-        }
-        Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
-        if (hpCanvas != null)
-        {
-            hpCanvas.worldCamera = Camera.main;
+            
+            // [핵심 수정] hpSlider가 비어있지 않을 때만 Canvas를 찾도록 안전하게 감쌉니다.
+            Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
+            if (hpCanvas != null)
+            {
+                hpCanvas.worldCamera = Camera.main;
+            }
         }
     }
 
@@ -65,9 +67,9 @@ public class EnemyHealth : MonoBehaviour
         if (hpSlider != null) hpSlider.value = currentHealth;
         ShowDamageText(damage);
 
-        // [핵심] 조우 중이 아닐 때만 피격 연출(움찔, 방어막 등)을 실행합니다.
+        // [핵심 수정] 조우 스크립트가 아예 없거나(보스 등), 조우 중이 아닐 때 피격 연출을 무조건 실행합니다!
         EnemyEncounter encounter = GetComponentInChildren<EnemyEncounter>();
-        if (encounter != null && !encounter.IsEncountering)
+        if (encounter == null || !encounter.IsEncountering)
         {
             StopCoroutine("HitFeedback");
             StartCoroutine("HitFeedback");
@@ -97,10 +99,10 @@ public class EnemyHealth : MonoBehaviour
         if (enemyAnim != null) enemyAnim.speed = 0f;
 
         // 3. 비주얼 교체: 본체 숨기고 피격용 오브젝트 켜기
-        if (sr != null) sr.enabled = false;
-
+        SpriteRenderer[] allSrs = GetComponentsInChildren<SpriteRenderer>();
         if (defenceVisual != null)
         {
+            if (sr != null) sr.enabled = false;
             defenceVisual.SetActive(true); // 피격 스프라이트 오브젝트 활성화
 
             // [핵심] 피격 오브젝트 내부의 모든 스프라이트를 붉게 물들임
@@ -108,6 +110,15 @@ public class EnemyHealth : MonoBehaviour
             foreach (var s in hitSrs)
             {
                 s.color = Color.red;
+            }
+        }
+        else
+        {
+            // 방어막(defenceVisual)이 없다면, 보스 몸통과 다리 모두를 직접 붉게 만듭니다!
+            foreach (var s in allSrs) 
+            {
+                // [수정] 이름이 "Shadow"인 그림자 오브젝트는 색상 변경에서 제외합니다!
+                if (s.gameObject.name != "Shadow") s.color = Color.red;
             }
         }
 
@@ -123,10 +134,9 @@ public class EnemyHealth : MonoBehaviour
         if (enemyAnim != null) enemyAnim.speed = 1f;
 
         // 5. 비주얼 원복: 본체 보이기 및 피격 오브젝트 초기화 후 끄기
-        if (sr != null) sr.enabled = true;
-
         if (defenceVisual != null)
         {
+            if (sr != null) sr.enabled = true;
             // 색상을 다시 하얗게 돌려놓고 비활성화 (다음에 또 써야 하니까요)
             SpriteRenderer[] hitSrs = defenceVisual.GetComponentsInChildren<SpriteRenderer>();
             foreach (var s in hitSrs)
@@ -134,6 +144,13 @@ public class EnemyHealth : MonoBehaviour
                 s.color = Color.white;
             }
             defenceVisual.SetActive(false);
+        }
+        else
+        {
+            foreach (var s in allSrs) 
+            {
+                if (s.gameObject.name != "Shadow") s.color = Color.white;
+            }
         }
 
         isHit = false;
@@ -170,8 +187,12 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // 3. 충돌체 즉시 차단 (더 이상 플레이어와 부딪히거나 공격받지 않음)
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
+        // [수정] 부모뿐만 아니라 자식(Body, 다리 등)에 있는 모든 콜리더를 찾아 꺼줍니다.
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        foreach (var c in cols)
+        {
+            c.enabled = false;
+        }
 
         // 4. 모든 스크립트(Mover, Attack 등) 비활성화
         // [핵심] 여기서 스크립트가 꺼져야 Update에서의 방향 전환과 공격 명령이 멈춥니다.
@@ -218,11 +239,29 @@ public class EnemyHealth : MonoBehaviour
     {
         if (damageTextPrefab != null)
         {
-            Transform canvasTransform = hpSlider.GetComponentInParent<Canvas>().transform;
-            GameObject textObj = Instantiate(damageTextPrefab, canvasTransform, false);
-            textObj.SetActive(true);
-            textObj.transform.localPosition = new Vector3(100f, 200f, 0);
-            textObj.GetComponent<DamageText>().Setup(damage);
+                Transform canvasTransform = null;
+                
+                // [핵심 수정] 체력바 UI가 없을 때 에러가 나지 않도록 방어 코드를 추가합니다.
+                if (hpSlider != null)
+                {
+                    Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
+                    if (hpCanvas != null) canvasTransform = hpCanvas.transform;
+                }
+
+                if (canvasTransform != null)
+                {
+                    GameObject textObj = Instantiate(damageTextPrefab, canvasTransform, false);
+                    textObj.SetActive(true);
+                    textObj.transform.localPosition = new Vector3(100f, 200f, 0);
+                    textObj.GetComponent<DamageText>().Setup(damage);
+                }
+                else
+                {
+                    // UI(캔버스)가 없으면 몬스터 위치 위에 월드 좌표로 데미지 텍스트 생성
+                    GameObject textObj = Instantiate(damageTextPrefab, transform.position + (Vector3.up * 1.5f), Quaternion.identity);
+                    textObj.SetActive(true);
+                    textObj.GetComponent<DamageText>()?.Setup(damage);
+                }
         }
     }
 

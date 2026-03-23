@@ -6,7 +6,7 @@ using Game.Core;
 
 public class WeaponCharge : MonoBehaviour, ISkill
 {
-    [Header("Skill Data (½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ® ÇÒ´ç)")]
+    [Header("Skill Data (ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½)")]
     public SkillData skillData;
 
     [Header("UI & Cost")]
@@ -17,7 +17,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
     public float Cooldown => skillData != null ? skillData.cooldown : 0f;
     public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + Cooldown) - Time.time);
 
-    [Header("½Ã°¢ È¿°ú (VFX)")]
+    [Header("ï¿½Ã°ï¿½ È¿ï¿½ï¿½ (VFX)")]
     public GameObject chargingVFX;
 
     [Header("0% Settings (Stage 0)")]
@@ -98,7 +98,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
             chargeGaugeUI.SetGauge(0, maxChargeTime);
         }
 
-        // [¼öÁ¤µÈ ºÎºÐ] ÄÑÁö±â 1ÇÁ·¹ÀÓ ÀüºÎÅÍ ÇÃ·¹ÀÌ¾î À§Ä¡·Î ¿Ïº®ÇÏ°Ô °íÁ¤½ÃÅ´
+        // [ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ïºï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å´
         if (chargingVFX != null)
         {
             chargingVFX.transform.position = owner.transform.position;
@@ -113,7 +113,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
             if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(chargeTimer, maxChargeTime);
             activeEnhancer?.OnUpdate(owner);
 
-            // [¼öÁ¤µÈ ºÎºÐ] ¸Å ÇÁ·¹ÀÓ ÇÃ·¹ÀÌ¾î À§Ä¡¸¦ ÂÑ¾Æ°¡¸ç, ¸¶¿ì½º ¹æÇâ¿¡ ¸ÂÃç Â÷Â¡ ÀÌÆåÆ®µµ ÁÂ¿ì ¹ÝÀü
+            // [ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½] ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ñ¾Æ°ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (chargingVFX != null)
             {
                 chargingVFX.transform.position = owner.transform.position;
@@ -242,7 +242,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
 
     public void PerformHitboxDamage(Collider2D enemyCollider)
     {
-        EnemyHealth healthScript = enemyCollider.GetComponent<EnemyHealth>();
+        EnemyHealth healthScript = enemyCollider.GetComponentInParent<EnemyHealth>();
         if (healthScript != null)
         {
             healthScript.TakeDamage(currentCalculatedDamage, currentAttackDirection);

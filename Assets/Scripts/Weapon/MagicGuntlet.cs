@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MagicGauntlet : WeaponBase
 {
@@ -76,12 +77,18 @@ public class MagicGauntlet : WeaponBase
         float range = (currentComboToFire == 2) ? data.attackRange * 1.5f : data.attackRange;
         Vector2 attackPoint = (Vector2)transform.position + (currentDirection * 0.5f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint, range);
+        HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
 
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy.CompareTag("Enemy"))
             {
-                enemy.GetComponent<EnemyHealth>()?.TakeDamage(finalDamage);
+                EnemyHealth health = enemy.GetComponentInParent<EnemyHealth>();
+                if (health != null && !damagedEnemies.Contains(health))
+                {
+                    damagedEnemies.Add(health);
+                    health.TakeDamage(finalDamage);
+                }
             }
         }
 

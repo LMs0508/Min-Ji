@@ -1,48 +1,49 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordWeapon : WeaponBase
 {
-    [Header("¡å ºñÁÖ¾ó & ¾Ö´Ï¸ÞÀÌ¼Ç")]
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ & ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½")]
     public GameObject attackVisualObject;
 
-    [Tooltip("°ø°Ý ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Àç»ýµÇ´Â ½Ã°£(ÃÊ)À» ÀÔ·ÂÇÏ¼¼¿ä.")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ã°ï¿½(ï¿½ï¿½)ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.")]
     public float attackDuration = 0.5f;
 
     private Vector2 lastAttackPoint;
     private float lastAttackRange;
 
-    // °ø°Ý ÁßÀÎÁö Ã¼Å©ÇØ¼­ ¿¬Å¸ ¹æÁö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ø¼ï¿½ ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½
     private bool isAttacking = false;
 
     public override void ExecuteAttack(Vector2 direction, float multiplier)
     {
-        // ÀÌ¹Ì °ø°Ý ÁßÀÌ¸é Áßº¹ ½ÇÇà ¹æÁö
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isAttacking) return;
 
         WeaponManager wm = GetComponentInParent<WeaponManager>();
         float playerAtk = (wm != null) ? wm.GetCurrentPlayerAttack() : 0;
         float finalDamage = playerAtk * 1.0f;
 
-        // 1. µ¥¹ÌÁö ÆÇÁ¤ ¹üÀ§ °è»ê
+        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 attackPoint = (Vector2)transform.position + (direction * 0.5f);
         float range = data.attackRange;
 
         lastAttackPoint = attackPoint;
         lastAttackRange = range;
 
-        // 2. µ¥¹ÌÁö Àû¿ë
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint, range);
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy.CompareTag("Enemy"))
             {
-                Debug.Log($"{enemy.name}¿¡°Ô {finalDamage}ÀÇ ±ÙÁ¢ µ¥¹ÌÁö!");
-                enemy.GetComponent<EnemyHealth>()?.TakeDamage(finalDamage);
+                Debug.Log($"{enemy.name}ï¿½ï¿½ï¿½ï¿½ {finalDamage}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
+                    enemy.GetComponentInParent<EnemyHealth>()?.TakeDamage(finalDamage);
             }
         }
 
-        // 3. [ÇÙ½É] °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç ¹× ºñÁÖ¾ó ±³Ã¼ ÄÚ·çÆ¾ ½ÇÇà
+        // 3. [ï¿½Ù½ï¿½] ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ ï¿½ï¿½Ã¼ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
         if (wm != null)
         {
             StartCoroutine(AttackRoutine(wm, direction));
@@ -53,18 +54,18 @@ public class SwordWeapon : WeaponBase
     {
         isAttacking = true;
 
-        // 1. [°³¼±] WeaponManager¿¡°Ô "ÇÃ·¹ÀÌ¾î º»Ã¼ ´Ù ¼û°ÜÁà!" ¶ó°í ÇÑ ÁÙ·Î ¸í·É
+        // 1. [ï¿½ï¿½ï¿½ï¿½] WeaponManagerï¿½ï¿½ï¿½ï¿½ "ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
         wm.TogglePlayerVisuals(false);
 
-        // 2. °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç(ÀÌÆåÆ®) ÄÑ±â
+        // 2. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½(ï¿½ï¿½ï¿½ï¿½Æ®) ï¿½Ñ±ï¿½
         if (attackVisualObject != null)
         {
             attackVisualObject.SetActive(true);
 
-            // À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î º»Ã¼ÀÇ Áß½ÉÀ¸·Î ¿Ïº®È÷ °íÁ¤!
+            // ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ß½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ïºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
             attackVisualObject.transform.position = wm.transform.position;
 
-            // ¸¶¿ì½º ¹æÇâ¿¡ ¸ÂÃç¼­ ÁÂ¿ì ¹ÝÀü
+            // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ç¼­ ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½
             Vector3 scale = attackVisualObject.transform.localScale;
             scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
             attackVisualObject.transform.localScale = scale;
@@ -73,16 +74,16 @@ public class SwordWeapon : WeaponBase
             if (anim != null) anim.Play("Attack", 0, 0f);
         }
 
-        // 3. °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç ±æÀÌ¸¸Å­ ´ë±â
+        // 3. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½Å­ ï¿½ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(attackDuration);
 
-        // 4. °ø°ÝÀÌ ³¡³ª¸é ÀÌÆåÆ®¸¦ ²ô°í
+        // 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (attackVisualObject != null)
         {
             attackVisualObject.SetActive(false);
         }
 
-        // 5. [°³¼±] WeaponManager¿¡°Ô "´Ù½Ã ÇÃ·¹ÀÌ¾î º»Ã¼ ´Ù º¸¿©Áà!" ¶ó°í ¸í·É
+        // 5. [ï¿½ï¿½ï¿½ï¿½] WeaponManagerï¿½ï¿½ï¿½ï¿½ "ï¿½Ù½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         wm.TogglePlayerVisuals(true);
 
         isAttacking = false;
