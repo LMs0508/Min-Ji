@@ -15,7 +15,9 @@ MonoBehaviour:
   itemName: MagicStaff
   itemType: 1
   icon: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa, type: 3}
-  description: "\uC8FC\uBB38\uB825 10\uC744 \uAC00\uC9C0\uACE0\uC788\uB294 \uB9C8\uBC95\uC8FC\uBB38\uB825"
+  description: "\uAE30\uBCF8\uC801\uC778 \uB9C8\uB825\uC2A4\uD0DC\uD504\n\uC8FC\uBB38\uB825
+    + 20, \uC0AC\uAC70\uB9AC 8\n\uC774\uB3D9\uC18D\uB3C4 + 50%, \uCFE8\uAC10 +10%\n
+    \uACF5\uACA9\uC18D\uB3C4 - 50%"
   isStackable: 0
   maxStack: 10
   value: 0
@@ -26,7 +28,7 @@ MonoBehaviour:
   attackDamage: 0
   attackSpeedMultiplier: 0.5
   armorStats: 1
-  cooldownStats: 10
+  cooldownStats: 1.1
   hpRegen: 0
   mpRegen: 1
   playerSpeed: 1.5

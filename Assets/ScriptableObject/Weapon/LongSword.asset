@@ -15,7 +15,8 @@ MonoBehaviour:
   itemName: LongSword
   itemType: 0
   icon: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358, type: 3}
-  description: 
+  description: "\uAE30\uBCF8\uC801\uC778 \uC7A5\uAC80\n\uACF5\uACA9\uB825 +10, \uC0AC\uAC70\uB9AC
+    2"
   isStackable: 0
   maxStack: 10
   value: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   hpRegen: 0
   mpRegen: 0
   playerSpeed: 1
+  weaponAnimatorOverride: {fileID: 0}
   attackRange: 2
   projectilePrefab: {fileID: 0}
   projectileSpeed: 10

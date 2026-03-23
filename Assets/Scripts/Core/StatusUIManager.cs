@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Game.Player;
+using Game.Core;
 
 public class StatusUIManager : MonoBehaviour
 {
@@ -27,6 +28,23 @@ public class StatusUIManager : MonoBehaviour
     public TextMeshProUGUI weaponDesc;
     public Image elementIcon;
     public TextMeshProUGUI elementDesc;
+
+    [Header("Element Icons Setup")]
+    public Sprite fireIcon;
+    public Sprite waterIcon;
+    public Sprite windIcon;
+    public Sprite earthIcon;
+    public Sprite noneIcon;
+
+    [Header("UI Buttons")]
+    public Button closeButton;
+
+    void Awake()
+    {
+        // 닫기 버튼이 연결되어 있다면 클릭 시 창을 닫도록 설정
+        if (closeButton != null)
+            closeButton.onClick.AddListener(() => gameObject.SetActive(false));
+    }
 
     void OnEnable()
     {
@@ -82,8 +100,26 @@ public class StatusUIManager : MonoBehaviour
         // 3. 원소 정보 갱신
         if (playerElement != null)
         {
-            elementDesc.text = $"현재 원소: <color=yellow>{playerElement.CurrentElement}</color>";
-            // elementIcon.sprite = ... 원소 아이콘 로직 필요 시 추가
+            string colorName = playerElement.CurrentElement switch
+            {
+                ElementType.Fire => "red",
+                ElementType.Water => "blue",
+                ElementType.Wind => "green",
+                ElementType.Earth => "#863d02d2",
+                _ => "black"
+            };
+
+            elementDesc.text = $"현재 원소: <color={colorName}>{playerElement.CurrentElement}</color>";
+            
+            // [수정] PlayerElement에는 아이콘 반환 함수가 없으므로, UI에서 직접 처리
+            elementIcon.sprite = playerElement.CurrentElement switch
+            {
+                ElementType.Fire => fireIcon,
+                ElementType.Water => waterIcon,
+                ElementType.Wind => windIcon,
+                ElementType.Earth => earthIcon,
+                _ => noneIcon
+            };
         }
     }
 

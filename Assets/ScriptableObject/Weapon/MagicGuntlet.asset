@@ -15,7 +15,9 @@ MonoBehaviour:
   itemName: MagicGuntlet
   itemType: 1
   icon: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276, type: 3}
-  description: "\uADFC\uC811\uACF5\uACA9\uC744 \uC790\uC8FC\uD558\uB294 \uB9C8\uBC95\uB3C4\uAD6C"
+  description: "\uADFC\uC811\uACF5\uACA9\uC744 \uC790\uC8FC\uD558\uB294 \uB9C8\uBC95\uC7A5\uAC11\n\uACF5\uACA9\uB825
+    + 10 , \uC8FC\uBB38\uB825 + 10, \uC0AC\uAC70\uB9AC 3\n\uBC29\uC5B4\uB825 - 20%,
+    \uCFE8\uAC10 +20%, \uC774\uB3D9\uC18D\uB3C4 + 20%"
   isStackable: 0
   maxStack: 10
   value: 0

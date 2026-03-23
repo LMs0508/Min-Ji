@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 2
   icon: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e, type: 3}
   description: "\uC804\uBC29\uC73C\uB85C 4\uBC1C\uC758 \uCD1D\uC54C\uC744 \uBC1C\uC0AC\uD558\uB294
-    \uC0F7\uAC74"
+    \uC0F7\uAC74\n\uACF5\uACA9\uB825 +5, \uC0AC\uAC70\uB9AC 5"
   isStackable: 0
   maxStack: 10
   value: 0
