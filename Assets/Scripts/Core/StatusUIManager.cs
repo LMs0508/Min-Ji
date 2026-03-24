@@ -10,6 +10,7 @@ public class StatusUIManager : MonoBehaviour
     private PlayerStats playerStats;
     private PlayerElement playerElement;
     private WeaponManager weaponManager;
+    private SkillSlotsPrefab playerSkills;
 
     [Header("Stat Texts (TMP)")]
     public TextMeshProUGUI hpText;
@@ -29,6 +30,10 @@ public class StatusUIManager : MonoBehaviour
     public Image elementIcon;
     public TextMeshProUGUI elementDesc;
 
+    [Header("Skill Slot UI")]
+    public Image[] skillSlotImages; // Q, W, E, R 순서대로 할당할 이미지 슬롯 (4개)
+    public Sprite emptySlotSprite; // 스킬이 없을 때 표시할 기본 이미지 (선택 사항)
+
     [Header("Element Icons Setup")]
     public Sprite fireIcon;
     public Sprite waterIcon;
@@ -46,15 +51,66 @@ public class StatusUIManager : MonoBehaviour
             closeButton.onClick.AddListener(() => gameObject.SetActive(false));
     }
 
+    void Start()
+    {
+        // 스킬 슬롯 UI에 대한 초기 설정을 한 번만 수행합니다.
+        SetupSkillSlots();
+    }
+
     void OnEnable()
     {
         RefreshUI();
+        // 창이 활성화될 때 플레이어 스킬 변경 이벤트에 구독합니다.
+        if (playerSkills != null)
+        {
+            playerSkills.OnEquipped += HandleSkillEquipped;
+        }
+    }
+
+    void OnDisable()
+    {
+        // 창이 비활성화될 때 이벤트 구독을 해제하여 성능 저하를 방지합니다.
+        if (playerSkills != null)
+        {
+            playerSkills.OnEquipped -= HandleSkillEquipped;
+        }
     }
 
     // [수정] 창이 열려있는 동안 실시간으로 스탯 변화(체력 재생 등)를 반영하기 위해 Update 추가
     void Update()
     {
         RefreshUI();
+    }
+
+    // 스킬 슬롯에 필요한 컴포넌트의 인덱스를 자동으로 설정합니다.
+    private void SetupSkillSlots()
+    {
+        if (skillSlotImages == null) return;
+
+        for (int i = 0; i < skillSlotImages.Length; i++)
+        {
+            if (skillSlotImages[i] != null)
+            {
+                UIItemSlot itemSlot = skillSlotImages[i].GetComponent<UIItemSlot>();
+                if (itemSlot != null)
+                {
+                    itemSlot.slotType = UIItemSlot.SlotType.Skill;
+                    itemSlot.skillIndex = i;
+                }
+
+                SkillTooltip tooltip = skillSlotImages[i].GetComponent<SkillTooltip>();
+                if (tooltip != null)
+                {
+                    tooltip.slotIndex = i;
+                }
+            }
+        }
+    }
+
+    // 스킬 장착/해제 시 아이콘을 바로 갱신하기 위한 이벤트 핸들러
+    private void HandleSkillEquipped(int slotIndex, GameObject skillPrefab)
+    {
+        UpdateSkillIcons();
     }
 
     public void RefreshUI()
@@ -121,6 +177,35 @@ public class StatusUIManager : MonoBehaviour
                 _ => noneIcon
             };
         }
+
+        // 4. 스킬 아이콘 갱신
+        UpdateSkillIcons();
+    }
+
+    // 스킬 아이콘 UI를 현재 장착된 스킬에 맞게 업데이트
+    private void UpdateSkillIcons()
+    {
+        if (playerSkills == null || skillSlotImages == null) return;
+
+        for (int i = 0; i < skillSlotImages.Length; i++)
+        {
+            if (i >= playerSkills.equippedSkill.Length || skillSlotImages[i] == null) continue;
+
+            ISkill skill = playerSkills.equippedSkill[i];
+
+            if (skill != null && skill.Icon != null)
+            {
+                skillSlotImages[i].sprite = skill.Icon;
+                skillSlotImages[i].color = Color.white;
+                skillSlotImages[i].raycastTarget = true; // 드래그 및 툴팁을 위해 레이캐스트 활성화
+            }
+            else
+            {
+                skillSlotImages[i].sprite = emptySlotSprite;
+                skillSlotImages[i].color = (emptySlotSprite == null) ? new Color(1, 1, 1, 0) : Color.white;
+                skillSlotImages[i].raycastTarget = false; // 빈 슬롯은 상호작용 불가
+            }
+        }
     }
 
     private void FindPlayer()
@@ -132,6 +217,7 @@ public class StatusUIManager : MonoBehaviour
             // [수정] 컴포넌트가 자식 오브젝트에 있을 가능성을 대비해 GetComponentInChildren 사용
             playerElement = player.GetComponentInChildren<PlayerElement>();
             weaponManager = player.GetComponentInChildren<WeaponManager>();
+            playerSkills = player.GetComponent<SkillSlotsPrefab>();
         }
     }
 }
