@@ -58,7 +58,7 @@ public class ShotgunWeapon : WeaponBase
             visualHandler.isAttacking = false;
         }
         isAttacking = false;    
-        }
+        }   
 
     // 애니메이션 이벤트에서 호출되는 실제 발사 로직
     public void FireBullet()
@@ -75,7 +75,7 @@ public class ShotgunWeapon : WeaponBase
             weaponScale.x = Mathf.Abs(weaponScale.x) * (bodyScaleX < 0 ? -1f : 1f);
             transform.localScale = weaponScale;
         }
-
+    
         // 1. 방향에 맞는 FirePoint 선택
         Transform activeFirePoint = transform; // 기본값
         

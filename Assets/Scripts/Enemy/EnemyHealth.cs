@@ -23,14 +23,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float hitStopDuration = 0.3f; // 히트스탑 시간
     private Animator enemyAnim;
 
-    void Awake()
+    protected virtual void Awake()
     {
         stats = GetComponent<EnemyStats>();
         sr = GetComponentInChildren<SpriteRenderer>();
         enemyAnim = GetComponentInChildren<Animator>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         currentHealth = stats.maxHealth;
 
@@ -48,15 +48,34 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
+        
+        // [추가] 거미 보스 기믹 처리: 모든 다리가 부서지지 않았다면 본체는 무적
+        SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
+        if (bossCtrl != null && !bossCtrl.AreAllLegsDestroyed())
+        {
+            ShowDamageText(0);
+            return;
+        }
+
         HandleDamage(damage, Vector2.zero);
     }
 
-    public void TakeDamage(float damage, Vector2 knockbackDir)
+    public virtual void TakeDamage(float damage, Vector2 knockbackDir)
     {
         if (currentHealth <= 0) return;
+
+        // [추가] 넉백 스킬로 타격 시에도 동일하게 무적 처리
+        SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
+        if (bossCtrl != null && !bossCtrl.AreAllLegsDestroyed())
+        {
+            // 다리가 아직 살아있으므로 본체 데미지 무효화
+            ShowDamageText(0);
+            return;
+        }
+
         HandleDamage(damage, knockbackDir);
     }
 
@@ -234,33 +253,73 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(FadeOutAndDestroy());
     }
 
+    // [핵심 추가] 데미지 텍스트를 담을 전용 '월드 스페이스' 캔버스를 가져오거나 생성합니다.
+    public Canvas GetDamageTextCanvas()
+    {
+        // 1. 기존 체력바 캔버스가 월드 스페이스라면 그것을 사용 (가장 안전)
+        if (hpSlider != null)
+        {
+            Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
+            if (hpCanvas != null && hpCanvas.renderMode == RenderMode.WorldSpace)
+                return hpCanvas;
+        }
+
+        // 2. 데미지 텍스트 전용으로 만든 캔버스가 이미 있는지 확인
+        Transform existingCanvas = transform.Find("DamageTextCanvas");
+        if (existingCanvas != null)
+            return existingCanvas.GetComponent<Canvas>();
+
+        // 2. 없으면 새로 생성 (UI 렌더링 누락을 막기 위해 RectTransform 명시 추가)
+        GameObject canvasObj = new GameObject("DamageTextCanvas", typeof(RectTransform));
+        canvasObj.transform.SetParent(this.transform, false);
+        canvasObj.transform.localPosition = Vector3.zero;
+        
+        // [해결] 카메라 설정에 따라 텍스트가 안 보이는 현상을 막기 위해 UI 레이어 명시적 지정
+        canvasObj.layer = LayerMask.NameToLayer("UI");
+
+        Canvas newCanvas = canvasObj.AddComponent<Canvas>();
+        newCanvas.renderMode = RenderMode.WorldSpace;
+        newCanvas.worldCamera = Camera.main ?? FindFirstObjectByType<Camera>();
+        newCanvas.sortingOrder = 999;
+
+        // [수정] 캔버스의 스케일은 가장 기본값인 0.01로 안전하게 고정합니다. (유니티 렌더링 버그 방지)
+        canvasObj.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        return newCanvas;
+    }
+
     // (FadeOutAndDestroy 및 ShowDamageText는 기존과 동일)
-    void ShowDamageText(float damage)
+    protected virtual void ShowDamageText(float damage)
     {
         if (damageTextPrefab != null)
         {
-                Transform canvasTransform = null;
-                
-                // [핵심 수정] 체력바 UI가 없을 때 에러가 나지 않도록 방어 코드를 추가합니다.
-                if (hpSlider != null)
+                Canvas targetCanvas = GetDamageTextCanvas();
+                if (targetCanvas != null)
                 {
-                    Canvas hpCanvas = hpSlider.GetComponentInParent<Canvas>();
-                    if (hpCanvas != null) canvasTransform = hpCanvas.transform;
-                }
+                    GameObject textObj = Instantiate(damageTextPrefab, targetCanvas.transform, false);
+                    textObj.SetActive(true);
+                    
+                    // [수정] 하드코딩 제거. 타겟 위치로 이동 후, 프리팹에서 설정한 로컬 오프셋 값을 더해줍니다.
+                    textObj.transform.position = transform.position;
+                    textObj.transform.localPosition += damageTextPrefab.transform.localPosition;
+                    
+                    RectTransform rect = textObj.GetComponent<RectTransform>();
+                    RectTransform prefabRect = damageTextPrefab.GetComponent<RectTransform>();
+                    if (rect != null && prefabRect != null) {
+                        rect.sizeDelta = prefabRect.sizeDelta; // 텍스트 상자 크기 적용
+                        
+                        // [핵심 해결] 캔버스가 보스 크기에 의해 뻥튀기되더라도 텍스트 크기를 역산하여 일정하게 맞춥니다.
+                        Vector3 canvasWorldScale = targetCanvas.transform.lossyScale;
+                        Vector3 baseScale = prefabRect.localScale * 0.01f;
 
-                if (canvasTransform != null)
-                {
-                    GameObject textObj = Instantiate(damageTextPrefab, canvasTransform, false);
-                    textObj.SetActive(true);
-                    textObj.transform.localPosition = new Vector3(100f, 200f, 0);
+                        float finalX = canvasWorldScale.x != 0 ? baseScale.x / canvasWorldScale.x : prefabRect.localScale.x;
+                        float finalY = canvasWorldScale.y != 0 ? baseScale.y / canvasWorldScale.y : prefabRect.localScale.y;
+                        float finalZ = canvasWorldScale.z != 0 ? baseScale.z / canvasWorldScale.z : prefabRect.localScale.z;
+
+                        rect.localScale = new Vector3(finalX, finalY, finalZ);
+                    }
+                    
                     textObj.GetComponent<DamageText>().Setup(damage);
-                }
-                else
-                {
-                    // UI(캔버스)가 없으면 몬스터 위치 위에 월드 좌표로 데미지 텍스트 생성
-                    GameObject textObj = Instantiate(damageTextPrefab, transform.position + (Vector3.up * 1.5f), Quaternion.identity);
-                    textObj.SetActive(true);
-                    textObj.GetComponent<DamageText>()?.Setup(damage);
                 }
         }
     }

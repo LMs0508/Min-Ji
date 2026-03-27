@@ -22,6 +22,12 @@ public class ProceduralSpiderLeg : MonoBehaviour
     private bool isStepping = false;
     private Vector3 defaultLocalPosition; // 시작 시 다리의 자연스러운 로컬 위치 기억
     
+    [Header("체력 설정")]
+    public float maxHealth = 50f;
+    public float currentHealth;
+    public bool isDead = false;
+    private SpriteRenderer[] srs; // [수정] 다리 전체의 이미지를 담기 위한 배열
+
     private EnemyStats bossStats; // [추가] 몸통에서 스탯(데미지)을 가져오기 위한 변수
 
     private void Start()
@@ -36,6 +42,9 @@ public class ProceduralSpiderLeg : MonoBehaviour
         transform.SetParent(null);
 
         currentPosition = transform.position;
+
+        currentHealth = maxHealth;
+        srs = GetComponentsInChildren<SpriteRenderer>(); // [수정] 다리를 구성하는 모든 스프라이트를 가져옴
     }
 
     private void Update()
@@ -96,6 +105,8 @@ public class ProceduralSpiderLeg : MonoBehaviour
     // [수정] SlamAttack 코루틴 내부 로직
     private IEnumerator SlamAttackRoutine(Vector3 strikePos, bool shakeCamera, float slamHeight, float durationMultiplier)
     {
+        if (isDead) yield break;
+
         isStepping = true; // 찍기 공격 중에는 일반 걷기 로직이 발동하지 않도록 잠금
 
         // [핵심] 타겟 위치가 몸통에서 너무 멀면, 최대 거리(maxReach)까지만 뻗도록 제한 (다리 분리 방지)
@@ -150,6 +161,8 @@ public class ProceduralSpiderLeg : MonoBehaviour
 
     private IEnumerator SweepAttackRoutine(Vector3 targetPos, int dirModifier)
     {
+        if (isDead) yield break;
+
         isStepping = true;
         Vector3 startPos = currentPosition;
 
@@ -190,9 +203,54 @@ public class ProceduralSpiderLeg : MonoBehaviour
         isStepping = false;
     }
 
+    // [추가] 플레이어의 공격을 받았을 때 호출되는 함수
+    public void TakeDamage(float damage)
+    {
+        if (isDead) return;
+
+        currentHealth -= damage;
+        StartCoroutine(HitFeedback()); // 피격 시 붉게 깜빡임
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private IEnumerator HitFeedback()
+    {
+        // [수정] 피격 시 다리 전체를 붉게 만듦
+        if (srs != null) { foreach(var sr in srs) sr.color = Color.red; }
+        
+        yield return new WaitForSeconds(0.1f);
+        
+        if (srs != null && !isDead) 
+        { 
+            foreach(var sr in srs) sr.color = Color.white; 
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        StopAllCoroutines(); // 진행 중인 모든 움직임과 공격을 즉시 정지
+
+        isStepping = false; // 공격 중 파괴되었을 때, 이어서 바로 다시 걷기 시작할 수 있도록 상태 초기화
+
+        // 파괴된 다리 시각적 연출: 회색으로 변하고 충돌체 비활성화
+        // [수정] 다리 전체를 회색으로 만들고 다리에 붙어있는 모든 충돌체를 끔
+        if (srs != null) { foreach(var sr in srs) sr.color = Color.gray; } // 일반 회색으로 변경
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        foreach(var col in cols) {
+            col.enabled = false; // 충돌체가 꺼지므로 더 이상 플레이어가 닿아도 데미지를 입지 않습니다.
+        }
+    }
+
     // [추가] 다리의 트리거(충돌체)에 무언가 닿았을 때 실행되는 유니티 기본 함수
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead) return; // 파괴된 다리는 플레이어에게 데미지를 주지 않음
+
         if (collision.CompareTag("Player") && bossStats != null && bossStats.enemyData != null)
         {
             PlayerStats playerStats = collision.GetComponent<PlayerStats>();
