@@ -250,6 +250,13 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
+        // [추가] 보스 몬스터일 경우 죽음 연출(죽음 애니메이션 켜기)을 강제로 실행합니다.
+        SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
+        if (bossCtrl != null)
+        {
+            bossCtrl.HandleDeath();
+        }
+
         StartCoroutine(FadeOutAndDestroy());
     }
 
@@ -326,6 +333,13 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator FadeOutAndDestroy()
     {
+        // [추가] 보스 몬스터는 페이드아웃 및 파괴를 생략하고 시체(DeathVisual)를 남깁니다.
+        SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
+        if (bossCtrl != null)
+        {
+            yield break; 
+        }
+
         yield return null;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)

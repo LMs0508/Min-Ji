@@ -52,6 +52,9 @@ public class SpiderBossController : MonoBehaviour
     public float poisonSpitCooldown = 4f; // 독침 뱉기 쿨타임
     private float lastPoisonSpitTime;
 
+    [Header("사망 연출 설정")]
+    public GameObject deathVisual; // 죽을 때 켜질 죽음 애니메이션 오브젝트
+
     private EnemyHealth healthScript;
     private EnemyStats stats;
 
@@ -69,7 +72,12 @@ public class SpiderBossController : MonoBehaviour
 
         if (healthScript != null && healthScript.IsDead)
         {
-            currentState = SpiderBossState.Dead;
+            // 죽음 처리를 한 번만 실행하기 위한 조건문
+            if (currentState != SpiderBossState.Dead)
+            {
+                currentState = SpiderBossState.Dead;
+                HandleDeath(); // 몸통 끄고 시체 켜기
+            }
             return;
         }
 
@@ -154,6 +162,40 @@ public class SpiderBossController : MonoBehaviour
                     }
                 }
                 break;
+        }
+    }
+
+    // [추가] 보스 사망 시 시각적 연출 처리 (EnemyHealth에서 직접 호출할 수 있도록 public으로 변경)
+    public void HandleDeath()
+    {
+        StopAllCoroutines();
+
+        // 1. 본체(자식 포함)에 붙어있는 모든 스프라이트 렌더러 끄기
+        SpriteRenderer[] allSrs = GetComponentsInChildren<SpriteRenderer>();
+        foreach (var s in allSrs) s.enabled = false;
+
+        // 2. 몸통에서 분리되어 돌아다니던 다리들(8개)의 스프라이트도 끄기
+        if (allLegs != null)
+        {
+            foreach (var leg in allLegs)
+            {
+                if (leg != null)
+                {
+                    SpriteRenderer[] legSrs = leg.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (var s in legSrs) s.enabled = false;
+                }
+            }
+        }
+
+        // 3. 거미줄 끄기 (보스가 죽어도 거미줄을 남기려면 이 부분을 주석 처리합니다)
+        // if (spiderWebObject != null) spiderWebObject.SetActive(false);
+
+        // 4. 죽음 전용 애니메이션 오브젝트 켜기
+        if (deathVisual != null)
+        {
+            deathVisual.SetActive(true);
+            SpriteRenderer[] deathSrs = deathVisual.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var s in deathSrs) s.enabled = true; // 방금 위에서 껐으므로 다시 켜줍니다.
         }
     }
 
