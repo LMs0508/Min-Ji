@@ -54,7 +54,7 @@ public class EnemyHealth : MonoBehaviour
         
         // [추가] 거미 보스 기믹 처리: 모든 다리가 부서지지 않았다면 본체는 무적
         SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
-        if (bossCtrl != null && !bossCtrl.AreAllLegsDestroyed())
+        if (bossCtrl != null && bossCtrl.IsInvincible())
         {
             ShowDamageText(0);
             return;
@@ -69,7 +69,7 @@ public class EnemyHealth : MonoBehaviour
 
         // [추가] 넉백 스킬로 타격 시에도 동일하게 무적 처리
         SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
-        if (bossCtrl != null && !bossCtrl.AreAllLegsDestroyed())
+        if (bossCtrl != null && bossCtrl.IsInvincible())
         {
             // 다리가 아직 살아있으므로 본체 데미지 무효화
             ShowDamageText(0);

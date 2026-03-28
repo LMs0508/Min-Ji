@@ -11,6 +11,7 @@ public class BossScreenSlash : MonoBehaviour
     
     private SpriteRenderer sr;
     private BoxCollider2D col;
+    private bool hasDamaged = false; // [추가] 다단히트(중복 데미지) 방지용 플래그
 
     void Start()
     {
@@ -57,15 +58,28 @@ public class BossScreenSlash : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 광선에 닿은 대상이 플레이어면 데미지 적용
+        TryDamagePlayer(other);
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        TryDamagePlayer(other);
+    }
+
+    private void TryDamagePlayer(Collider2D other)
+    {
+        if (hasDamaged) return; // 한 번 데미지를 입혔으면 종료
+
         if (other.CompareTag("Player"))
         {
             PlayerStats playerStats = other.GetComponent<PlayerStats>();
             if (playerStats == null) playerStats = other.GetComponentInParent<PlayerStats>();
+            if (playerStats == null) playerStats = other.transform.root.GetComponentInChildren<PlayerStats>(); // 최상위 부모까지 안전하게 검색
             
             if (playerStats != null)
             {
                 playerStats.TakeDamage(damage);
+                hasDamaged = true; // 데미지를 주었다고 체크 (다단히트 방지)
             }
         }
     }
