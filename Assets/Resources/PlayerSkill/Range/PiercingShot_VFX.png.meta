@@ -1,0 +1,498 @@
+fileFormatVersion: 2
+guid: 21409d244fd31ae4fa995fd2d7ddfcdb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7805119353554043911
+    second: PiercingShot_VFX_0
+  - first:
+      213: 8039963609718971819
+    second: PiercingShot_VFX_1
+  - first:
+      213: 444120050649448033
+    second: PiercingShot_VFX_2
+  - first:
+      213: 2382832629630057743
+    second: PiercingShot_VFX_3
+  - first:
+      213: -5627516572837859017
+    second: PiercingShot_VFX_4
+  - first:
+      213: 7115315910654185525
+    second: PiercingShot_VFX_5
+  - first:
+      213: 6617475511503414400
+    second: PiercingShot_VFX_6
+  - first:
+      213: 9031334959923946789
+    second: PiercingShot_VFX_7
+  - first:
+      213: -8459295261825453847
+    second: PiercingShot_VFX_8
+  - first:
+      213: 8621451850540647933
+    second: PiercingShot_VFX_9
+  - first:
+      213: 7223266173940810963
+    second: PiercingShot_VFX_10
+  - first:
+      213: -7262616823685729267
+    second: PiercingShot_VFX_11
+  - first:
+      213: 7839957383226783867
+    second: PiercingShot_VFX_12
+  - first:
+      213: -952261263464798344
+    second: PiercingShot_VFX_13
+  - first:
+      213: -1223876476752208339
+    second: PiercingShot_VFX_14
+  - first:
+      213: 4482425829003397676
+    second: PiercingShot_VFX_15
+  - first:
+      213: 6900036716610272611
+    second: PiercingShot_VFX_16
+  - first:
+      213: -198601615388612991
+    second: PiercingShot_VFX_17
+  - first:
+      213: -4350176724507498731
+    second: PiercingShot_VFX_18
+  - first:
+      213: 3795709089522431579
+    second: PiercingShot_VFX_19
+  - first:
+      213: -2767293213611745973
+    second: PiercingShot_VFX_20
+  - first:
+      213: 4959235940459555822
+    second: PiercingShot_VFX_21
+  - first:
+      213: 2794118925804821748
+    second: PiercingShot_VFX_22
+  - first:
+      213: 1247557660999935439
+    second: PiercingShot_VFX_23
+  - first:
+      213: -4031261154146266505
+    second: PiercingShot_VFX_24
+  - first:
+      213: -1935633194060044065
+    second: PiercingShot_VFX_25
+  - first:
+      213: 5488167682852463873
+    second: PiercingShot_VFX_26
+  - first:
+      213: 2657954650284378217
+    second: PiercingShot_VFX_27
+  - first:
+      213: -2077800787119777318
+    second: PiercingShot_VFX_28
+  - first:
+      213: -5065004713914595457
+    second: PiercingShot_VFX_29
+  - first:
+      213: -8103138498679788963
+    second: PiercingShot_VFX_30
+  - first:
+      213: -6970618018363260765
+    second: PiercingShot_VFX_31
+  - first:
+      213: 2467116706998220592
+    second: PiercingShot_VFX_32
+  - first:
+      213: 6280545622282581932
+    second: PiercingShot_VFX_33
+  - first:
+      213: -6004129392858039894
+    second: PiercingShot_VFX_34
+  - first:
+      213: -257377549801166709
+    second: PiercingShot_VFX_35
+  - first:
+      213: -5151520390310511223
+    second: PiercingShot_VFX_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PiercingShot_VFX_0
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 1091
+        width: 497
+        height: 402
+      alignment: 9
+      pivot: {x: 0.8653687, y: 0.48363316}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fb72ed1d45aea390800000000000000
+      internalID: -7805119353554043911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_1
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1164
+        width: 221
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baddd543e40b39f60800000000000000
+      internalID: 8039963609718971819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 2337
+        y: 1157
+        width: 253
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16eb69045d4d92600800000000000000
+      internalID: 444120050649448033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_4
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 1237
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 731306c2e7b07e1b0800000000000000
+      internalID: -5627516572837859017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_6
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 1197
+        width: 173
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 084e105baeef5db50800000000000000
+      internalID: 6617475511503414400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_7
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 785
+        width: 806
+        height: 316
+      alignment: 9
+      pivot: {x: 0.9522238, y: 0.4999996}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52565d5cb4fb55d70800000000000000
+      internalID: 9031334959923946789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_8
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 895
+        width: 1750
+        height: 95
+      alignment: 9
+      pivot: {x: 0.97972393, y: 0.47229454}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e0bfb457cb8a9a80800000000000000
+      internalID: -8459295261825453847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_18
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 544
+        width: 2539
+        height: 93
+      alignment: 9
+      pivot: {x: 0.9850894, y: 0.45755103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 517ee89315111a3c0800000000000000
+      internalID: -4350176724507498731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_32
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 16
+        width: 2414
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0377f0cd295fc3220800000000000000
+      internalID: 2467116706998220592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PiercingShot_VFX_34
+      rect:
+        serializedVersion: 2
+        x: 2527
+        y: 146
+        width: 181
+        height: 163
+      alignment: 9
+      pivot: {x: 0.7907971, y: 0.4757814}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa9f631e02c0daca0800000000000000
+      internalID: -6004129392858039894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 17468441e292fa54589ced0ae94d146b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PiercingShot_VFX_0: -7805119353554043911
+      PiercingShot_VFX_1: 8039963609718971819
+      PiercingShot_VFX_10: 7223266173940810963
+      PiercingShot_VFX_11: -7262616823685729267
+      PiercingShot_VFX_12: 7839957383226783867
+      PiercingShot_VFX_13: -952261263464798344
+      PiercingShot_VFX_14: -1223876476752208339
+      PiercingShot_VFX_15: 4482425829003397676
+      PiercingShot_VFX_16: 6900036716610272611
+      PiercingShot_VFX_17: -198601615388612991
+      PiercingShot_VFX_18: -4350176724507498731
+      PiercingShot_VFX_19: 3795709089522431579
+      PiercingShot_VFX_2: 444120050649448033
+      PiercingShot_VFX_20: -2767293213611745973
+      PiercingShot_VFX_21: 4959235940459555822
+      PiercingShot_VFX_22: 2794118925804821748
+      PiercingShot_VFX_23: 1247557660999935439
+      PiercingShot_VFX_24: -4031261154146266505
+      PiercingShot_VFX_25: -1935633194060044065
+      PiercingShot_VFX_26: 5488167682852463873
+      PiercingShot_VFX_27: 2657954650284378217
+      PiercingShot_VFX_28: -2077800787119777318
+      PiercingShot_VFX_29: -5065004713914595457
+      PiercingShot_VFX_3: 2382832629630057743
+      PiercingShot_VFX_30: -8103138498679788963
+      PiercingShot_VFX_31: -6970618018363260765
+      PiercingShot_VFX_32: 2467116706998220592
+      PiercingShot_VFX_33: 6280545622282581932
+      PiercingShot_VFX_34: -6004129392858039894
+      PiercingShot_VFX_35: -257377549801166709
+      PiercingShot_VFX_36: -5151520390310511223
+      PiercingShot_VFX_4: -5627516572837859017
+      PiercingShot_VFX_5: 7115315910654185525
+      PiercingShot_VFX_6: 6617475511503414400
+      PiercingShot_VFX_7: 9031334959923946789
+      PiercingShot_VFX_8: -8459295261825453847
+      PiercingShot_VFX_9: 8621451850540647933
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -55,4 +55,5 @@ MonoBehaviour:
   maxStacks: 3
   stackEffect: 0
   stackBonusDamage: 0.5
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 1128041895202128153, guid: fa79f82f0d8156a4f9c8ce5f5ed45a98,
+    type: 3}

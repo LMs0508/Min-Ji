@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7188349329164546263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2346889416916763147}
+  - component: {fileID: 8426041705569650059}
+  m_Layer: 0
+  m_Name: PF_Skill_PiercingShot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2346889416916763147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188349329164546263}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.10176, y: 4.09372, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8426041705569650059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188349329164546263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff90a1323e9fbb40945fbfb64c26604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PiercingShotSkill
+  skillData: {fileID: 11400000, guid: 4fdbc6fe4a33f0543930bb35108b229a, type: 2}
+  skillManaCost: 30
+  damageRatio: 1.2
+  projectilePrefab: {fileID: 6881215201397274996, guid: c781cc03f1d06be4999030b070eed1e6,
+    type: 3}
+  castEffectPrefab: {fileID: 8122427817498624292, guid: a8e9bbd3302291943829478d2d6c6f5a,
+    type: 3}
+  projectileSpeed: 25
+  projectileRange: 15

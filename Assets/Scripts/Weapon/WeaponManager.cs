@@ -6,6 +6,8 @@ public class WeaponManager : MonoBehaviour
 {
     [Header("현재 장착 정보")]
     public WeaponData currentWeapon;
+
+    public event Action OnSkillFireRequest;
     
     // [복구] UI에 무기가 변경되었음을 알리는 이벤트
     public static event Action<WeaponData> OnWeaponChanged; 
@@ -113,13 +115,25 @@ public class WeaponManager : MonoBehaviour
         hasFiredThisAttack = false; 
     }
 
+    // [추가] 스킬 사용 시 스킬 애니메이션 때문에 일반 투사체가 나가는 것을 막기 위해 권한을 즉시 소모합니다.
+    public void ConsumeAttackEvent()
+    {
+        hasFiredThisAttack = true;
+    }
+
     // 애니메이션 이벤트(PlayerAnimationEventRelay)에서 발사 명령을 받을 함수
     public void FireCurrentWeapon()
     {
         // [핵심] 이미 총알을 쐈다면 시간차로 들어오는 불필요한 이벤트는 완벽히 무시합니다.
-        // [수정] 스킬이 활성화된 동안에는 애니메이션 이벤트로 일반 공격이 발사되지 않도록 막습니다.
-        if (hasFiredThisAttack || IsSkillActive) return;
+        if (hasFiredThisAttack) return;
         hasFiredThisAttack = true;
+
+        // [수정] 스킬이 활성화된 상태라면, 일반 공격 대신 스킬 발사 이벤트를 호출합니다.
+        if (IsSkillActive)
+        {
+            OnSkillFireRequest?.Invoke();
+            return;
+        }
 
         if (equippedWeaponInstance != null)
         {
@@ -131,6 +145,9 @@ public class WeaponManager : MonoBehaviour
     // A키 입력 시 호출될 함수
     public void OnAttack(Vector2 dir, float multiplier)
     {
+        // [핵심] 스킬이 활성화된 상태에서는 일반 공격을 시작할 수 없습니다. (중복 방지)
+        if (IsSkillActive) return;
+
         if (equippedWeaponInstance != null)
         {
             // 공격 시 즉시 전투 태세(Combat Mode)를 활성화합니다.

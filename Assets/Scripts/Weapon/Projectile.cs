@@ -1,21 +1,28 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Projectile : MonoBehaviour
 {
     private Vector2 startPos;
     private float range;
-    private float damage; // 데미지 추가
+    private float damage;
+    private bool isPiercing; // 관통 옵션
+    
+    private HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>(); // 중복 타격 방지 리스트
 
     [Header("이펙트 설정")]
     [Tooltip("적이나 벽에 맞았을 때 생성될 피격/폭발 애니메이션 프리팹")]
     public GameObject hitEffectPrefab;
 
-    // Setup 함수에 damage 인자 추가
-    public void Setup(float speed, float range, float damage, Vector2 direction)
+    // Setup 함수에 isPiercing 선택적 인자 추가
+    public void Setup(float speed, float range, float damage, Vector2 direction, bool isPiercing = false)
     {
         this.range = range;
         this.damage = damage;
+        this.isPiercing = isPiercing;
         this.startPos = transform.position;
+        
+        damagedEnemies.Clear(); // 셋업 시 리스트 초기화
 
         // 투사체 이동 설정
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -45,21 +52,30 @@ public class Projectile : MonoBehaviour
         {
             // 적의 체력 관리 스크립트를 가져옵니다.
             var enemy = collision.GetComponentInParent<EnemyHealth>();
-            if (enemy != null)
+            
+            // [핵심] 아직 데미지를 주지 않은 적일 때만 데미지를 줍니다!
+            if (enemy != null && !damagedEnemies.Contains(enemy))
             {
-                // 계산되어 넘어온 80% 데미지를 입힙니다.
+                damagedEnemies.Add(enemy); // 데미지를 준 적으로 기록
                 enemy.TakeDamage(damage);
-                Debug.Log($"적중! 데미지: {damage} (플레이어 공격력의 80%)");
+                Debug.Log($"투사체 적중! 데미지: {damage}");
+                SpawnHitEffect(); // 데미지가 들어갈 때만 이펙트 터뜨리기
             }
-            SpawnHitEffect();
-            Destroy(gameObject);
+            
+            // 관통 속성이 아닐 때만 투사체 소멸
+            if (!isPiercing) 
+                Destroy(gameObject);
         }
 
         // 2. 벽에 부딪혔을 때
         if (collision.CompareTag("Wall"))
         {
             SpawnHitEffect();
-            Destroy(gameObject); // 벽에 닿으면 소멸
+            
+            // [핵심] 관통 옵션(레이저 등)일 때는 벽에 스쳐도 사라지지 않고 뚫고 지나갑니다!
+            // 시원한 연출과 제대로 된 사거리를 보장하기 위한 조치입니다.
+            if (!isPiercing) 
+                Destroy(gameObject);
         }
     }
 

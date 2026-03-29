@@ -19,7 +19,7 @@ public class EarthBarrier : MonoBehaviour
     {
         transform.localPosition = positionOffset;
         myCollider = GetComponent<Collider2D>();
-        filter.NoFilter();
+        filter = ContactFilter2D.noFilter;
         filter.useTriggers = true; // [핵심] 트리거 콜라이더인 보스의 다리도 감지하도록 강제 설정
     }
 

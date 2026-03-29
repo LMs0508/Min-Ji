@@ -14,7 +14,7 @@ public class WaterWhirlwind : MonoBehaviour
     private void Start()
     {
         myCollider = GetComponent<Collider2D>();
-        filter.NoFilter(); // 모든 콜라이더 감지
+        filter = ContactFilter2D.noFilter; // 모든 콜라이더 감지
         filter.useTriggers = true; // [핵심] 트리거 콜라이더인 보스의 다리도 감지하도록 강제 설정
     }
 
