@@ -1,6 +1,7 @@
 using UnityEngine;
 using Game.Core;
 using System.Collections;
+using System.Collections.Generic;
 
 public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
 {
@@ -88,13 +89,17 @@ public class JudgementSmashFireEnhancer : MonoBehaviour, ISkillElementEnhancer
             Destroy(fireField, 3.0f);
         }
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(landingPos, explosionRadius);
+        HashSet<EnemyHealth> appliedEnemies = new HashSet<EnemyHealth>();
+
         foreach (var hit in hitEnemies)
         {
             if (hit.CompareTag("Enemy"))
             {
                 EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
-                if (health != null)
+                // [핵심 수정] 하나의 몬스터(보스 등)에게 화상이 여러 개 걸리는 것을 방지
+                if (health != null && !appliedEnemies.Contains(health))
                 {
+                    appliedEnemies.Add(health);
                     health.StartCoroutine(ApplyBurnEffect(health, burnDamage, burnDuration));
                 }
             }

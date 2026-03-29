@@ -5,7 +5,7 @@ public class JudgementSmashWaterEnhancer : MonoBehaviour, ISkillElementEnhancer
 {
     public ElementType TargetElement => ElementType.Water;
 
-    [Header("È¸¿À¸® ¼³Á¤")]
+    [Header("íšŒì˜¤ë¦¬ ì„¤ì •")]
     public GameObject whirlwindPrefab;
 
     public void OnStart(GameObject owner) { }
@@ -17,7 +17,7 @@ public class JudgementSmashWaterEnhancer : MonoBehaviour, ISkillElementEnhancer
         {
             GameObject whirlwind = Instantiate(whirlwindPrefab, owner.transform.position, Quaternion.identity);
 
-            // 3ÃÊ µÚ ÀÚµ¿ ¼Ò¸ê
+            // 3ì´ˆ ë’¤ ìë™ ì†Œë©¸
             Destroy(whirlwind, 3.0f);
         }
     }

@@ -56,7 +56,6 @@ public class EnemyHealth : MonoBehaviour
         SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
         if (bossCtrl != null && bossCtrl.IsInvincible())
         {
-            ShowDamageText(0);
             return;
         }
 
@@ -71,8 +70,6 @@ public class EnemyHealth : MonoBehaviour
         SpiderBossController bossCtrl = GetComponent<SpiderBossController>();
         if (bossCtrl != null && bossCtrl.IsInvincible())
         {
-            // 다리가 아직 살아있으므로 본체 데미지 무효화
-            ShowDamageText(0);
             return;
         }
 
