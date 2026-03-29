@@ -10,6 +10,10 @@ public class WeaponManager : MonoBehaviour
     // [복구] UI에 무기가 변경되었음을 알리는 이벤트
     public static event Action<WeaponData> OnWeaponChanged; 
 
+    // [추가] 스킬 시스템에서 현재 무기 인스턴스에 접근하고 발사를 제어하기 위한 속성
+    public WeaponBase EquippedWeaponInstance => equippedWeaponInstance;
+    public bool IsSkillActive { get; set; } = false;
+
     [Header("참조 설정")]
     public Transform weaponHoldPoint; // 플레이어 손 위치 (Transform)
 
@@ -113,7 +117,8 @@ public class WeaponManager : MonoBehaviour
     public void FireCurrentWeapon()
     {
         // [핵심] 이미 총알을 쐈다면 시간차로 들어오는 불필요한 이벤트는 완벽히 무시합니다.
-        if (hasFiredThisAttack) return;
+        // [수정] 스킬이 활성화된 동안에는 애니메이션 이벤트로 일반 공격이 발사되지 않도록 막습니다.
+        if (hasFiredThisAttack || IsSkillActive) return;
         hasFiredThisAttack = true;
 
         if (equippedWeaponInstance != null)

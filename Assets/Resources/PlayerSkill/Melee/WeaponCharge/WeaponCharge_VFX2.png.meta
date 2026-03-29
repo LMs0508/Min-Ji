@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 803b2a9556121d8419b6cfd6a8eca8c4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7292236270196928859
+    second: WeaponCharge_VFX2_0
+  - first:
+      213: -5780434970482348705
+    second: WeaponCharge_VFX2_1
+  - first:
+      213: 3791232653337497548
+    second: WeaponCharge_VFX2_2
+  - first:
+      213: -2766880612294952463
+    second: WeaponCharge_VFX2_3
+  - first:
+      213: 8623109939177403518
+    second: WeaponCharge_VFX2_4
+  - first:
+      213: 3323823140613950011
+    second: WeaponCharge_VFX2_5
+  - first:
+      213: -3608855012894852093
+    second: WeaponCharge_VFX2_6
+  - first:
+      213: -8243283152977763717
+    second: WeaponCharge_VFX2_7
+  - first:
+      213: -7832151667587728029
+    second: WeaponCharge_VFX2_8
+  - first:
+      213: -1356721753127140953
+    second: WeaponCharge_VFX2_9
+  - first:
+      213: -4882179193854378775
+    second: WeaponCharge_VFX2_10
+  - first:
+      213: 8995299011911244742
+    second: WeaponCharge_VFX2_11
+  - first:
+      213: 2861342564476984877
+    second: WeaponCharge_VFX2_12
+  - first:
+      213: 311279711603539299
+    second: WeaponCharge_VFX2_13
+  - first:
+      213: -6142199222576929501
+    second: WeaponCharge_VFX2_14
+  - first:
+      213: 8552123596375570646
+    second: WeaponCharge_VFX2_15
+  - first:
+      213: -7943450136792413450
+    second: WeaponCharge_VFX2_16
+  - first:
+      213: 858772801995230475
+    second: WeaponCharge_VFX2_17
+  - first:
+      213: 6700532162717944660
+    second: WeaponCharge_VFX2_18
+  - first:
+      213: -5583637934847603438
+    second: WeaponCharge_VFX2_19
+  - first:
+      213: 1778687011961936272
+    second: WeaponCharge_VFX2_20
+  - first:
+      213: -5659898448362901017
+    second: WeaponCharge_VFX2_21
+  - first:
+      213: 5880156718537555581
+    second: WeaponCharge_VFX2_22
+  - first:
+      213: 8807193008849909749
+    second: WeaponCharge_VFX2_23
+  - first:
+      213: 4526833448810409390
+    second: WeaponCharge_VFX2_24
+  - first:
+      213: 9045840765468254509
+    second: WeaponCharge_VFX2_25
+  - first:
+      213: 5155744292865006123
+    second: WeaponCharge_VFX2_26
+  - first:
+      213: 3253799634537186180
+    second: WeaponCharge_VFX2_27
+  - first:
+      213: 6277107609147403417
+    second: WeaponCharge_VFX2_28
+  - first:
+      213: -7711373325847738958
+    second: WeaponCharge_VFX2_29
+  - first:
+      213: 4409936940620771300
+    second: WeaponCharge_VFX2_30
+  - first:
+      213: 2365457994709781622
+    second: WeaponCharge_VFX2_31
+  - first:
+      213: -5481163968800738755
+    second: WeaponCharge_VFX2_32
+  - first:
+      213: 5530033883246019637
+    second: WeaponCharge_VFX2_33
+  - first:
+      213: -9041573877465268260
+    second: WeaponCharge_VFX2_34
+  - first:
+      213: 2804219583056502427
+    second: WeaponCharge_VFX2_35
+  - first:
+      213: -7973094766306641181
+    second: WeaponCharge_VFX2_36
+  - first:
+      213: -9108552579464742405
+    second: WeaponCharge_VFX2_37
+  - first:
+      213: 4940986325185291661
+    second: WeaponCharge_VFX2_38
+  - first:
+      213: 6543216664084504698
+    second: WeaponCharge_VFX2_39
+  - first:
+      213: 2650535020850857033
+    second: WeaponCharge_VFX2_40
+  - first:
+      213: 7722867782900570865
+    second: WeaponCharge_VFX2_41
+  - first:
+      213: 4161923170069296752
+    second: WeaponCharge_VFX2_42
+  - first:
+      213: 3794744336035057041
+    second: WeaponCharge_VFX2_43
+  - first:
+      213: -2094466964180547190
+    second: WeaponCharge_VFX2_44
+  - first:
+      213: 6929857911977717375
+    second: WeaponCharge_VFX2_45
+  - first:
+      213: 8455644136220985892
+    second: WeaponCharge_VFX2_46
+  - first:
+      213: -6214565947497630543
+    second: WeaponCharge_VFX2_47
+  - first:
+      213: -4929175038009246129
+    second: WeaponCharge_VFX2_48
+  - first:
+      213: -2716994787302403058
+    second: WeaponCharge_VFX2_49
+  - first:
+      213: 4639566458451169802
+    second: WeaponCharge_VFX2_50
+  - first:
+      213: 3631798536488698353
+    second: WeaponCharge_VFX2_51
+  - first:
+      213: -5794598910552172901
+    second: WeaponCharge_VFX2_52
+  - first:
+      213: 5693147744558208132
+    second: WeaponCharge_VFX2_53
+  - first:
+      213: -7680788740132891409
+    second: WeaponCharge_VFX2_54
+  - first:
+      213: -188856293554453888
+    second: WeaponCharge_VFX2_55
+  - first:
+      213: -9087027661352486778
+    second: WeaponCharge_VFX2_56
+  - first:
+      213: -2882272678780476561
+    second: WeaponCharge_VFX2_57
+  - first:
+      213: -229061514012426348
+    second: WeaponCharge_VFX2_58
+  - first:
+      213: 2083686706017637597
+    second: WeaponCharge_VFX2_59
+  - first:
+      213: 8758945150782027635
+    second: WeaponCharge_VFX2_60
+  - first:
+      213: 7324535165535171767
+    second: WeaponCharge_VFX2_61
+  - first:
+      213: 1689729255355866787
+    second: WeaponCharge_VFX2_62
+  - first:
+      213: 443151850638035657
+    second: WeaponCharge_VFX2_63
+  - first:
+      213: 2765623964642469381
+    second: WeaponCharge_VFX2_64
+  - first:
+      213: -4979585057944710491
+    second: WeaponCharge_VFX2_65
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 50
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1686
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae41b88fb5ccca90800000000000000
+      internalID: -7292236270196928859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_1
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 1686
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5d67293505c7cfa0800000000000000
+      internalID: -5780434970482348705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 844
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccf0b0be20a2d9430800000000000000
+      internalID: 3791232653337497548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_3
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 844
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f97e302eb01a99d0800000000000000
+      internalID: -2766880612294952463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e743fcf6dc07ba770800000000000000
+      internalID: 8623109939177403518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponCharge_VFX2_5
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 2
+        width: 848
+        height: 842
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3a84883987902e20800000000000000
+      internalID: 3323823140613950011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: aae91eafb63526447958c36ee8f7cbbb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":3.0},"gridSpriteSize":{"x":848.0,"y":842.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      WeaponCharge_VFX2_0: -7292236270196928859
+      WeaponCharge_VFX2_1: -5780434970482348705
+      WeaponCharge_VFX2_2: 3791232653337497548
+      WeaponCharge_VFX2_3: -2766880612294952463
+      WeaponCharge_VFX2_4: 8623109939177403518
+      WeaponCharge_VFX2_5: 3323823140613950011
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

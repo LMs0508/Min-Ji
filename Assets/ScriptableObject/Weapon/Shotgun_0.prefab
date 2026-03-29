@@ -220,6 +220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_AT(Shotgun_Front)_VFX_0
       objectReference: {fileID: 0}
+    - target: {fileID: 663332104437994785, guid: df8a51bc603ab0c4a91dc7f066fe9004,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2072878879048625921, guid: df8a51bc603ab0c4a91dc7f066fe9004,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -269,6 +274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565460133297695125, guid: df8a51bc603ab0c4a91dc7f066fe9004,
+        type: 3}
+      propertyPath: m_Name
+      value: Firepoint_Front
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -306,6 +316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_AT(Shotgun_Back)_VFX
       objectReference: {fileID: 0}
+    - target: {fileID: 3149479390370965199, guid: 2fd7df2834d488842be0c072bec0c69d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6070515278333289860, guid: 2fd7df2834d488842be0c072bec0c69d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -355,6 +370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106910014592624779, guid: 2fd7df2834d488842be0c072bec0c69d,
+        type: 3}
+      propertyPath: m_Name
+      value: Firepoint_Back
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -446,6 +466,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8059677432585766039, guid: ffae7fd566b9f7d4a81b7d623d06c359,
+        type: 3}
+      propertyPath: m_Name
+      value: Firepoint_Side
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

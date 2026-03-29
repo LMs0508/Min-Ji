@@ -75,6 +75,14 @@ public class JudgmentSmash : MonoBehaviour, ISkill
         if (owner == null || isExecuting || skillData == null) return false;
         if (Time.time < lastUsedTime + Cooldown) return false;
 
+        // [추가] 현재 장착된 무기가 근접(Melee) 무기인지 확인합니다.
+        var weaponManager = owner.GetComponentInChildren<WeaponManager>();
+        if (weaponManager == null || weaponManager.currentWeapon == null || weaponManager.currentWeapon.weaponType != WeaponType.Melee)
+        {
+            Debug.Log("<color=red>근접(Melee) 무기를 장착해야 저지먼트 스매시를 사용할 수 있습니다!</color>");
+            return false;
+        }
+
         var stats = owner.GetComponentInChildren<PlayerStats>();
         var runner = owner.GetComponent<CoroutineRunner>();
 
