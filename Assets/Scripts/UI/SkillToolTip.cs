@@ -1,58 +1,48 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using TMPro;
 using Game.Player;
-using System.Reflection; // 리플렉션을 위해 추가
+using System.Reflection;
 
 public class SkillTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public int slotIndex;
-    public GameObject tooltipWindow;
-    public TextMeshProUGUI infoText;
+    private SkillSlotsPrefab playerSkills;
+    private PlayerElement playerElement;
+
+    public void Bind(SkillSlotsPrefab skills, PlayerElement element)
+    {
+        playerSkills = skills;
+        playerElement = element;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        var slots = player.GetComponent<SkillSlotsPrefab>();
-        var element = player.GetComponent<PlayerElement>();
+        if (playerSkills == null || playerElement == null) return;
+        if (slotIndex < 0 || slotIndex >= playerSkills.equippedSkill.Length) return;
 
-        // 장착된 스킬 가져오기
-        var skill = slots.equippedSkill[slotIndex];
+        ISkill skill = playerSkills.equippedSkill[slotIndex];
         if (skill == null) return;
 
-        // [수정] 리플렉션으로 SkillData를 찾아서 이름과 설명을 가져옵니다.
-        SkillData data = GetSkillData(skill);
-
-        string skillName = data != null ? data.skillName : "스킬 이름 없음";
-        string skillDesc = data != null ? data.description : "설명 없음";
-        string elementBonus = data != null ? data.GetElementDescription(element.CurrentElement) : "원소 효과 정보 없음";
-        
-        infoText.text = $"<size=120%>{skillName}</size>\n\n{skillDesc}\n\n<color=cyan>[원소 효과: {element.CurrentElement}]</color>\n{elementBonus}";
-        
-        tooltipWindow.SetActive(true);
+        SkillData data = GetSkillDataFromSkill(skill);
+        if (data != null && SkillTooltipUI.Instance != null)
+        {
+            SkillTooltipUI.Instance.Show(data, playerElement.CurrentElement);
+        }
     }
 
-    public void OnPointerExit(PointerEventData eventData) => tooltipWindow.SetActive(false);
-
-    private SkillData GetSkillData(ISkill skill)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        // 1. ISkill 구현체에서 SkillData를 찾습니다.
-        // (ISkill 인터페이스에 SkillData 프로퍼티가 없으므로 리플렉션으로 'skillData' 또는 'data' 필드를 찾습니다.)
-        SkillData data = null;
-        var type = skill.GetType();
-        
-        // 'skillData' 혹은 'data'라는 이름의 필드나 프로퍼티를 찾아서 가져옵니다.
-        var field = type.GetField("skillData") ?? type.GetField("data");
-        if (field != null && field.FieldType == typeof(SkillData))
-            data = field.GetValue(skill) as SkillData;
-        
-        if (data == null)
-        {
-            var prop = type.GetProperty("SkillData") ?? type.GetProperty("Data");
-            if (prop != null && prop.PropertyType == typeof(SkillData))
-                data = prop.GetValue(skill) as SkillData;
-        }
+        if (SkillTooltipUI.Instance != null) SkillTooltipUI.Instance.Hide();
+    }
 
-        return data;
+    private SkillData GetSkillDataFromSkill(ISkill skill)
+    {
+        if (skill is MonoBehaviour mb)
+        {
+            // 스킬 스크립트(예: DashFire.cs 등)에 public SkillData skillData; 가 있다고 가정
+            FieldInfo field = mb.GetType().GetField("skillData", BindingFlags.Public | BindingFlags.Instance);
+            if (field != null) return field.GetValue(mb) as SkillData;
+        }
+        return null;
     }
 }

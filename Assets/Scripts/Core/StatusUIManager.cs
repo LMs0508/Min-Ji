@@ -86,6 +86,7 @@ public class StatusUIManager : MonoBehaviour
     private void SetupSkillSlots()
     {
         if (skillSlotImages == null) return;
+        if (playerSkills == null) FindPlayer();
 
         for (int i = 0; i < skillSlotImages.Length; i++)
         {
@@ -102,6 +103,7 @@ public class StatusUIManager : MonoBehaviour
                 if (tooltip != null)
                 {
                     tooltip.slotIndex = i;
+                    if (playerSkills != null) tooltip.Bind(playerSkills, playerElement);
                 }
             }
         }
@@ -180,6 +182,34 @@ public class StatusUIManager : MonoBehaviour
 
         // 4. 스킬 아이콘 갱신
         UpdateSkillIcons();
+        if (playerSkills == null) playerSkills = GameObject.FindGameObjectWithTag("Player").GetComponent<SkillSlotsPrefab>();
+
+    for (int i = 0; i < skillSlotImages.Length; i++)
+    {
+        if (i >= 4 || i >= playerSkills.equippedSkill.Length) break; // 변수명 s 제거: equippedSkill
+
+        ISkill skill = playerSkills.equippedSkill[i]; // s 제거
+
+        // 툴팁 컴포넌트에 실시간으로 참조를 갱신
+        SkillTooltip tooltip = skillSlotImages[i].GetComponent<SkillTooltip>();
+        if (tooltip != null)
+        {
+            tooltip.Bind(playerSkills, playerElement);
+        }
+
+        if (skill != null && skill.Icon != null)
+        {
+            skillSlotImages[i].sprite = skill.Icon;
+            skillSlotImages[i].color = Color.white;
+            skillSlotImages[i].raycastTarget = true;
+        }
+        else
+        {
+            skillSlotImages[i].sprite = emptySlotSprite;
+            skillSlotImages[i].color = (emptySlotSprite == null) ? new Color(1, 1, 1, 0) : Color.white;
+            skillSlotImages[i].raycastTarget = false; 
+        }
+    }
     }
 
     // 스킬 아이콘 UI를 현재 장착된 스킬에 맞게 업데이트
@@ -192,6 +222,13 @@ public class StatusUIManager : MonoBehaviour
             if (i >= playerSkills.equippedSkill.Length || skillSlotImages[i] == null) continue;
 
             ISkill skill = playerSkills.equippedSkill[i];
+
+            // 툴팁 컴포넌트에 실시간으로 참조를 갱신합니다.
+            SkillTooltip tooltip = skillSlotImages[i].GetComponent<SkillTooltip>();
+            if (tooltip != null)
+            {
+                tooltip.Bind(playerSkills, playerElement);
+            }
 
             if (skill != null && skill.Icon != null)
             {
