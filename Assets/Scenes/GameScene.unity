@@ -15194,6 +15194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.SceneFlowManager
   floorScenes:
+  - village
   - floor01
   - floor02
   - floor03
