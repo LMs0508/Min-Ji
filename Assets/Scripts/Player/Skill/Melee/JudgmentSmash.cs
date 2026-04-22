@@ -12,8 +12,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
     [Header("Skill Data (스크립터블 오브젝트 할당)")]
     public SkillData skillData;
 
-    [Header("UI & Cost")]
-    public float skillManaCost = 20f;
+    [Header("UI & Cost")] 
     public Sprite Icon => skillData != null ? skillData.icon : null;
 
     [Header("스킬 전용 플레이어 외형")]
@@ -88,7 +87,7 @@ public class JudgmentSmash : MonoBehaviour, ISkill
 
         if (stats == null || runner == null) return false;
 
-        if (!stats.SpendMP(skillManaCost)) return false;
+        if (!stats.SpendMP(skillData.skillManaCost)) return false;
 
         lastUsedTime = Time.time;
         runner.StartCoroutine(ExecuteJudgmentSmash(owner));

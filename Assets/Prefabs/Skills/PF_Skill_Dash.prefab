@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832df17e0e1a66d49b6e9d9e547e67fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashSkill
-  icon: {fileID: 9144078166543854885, guid: ac9b26576a773324a9c8941a1fca50d9, type: 3}
+  skillData: {fileID: 11400000, guid: 1213f6a09dae8ce4a933118a4c9a2750, type: 2}
   dashDistance: 3
   dashTime: 0.12
   dashCooldown: 3
@@ -68,6 +68,7 @@ MonoBehaviour:
   bonusArmorPerStack: 10
   maxStacks: 3
   resetTime: 6
+  dashGaugeUI: {fileID: 0}
 --- !u!114 &1101951961423772250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b19715b9474164ab96fd8eeeec0bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashFireEnhancer
+  damage: 20
 --- !u!114 &430526255799209022
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: -1025219060167273282, guid: 7cc1fd4fd9bc72d43864dee394d53d89, type: 3}
   description: 
   cooldown: 1
+  skillManaCost: 10
   isActive: 1
   isBuff: 0
   useCharge: 0
@@ -30,8 +31,15 @@ MonoBehaviour:
     type: 3}
   windEnhancerPrefab: {fileID: 6173297824533353180, guid: 5221a1c0f4fd30c4090789c594c2ffaa,
     type: 3}
+  fireElementDescription: 
+  waterElementDescription: 
+  earthElementDescription: 
+  windElementDescription: 
+  noneElementDescription: 
   damageType: 0
   damageRatio: 1.5
+  dashDistance: 3
+  dashTime: 0.12
   buffDuration: 5
   speedMultiplier: 1
   attackSpeedBoost: 0
@@ -54,5 +62,5 @@ MonoBehaviour:
   maxStacks: 3
   stackEffect: 0
   stackBonusDamage: 0.5
-  skillPrefab: {fileID: 6937305669529462694, guid: 1660026949bbb5a499c098182ea50aa4,
+  skillPrefab: {fileID: 3692249636830114244, guid: 617a110dac3f6144f831c5311ada794e,
     type: 3}

@@ -13,6 +13,7 @@ public class SkillData : ScriptableObject
     public Sprite icon;
     [TextArea(3, 10)] public string description;
     public float cooldown = 1f;
+    public float skillManaCost = 10f;
 
     [Header("스킬 성격 (중복 선택 가능)")]
     public bool isActive;   // 공격/액션 기능 여부
@@ -42,6 +43,10 @@ public class SkillData : ScriptableObject
     [Header("공격/전투 계수 (isActive가 체크됐을 때)")]
     public DamageType damageType;
     [Range(0, 5)] public float damageRatio = 1.0f;
+
+    [Header("이동/대쉬 설정")]
+    public float dashDistance = 3f;
+    public float dashTime = 0.12f;
 
     [Header("버프 설정 (isBuff가 체크됐을 때)")]
     public float buffDuration = 5f;

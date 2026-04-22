@@ -1,0 +1,2286 @@
+fileFormatVersion: 2
+guid: 7f97fcad1768738499a1ca2314805445
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5467035010284119457
+    second: Tilemap_Boss_Wall_0
+  - first:
+      213: -7079288506883102162
+    second: Tilemap_Boss_Wall_1
+  - first:
+      213: 7166124171142511216
+    second: Tilemap_Boss_Wall_2
+  - first:
+      213: 4993299435335753031
+    second: Tilemap_Boss_Wall_3
+  - first:
+      213: -974799606727889301
+    second: Tilemap_Boss_Wall_4
+  - first:
+      213: -8073945003956875425
+    second: Tilemap_Boss_Wall_5
+  - first:
+      213: -6473631615948852190
+    second: Tilemap_Boss_Wall_6
+  - first:
+      213: 4821405806742593840
+    second: Tilemap_Boss_Wall_7
+  - first:
+      213: 3608442984006564045
+    second: Tilemap_Boss_Wall_8
+  - first:
+      213: 8743597377272769889
+    second: Tilemap_Boss_Wall_9
+  - first:
+      213: -7908917235230968906
+    second: Tilemap_Boss_Wall_10
+  - first:
+      213: 6295640557409298503
+    second: Tilemap_Boss_Wall_11
+  - first:
+      213: -7919369529784500859
+    second: Tilemap_Boss_Wall_12
+  - first:
+      213: 3153640718313204989
+    second: Tilemap_Boss_Wall_13
+  - first:
+      213: -7982665924257925929
+    second: Tilemap_Boss_Wall_14
+  - first:
+      213: 8604906884187723658
+    second: Tilemap_Boss_Wall_15
+  - first:
+      213: 8347864069560665136
+    second: Tilemap_Boss_Wall_16
+  - first:
+      213: -4006509319624254108
+    second: Tilemap_Boss_Wall_17
+  - first:
+      213: -3463675114233675341
+    second: Tilemap_Boss_Wall_18
+  - first:
+      213: -4645269759020880743
+    second: Tilemap_Boss_Wall_19
+  - first:
+      213: -2084064612135221488
+    second: Tilemap_Boss_Wall_20
+  - first:
+      213: 9006413546124657390
+    second: Tilemap_Boss_Wall_21
+  - first:
+      213: -400844765984294304
+    second: Tilemap_Boss_Wall_22
+  - first:
+      213: 3043616797924462167
+    second: Tilemap_Boss_Wall_23
+  - first:
+      213: 5962338002337469877
+    second: Tilemap_Boss_Wall_24
+  - first:
+      213: -2207023921384127286
+    second: Tilemap_Boss_Wall_25
+  - first:
+      213: -3336856550988299134
+    second: Tilemap_Boss_Wall_26
+  - first:
+      213: 567161579057093323
+    second: Tilemap_Boss_Wall_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b6d8d15c066f584db3694feb9e0f37f
+      internalID: -5467035010284119457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_1
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5faf3585b3fe0d489e7218f584af6ea
+      internalID: -7079288506883102162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_2
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85fc59ed972254f4f80abd35d02d47e8
+      internalID: 7166124171142511216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_3
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2729ca4e787314cabc85bf37a6f6ba
+      internalID: 4993299435335753031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_4
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8db17ea3fdf24040b698752f49a97d4
+      internalID: -974799606727889301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_5
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25199832619febd409a98a90b3557679
+      internalID: -8073945003956875425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_6
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 876b2999800b61f4aa8076c789e40240
+      internalID: -6473631615948852190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_7
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d479dc09fd306a84a876f667c01062c5
+      internalID: 4821405806742593840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_8
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1961
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc1738f223c281344a63708aa3044015
+      internalID: 3608442984006564045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5a798bdb583fec429b687962515ddb5
+      internalID: 8743597377272769889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_10
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d059f4fa7ef50354bbd81cea54978a40
+      internalID: -7908917235230968906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_11
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd0f496f1c0afdb4986f2d0719fdd09b
+      internalID: 6295640557409298503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_12
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59c3b00361fd9540a4e0dade4467165
+      internalID: -7919369529784500859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_13
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 899c0e99be9c7c041b8368734d61ff17
+      internalID: 3153640718313204989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_14
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b6a78c687771274c806c3d38286a28c
+      internalID: -7982665924257925929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_15
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7630110843be79a4ea7a2fc67fe07b06
+      internalID: 8604906884187723658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_16
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d86ac404e70549b4893c4152ee2dbefb
+      internalID: 8347864069560665136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_17
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1744
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12205dde536aa864586188316b48e18e
+      internalID: -4006509319624254108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef73df11b6d9bfc41b04f2377ecddea6
+      internalID: -3463675114233675341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_19
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a9345b7765daea43993bab8f58a6d3f
+      internalID: -4645269759020880743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_20
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ce78be41ca861747bb53bcd1455db07
+      internalID: -2084064612135221488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_21
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e33b48916ca69d4e93c87b8054a7f5b
+      internalID: 9006413546124657390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_22
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 650c8d5dd9a0858449850d57af84d06e
+      internalID: -400844765984294304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_23
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4264566c1c3ecc84d91ab5ab27995168
+      internalID: 3043616797924462167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_24
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e7d6ed3b4abb3b43abb3b0cf6d5e7c8
+      internalID: 5962338002337469877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_25
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6d29347c80bb2b4d8d81dc007d01abf
+      internalID: -2207023921384127286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_26
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1527
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b52b8f071e3d3434798da7b4f38c9ac4
+      internalID: -3336856550988299134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c1ab1a9ad49ab4c8afc8c4dbbf266e
+      internalID: 567161579057093323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_28
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3876863cebfb14546a0beb087a7344ff
+      internalID: 430697888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_29
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36791ba0f387c2143942283482970a57
+      internalID: -583492889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_30
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dd289924624309489bd7f4be6e9b660
+      internalID: 144454779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_31
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9db5f85feaeda244cb4d40ceec87b38b
+      internalID: 1020032185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_32
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e26c0e486143684895adc9a2ec92834
+      internalID: -449285252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_33
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea5369228c1519241849d174ef6f6fa4
+      internalID: -1493664475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_34
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af132486f00f13c459e91dc3eb900f01
+      internalID: 1444815266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_35
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1310
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0871061067b139a42a820d236be21945
+      internalID: 1427197594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e101b832b679bfd4aa311d05a94bbefc
+      internalID: 696227293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_37
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 093f7de588cb5fc409d3ba22fdf2d1ad
+      internalID: -27064937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_38
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85e382f4c7c14404788f063f825ca7af
+      internalID: 44177599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_39
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b436c6bc95d55db498b1beb9d87eb465
+      internalID: -592339290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_40
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f40e42bb31efae64c98c1f258aff2ad1
+      internalID: -322632460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_41
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78fb5c0fa70a8ea458b78837688adb37
+      internalID: -1012238322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_42
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06f093931723c814ebcdf074ebb186c0
+      internalID: 870205753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_43
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35d03502fb30e4d468b9d0877895ad45
+      internalID: -544277615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_44
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1093
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d67ebd44b6c99045b68b91b44f6d46d
+      internalID: -1955042460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 906c5fdb13302ce4e9a4ab3161af16ac
+      internalID: -407005324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_46
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd5d1113b600d404380ede91c0e3d815
+      internalID: -289635785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_47
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dbfc65ccc69a15479f35478a7b90c41
+      internalID: 179925663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_48
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8acdd7fc0e22e924ebe8e810c1110fd1
+      internalID: -1555812510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_49
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 640e121d6b37d24428cfc05da1941bd5
+      internalID: 2127017352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_50
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af11b2910fe2c3499998e7539c2fd58
+      internalID: -58666436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_51
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47da43f5f2f23cb45be73e8149de0751
+      internalID: -1558909530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_52
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63ad87d65d9fb54a8a95298b803f808
+      internalID: 657337870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_53
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 876
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20bc9a2bc6f136e47af35881db623063
+      internalID: 979930296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c9582c7f5366b640ab73c1a9c72ef31
+      internalID: -546044706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_55
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 111ea912c040dc440854d381955eecff
+      internalID: -633439072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_56
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0c211f90440e264d80ab11fd92af2b3
+      internalID: 622638309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_57
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bd795d103948a64aadfd58c520f8712
+      internalID: -256352742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_58
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4edf07213f77af44796b63e27ec03966
+      internalID: -1799067941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_59
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee325cead982b145bf40784f85a1972
+      internalID: 970877460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_60
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb2783654b905f47bbaeac710d4a90e
+      internalID: -307524359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_61
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b70aa4f324152d94da055fb8c3dbdd85
+      internalID: 1661527128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_62
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 659
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b15f1392e83214ca1f15c70606abd7
+      internalID: 1459244087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_63
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbad811279fda9b40969e3ebc96850f2
+      internalID: 678720799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_64
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396939a8e22272e42a7ac5ee20bd687a
+      internalID: 1309996921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_65
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6126c7259de5c7f47a12e4b96c9e606b
+      internalID: 1789536714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_66
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8655bc822801aa141a70f78ad1fcae96
+      internalID: -1502229734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_67
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0045a661bc1ed8846ba329ef95db2b52
+      internalID: -1391110660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_68
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c352404ade40baf4b97e193162eb2b45
+      internalID: 1347745240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_69
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e2bd28f4c274b4429eef05ded37f7d5
+      internalID: -1001385937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_70
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89706853c1ddf104bb01bcd9667e9fb3
+      internalID: -1410351931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_71
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 442
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d87152af22df3249960732d5db14bcb
+      internalID: 1593448863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_72
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89c1215d7713bd54b832ff25db5d71ae
+      internalID: 1461091157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_73
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef25a7452f25f034c9fc3ea10cbb2c4c
+      internalID: 2122508664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_74
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5edcb17bfa5f7eb46a1b027dcaaae501
+      internalID: -90429956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_75
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e901d620e957c141a1750245d51597f
+      internalID: 623486725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_76
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a970846506e546d4eb2e3cf7e3bc23a8
+      internalID: -279307494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_77
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7d35166c84ea3f478a4854f628ab13e
+      internalID: -1917834105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_78
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d692711316e00149b3a99b7c5271d20
+      internalID: 1707303207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_79
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c12205dd884b67c44a12431d78babdd9
+      internalID: -2051164425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_80
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 225
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1bb0e22d4700a148a19165e6b09cd95
+      internalID: -25999369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_81
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbcffca2cf9bd0849b36a4921062a694
+      internalID: -150471801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_82
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acd0a7cd71300f04bb2eb8a2c4161856
+      internalID: 746581806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_83
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b07e659bb5cb6e54f8931014a200dbbe
+      internalID: -653866523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_84
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 377db0786d28ae847bb9a1c2b8ee59e3
+      internalID: -742977799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_85
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13c6197d8b6b9e64f8b6aa59d6b60d91
+      internalID: -624351141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_86
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff7272a098171f048a83b0911b174dc5
+      internalID: 2063374307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_87
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 913fcd786453fe745974644ffb09293e
+      internalID: -370300747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_88
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daa7d17dbeeecb342bd4dffb6331ad12
+      internalID: -414387234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tilemap_Boss_Wall_89
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 8
+        width: 216
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5526778475d212b4ab59ce4e569b514f
+      internalID: -21967743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 54dc429b378b343419f29d6ed12480cf
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":9.0,"y":10.0},"gridSpriteSize":{"x":216.0,"y":217.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Tilemap_Boss_Wall_0: -5467035010284119457
+      Tilemap_Boss_Wall_1: -7079288506883102162
+      Tilemap_Boss_Wall_10: -7908917235230968906
+      Tilemap_Boss_Wall_11: 6295640557409298503
+      Tilemap_Boss_Wall_12: -7919369529784500859
+      Tilemap_Boss_Wall_13: 3153640718313204989
+      Tilemap_Boss_Wall_14: -7982665924257925929
+      Tilemap_Boss_Wall_15: 8604906884187723658
+      Tilemap_Boss_Wall_16: 8347864069560665136
+      Tilemap_Boss_Wall_17: -4006509319624254108
+      Tilemap_Boss_Wall_18: -3463675114233675341
+      Tilemap_Boss_Wall_19: -4645269759020880743
+      Tilemap_Boss_Wall_2: 7166124171142511216
+      Tilemap_Boss_Wall_20: -2084064612135221488
+      Tilemap_Boss_Wall_21: 9006413546124657390
+      Tilemap_Boss_Wall_22: -400844765984294304
+      Tilemap_Boss_Wall_23: 3043616797924462167
+      Tilemap_Boss_Wall_24: 5962338002337469877
+      Tilemap_Boss_Wall_25: -2207023921384127286
+      Tilemap_Boss_Wall_26: -3336856550988299134
+      Tilemap_Boss_Wall_27: 567161579057093323
+      Tilemap_Boss_Wall_28: 430697888
+      Tilemap_Boss_Wall_29: -583492889
+      Tilemap_Boss_Wall_3: 4993299435335753031
+      Tilemap_Boss_Wall_30: 144454779
+      Tilemap_Boss_Wall_31: 1020032185
+      Tilemap_Boss_Wall_32: -449285252
+      Tilemap_Boss_Wall_33: -1493664475
+      Tilemap_Boss_Wall_34: 1444815266
+      Tilemap_Boss_Wall_35: 1427197594
+      Tilemap_Boss_Wall_36: 696227293
+      Tilemap_Boss_Wall_37: -27064937
+      Tilemap_Boss_Wall_38: 44177599
+      Tilemap_Boss_Wall_39: -592339290
+      Tilemap_Boss_Wall_4: -974799606727889301
+      Tilemap_Boss_Wall_40: -322632460
+      Tilemap_Boss_Wall_41: -1012238322
+      Tilemap_Boss_Wall_42: 870205753
+      Tilemap_Boss_Wall_43: -544277615
+      Tilemap_Boss_Wall_44: -1955042460
+      Tilemap_Boss_Wall_45: -407005324
+      Tilemap_Boss_Wall_46: -289635785
+      Tilemap_Boss_Wall_47: 179925663
+      Tilemap_Boss_Wall_48: -1555812510
+      Tilemap_Boss_Wall_49: 2127017352
+      Tilemap_Boss_Wall_5: -8073945003956875425
+      Tilemap_Boss_Wall_50: -58666436
+      Tilemap_Boss_Wall_51: -1558909530
+      Tilemap_Boss_Wall_52: 657337870
+      Tilemap_Boss_Wall_53: 979930296
+      Tilemap_Boss_Wall_54: -546044706
+      Tilemap_Boss_Wall_55: -633439072
+      Tilemap_Boss_Wall_56: 622638309
+      Tilemap_Boss_Wall_57: -256352742
+      Tilemap_Boss_Wall_58: -1799067941
+      Tilemap_Boss_Wall_59: 970877460
+      Tilemap_Boss_Wall_6: -6473631615948852190
+      Tilemap_Boss_Wall_60: -307524359
+      Tilemap_Boss_Wall_61: 1661527128
+      Tilemap_Boss_Wall_62: 1459244087
+      Tilemap_Boss_Wall_63: 678720799
+      Tilemap_Boss_Wall_64: 1309996921
+      Tilemap_Boss_Wall_65: 1789536714
+      Tilemap_Boss_Wall_66: -1502229734
+      Tilemap_Boss_Wall_67: -1391110660
+      Tilemap_Boss_Wall_68: 1347745240
+      Tilemap_Boss_Wall_69: -1001385937
+      Tilemap_Boss_Wall_7: 4821405806742593840
+      Tilemap_Boss_Wall_70: -1410351931
+      Tilemap_Boss_Wall_71: 1593448863
+      Tilemap_Boss_Wall_72: 1461091157
+      Tilemap_Boss_Wall_73: 2122508664
+      Tilemap_Boss_Wall_74: -90429956
+      Tilemap_Boss_Wall_75: 623486725
+      Tilemap_Boss_Wall_76: -279307494
+      Tilemap_Boss_Wall_77: -1917834105
+      Tilemap_Boss_Wall_78: 1707303207
+      Tilemap_Boss_Wall_79: -2051164425
+      Tilemap_Boss_Wall_8: 3608442984006564045
+      Tilemap_Boss_Wall_80: -25999369
+      Tilemap_Boss_Wall_81: -150471801
+      Tilemap_Boss_Wall_82: 746581806
+      Tilemap_Boss_Wall_83: -653866523
+      Tilemap_Boss_Wall_84: -742977799
+      Tilemap_Boss_Wall_85: -624351141
+      Tilemap_Boss_Wall_86: 2063374307
+      Tilemap_Boss_Wall_87: -370300747
+      Tilemap_Boss_Wall_88: -414387234
+      Tilemap_Boss_Wall_89: -21967743
+      Tilemap_Boss_Wall_9: 8743597377272769889
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

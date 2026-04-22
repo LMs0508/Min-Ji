@@ -13489,6 +13489,7 @@ MonoBehaviour:
   - floor02
   - floor03
   - floor04
+  - Boss
   player: {fileID: 546535822}
   spawnObjectName: FloorSpawn
   spawnOffset: {x: 0, y: 0}

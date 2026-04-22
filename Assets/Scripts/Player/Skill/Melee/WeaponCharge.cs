@@ -9,8 +9,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
     [Header("Skill Data (��ũ���ͺ� ������Ʈ �Ҵ�)")]
     public SkillData skillData;
 
-    [Header("UI & Cost")]
-    public float skillManaCost = 15f;
+    [Header("UI & Cost")] 
     [HideInInspector] public SkillGaugeUI chargeGaugeUI;
 
     public Sprite Icon => skillData != null ? skillData.icon : null;
@@ -69,7 +68,7 @@ public class WeaponCharge : MonoBehaviour, ISkill
         var runner = owner.GetComponent<CoroutineRunner>();
 
         if (stats == null || runner == null) return false;
-        if (!stats.SpendMP(skillManaCost)) return false;
+        if (!stats.SpendMP(skillData.skillManaCost)) return false;
 
         playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
 

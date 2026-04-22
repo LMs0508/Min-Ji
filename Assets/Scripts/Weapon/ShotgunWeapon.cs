@@ -21,12 +21,13 @@ public class ShotgunWeapon : WeaponBase
 
     public override void ExecuteAttack(Vector2 direction, float multiplier)
     {
-        if (isAttacking) return;
+        WeaponManager wm = GetComponentInParent<WeaponManager>();
+        // [수정] 스킬 사용 중에는 isAttacking 체크를 건너뛰어 연사가 가능하게 합니다.
+        if (isAttacking && (wm == null || !wm.IsSkillActive)) return;
 
         currentDirection = direction;
         currentMultiplier = multiplier; 
 
-        WeaponManager wm = GetComponentInParent<WeaponManager>();
         if (wm != null)
         {
             wm.StartNewAttack(); // [추가] 새로운 공격 시작! 발사 권한 충전
@@ -115,5 +116,20 @@ public class ShotgunWeapon : WeaponBase
 
             bullet.GetComponent<Projectile>()?.Setup(data.projectileSpeed, data.attackRange, finalDamage, finalDir);
         }
+    }
+
+    // [추가] 방향에 맞는 FirePoint를 반환하는 메서드 재정의
+    public override Transform GetFirePoint(Vector2 direction)
+    {
+        Transform firePoint = null;
+        if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+        {
+            firePoint = direction.y > 0 ? firePointUp : firePointDown;
+        }
+        else
+        {
+            firePoint = firePointSide;
+        }
+        return firePoint != null ? firePoint : transform;
     }
 }

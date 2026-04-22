@@ -12,7 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78881d2681cbc8846a1d5d57af81bfde, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillId: Dash
   skillName: Dash
-  icon: {fileID: -7848039375673857549, guid: 81a0dc69d627c6b45b2dfc8de93bb3d1, type: 3}
+  icon: {fileID: 9144078166543854885, guid: ac9b26576a773324a9c8941a1fca50d9, type: 3}
+  description: 
   cooldown: 3
+  skillManaCost: 10
+  isActive: 0
+  isBuff: 0
+  useCharge: 0
+  useStack: 0
+  isElementReactive: 0
+  defaultElement: 0
+  fireEnhancerPrefab: {fileID: 0}
+  waterEnhancerPrefab: {fileID: 0}
+  earthEnhancerPrefab: {fileID: 0}
+  windEnhancerPrefab: {fileID: 0}
+  fireElementDescription: 
+  waterElementDescription: 
+  earthElementDescription: 
+  windElementDescription: 
+  noneElementDescription: 
+  damageType: 0
+  damageRatio: 1
+  dashDistance: 3
+  dashTime: 0.12
+  buffDuration: 5
+  speedMultiplier: 1
+  attackSpeedBoost: 0
+  attackBuffMultiplier: 1
+  armor: 1.2
+  cooltimeReduce: 1
+  maxChargeStages: 3
+  stageTimeThresholds:
+  - 0.5
+  - 1.5
+  - 2.5
+  stageMultipliers:
+  - 1
+  - 2
+  - 3
+  stageRanges:
+  - 1
+  - 2
+  - 3
+  maxStacks: 3
+  stackEffect: 0
+  stackBonusDamage: 0.5
+  skillPrefab: {fileID: 0}

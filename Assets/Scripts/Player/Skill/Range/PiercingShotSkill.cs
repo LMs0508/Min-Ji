@@ -8,8 +8,7 @@ public class PiercingShotSkill : MonoBehaviour, ISkill
     [Header("Skill Data (스크립터블 오브젝트 할당)")]
     public SkillData skillData;
 
-    [Header("스킬 설정")]
-    public float skillManaCost = 30f;
+    [Header("스킬 설정")] 
     public float damageRatio = 1.2f; // 공격력의 120%
     
     [Header("투사체 설정 (관통형 투사체 프리팹)")]
@@ -52,7 +51,7 @@ public class PiercingShotSkill : MonoBehaviour, ISkill
         if (stats == null || runner == null) return false;
 
         // [조건 2] 마나 소모 (30)
-        if (!stats.SpendMP(skillManaCost))
+        if (!stats.SpendMP(skillData.skillManaCost))
         {
             Debug.Log("<color=red>마나가 부족합니다!</color>");
             return false;
@@ -124,18 +123,11 @@ public class PiercingShotSkill : MonoBehaviour, ISkill
     {
         if (skillOwner == null || ownerWeaponManager == null) return;
 
-        Transform activeFirePoint = skillOwner.transform;
+        // [수정] 현재 무기에서 직접 FirePoint를 가져오도록 로직을 개선합니다.
         WeaponBase activeWeapon = skillOwner.GetComponentInChildren<WeaponBase>();
-        if (activeWeapon != null)
-        {
-            var shotgun = activeWeapon as ShotgunWeapon;
-            if (shotgun != null) activeFirePoint = (Mathf.Abs(fireDirection.y) > Mathf.Abs(fireDirection.x)) ? ((fireDirection.y > 0) ? shotgun.firePointUp : shotgun.firePointDown) : shotgun.firePointSide;
-
-            var sniper = activeWeapon as SniperWeapon;
-            if (sniper != null) activeFirePoint = (Mathf.Abs(fireDirection.y) > Mathf.Abs(fireDirection.x)) ? ((fireDirection.y > 0) ? sniper.firePointUp : sniper.firePointDown) : sniper.firePointSide;
-
-            if (activeFirePoint == skillOwner.transform || activeFirePoint == null) activeFirePoint = activeWeapon.transform;
-        }
+        Transform activeFirePoint = (activeWeapon != null)
+            ? activeWeapon.GetFirePoint(fireDirection)
+            : skillOwner.transform;
 
         Vector3 spawnPos = activeFirePoint.position;
         if (activeFirePoint == skillOwner.transform) spawnPos += (Vector3)fireDirection * 0.5f;
