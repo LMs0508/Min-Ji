@@ -4014,6 +4014,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2727704921449879569, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: moveSpeed.baseValue
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: m_labelHash

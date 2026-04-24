@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 8871601090542569165, guid: 0036c7e665bdd7a4f8149a5ffaecdc04,
+  m_Sprite: {fileID: 8871601090542569165, guid: 5241bde0422e05c46b0beb70b16ea9c1,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -202,7 +202,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.7266665, y: 4.6346917}
+    oldSize: {x: 1.5755556, y: 1.5448973}
     newSize: {x: 7.09, y: 6.9520383}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -375,6 +375,32 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8749322823865163264}
     m_Modifications:
+    - target: {fileID: 2134125850443765135, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134125850443765135, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134125850443765135, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4339384685721989090, guid: 580411cd931540741bb52f7f5b2a12e9,
+        type: 2}
+    - target: {fileID: 2134125850443765135, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286136318
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134125850443765135, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4097285729814137264, guid: c8a152323b4987045bf4ce809c8f3980,
         type: 3}
       propertyPath: m_Pivot.x
@@ -474,6 +500,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847952652764784569, guid: c8a152323b4987045bf4ce809c8f3980,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6055394600376698645, guid: c8a152323b4987045bf4ce809c8f3980,
         type: 3}

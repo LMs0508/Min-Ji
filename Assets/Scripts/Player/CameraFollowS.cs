@@ -29,5 +29,10 @@ namespace Cainos.PixelArtTopDown_Basic
             transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
         }
 
+        public void SnapToTarget()
+        {
+            if (target == null) return;
+            transform.position = target.position + offset;
+        }
     }
 }
