@@ -9,9 +9,8 @@ public class LightBulletSkill : MonoBehaviour, ISkill
     public SkillData skillData;
 
     [Header("스킬 설정")]
-    public float skillManaCost = 20f;
     public int shotCount = 6;
-    public float timeBetweenShots = 0.2f;
+    public float timeBetweenShots = 0.1f;
     
     [Header("투사체 설정 (빛의 탄환 프리팹)")]
     public GameObject projectilePrefab;
@@ -53,7 +52,7 @@ public class LightBulletSkill : MonoBehaviour, ISkill
         if (stats == null || runner == null) return false;
 
         // [조건 2] 마나 소모 (20)
-        if (!stats.SpendMP(skillManaCost)) return false;
+        if (!stats.SpendMP(skillData.skillManaCost)) return false;
 
         lastUsedTime = Time.time;
         runner.StartCoroutine(ExecuteLightBullet(owner, stats, weaponManager));
@@ -69,60 +68,66 @@ public class LightBulletSkill : MonoBehaviour, ISkill
         this.skillOwner = owner;
         this.ownerWeaponManager = weaponManager;
 
-        // 스킬 발사 이벤트 구독
-        weaponManager.OnSkillFireRequest += FireSkillBullet;
-
         var visualHandler = owner.GetComponentInChildren<PlayerVisualHandler>();
-        if (visualHandler != null) visualHandler.TriggerCombatMode();
+        if (visualHandler != null)
+        {
+            visualHandler.TriggerCombatMode();
+            // 스킬이 지속되는 동안 공격 모션으로 인해 캐릭터 방향이 고정되도록 합니다.
+            visualHandler.isAttacking = true;
+        }
 
         // [조건 3] 공격력의 100% 데미지
         float baseAttack = stats.Attack.Value;
         float damageMultiplier = skillData != null ? skillData.damageRatio : 1.0f;
         this.finalSkillDamage = baseAttack * damageMultiplier;
 
+        // 스킬 시작 시의 마우스 방향으로 조준을 고정합니다.
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        this.fireDirection = (mousePos - owner.transform.position).normalized;
+
+        // 캐릭터 시선 방향을 고정된 조준 방향으로 설정합니다.
+        if (visualHandler != null && visualHandler.bodyAnimator != null)
+        {
+            visualHandler.bodyAnimator.SetFloat("MoveX", this.fireDirection.x);
+            visualHandler.bodyAnimator.SetFloat("MoveY", this.fireDirection.y);
+
+            Vector3 scale = visualHandler.bodyAnimator.transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (this.fireDirection.x < 0 ? -1f : 1f);
+            visualHandler.bodyAnimator.transform.localScale = scale;
+
+            // 무기의 좌우 반전도 플레이어 방향에 맞춰 처리하여 FirePoint 위치를 보정합니다.
+            WeaponBase weapon = owner.GetComponentInChildren<WeaponBase>();
+            if (weapon != null)
+            {
+                Vector3 weaponScale = weapon.transform.localScale;
+                weaponScale.x = Mathf.Abs(weaponScale.x) * (this.fireDirection.x < 0 ? -1f : 1f);
+                weapon.transform.localScale = weaponScale;
+            }
+        }
+
         // [조건 4] 6발 발사 연사루프
         for (int i = 0; i < shotCount; i++)
         {
-            // 매 발사마다 마우스 위치를 갱신하여 플레이어가 조준을 바꿀 수 있게 합니다.
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            this.fireDirection = (mousePos - owner.transform.position).normalized;
-
-            // 캐릭터 시선 방향 전환 및 공격 애니메이션
+            // [변경] 애니메이션 이벤트에 의존하지 않고, 직접 공격 애니메이션을 재생하고 발사 로직을 호출합니다.
+            // 이렇게 하면 애니메이션이 0.1초마다 재시작되어 연사하는 것처럼 보입니다.
             if (visualHandler != null && visualHandler.bodyAnimator != null)
             {
-                visualHandler.bodyAnimator.SetFloat("MoveX", this.fireDirection.x);
-                visualHandler.bodyAnimator.SetFloat("MoveY", this.fireDirection.y);
-                
-                Vector3 scale = visualHandler.bodyAnimator.transform.localScale;
-                scale.x = Mathf.Abs(scale.x) * (this.fireDirection.x < 0 ? -1f : 1f);
-                visualHandler.bodyAnimator.transform.localScale = scale;
-
-                // [추가] 무기의 좌우 반전도 플레이어 방향에 맞춰 처리하여 FirePoint 위치를 보정합니다.
-                WeaponBase weapon = owner.GetComponentInChildren<WeaponBase>();
-                if (weapon != null)
-                {
-                    Vector3 weaponScale = weapon.transform.localScale;
-                    weaponScale.x = Mathf.Abs(weaponScale.x) * (this.fireDirection.x < 0 ? -1f : 1f);
-                    weapon.transform.localScale = weaponScale;
-                }
+                visualHandler.PlayAttackAnimation(this.fireDirection);
             }
+            FireSkillBullet();
 
-            // 애니메이션을 재생시켜 이벤트가 'FireSkillBullet'을 호출하도록 합니다.
-            WeaponBase activeWeapon = owner.GetComponentInChildren<WeaponBase>();
-            if (activeWeapon != null)
-            {
-                activeWeapon.ExecuteAttack(this.fireDirection, 1.0f);
-            }
-
-            // [조건 5] 0.2초 대기
+            // [조건 5] 0.1초 대기
             yield return new WaitForSeconds(timeBetweenShots);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        // [추가] 스킬이 끝난 후 공격 방향 고정을 해제합니다.
+        if (visualHandler != null)
+        {
+            visualHandler.isAttacking = false;
+        }
 
         // 스킬 종료 및 정리
-        weaponManager.OnSkillFireRequest -= FireSkillBullet;
         weaponManager.IsSkillActive = false;
         isExecuting = false;
         this.skillOwner = null;
@@ -134,18 +139,11 @@ public class LightBulletSkill : MonoBehaviour, ISkill
     {
         if (skillOwner == null || ownerWeaponManager == null) return;
 
-        Transform activeFirePoint = skillOwner.transform;
+        // [수정] 현재 무기에서 직접 FirePoint를 가져오도록 로직을 개선합니다.
         WeaponBase activeWeapon = skillOwner.GetComponentInChildren<WeaponBase>();
-        if (activeWeapon != null)
-        {
-            var shotgun = activeWeapon as ShotgunWeapon;
-            if (shotgun != null) activeFirePoint = (Mathf.Abs(fireDirection.y) > Mathf.Abs(fireDirection.x)) ? ((fireDirection.y > 0) ? shotgun.firePointUp : shotgun.firePointDown) : shotgun.firePointSide;
-
-            var sniper = activeWeapon as SniperWeapon;
-            if (sniper != null) activeFirePoint = (Mathf.Abs(fireDirection.y) > Mathf.Abs(fireDirection.x)) ? ((fireDirection.y > 0) ? sniper.firePointUp : sniper.firePointDown) : sniper.firePointSide;
-
-            if (activeFirePoint == skillOwner.transform || activeFirePoint == null) activeFirePoint = activeWeapon.transform;
-        }
+        Transform activeFirePoint = (activeWeapon != null)
+            ? activeWeapon.GetFirePoint(fireDirection)
+            : skillOwner.transform;
 
         Vector3 spawnPos = activeFirePoint.position;
         if (activeFirePoint == skillOwner.transform) spawnPos += (Vector3)fireDirection * 0.5f;
