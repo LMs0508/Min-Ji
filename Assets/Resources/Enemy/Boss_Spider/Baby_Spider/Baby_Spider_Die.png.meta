@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 40cfc2a8d9eae55448a91336270d0916
+guid: 83b35c46f0edf854ba2edaea11085929
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3527350478311125068
-    second: DashAura_0
-  - first:
-      213: 1078646665067578117
-    second: DashAura_1
-  - first:
-      213: -4890734781821764711
-    second: DashAura_2
+      213: 795453424692078520
+    second: Baby_Spider_Die_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 400
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DashAura_0
+      name: Baby_Spider_Die_0
       rect:
         serializedVersion: 2
-        x: 818
-        y: 172
-        width: 1143
-        height: 1186
+        x: 455
+        y: 77
+        width: 1841
+        height: 1290
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4bf06fdbd655c0fc0800000000000000
-      internalID: -3527350478311125068
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DashAura_1
-      rect:
-        serializedVersion: 2
-        x: 1956
-        y: 896
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 503438d4d6f18fe00800000000000000
-      internalID: 1078646665067578117
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DashAura_2
-      rect:
-        serializedVersion: 2
-        x: 802
-        y: 671
-        width: 22
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 99bbddec0ae902cb0800000000000000
-      internalID: -4890734781821764711
+      spriteID: 8b7a32edca40a0b00800000000000000
+      internalID: 795453424692078520
       vertices: []
       indices: 
       edges: []
@@ -188,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DashAura_0: -3527350478311125068
-      DashAura_1: 1078646665067578117
-      DashAura_2: -4890734781821764711
+      Baby_Spider_Die_0: 795453424692078520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
