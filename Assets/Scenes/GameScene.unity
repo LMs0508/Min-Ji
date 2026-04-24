@@ -13490,11 +13490,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Core.SceneFlowManager
   floorScenes:
+  - village
   - floor01
   - floor02
   - floor03
   - floor04
+<<<<<<< HEAD
   - Boss
+=======
+>>>>>>> parent of 4d595f7 (v5)
   player: {fileID: 546535822}
   spawnObjectName: FloorSpawn
   spawnOffset: {x: 0, y: 0}
