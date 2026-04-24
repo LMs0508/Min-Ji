@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
 
     public List<QuestData> activeQuests = new List<QuestData>();
+    public event Action OnQuestListChanged;
+
 
     [Header("Global NPC Icon Settings")]
     public GameObject iconPrefab;
@@ -40,6 +43,7 @@ public class QuestManager : MonoBehaviour
             newQuest.isCompleted = false;
             activeQuests.Add(newQuest);
             UpdateQuestUI();
+            OnQuestListChanged?.Invoke();
         }
     }
 
@@ -62,7 +66,12 @@ public class QuestManager : MonoBehaviour
             }
         }
 
+        bool wasCompleted = q.isCompleted;
         q.isCompleted = allObjectivesDone;
+        if (wasCompleted != q.isCompleted)
+        {
+            OnQuestListChanged?.Invoke();
+        }
     }
 
     public void ProgressQuest(QuestType type, string id, int amount = 1)
@@ -87,6 +96,7 @@ public class QuestManager : MonoBehaviour
                 {
                     CheckQuestCompletion(q);
                     UpdateQuestUI();
+                    OnQuestListChanged?.Invoke();
                 }
             }
         }
@@ -130,7 +140,7 @@ public class QuestManager : MonoBehaviour
         }
 
         // 모든 NPC 아이콘 갱신
-        NPCDialogue[] allNPCs = Object.FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None);
+        NPCDialogue[] allNPCs =UnityEngine.Object.FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None);
         foreach (var npc in allNPCs)
         {
             npc.UpdateQuestIcon();

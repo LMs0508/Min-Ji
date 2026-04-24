@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: 522a477e7b3b2f5459be82f5fdf78544
   - enabled: 1
+    path: Assets/Scenes/village.unity
+    guid: 0b1f341df2ce6f14ca597658ab545764
+  - enabled: 1
     path: Assets/Scenes/floor01.unity
     guid: f38fcfb327d18ce4bb4e47cb40d72ddf
   - enabled: 1
