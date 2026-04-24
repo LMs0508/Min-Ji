@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cainos.PixelArtTopDown_Basic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,14 +12,14 @@ namespace Game.Core
         [SerializeField] private List<string> floorScenes = new List<string> { "floor01", "floor02","floor03" };
 
         [Header("Player")]
-        [SerializeField] private Transform player;                       // PF Player µå·¡±×
-        [SerializeField] private string spawnObjectName = "FloorSpawn";  // °¢ Floor¿¡ ÀÖ´Â ½ºÆù ¿ÀºêÁ§Æ® ÀÌ¸§
+        [SerializeField] private Transform player;                       // PF Player ï¿½å·¡ï¿½ï¿½
+        [SerializeField] private string spawnObjectName = "FloorSpawn";  // ï¿½ï¿½ Floorï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ì¸ï¿½
 
         [Header("Spawn")]
-        [Tooltip("½ºÆù À§Ä¡¿¡ Á¤È®È÷ °ãÄ¡¸é Trigger Enter°¡ ¾È ¶ß´Â ÄÉÀÌ½º¸¦ ÇÇÇÏ·Á°í »ìÂ¦ ¿ÀÇÁ¼ÂÀ» ÁÙ ¼ö ÀÖ¾î¿ä.")]
+        [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Trigger Enterï¿½ï¿½ ï¿½ï¿½ ï¿½ß´ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½Â¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½.")]
         [SerializeField] private Vector2 spawnOffset = Vector2.zero;
 
-        [Tooltip("Ãş ·Îµå/¾ğ·Îµå Áß Áßº¹ È£Ãâ ¹æÁö")]
+        [Tooltip("ï¿½ï¿½ ï¿½Îµï¿½/ï¿½ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ßºï¿½ È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
         [SerializeField] private bool blockWhileLoading = true;
 
         private int currentFloorIndex = -1;
@@ -27,7 +28,7 @@ namespace Game.Core
 
         private void Start()
         {
-            // °ÔÀÓ ½ÃÀÛ ½Ã 1Ãş ·Îµå
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Îµï¿½
             _ = LoadFloorAsync(0);
         }
 
@@ -55,7 +56,7 @@ namespace Game.Core
                     return;
                 }
 
-                // 1) ±âÁ¸ Floor ¾ğ·Îµå
+                // 1) ï¿½ï¿½ï¿½ï¿½ Floor ï¿½ï¿½Îµï¿½
                 if (currentFloorIndex >= 0)
                 {
                     if (loadedFloorScene.IsValid() && loadedFloorScene.isLoaded)
@@ -66,7 +67,7 @@ namespace Game.Core
                     }
                 }
 
-                // 2) »õ Floor Additive ·Îµå
+                // 2) ï¿½ï¿½ Floor Additive ï¿½Îµï¿½
                 string sceneName = floorScenes[floorIndex];
                 var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 while (loadOp != null && !loadOp.isDone)
@@ -79,16 +80,16 @@ namespace Game.Core
                     return;
                 }
 
-                //  Active Scene ¼³Á¤ (Additive ±¸¼º¿¡¼­ °¢Á¾ ²¿ÀÓ ¹æÁö)
+                //  Active Scene ï¿½ï¿½ï¿½ï¿½ (Additive ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                 SceneManager.SetActiveScene(loadedFloorScene);
 
                 currentFloorIndex = floorIndex;
 
-                // 3) ½ºÆù À§Ä¡ Ã£°í ÇÃ·¹ÀÌ¾î ÀÌµ¿
+                // 3) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ Ã£ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½
                 MovePlayerToSpawn(loadedFloorScene);
 
-                //  ¹°¸®(Trigger/Collision) ¾÷µ¥ÀÌÆ® ÇÑ Æ½ µ¹·ÁÁÖ±â
-                // (½ºÆù Á÷ÈÄ Æ®¸®°Å/Ãæµ¹ÀÌ ¾ÃÈ÷´Â ÄÉÀÌ½º ¹æÁö)
+                //  ï¿½ï¿½ï¿½ï¿½(Trigger/Collision) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ Æ½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
+                // (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½/ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                 await Task.Yield();
                 Physics2D.SyncTransforms();
             }
@@ -115,31 +116,33 @@ namespace Game.Core
 
             Vector2 targetPos = (Vector2)spawn.transform.position + spawnOffset;
 
-            //  Rigidbody2D°¡ ÀÖÀ¸¸é ¹°¸® À§Ä¡·Î ¼ø°£ÀÌµ¿ (Trigger/Collision ¾ÈÁ¤)
+            // transform.positionì„ ë¨¼ì € ì„¤ì •í•´ì•¼ TopDownCharacterController.targetPositionì´ ì˜¬ë°”ë¥¸ ìœ„ì¹˜ë¥¼ ì½ìŒ
+            player.position = targetPos;
+
             var rb = player.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0f;
-                rb.position = targetPos;      // ÇÙ½É: transform.position ´ë½Å rb.position
+                rb.position = targetPos;
                 rb.WakeUp();
             }
-            else
-            {
-                player.position = targetPos;
-            }
+
+            // targetPositionì„ í˜„ì¬ ìœ„ì¹˜ë¡œ ì´ˆê¸°í™”í•´ì„œ ìë™ ì´ë™ ë°©ì§€
+            var controller = player.GetComponent<Cainos.PixelArtTopDown_Basic.TopDownCharacterController>();
+            controller?.StopMovement();
         }
 
         private GameObject FindSpawnObject(Scene floorScene)
         {
-            // floor ¾ÀÀÇ ·çÆ® ¿ÀºêÁ§Æ®¿¡¼­ "FloorSpawn" Ã£±â
+            // floor ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ "FloorSpawn" Ã£ï¿½ï¿½
             foreach (var root in floorScene.GetRootGameObjects())
             {
-                // 1) ·çÆ® Á÷¼Ó
+                // 1) ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
                 var t = root.transform.Find(spawnObjectName);
                 if (t != null) return t.gameObject;
 
-                // 2) ÀüÃ¼ °Ë»ö
+                // 2) ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
                 var all = root.GetComponentsInChildren<Transform>(true);
                 foreach (var tr in all)
                 {
@@ -150,7 +153,7 @@ namespace Game.Core
             return null;
         }
 
-        // (¼±ÅÃ) ¿ÜºÎ¿¡¼­ ÇöÀç Ãş ¹øÈ£°¡ ÇÊ¿äÇÒ ¶§
+        // (ï¿½ï¿½ï¿½ï¿½) ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½
         public int CurrentFloorIndex => currentFloorIndex;
     }
 }
