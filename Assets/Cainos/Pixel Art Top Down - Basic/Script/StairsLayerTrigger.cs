@@ -29,15 +29,16 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             if (other.CompareTag("Player"))
             {
-                if (direction == Direction.South && other.transform.position.y < transform.position.y)
-                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
-                else if (direction == Direction.West && other.transform.position.x < transform.position.x)
-                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
-                else if (direction == Direction.East && other.transform.position.x > transform.position.x)
-                    UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower);
+                // 남쪽(위아래) 계단 기준
+                if (direction == Direction.South)
+                {
+                    if (other.transform.position.y > transform.position.y) 
+                        UpdatePlayerLayer(other.gameObject, layerUpper, sortingLayerUpper); // 위로 나감
+                    else 
+                        UpdatePlayerLayer(other.gameObject, layerLower, sortingLayerLower); // 아래로 나감
+                }
             }
         }
-
         // 핵심 수정 부분
         private void UpdatePlayerLayer(GameObject target, string layerName, string sortingLayerName)
         {
