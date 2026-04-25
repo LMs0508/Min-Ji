@@ -1,15 +1,14 @@
+using Game.Player;
 using UnityEngine;
 using System.Collections;
 
 public class MiniSpiderController : MonoBehaviour
 {
-    [Header("상태 및 타겟")]
+    [Header("타겟")]
     public Transform targetPlayer;
 
-    [Header("절차적 다리 참조")]
+    [Header("앞다리 공격 (ProceduralSpiderLeg 2개만)")]
     public ProceduralSpiderLeg[] frontLegs;
-    public ProceduralSpiderLeg[] middleLegs;
-    public float middleLegAttackRange = 3f;
 
     private SpiderBossState currentState = SpiderBossState.Idle;
     private EnemyHealth healthScript;
@@ -42,27 +41,17 @@ public class MiniSpiderController : MonoBehaviour
             case SpiderBossState.Chase:
                 if (targetPlayer == null) return;
 
-                bool canFrontAttack = false;
+                bool canAttack = false;
                 foreach (var leg in frontLegs)
                 {
                     if (leg != null && !leg.isDead && Vector2.Distance(leg.transform.position, targetPlayer.position) <= stats.enemyData.attackRange)
                     {
-                        canFrontAttack = true;
+                        canAttack = true;
                         break;
                     }
                 }
 
-                bool canMiddleAttack = false;
-                foreach (var leg in middleLegs)
-                {
-                    if (leg != null && !leg.isDead && Vector2.Distance(leg.transform.position, targetPlayer.position) <= middleLegAttackRange)
-                    {
-                        canMiddleAttack = true;
-                        break;
-                    }
-                }
-
-                if ((canFrontAttack || canMiddleAttack) && Time.time > lastAttackTime + stats.enemyData.attackCooldown)
+                if (canAttack && Time.time > lastAttackTime + stats.enemyData.attackCooldown)
                     StartCoroutine(MeleeAttackRoutine());
                 else
                     transform.position = Vector2.MoveTowards(transform.position, targetPlayer.position, stats.moveSpeed * Time.deltaTime);
@@ -75,46 +64,26 @@ public class MiniSpiderController : MonoBehaviour
         currentState = SpiderBossState.Attack_Melee;
         lastAttackTime = Time.time;
 
-        bool canFrontAttack = false;
+        ProceduralSpiderLeg closestLeg = null;
+        float minDistance = float.MaxValue;
         foreach (var leg in frontLegs)
         {
-            if (leg != null && !leg.isDead && Vector2.Distance(leg.transform.position, targetPlayer.position) <= stats.enemyData.attackRange)
-            {
-                canFrontAttack = true;
-                break;
-            }
+            if (leg == null || leg.isDead) continue;
+            float d = Vector2.Distance(leg.transform.position, targetPlayer.position);
+            if (d < minDistance) { minDistance = d; closestLeg = leg; }
         }
 
-        if (canFrontAttack)
+        if (closestLeg != null)
         {
-            ProceduralSpiderLeg closestLeg = null;
-            float minDistance = float.MaxValue;
-            foreach (var leg in frontLegs)
-            {
-                if (leg == null || leg.isDead) continue;
-                float d = Vector2.Distance(leg.transform.position, targetPlayer.position);
-                if (d < minDistance) { minDistance = d; closestLeg = leg; }
-            }
-
-            if (closestLeg != null)
-            {
-                float localX = transform.InverseTransformPoint(closestLeg.transform.position).x;
-                int sweepDir = localX > 0 ? 1 : -1;
-                closestLeg.PerformSweep(targetPlayer.position, sweepDir);
-            }
-        }
-
-        foreach (var leg in middleLegs)
-        {
-            if (leg != null && !leg.isDead && Vector2.Distance(leg.transform.position, targetPlayer.position) <= middleLegAttackRange)
-                leg.PerformSlam(leg.GetIdealPosition(), true, 2f, 2f);
+            float localX = transform.InverseTransformPoint(closestLeg.transform.position).x;
+            int sweepDir = localX > 0 ? 1 : -1;
+            closestLeg.PerformSweep(targetPlayer.position, sweepDir);
         }
 
         yield return new WaitForSeconds(1.5f);
         currentState = SpiderBossState.Chase;
     }
 
-    // EnemyHealth가 이 컴포넌트를 disable할 때 자동으로 코루틴 정리
     private void OnDisable()
     {
         StopAllCoroutines();

@@ -18,9 +18,16 @@ public class ProceduralSpiderLeg : MonoBehaviour
     public float sweepWidth = 3.0f; // 부채꼴의 좌우 긁기 넓이 (기본 3.0)
     public float sweepForward = 2.0f; // 긁을 때 앞으로 볼록하게 튀어나오는 거리 (기본 2.0)
 
+    [Header("판정 설정")]
+    public float attackRadius = 0.5f; // 공격 판정 반경 (콜라이더 보조용)
+
     private Vector3 currentPosition; // 현재 발의 위치
     private bool isStepping = false;
     private Vector3 defaultLocalPosition; // 시작 시 다리의 자연스러운 로컬 위치 기억
+
+    // 코루틴 없는 걷기용 상태 (GC 할당 제거)
+    private float stepT = -1f;
+    private Vector3 stepStartPos;
     
     [Header("체력 설정")]
     public float maxHealth = 50f;
@@ -49,43 +56,33 @@ public class ProceduralSpiderLeg : MonoBehaviour
 
     private void Update()
     {
-        transform.position = currentPosition;
+        if (body == null) return;
 
-        // [추가] 몸통에서 분리되었으므로, 혹시라도 거미 몸통이 좌우로 반전(Flip)된다면 
-        // 다리의 이미지도 올바른 방향을 바라보도록 스케일을 동기화해 줍니다.
-        if (body != null)
-        {
-            float parentScaleX = body.lossyScale.x;
-            Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * (parentScaleX < 0 ? -1f : 1f);
-            transform.localScale = scale;
-        }
+        // 좌우 반전 동기화
+        float parentScaleX = body.lossyScale.x;
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * (parentScaleX < 0 ? -1f : 1f);
+        transform.localScale = scale;
 
-        // 3. 매 프레임 몸통의 이동에 따라 다리가 있어야 할 '목표 월드 위치'를 계산합니다.
         Vector3 targetWorldPos = body.TransformPoint(defaultLocalPosition);
 
-        // 발이 목표 위치에서 너무 멀어지면 새로운 걸음(Step)을 시작함
-        if (!isStepping && Vector3.Distance(currentPosition, targetWorldPos) > stepDistance)
+        if (isStepping)
         {
-            StartCoroutine(Step());
+            // 코루틴 없이 Update에서 직접 보간 (GC 할당 없음)
+            stepT = Mathf.Min(1f, stepT + Time.deltaTime * stepSpeed);
+            currentPosition = Vector3.Lerp(stepStartPos, targetWorldPos, stepT)
+                              + new Vector3(0f, Mathf.Sin(stepT * Mathf.PI) * stepHeight, 0f);
+            if (stepT >= 1f)
+                isStepping = false;
         }
-    }
-
-    private IEnumerator Step()
-    {
-        isStepping = true;
-        Vector3 startPos = currentPosition;
-
-        float t = 0;
-        while (t < 1f)
+        else if (Vector3.Distance(currentPosition, targetWorldPos) > stepDistance)
         {
-            t += Time.deltaTime * stepSpeed;
-            // 몸통이 움직이는 중에도 발이 정확히 따라가도록 도착 지점을 계속 갱신합니다.
-            Vector3 targetPos = body.TransformPoint(defaultLocalPosition);
-            currentPosition = Vector3.Lerp(startPos, targetPos, t) + Vector3.up * Mathf.Sin(t * Mathf.PI) * stepHeight;
-            yield return null;
+            stepStartPos = currentPosition;
+            stepT = 0f;
+            isStepping = true;
         }
-        isStepping = false;
+
+        transform.position = currentPosition;
     }
 
     // [추가] 다리가 평소 딛고 있어야 할 이상적인 바닥 월드 위치를 반환 (수직 찍기에 사용)
@@ -159,6 +156,14 @@ public class ProceduralSpiderLeg : MonoBehaviour
         StartCoroutine(SweepAttackRoutine(targetPos, directionModifier));
     }
 
+    private void ClampToBody(ref Vector3 pos)
+    {
+        if (body == null) return;
+        Vector3 toPos = pos - body.position;
+        if (toPos.magnitude > maxReach)
+            pos = body.position + toPos.normalized * maxReach;
+    }
+
     private IEnumerator SweepAttackRoutine(Vector3 targetPos, int dirModifier)
     {
         if (isDead) yield break;
@@ -168,36 +173,58 @@ public class ProceduralSpiderLeg : MonoBehaviour
 
         if (body == null) yield break;
 
-        // [핵심] 긁기 공격 시에도 다리가 너무 멀리 나가지 않도록 거리 제한
         Vector3 offset = targetPos - body.position;
         if (offset.magnitude > maxReach)
-        {
             targetPos = body.position + offset.normalized * maxReach;
-        }
 
-        // 타겟을 향하는 방향
         Vector3 dirToTarget = (targetPos - body.position).normalized;
         dirToTarget.z = 0;
 
-        // 타겟 방향에 수직인 벡터 (오른쪽 방향)
         Vector3 rightTangent = new Vector3(dirToTarget.y, -dirToTarget.x, 0);
 
-        // dirModifier가 1이면 오른쪽에서 왼쪽으로, -1이면 왼쪽에서 오른쪽으로 긁음
-        Vector3 sweepStart = targetPos + (rightTangent * dirModifier * sweepWidth) + (Vector3.up * 1.5f); // 긁기 전 높이 치켜듦
-        Vector3 sweepEnd = targetPos - (rightTangent * dirModifier * sweepWidth) - (Vector3.up * 0.5f);   // 바닥을 긁으며 내려감
+        Vector3 sweepStart = targetPos + (rightTangent * dirModifier * sweepWidth) + (Vector3.up * 1.5f);
+        Vector3 sweepEnd   = targetPos - (rightTangent * dirModifier * sweepWidth) - (Vector3.up * 0.5f);
 
-        // 1. 스와이프 시작 위치로 이동 (사전 준비 동작)
+        // sweepStart/sweepEnd도 maxReach 이내로 제한 (몸통과 멀어지는 문제 방지)
+        ClampToBody(ref sweepStart);
+        ClampToBody(ref sweepEnd);
+
+        // 1. 스와이프 시작 위치로 이동
         float t = 0;
-        while (t < 1f) { t += Time.deltaTime * (stepSpeed * 1.5f); currentPosition = Vector3.Lerp(startPos, sweepStart, t); yield return null; }
+        while (t < 1f)
+        {
+            t += Time.deltaTime * (stepSpeed * 1.5f);
+            currentPosition = Vector3.Lerp(startPos, sweepStart, t);
+            ClampToBody(ref currentPosition);
+            yield return null;
+        }
 
-        yield return new WaitForSeconds(0.15f); // 살짝 멈칫 (긴장감)
+        yield return new WaitForSeconds(0.15f);
 
         // 2. 와이퍼처럼 반대편으로 빠르게 긁기 (부채꼴)
         t = 0;
-        while (t < 1f) { t += Time.deltaTime * (stepSpeed * 3f); 
+        bool hitDealt = false; // 스윕 한 번에 중복 피해 방지
+        while (t < 1f)
+        {
+            t += Time.deltaTime * (stepSpeed * 3f);
             Vector3 linearPos = Vector3.Lerp(sweepStart, sweepEnd, t);
-            Vector3 arcOffset = dirToTarget * Mathf.Sin(t * Mathf.PI) * sweepForward; // 앞으로 볼록하게 튀어나오며 부채꼴 궤적 생성
-            currentPosition = linearPos + arcOffset; yield return null; }
+            Vector3 arcOffset = dirToTarget * Mathf.Sin(t * Mathf.PI) * sweepForward;
+            currentPosition = linearPos + arcOffset;
+            ClampToBody(ref currentPosition);
+
+            // 빠른 이동·이미 겹침 모두 커버하는 직접 판정
+            if (!hitDealt && !isDead)
+            {
+                Collider2D hit = Physics2D.OverlapCircle(currentPosition, attackRadius);
+                if (hit != null && hit.CompareTag("Player"))
+                {
+                    TryDealDamage(hit);
+                    hitDealt = true;
+                }
+            }
+
+            yield return null;
+        }
 
         yield return new WaitForSeconds(0.5f);
         isStepping = false;
@@ -246,21 +273,23 @@ public class ProceduralSpiderLeg : MonoBehaviour
         }
     }
 
-    // [추가] 다리의 트리거(충돌체)에 무언가 닿았을 때 실행되는 유니티 기본 함수
+    private void TryDealDamage(Collider2D collision)
+    {
+        if (bossStats == null || bossStats.enemyData == null || bossStats.enemyData.damage <= 0) return;
+
+        if (!collision.TryGetComponent(out PlayerStats playerStats))
+            playerStats = collision.GetComponentInParent<PlayerStats>();
+        if (playerStats == null)
+            playerStats = collision.transform.root.GetComponentInChildren<PlayerStats>();
+
+        if (playerStats != null)
+            playerStats.TakeDamage(bossStats.enemyData.damage);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDead) return; // 파괴된 다리는 플레이어에게 데미지를 주지 않음
-
-        if (collision.CompareTag("Player") && bossStats != null && bossStats.enemyData != null)
-        {
-            PlayerStats playerStats = collision.GetComponent<PlayerStats>();
-            if (playerStats == null) playerStats = collision.GetComponentInParent<PlayerStats>();
-            if (playerStats == null) playerStats = collision.transform.root.GetComponentInChildren<PlayerStats>();
-
-            if (playerStats != null && bossStats.enemyData.damage > 0)
-            {
-                playerStats.TakeDamage(bossStats.enemyData.damage);
-            }
-        }
+        if (isDead) return;
+        if (collision.CompareTag("Player"))
+            TryDealDamage(collision);
     }
 }
