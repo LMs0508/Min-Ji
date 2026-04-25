@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Playables;
 
 public enum QuestType
 {
@@ -52,4 +53,20 @@ public class QuestData
 
     [Header("Rewards")]
     public QuestReward[] rewards;
+
+    [Header("Timeline Settings")]
+    // 시작 연출 설정
+    public PlayableAsset startCutscene;
+    public string startTimelinePlayer = "TimelinePlayer1"; 
+
+    // 중간 연출 설정
+    public PlayableAsset midCutscene;
+    public int midTargetAmount = 3;
+    public string midTimelinePlayer = "TimelinePlayer2"; 
+
+    // 완료 연출 설정
+    public PlayableAsset completeCutscene;
+    public string completeTimelinePlayer = "TimelinePlayer3";
+
+    [HideInInspector] public bool playedMid = false; // 연출 중복 방지용
 }

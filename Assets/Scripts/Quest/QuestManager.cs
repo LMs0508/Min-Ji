@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Playables;
 
 public class QuestManager : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class QuestManager : MonoBehaviour
 
     public List<QuestData> activeQuests = new List<QuestData>();
     public event Action OnQuestListChanged;
-
 
     [Header("Global NPC Icon Settings")]
     public GameObject iconPrefab;
@@ -32,7 +32,8 @@ public class QuestManager : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void AddQuest(QuestData newQuest)
@@ -40,24 +41,35 @@ public class QuestManager : MonoBehaviour
         if (!activeQuests.Contains(newQuest))
         {
             newQuest.isAccepted = true;
-            newQuest.isCompleted = false;
             activeQuests.Add(newQuest);
+
+            // [추가] 시작 연출
+            if (newQuest.startCutscene != null) 
+                PlayTimeline(newQuest.startCutscene, newQuest.startTimelinePlayer);
+
             UpdateQuestUI();
             OnQuestListChanged?.Invoke();
         }
     }
 
-    // 모든 목표가 달성되었는지 체크하는 핵심 함수
+    // [복구] 기존 카운팅 로직 유지 + 연출 추가
     public void CheckQuestCompletion(QuestData q)
     {
         bool allObjectivesDone = true;
 
         foreach (var obj in q.objectives)
         {
-            // 수집형 아이템은 실시간으로 인벤토리 개수 확인
+            // 수집형 아이템 실시간 인벤토리 확인 로직 (기존 그대로)
             if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
             {
                 obj.currentAmount = InventoryManager.Instance.GetItemTotalCount(obj.targetItem);
+            }
+
+            // [추가] 중간 연출 로직
+            if (q.midCutscene != null && obj.currentAmount >= q.midTargetAmount && !q.playedMid)
+            {
+                PlayTimeline(q.midCutscene, q.midTimelinePlayer);
+                q.playedMid = true;
             }
 
             if (obj.currentAmount < obj.targetAmount)
@@ -68,12 +80,20 @@ public class QuestManager : MonoBehaviour
 
         bool wasCompleted = q.isCompleted;
         q.isCompleted = allObjectivesDone;
+
+        // [추가] 완료 연출 로직
+        if (!wasCompleted && q.isCompleted && q.completeCutscene != null)
+        {
+            PlayTimeline(q.completeCutscene, q.completeTimelinePlayer);
+        }
+
         if (wasCompleted != q.isCompleted)
         {
             OnQuestListChanged?.Invoke();
         }
     }
 
+    // [복구] 기존 수집/사냥 진행 로직 유지
     public void ProgressQuest(QuestType type, string id, int amount = 1)
     {
         foreach (var q in activeQuests)
@@ -83,7 +103,6 @@ public class QuestManager : MonoBehaviour
                 bool progressMade = false;
                 foreach (var obj in q.objectives)
                 {
-                    // 타입과 ID가 일치하는 목표 수치 증가 (수집형 제외)
                     if (obj.type != QuestType.ItemCollect && obj.type == type && obj.targetID == id)
                     {
                         obj.currentAmount += amount;
@@ -102,17 +121,16 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // [복구] UI 업데이트 시 실시간 체크 로직 (기존 그대로)
     public void UpdateQuestUI()
     {
-        // 기존 UI 항목 삭제
-        foreach (Transform child in questListParent)
-        {
-            Destroy(child.gameObject);
-        }
+        if (questListParent == null) return;
+
+        foreach (Transform child in questListParent) Destroy(child.gameObject);
 
         foreach (var q in activeQuests)
         {
-            // UI 생성 전 상태 업데이트
+            // UI를 그릴 때마다 목표를 다시 체크해서 카운트를 갱신함 (이게 빠졌었음)
             CheckQuestCompletion(q);
 
             GameObject item = Instantiate(questPrefab, questListParent);
@@ -120,30 +138,40 @@ public class QuestManager : MonoBehaviour
 
             if (title != null)
             {
-                // 여러 목표를 텍스트로 합치기
                 string statusText = $"<b>{q.questTitle}</b>";
                 foreach (var obj in q.objectives)
                 {
                     string colorHex = (obj.currentAmount >= obj.targetAmount) ? "#32CD32" : "#FFFFFF";
                     statusText += $"\n<color={colorHex}>- {obj.targetID} ({obj.currentAmount}/{obj.targetAmount})</color>";
                 }
-
                 title.text = statusText;
                 title.color = q.isCompleted ? completedColor : inProgressColor;
             }
 
             Image iconImage = item.transform.Find("Icon")?.GetComponent<Image>();
-            if (iconImage != null)
-            {
-                iconImage.sprite = q.isCompleted ? greenCheckIcon : grayCheckIcon;
-            }
+            if (iconImage != null) iconImage.sprite = q.isCompleted ? greenCheckIcon : grayCheckIcon;
         }
 
-        // 모든 NPC 아이콘 갱신
-        NPCDialogue[] allNPCs =UnityEngine.Object.FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None);
-        foreach (var npc in allNPCs)
+        // NPC 아이콘 업데이트
+        foreach (var npc in FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None))
         {
             npc.UpdateQuestIcon();
+        }
+    }
+
+    // [추가] 타임라인 재생 공용 함수
+    private void PlayTimeline(PlayableAsset asset, string playerName)
+    {
+        if (asset == null) return;
+        GameObject playerObj = GameObject.Find(playerName);
+        if (playerObj != null)
+        {
+            PlayableDirector director = playerObj.GetComponent<PlayableDirector>();
+            if (director != null)
+            {
+                director.playableAsset = asset;
+                director.Play();
+            }
         }
     }
 

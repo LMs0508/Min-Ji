@@ -4361,6 +4361,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2727704921449879569, guid: 6961d4dbb06700941be0d29e73f16f7d,
+        type: 3}
+      propertyPath: moveSpeed.baseValue
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3173185729591899500, guid: 6961d4dbb06700941be0d29e73f16f7d,
         type: 3}
       propertyPath: m_labelHash
@@ -15327,6 +15332,7 @@ MonoBehaviour:
     type: 3}
   inProgressColor: {r: 1, g: 1, b: 1, a: 1}
   completedColor: {r: 0, g: 0.8018868, b: 0, a: 1}
+  globalDirector: {fileID: 0}
 --- !u!1 &2034244474
 GameObject:
   m_ObjectHideFlags: 0

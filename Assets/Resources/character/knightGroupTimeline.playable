@@ -1417,7 +1417,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
 --- !u!114 &-5035067012064920790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1940,7 +1940,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
 --- !u!114 &-741197337373619861
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3274,7 +3274,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
 --- !u!114 &2495663065737120696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3477,7 +3477,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
 --- !u!114 &2870553562172155678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3719,7 +3719,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
 --- !u!114 &4057461376255636031
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5577,4 +5577,4 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 1
