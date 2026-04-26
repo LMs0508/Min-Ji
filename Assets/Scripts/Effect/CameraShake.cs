@@ -38,7 +38,7 @@ public class CameraShake : MonoBehaviour
         {
             shakeOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0) * currentIntensity;
             transform.position += shakeOffset;
-            shakeTimer -= Time.deltaTime;
+            shakeTimer -= Time.unscaledDeltaTime;
         }
     }
 }

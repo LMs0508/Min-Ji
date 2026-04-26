@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Quest UI")]
     public GameObject selectionPanel; // 수락/거절 버튼 패널
 
+    [Header("Quiz UI")]
+    public GameObject quizPanel; // O/X 버튼 패널
+
     private bool hasQuest;
     private QuestData pendingQuest; // [추가] 수락을 기다리는 현재 퀘스트 데이터
 
@@ -25,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     private bool open;
 
     private NPCDialogue currentCaller;
+    private QuizNPC currentQuizCaller;
 
     void Awake()
     {
@@ -40,6 +44,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (panel != null) panel.SetActive(false);
         if (selectionPanel != null) selectionPanel.SetActive(false);
+        if (quizPanel != null) quizPanel.SetActive(false);
         open = false;
     }
 
@@ -81,6 +86,7 @@ public class DialogueManager : MonoBehaviour
         open = true;
         if (panel != null) panel.SetActive(true);
         if (selectionPanel != null) selectionPanel.SetActive(false);
+        if (quizPanel != null) quizPanel.SetActive(false);
 
         if (hintText != null) hintText.SetActive(newLines.Length > 1);
 
@@ -139,6 +145,7 @@ public class DialogueManager : MonoBehaviour
         open = false;
         if (panel != null) panel.SetActive(false);
         if (selectionPanel != null) selectionPanel.SetActive(false);
+        if (quizPanel != null) quizPanel.SetActive(false);
         Time.timeScale = 1f;
 
         if (currentCaller != null)
@@ -146,7 +153,38 @@ public class DialogueManager : MonoBehaviour
             currentCaller.NotifyDialogueClosed();
             currentCaller = null;
         }
-        pendingQuest = null; // 초기화
+        currentQuizCaller = null;
+        pendingQuest = null;
+    }
+
+    public void StartQuizMode(QuizNPC caller, string question, string npcName)
+    {
+        currentQuizCaller = caller;
+        currentCaller = null;
+        open = true;
+
+        if (panel != null) panel.SetActive(true);
+        if (selectionPanel != null) selectionPanel.SetActive(false);
+        if (quizPanel != null) quizPanel.SetActive(true);
+        if (hintText != null) hintText.SetActive(false);
+        if (nameText != null) nameText.text = npcName;
+        if (dialogueText != null) dialogueText.text = question;
+
+        Time.timeScale = 0f;
+    }
+
+    public void OnQuizO()
+    {
+        QuizNPC quiz = currentQuizCaller;
+        CloseDialogue();
+        quiz?.OnAnswer(true);
+    }
+
+    public void OnQuizX()
+    {
+        QuizNPC quiz = currentQuizCaller;
+        CloseDialogue();
+        quiz?.OnAnswer(false);
     }
 
     // [핵심 수정] 수락 버튼 클릭 시 리스트 방식에 맞춰 동작

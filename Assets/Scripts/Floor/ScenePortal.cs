@@ -10,6 +10,11 @@ public class ScenePortal : MonoBehaviour
     [Tooltip("목적 씬에서 어느 SpawnPoint로 이동할지 ID (PortalSpawnPoint의 SpawnID와 일치해야 함)")]
     [SerializeField] private string spawnID = "default";
 
+    [Header("Key Lock (선택)")]
+    [SerializeField] private ItemData requiredKey;
+    [SerializeField] private string doorLabel = "문";
+    [SerializeField, TextArea(1, 2)] private string[] noKeyLines = { "문이 미동도 없다." };
+
     private static float lastTransitionTime = -10f;
     private const float transitionCooldown = 1f;
 
@@ -17,6 +22,18 @@ public class ScenePortal : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         if (Time.time - lastTransitionTime < transitionCooldown) return;
+
+        if (requiredKey != null)
+        {
+            bool hasKey = InventoryManager.Instance != null
+                          && InventoryManager.Instance.GetItemTotalCount(requiredKey) > 0;
+            if (!hasKey)
+            {
+                if (DialogueManager.Instance != null)
+                    DialogueManager.Instance.StartDialogue(null, doorLabel, noKeyLines, false);
+                return;
+            }
+        }
 
         var controller = other.GetComponent<Cainos.PixelArtTopDown_Basic.TopDownCharacterController>();
         if (controller != null)
