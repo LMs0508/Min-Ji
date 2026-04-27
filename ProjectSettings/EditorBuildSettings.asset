@@ -38,5 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BossHouse.unity
     guid: fade792f67b4c454b9098ea9bd9f923b
+  - enabled: 1
+    path: Assets/Scenes/InHouse.unity
+    guid: 3ee895905f80fa444a71b9435cc2b78c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

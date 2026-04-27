@@ -12401,6 +12401,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629448370}
   m_CullTransparentMesh: 1
+--- !u!114 &1662498234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1351486943479723922, guid: 6961d4dbb06700941be0d29e73f16f7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 546535820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd146093740c5d43b5909c7913f3109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cainos.PixelArtTopDown_Basic.TopDownCharacterController
+--- !u!50 &1662498235 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 2423845362651491417, guid: 6961d4dbb06700941be0d29e73f16f7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 546535820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1666468292
 GameObject:
   m_ObjectHideFlags: 0
@@ -15812,6 +15830,7 @@ GameObject:
   - component: {fileID: 2020795448}
   - component: {fileID: 2020795447}
   - component: {fileID: 2020795449}
+  - component: {fileID: 2020795450}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -15953,6 +15972,24 @@ MonoBehaviour:
     type: 3}
   inProgressColor: {r: 1, g: 1, b: 1, a: 1}
   completedColor: {r: 0, g: 0.8018868, b: 0, a: 1}
+--- !u!114 &2020795450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020795442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e2d7f6e04e937438d44c9f091da633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutsceneManager
+  playedCutsceneIDs:
+  - VillageOpening
+  gameplayUIPanel: {fileID: 1849994167}
+  playerMoveScript: {fileID: 1662498234}
+  playerRigidbody: {fileID: 1662498235}
+  defaultCameraSize: 8
 --- !u!1 &2034244474
 GameObject:
   m_ObjectHideFlags: 0
