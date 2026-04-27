@@ -43,7 +43,6 @@ public class QuestManager : MonoBehaviour
             newQuest.isAccepted = true;
             activeQuests.Add(newQuest);
 
-            // [�߰�] ���� ����
             if (newQuest.startCutscene != null) 
                 PlayTimeline(newQuest.startCutscene, newQuest.startTimelinePlayer);
 
@@ -52,48 +51,31 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // [����] ���� ī���� ���� ���� + ���� �߰�
     public void CheckQuestCompletion(QuestData q)
     {
         bool allObjectivesDone = true;
-
         foreach (var obj in q.objectives)
         {
-            // ������ ������ �ǽð� �κ��丮 Ȯ�� ���� (���� �״��)
             if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
-            {
                 obj.currentAmount = InventoryManager.Instance.GetItemTotalCount(obj.targetItem);
-            }
 
-            // [�߰�] �߰� ���� ����
             if (q.midCutscene != null && obj.currentAmount >= q.midTargetAmount && !q.playedMid)
             {
                 PlayTimeline(q.midCutscene, q.midTimelinePlayer);
                 q.playedMid = true;
             }
-
-            if (obj.currentAmount < obj.targetAmount)
-            {
-                allObjectivesDone = false;
-            }
+            if (obj.currentAmount < obj.targetAmount) allObjectivesDone = false;
         }
 
         bool wasCompleted = q.isCompleted;
         q.isCompleted = allObjectivesDone;
 
-        // [�߰�] �Ϸ� ���� ����
         if (!wasCompleted && q.isCompleted && q.completeCutscene != null)
-        {
             PlayTimeline(q.completeCutscene, q.completeTimelinePlayer);
-        }
 
-        if (wasCompleted != q.isCompleted)
-        {
-            OnQuestListChanged?.Invoke();
-        }
+        if (wasCompleted != q.isCompleted) OnQuestListChanged?.Invoke();
     }
 
-    // [����] ���� ����/��� ���� ���� ����
     public void ProgressQuest(QuestType type, string id, int amount = 1)
     {
         foreach (var q in activeQuests)
@@ -110,7 +92,6 @@ public class QuestManager : MonoBehaviour
                         progressMade = true;
                     }
                 }
-
                 if (progressMade)
                 {
                     CheckQuestCompletion(q);
@@ -121,21 +102,16 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // [����] UI ������Ʈ �� �ǽð� üũ ���� (���� �״��)
     public void UpdateQuestUI()
     {
         if (questListParent == null) return;
-
         foreach (Transform child in questListParent) Destroy(child.gameObject);
 
         foreach (var q in activeQuests)
         {
-            // UI�� �׸� ������ ��ǥ�� �ٽ� üũ�ؼ� ī��Ʈ�� ������ (�̰� ��������)
             CheckQuestCompletion(q);
-
             GameObject item = Instantiate(questPrefab, questListParent);
             TMP_Text title = item.GetComponentInChildren<TMP_Text>();
-
             if (title != null)
             {
                 string statusText = $"<b>{q.questTitle}</b>";
@@ -147,31 +123,38 @@ public class QuestManager : MonoBehaviour
                 title.text = statusText;
                 title.color = q.isCompleted ? completedColor : inProgressColor;
             }
-
             Image iconImage = item.transform.Find("Icon")?.GetComponent<Image>();
             if (iconImage != null) iconImage.sprite = q.isCompleted ? greenCheckIcon : grayCheckIcon;
         }
 
-        // NPC ������ ������Ʈ
         foreach (var npc in FindObjectsByType<NPCDialogue>(FindObjectsSortMode.None))
-        {
             npc.UpdateQuestIcon();
-        }
     }
 
-    // [�߰�] Ÿ�Ӷ��� ��� ���� �Լ�
+    // [최종 수정] 컷신 매니저를 호출하여 중복 기능을 통합
     private void PlayTimeline(PlayableAsset asset, string playerName)
     {
         if (asset == null) return;
         GameObject playerObj = GameObject.Find(playerName);
-        if (playerObj != null)
+        if (playerObj == null) return;
+
+        PlayableDirector director = playerObj.GetComponent<PlayableDirector>();
+        if (director == null) return;
+
+        // 시네머신 트랙 바인딩 로직만 처리
+        foreach (var output in asset.outputs)
         {
-            PlayableDirector director = playerObj.GetComponent<PlayableDirector>();
-            if (director != null)
+            if (output.sourceObject != null && output.sourceObject.GetType().Name == "CinemachineTrack")
             {
-                director.playableAsset = asset;
-                director.Play();
+                GameObject mainCam = GameObject.FindWithTag("MainCamera");
+                if (mainCam != null) director.SetGenericBinding(output.sourceObject, mainCam);
             }
+        }
+
+        // 실제 재생 및 조작 차단 관리는 CutsceneManager에게 일임 (ID는 빈값 처리)
+        if (CutsceneManager.Instance != null)
+        {
+            CutsceneManager.Instance.PlayCutscene(director, asset, "");
         }
     }
 
