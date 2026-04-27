@@ -73,13 +73,48 @@ public class QuestManager : MonoBehaviour
         if (!wasCompleted && q.isCompleted && q.completeCutscene != null)
             PlayTimeline(q.completeCutscene, q.completeTimelinePlayer);
 
+        // [추가] 자동 완료 설정이 되어있고 이제 막 목표를 달성했다면 즉시 완료 처리
+        if (!wasCompleted && q.isCompleted && q.autoComplete)
+            CompleteQuest(q);
+
         if (wasCompleted != q.isCompleted) OnQuestListChanged?.Invoke();
+    }
+
+    // [추가] 퀘스트를 완료 처리하고 보상을 지급하는 공용 함수
+    public void CompleteQuest(QuestData q)
+    {
+        if (q == null || q.isFinished) return;
+
+        // 아이템 회수
+        if (q.StealItem)
+        {
+            foreach (var obj in q.objectives)
+            {
+                if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
+                    InventoryManager.Instance?.RemoveItem(obj.targetItem, obj.targetAmount);
+            }
+        }
+
+        // 보상 지급
+        if (q.rewards != null)
+        {
+            foreach (var reward in q.rewards)
+            {
+                if (reward.rewardItem != null)
+                    InventoryManager.Instance?.AddItem(reward.rewardItem, reward.rewardAmount);
+            }
+        }
+
+        q.isFinished = true;
+        RemoveQuest(q);
     }
 
     public void ProgressQuest(QuestType type, string id, int amount = 1)
     {
-        foreach (var q in activeQuests)
+        // 리스트 수정(삭제)에 대비하여 역순으로 순회
+        for (int i = activeQuests.Count - 1; i >= 0; i--)
         {
+            QuestData q = activeQuests[i];
             if (q.isAccepted && !q.isCompleted)
             {
                 bool progressMade = false;
@@ -105,11 +140,17 @@ public class QuestManager : MonoBehaviour
     public void UpdateQuestUI()
     {
         if (questListParent == null) return;
-        foreach (Transform child in questListParent) Destroy(child.gameObject);
 
+        // 1. 상태 체크 (자동 완료 시 리스트가 변하므로 역순 체크)
+        for (int i = activeQuests.Count - 1; i >= 0; i--)
+        {
+            CheckQuestCompletion(activeQuests[i]);
+        }
+
+        // 2. UI 갱신
+        foreach (Transform child in questListParent) Destroy(child.gameObject);
         foreach (var q in activeQuests)
         {
-            CheckQuestCompletion(q);
             GameObject item = Instantiate(questPrefab, questListParent);
             TMP_Text title = item.GetComponentInChildren<TMP_Text>();
             if (title != null)

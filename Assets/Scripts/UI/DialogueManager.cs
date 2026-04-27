@@ -28,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     private bool open;
 
     private NPCDialogue currentCaller;
-    private QuizNPC currentQuizCaller;
+    private IQuizHandler currentQuizCaller;
 
     void Awake()
     {
@@ -157,7 +157,7 @@ public class DialogueManager : MonoBehaviour
         pendingQuest = null;
     }
 
-    public void StartQuizMode(QuizNPC caller, string question, string npcName)
+    public void StartQuizMode(IQuizHandler caller, string question, string npcName)
     {
         currentQuizCaller = caller;
         currentCaller = null;
@@ -175,14 +175,14 @@ public class DialogueManager : MonoBehaviour
 
     public void OnQuizO()
     {
-        QuizNPC quiz = currentQuizCaller;
+        IQuizHandler quiz = currentQuizCaller;
         CloseDialogue();
         quiz?.OnAnswer(true);
     }
 
     public void OnQuizX()
     {
-        QuizNPC quiz = currentQuizCaller;
+        IQuizHandler quiz = currentQuizCaller;
         CloseDialogue();
         quiz?.OnAnswer(false);
     }
