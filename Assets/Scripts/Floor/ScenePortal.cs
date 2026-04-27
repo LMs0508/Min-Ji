@@ -18,28 +18,61 @@ public class ScenePortal : MonoBehaviour
     private static float lastTransitionTime = -10f;
     private const float transitionCooldown = 1f;
 
+    public KeyCode interactKey = KeyCode.Space;
+    private bool playerNear = false;
+    private Collider2D playerCollider;
+    private float nextInteractTime = 0f;
+
+    private void Update()
+    {
+        // requiredKey가 있을 때만 Space 방식
+        if (requiredKey == null) return;
+        if (!playerNear || DialogueManager.Instance.IsOpen()) return;
+        if (Time.unscaledTime < nextInteractTime) return;
+        if (!Input.GetKeyDown(interactKey)) return;
+
+        bool hasKey = InventoryManager.Instance != null
+                      && InventoryManager.Instance.GetItemTotalCount(requiredKey) > 0;
+
+        if (!hasKey)
+        {
+            if (DialogueManager.Instance != null)
+                DialogueManager.Instance.StartDialogue(null, doorLabel, noKeyLines, false);
+            nextInteractTime = Time.unscaledTime + 0.5f;
+            return;
+        }
+
+        var controller = playerCollider?.GetComponent<TopDownCharacterController>();
+        if (controller != null) controller.StopMovement();
+        StartCoroutine(TransitionTo(targetScene, spawnID, controller));
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        if (Time.time - lastTransitionTime < transitionCooldown) return;
 
+        // requiredKey 있으면 Space 방식으로 처리
         if (requiredKey != null)
         {
-            bool hasKey = InventoryManager.Instance != null
-                          && InventoryManager.Instance.GetItemTotalCount(requiredKey) > 0;
-            if (!hasKey)
-            {
-                if (DialogueManager.Instance != null)
-                    DialogueManager.Instance.StartDialogue(null, doorLabel, noKeyLines, false);
-                return;
-            }
+            playerNear = true;
+            playerCollider = other;
+            return;
         }
 
-        var controller = other.GetComponent<Cainos.PixelArtTopDown_Basic.TopDownCharacterController>();
-        if (controller != null)
-            controller.StopMovement();
+        if (Time.time - lastTransitionTime < transitionCooldown) return;
 
+        var controller = other.GetComponent<TopDownCharacterController>();
+        if (controller != null) controller.StopMovement();
         StartCoroutine(TransitionTo(targetScene, spawnID, controller));
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerNear = false;
+            playerCollider = null;
+        }
     }
 
     private IEnumerator TransitionTo(string sceneName, string id, Cainos.PixelArtTopDown_Basic.TopDownCharacterController controller)

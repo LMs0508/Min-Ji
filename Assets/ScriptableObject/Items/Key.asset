@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Key
-  itemType: 4
+  itemType: 3
   icon: {fileID: 1694913177206695654, guid: 700eb279797ce8f4ab8ea26fbe582d14, type: 3}
   description: "\uBB38\uC744 \uC5F4\uAE30 \uC704\uD55C \uC5F4\uC1E0\uB2E4."
   isStackable: 0

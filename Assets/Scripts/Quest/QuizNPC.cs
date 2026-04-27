@@ -39,12 +39,7 @@ public class QuizNPC : MonoBehaviour
         if (Time.unscaledTime < nextInteractTime) return;
         if (!Input.GetKeyDown(interactKey)) return;
 
-        if (quizComplete)
-        {
-            if (allCorrectLines != null && allCorrectLines.Length > 0)
-                DialogueManager.Instance.StartDialogue(null, npcName, allCorrectLines, false);
-            return;
-        }
+        if (quizComplete) return;
 
         if (!introShown && introLines != null && introLines.Length > 0)
         {
