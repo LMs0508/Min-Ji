@@ -50,17 +50,20 @@ public class InteractionReward : MonoBehaviour, IQuizHandler
 
     [Header("조작 설정")]
     public KeyCode interactKey = KeyCode.Space;
+    public float reInteractCooldown = 0.5f; // 다시 상호작용하기까지의 대기 시간
     
     private bool isPlayerNear = false;
     private bool isProcessing = false;
+    private float nextInteractTime = 0f;
     private SpriteRenderer iconRenderer;
 
 
     void Update()
     {
         // 플레이어가 근처에 있고, 스페이스바를 눌렀으며, 현재 진행 중이 아닐 때
-        if (isPlayerNear && Input.GetKeyDown(interactKey) && !isProcessing)
+        if (isPlayerNear && Input.GetKeyDown(interactKey) && !isProcessing && Time.unscaledTime >= nextInteractTime)
         {
+            if (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen()) return;
             StartInteraction();
         }
     }
@@ -88,6 +91,7 @@ public class InteractionReward : MonoBehaviour, IQuizHandler
             // 거절(X)을 눌렀을 때
             Debug.Log("상호작용을 취소했습니다.");
             isProcessing = false;
+            nextInteractTime = Time.unscaledTime + reInteractCooldown;
         }
     }
 
@@ -162,6 +166,7 @@ public class InteractionReward : MonoBehaviour, IQuizHandler
 
         // 상호작용 종료 (다시 실행 가능하게 변경)
         isProcessing = false;
+        nextInteractTime = Time.unscaledTime + reInteractCooldown;
     }
 
     // 플레이어 진입 감지
