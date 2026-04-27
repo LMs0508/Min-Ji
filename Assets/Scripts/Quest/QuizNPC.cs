@@ -9,7 +9,12 @@ public class QuizQuestion
     [TextArea(1, 2)] public string wrongLine;
 }
 
-public class QuizNPC : MonoBehaviour
+public interface IQuizHandler
+{
+    void OnAnswer(bool isO);
+}
+
+public class QuizNPC : MonoBehaviour, IQuizHandler
 {
     public string npcName = "NPC";
 

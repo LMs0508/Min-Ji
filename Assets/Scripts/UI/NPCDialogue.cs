@@ -86,28 +86,8 @@ public class NPCDialogue : MonoBehaviour
     {
         QuestData q = CurrentQuest;
         if (q == null) return;
-
-        // 아이템 회수
-        if (q.StealItem)
-        {
-            foreach (var obj in q.objectives)
-            {
-                if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
-                    InventoryManager.Instance.RemoveItem(obj.targetItem, obj.targetAmount);
-            }
-        }
-
-        // 보상 지급
-        if (q.rewards != null)
-        {
-            foreach (var reward in q.rewards)
-            {
-                if (reward.rewardItem != null)
-                    InventoryManager.Instance.AddItem(reward.rewardItem, reward.rewardAmount);
-            }
-        }
-
-        QuestManager.Instance.RemoveQuest(q);
+        
+        QuestManager.Instance.CompleteQuest(q);
         currentQuestIndex++;
         UpdateQuestIcon();
     }
@@ -116,6 +96,14 @@ public class NPCDialogue : MonoBehaviour
     public void UpdateQuestIcon()
     {
         if (iconRenderer == null) return;
+
+        // [추가] 자동 완료 등으로 인해 현재 퀘스트가 이미 종료되었다면 다음 퀘스트로 인덱스 이동
+        while (CurrentQuest != null && (CurrentQuest.isFinished || 
+               (CurrentQuest.isAccepted && !QuestManager.Instance.activeQuests.Contains(CurrentQuest))))
+        {
+            currentQuestIndex++;
+        }
+
         QuestData q = CurrentQuest;
 
         if (q == null)

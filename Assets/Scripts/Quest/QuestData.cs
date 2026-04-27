@@ -45,6 +45,7 @@ public class QuestData
 
     [Header("Quest Options")]
     public bool StealItem = true;
+    public bool autoComplete = false; // [추가] 체크 시 목표 달성 즉시 완료
 
     [Header("Status")]
     public bool isAccepted = false;
