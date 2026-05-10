@@ -7,43 +7,37 @@ using Game.Core; // ElementType, ISkillElementEnhancer 접근을 위해 추가
 
 public class DashSkill : MonoBehaviour, ISkill
 {
-    [Header("UI")]
-    [SerializeField] private Sprite icon;
-    public Sprite Icon => icon;
-
-    [Header("대쉬 설정")]
-    public float dashDistance = 3f;
-    public float dashTime = 0.12f;
-    public float dashCooldown = 1f;
-    public float skillManaCost = 10f;
+    [Header("Skill Data (스크립터블 오브젝트 할당)")]
+    public SkillData skillData;
+    public Sprite Icon => skillData != null ? skillData.icon : null;
 
     private bool isDashing = false;
     private float lastDashTime = -999f;
 
-    public float Cooldown => dashCooldown;
+    public float Cooldown => skillData != null ? skillData.cooldown : 1f;
 
     public float CooldownRemaining
     {
         get
         {
-            float remain = (lastDashTime + dashCooldown) - Time.time;
+            float remain = (lastDashTime + Cooldown) - Time.time;
             return Mathf.Max(0f, remain);
         }
     }
 
     public bool TryUse(GameObject owner)
     {
-        if (owner == null) return false;
+        if (owner == null || skillData == null) return false;
         if (isDashing) return false;
 
-        if (Time.time < lastDashTime + dashCooldown)
+        if (Time.time < lastDashTime + Cooldown)
         {
             Debug.Log("대쉬 쿨타임 중");
             return false;
         }
 
         var stats = owner.GetComponentInChildren<PlayerStats>();
-        if (stats == null || !stats.SpendMP(skillManaCost))
+        if (stats == null || !stats.SpendMP(skillData.skillManaCost))
         {
             Debug.Log("마나 부족으로 대쉬 불가");
             return false;
@@ -105,11 +99,11 @@ public class DashSkill : MonoBehaviour, ISkill
 
         rb.linearVelocity = Vector2.zero;
         // 속도 계산: 거리 / 시간
-        float dashVelocity = dashDistance / Mathf.Max(0.0001f, dashTime);
+        float dashVelocity = skillData.dashDistance / Mathf.Max(0.0001f, skillData.dashTime);
         rb.linearVelocity = dir * dashVelocity;
 
         float elapsed = 0;
-        while (elapsed < dashTime)
+        while (elapsed < skillData.dashTime)
         {
             // 원소 효과 업데이트 (매 프레임 호출)
             enhancer?.OnUpdate(owner);

@@ -1,0 +1,564 @@
+fileFormatVersion: 2
+guid: ef531260bc2d5674f8741f452ae3fa59
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8940464634004382572
+    second: LightBullet_VFX_0
+  - first:
+      213: 3097206475162266482
+    second: LightBullet_VFX_1
+  - first:
+      213: 6720920380820389852
+    second: LightBullet_VFX_2
+  - first:
+      213: -7504996799195139498
+    second: LightBullet_VFX_3
+  - first:
+      213: -5903955489349599710
+    second: LightBullet_VFX_4
+  - first:
+      213: 6335403314670990522
+    second: LightBullet_VFX_5
+  - first:
+      213: -5576675248831111657
+    second: LightBullet_VFX_6
+  - first:
+      213: 9123350981240933410
+    second: LightBullet_VFX_7
+  - first:
+      213: 3125487018920809431
+    second: LightBullet_VFX_8
+  - first:
+      213: -5062159206189730613
+    second: LightBullet_VFX_9
+  - first:
+      213: -1640312663772434687
+    second: LightBullet_VFX_10
+  - first:
+      213: -1643110822883341720
+    second: LightBullet_VFX_11
+  - first:
+      213: -5128808495738190235
+    second: LightBullet_VFX_12
+  - first:
+      213: -9007129772802212161
+    second: LightBullet_VFX_13
+  - first:
+      213: -6738910217395133737
+    second: LightBullet_VFX_14
+  - first:
+      213: 5481099098913119973
+    second: LightBullet_VFX_15
+  - first:
+      213: -4116672549145727879
+    second: LightBullet_VFX_16
+  - first:
+      213: 7967447286528550976
+    second: LightBullet_VFX_17
+  - first:
+      213: -7752899123962293731
+    second: LightBullet_VFX_18
+  - first:
+      213: 6784062031456589414
+    second: LightBullet_VFX_19
+  - first:
+      213: 4966802394608151248
+    second: LightBullet_VFX_20
+  - first:
+      213: 8923474990602122617
+    second: LightBullet_VFX_21
+  - first:
+      213: 4905422377982132933
+    second: LightBullet_VFX_22
+  - first:
+      213: -3475628207582826357
+    second: LightBullet_VFX_23
+  - first:
+      213: -817442983304009800
+    second: LightBullet_VFX_24
+  - first:
+      213: -8495878419112715846
+    second: LightBullet_VFX_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 250
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LightBullet_VFX_0
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 1150
+        width: 309
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49cd933b8c61de380800000000000000
+      internalID: -8940464634004382572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_1
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1228
+        width: 254
+        height: 106
+      alignment: 9
+      pivot: {x: 0.7877111, y: 0.4893937}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27b261421ec7bfa20800000000000000
+      internalID: 3097206475162266482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 1267
+        width: 717
+        height: 102
+      alignment: 9
+      pivot: {x: 0.9421882, y: 0.5110222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdf7b763a71854d50800000000000000
+      internalID: 6720920380820389852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_3
+      rect:
+        serializedVersion: 2
+        x: 2269
+        y: 1201
+        width: 292
+        height: 109
+      alignment: 9
+      pivot: {x: 0.83882624, y: 0.46905684}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 652b78f9c25e8d790800000000000000
+      internalID: -7504996799195139498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 790
+        width: 313
+        height: 307
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22e799f43cfe01ea0800000000000000
+      internalID: -5903955489349599710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_6
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 880
+        width: 452
+        height: 133
+      alignment: 9
+      pivot: {x: 0.8905156, y: 0.40701407}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71e55bd586bab92b0800000000000000
+      internalID: -5576675248831111657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_8
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 865
+        width: 457
+        height: 136
+      alignment: 9
+      pivot: {x: 0.8887031, y: 0.5082667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d39ed852e5ff5b20800000000000000
+      internalID: 3125487018920809431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_10
+      rect:
+        serializedVersion: 2
+        x: 2043
+        y: 878
+        width: 583
+        height: 120
+      alignment: 9
+      pivot: {x: 0.92233104, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10fe443b2507c39e0800000000000000
+      internalID: -1640312663772434687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_11
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 428
+        width: 310
+        height: 306
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86a4073896f7239e0800000000000000
+      internalID: -1643110822883341720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_14
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 536
+        width: 425
+        height: 129
+      alignment: 9
+      pivot: {x: 0.8703533, y: 0.44770753}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d2a9ee8cd49a72a0800000000000000
+      internalID: -6738910217395133737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_15
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 529
+        width: 480
+        height: 130
+      alignment: 9
+      pivot: {x: 0.8888158, y: 0.39621958}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee1e612796c01c40800000000000000
+      internalID: 5481099098913119973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_16
+      rect:
+        serializedVersion: 2
+        x: 1713
+        y: 487
+        width: 793
+        height: 163
+      alignment: 9
+      pivot: {x: 0.9224938, y: 0.5965647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97c219ba024aed6c0800000000000000
+      internalID: -4116672549145727879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_18
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 67
+        width: 315
+        height: 303
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d125ac8c25b286490800000000000000
+      internalID: -7752899123962293731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_20
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 169
+        width: 695
+        height: 112
+      alignment: 9
+      pivot: {x: 0.93030244, y: 0.48996148}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0daad207670ade440800000000000000
+      internalID: 4966802394608151248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightBullet_VFX_23
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 172
+        width: 662
+        height: 106
+      alignment: 9
+      pivot: {x: 0.921183, y: 0.47878683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b80b2b35f8614cfc0800000000000000
+      internalID: -3475628207582826357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f891c60f71309394b85172280facaaf4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LightBullet_VFX_0: -8940464634004382572
+      LightBullet_VFX_1: 3097206475162266482
+      LightBullet_VFX_10: -1640312663772434687
+      LightBullet_VFX_11: -1643110822883341720
+      LightBullet_VFX_12: -5128808495738190235
+      LightBullet_VFX_13: -9007129772802212161
+      LightBullet_VFX_14: -6738910217395133737
+      LightBullet_VFX_15: 5481099098913119973
+      LightBullet_VFX_16: -4116672549145727879
+      LightBullet_VFX_17: 7967447286528550976
+      LightBullet_VFX_18: -7752899123962293731
+      LightBullet_VFX_19: 6784062031456589414
+      LightBullet_VFX_2: 6720920380820389852
+      LightBullet_VFX_20: 4966802394608151248
+      LightBullet_VFX_21: 8923474990602122617
+      LightBullet_VFX_22: 4905422377982132933
+      LightBullet_VFX_23: -3475628207582826357
+      LightBullet_VFX_24: -817442983304009800
+      LightBullet_VFX_25: -8495878419112715846
+      LightBullet_VFX_3: -7504996799195139498
+      LightBullet_VFX_4: -5903955489349599710
+      LightBullet_VFX_5: 6335403314670990522
+      LightBullet_VFX_6: -5576675248831111657
+      LightBullet_VFX_7: 9123350981240933410
+      LightBullet_VFX_8: 3125487018920809431
+      LightBullet_VFX_9: -5062159206189730613
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

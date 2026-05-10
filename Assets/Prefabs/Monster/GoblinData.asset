@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: RangeGoblin
   maxHealth: 40
   moveSpeed: 3
-  damage: 3
+  damage: 5
   knockbackForce: 2
   detectionRange: 10
   stopDistance: 5
@@ -23,6 +23,5 @@ MonoBehaviour:
   wanderDuration: 1
   waitDuration: 0.5
   spawnInterval: 5
-  attackDamage: 3
   attackRange: 7
   attackCooldown: 1

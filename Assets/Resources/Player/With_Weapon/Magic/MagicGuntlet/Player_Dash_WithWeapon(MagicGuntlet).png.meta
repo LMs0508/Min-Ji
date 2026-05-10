@@ -1,0 +1,312 @@
+fileFormatVersion: 2
+guid: 21918a2db6c51f045930f14d8a8bff1b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -259502410991549475
+    second: Player_Dash_WithWeapon(MagicGuntlet)_0
+  - first:
+      213: -8119395437774194029
+    second: Player_Dash_WithWeapon(MagicGuntlet)_1
+  - first:
+      213: 6316709067595365915
+    second: Player_Dash_WithWeapon(MagicGuntlet)_2
+  - first:
+      213: -7209416266950559062
+    second: Player_Dash_WithWeapon(MagicGuntlet)_3
+  - first:
+      213: -3774924490462025376
+    second: Player_Dash_WithWeapon(MagicGuntlet)_4
+  - first:
+      213: -6145368866372829449
+    second: Player_Dash_WithWeapon(MagicGuntlet)_5
+  - first:
+      213: 6164351118869963961
+    second: Player_Dash_WithWeapon(MagicGuntlet)_6
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 450
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_0
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 92
+        width: 429
+        height: 776
+      alignment: 9
+      pivot: {x: 0.55507857, y: 0.4878204}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd3cd7e9eef066cf0800000000000000
+      internalID: -259502410991549475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_1
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 92
+        width: 442
+        height: 784
+      alignment: 9
+      pivot: {x: 0.5748419, y: 0.5140647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39aba842edc125f80800000000000000
+      internalID: -8119395437774194029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_2
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 100
+        width: 382
+        height: 775
+      alignment: 9
+      pivot: {x: 0.66494733, y: 0.4939024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1eb28bfd6579a750800000000000000
+      internalID: 6316709067595365915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_3
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 147
+        width: 505
+        height: 750
+      alignment: 9
+      pivot: {x: 0.59981775, y: 0.4726958}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaa3d723a1203fb90800000000000000
+      internalID: -7209416266950559062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_4
+      rect:
+        serializedVersion: 2
+        x: 2294
+        y: 92
+        width: 485
+        height: 768
+      alignment: 9
+      pivot: {x: 0.60068613, y: 0.50000006}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 069a6142d26cc9bc0800000000000000
+      internalID: -3774924490462025376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_5
+      rect:
+        serializedVersion: 2
+        x: 2866
+        y: 105
+        width: 489
+        height: 772
+      alignment: 9
+      pivot: {x: 0.53543484, y: 0.5000001}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fe3a1a539347baa0800000000000000
+      internalID: -6145368866372829449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Dash_WithWeapon(MagicGuntlet)_6
+      rect:
+        serializedVersion: 2
+        x: 3456
+        y: 104
+        width: 507
+        height: 772
+      alignment: 9
+      pivot: {x: 0.5621403, y: 0.4897977}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b4a607beac2c8550800000000000000
+      internalID: 6164351118869963961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1113b485f2c6d92418334de2ceb03bcc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_Dash_WithWeapon(MagicGuntlet)_0: -259502410991549475
+      Player_Dash_WithWeapon(MagicGuntlet)_1: -8119395437774194029
+      Player_Dash_WithWeapon(MagicGuntlet)_2: 6316709067595365915
+      Player_Dash_WithWeapon(MagicGuntlet)_3: -7209416266950559062
+      Player_Dash_WithWeapon(MagicGuntlet)_4: -3774924490462025376
+      Player_Dash_WithWeapon(MagicGuntlet)_5: -6145368866372829449
+      Player_Dash_WithWeapon(MagicGuntlet)_6: 6164351118869963961
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

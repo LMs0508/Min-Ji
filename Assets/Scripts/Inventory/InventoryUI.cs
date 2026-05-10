@@ -1,58 +1,46 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     public GameObject inventoryPanel;
     public Transform slotParent;
     public GameObject slotPrefab;
+    
+    [Header("UI Buttons")]
+    public Button closeButton;
 
-    private void Update()
+    private void Awake()
     {
-        // 1. I 키로 인벤토리 열고 닫기
-        if (Input.GetKeyDown(KeyCode.I))
+        if (closeButton != null)
         {
-            ToggleInventory();
-        }
-
-        // 2. ESC 키 처리 (인벤토리가 열려있을 때만 작동)
-        if (inventoryPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-        {
-            HandleEscapeKey();
+            closeButton.onClick.AddListener(() => 
+            {
+                // [수정] 스크립트가 패널과 다른 오브젝트에 붙어있을 경우를 대비해 inventoryPanel을 직접 닫습니다.
+                if (inventoryPanel != null) inventoryPanel.SetActive(false);
+                else gameObject.SetActive(false);
+            });
         }
     }
 
-    public void ToggleInventory()
+    // 창이 켜질 때마다 UI 갱신
+    private void OnEnable()
     {
-        bool newState = !inventoryPanel.activeSelf;
-        inventoryPanel.SetActive(newState);
-
-        if (newState)
-        {
-            UpdateUI();
-        }
-        else
-        {
-            // 인벤토리를 닫을 때 툴팁도 함께 숨기기
-            if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
-        }
+        UpdateUI();
     }
 
-    private void HandleEscapeKey()
+    // 창이 꺼질 때 툴팁도 같이 숨김
+    private void OnDisable()
     {
-        // [우선순위 1] 만약 아이템 버리기 팝업이 열려 있다면 팝업부터 닫기
-        var dropPopup = FindFirstObjectByType<DropPopupUI>(FindObjectsInactive.Include);
-        if (dropPopup != null && dropPopup.gameObject.activeSelf)
-        {
-            dropPopup.Close();
-            return; // 팝업만 닫고 인벤토리는 유지
-        }
-
-        // [우선순위 2] 팝업이 없다면 인벤토리 닫기
-        ToggleInventory();
+        if (TooltipUI.Instance != null) 
+            TooltipUI.Instance.HideTooltip();
     }
 
     public void UpdateUI()
     {
+        // [수정] 게임 시작 시점 등 InventoryManager가 아직 초기화되지 않았을 때 오류 방지
+        if (InventoryManager.Instance == null) return;
+
         // 기존 슬롯 삭제
         foreach (Transform child in slotParent)
         {

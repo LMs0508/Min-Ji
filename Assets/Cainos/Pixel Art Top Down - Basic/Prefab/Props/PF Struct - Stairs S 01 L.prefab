@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7469537216070537109}
   - component: {fileID: 6705829399605974098}
   - component: {fileID: 8782365772672552685}
-  - component: {fileID: 7877944261532147003}
   m_Layer: 0
   m_Name: Stairs Layer Trigger
   m_TagString: Untagged
@@ -94,24 +93,6 @@ MonoBehaviour:
   sortingLayerUpper: Layer 2
   layerLower: Layer 1
   sortingLayerLower: Layer 1
---- !u!114 &7877944261532147003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3668167150226541744}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c5b86b04ee630439fabe65a574904a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cainos.PixelArtTopDown_Basic.LayerTrigger
-  direction: 0
-  layerUpper: Layer 2
-  sortingLayerUpper: Layer 2
-  layerLower: Layer 1
-  sortingLayerLower: Layer 1
-  debugLog: 1
 --- !u!1 &6075975974917516961
 GameObject:
   m_ObjectHideFlags: 0

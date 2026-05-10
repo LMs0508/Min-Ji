@@ -29,6 +29,22 @@ public class NPCDialogue : MonoBehaviour
             iconObj.transform.localPosition = new Vector3(0, 1.5f, 0);
             iconRenderer = iconObj.GetComponent<SpriteRenderer>();
         }
+        
+        if (QuestManager.Instance != null)
+        {
+            // 내 퀘스트 리스트를 돌면서 가방(QuestManager)에 이미 있는지 확인
+            for (int i = 0; i < questList.Count; i++)
+            {
+                // QuestManager의 activeQuests에 이 퀘스트가 포함되어 있다면
+                if (QuestManager.Instance.activeQuests.Contains(questList[i]))
+                {
+                    // 이미 수락된 퀘스트이므로 인덱스를 여기에 맞추고 탈출
+                    currentQuestIndex = i;
+                    questList[i].isAccepted = true; // 수락 상태 강제 동기화
+                    break;
+                }
+            }
+        }
         UpdateQuestIcon();
     }
 
@@ -70,28 +86,8 @@ public class NPCDialogue : MonoBehaviour
     {
         QuestData q = CurrentQuest;
         if (q == null) return;
-
-        // 아이템 회수
-        if (q.StealItem)
-        {
-            foreach (var obj in q.objectives)
-            {
-                if (obj.type == QuestType.ItemCollect && obj.targetItem != null)
-                    InventoryManager.Instance.RemoveItem(obj.targetItem, obj.targetAmount);
-            }
-        }
-
-        // 보상 지급
-        if (q.rewards != null)
-        {
-            foreach (var reward in q.rewards)
-            {
-                if (reward.rewardItem != null)
-                    InventoryManager.Instance.AddItem(reward.rewardItem, reward.rewardAmount);
-            }
-        }
-
-        QuestManager.Instance.RemoveQuest(q);
+        
+        QuestManager.Instance.CompleteQuest(q);
         currentQuestIndex++;
         UpdateQuestIcon();
     }
@@ -100,6 +96,14 @@ public class NPCDialogue : MonoBehaviour
     public void UpdateQuestIcon()
     {
         if (iconRenderer == null) return;
+
+        // [추가] 자동 완료 등으로 인해 현재 퀘스트가 이미 종료되었다면 다음 퀘스트로 인덱스 이동
+        while (CurrentQuest != null && (CurrentQuest.isFinished || 
+               (CurrentQuest.isAccepted && !QuestManager.Instance.activeQuests.Contains(CurrentQuest))))
+        {
+            currentQuestIndex++;
+        }
+
         QuestData q = CurrentQuest;
 
         if (q == null)

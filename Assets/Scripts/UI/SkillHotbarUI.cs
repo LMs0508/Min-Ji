@@ -12,7 +12,7 @@ public class SkillHotbarUI : MonoBehaviour
     {
         if (slots == null) return;
         slots.OnCooldownChanged += HandleCooldown;
-        slots.OnEquipped += HandleEquipped; // 네 기존 아이콘 교체 이벤트
+        slots.OnEquipped += HandleEquipped; 
     }
 
     private void OnDisable()
@@ -30,7 +30,7 @@ public class SkillHotbarUI : MonoBehaviour
 
         img.fillAmount = fill;
 
-        // 0이면 숨기기(취향)
+        
         img.enabled = fill > 0.001f;
     }
 
@@ -42,7 +42,7 @@ public class SkillHotbarUI : MonoBehaviour
         var skill = skillPrefab.GetComponent<ISkill>();
         if (skill == null || skill.Icon == null)
         {
-            Debug.LogWarning($"스킬 프리팹에 ISkill/Icon이 없어 아이콘을 못 가져왔어! : {skillPrefab.name}");
+            Debug.LogWarning($"ISkill/Icon! : {skillPrefab.name}");
             iconImages[slot].enabled = false;
             return;
         }

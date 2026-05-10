@@ -1,218 +1,311 @@
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Game.Player;
 using Game.Core;
 
 public class WeaponCharge : MonoBehaviour, ISkill
 {
-    [Header("UI")]
-    public SkillGaugeUI chargeGaugeUI; // ø©±‚ø° ∞‘¿Ã¡ˆ «¡∏Æ∆’/ø¿∫Í¡ß∆Æ ø¨∞·
+    [Header("Skill Data (ÔøΩÔøΩ≈©ÔøΩÔøΩÔøΩÕ∫ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩ“¥ÔøΩ)")]
+    public SkillData skillData;
 
-    [SerializeField] private Sprite icon;
-    public Sprite Icon => icon;
+    [Header("UI & Cost")] 
+    [HideInInspector] public SkillGaugeUI chargeGaugeUI;
 
-    [Header("Ω∫≈≥ º≥¡§")]
-    public float maxChargeDuration = 2.0f;
-    public float cooldown = 5f;
-    public float skillManaCost = 15f;
-    public LayerMask enemyLayer;
+    public Sprite Icon => skillData != null ? skillData.icon : null;
+    public float Cooldown => skillData != null ? skillData.cooldown : 0f;
+    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + Cooldown) - Time.time);
 
-    [Header("Visuals (¿Ã∆Â∆Æ)")]
-    public float effectScale = 1.0f;
-    public GameObject effect0, effect50, effect100;
+    [Header("ÔøΩ√∞ÔøΩ »øÔøΩÔøΩ (VFX)")]
+    public GameObject chargingVFX;
 
-    [Header("¡∂¡§")]
-    public float rotationOffset = 0f;
+    [Header("0% Settings (Stage 0)")]
+    public GameObject obj0Percent;
+    public GameObject playerAnim0Percent;
+    public float duration0Percent = 0.5f;
 
-    [Header("¿ßƒ° º≥¡§ (¿⁄µø ∞Àªˆ)")]
-    public string handObjectName = "RightHand";
-    public Vector3 handOffset = new Vector3(0.5f, 0f, 0f);
+    [Header("50% Settings (Stage 1)")]
+    public GameObject obj50Percent;
+    public GameObject playerAnim50Percent;
+    public float duration50Percent = 1.5f;
 
-    [Header("π∞∏Æ º≥¡§ (º”º∫ ∞≠»≠øÎ)")]
-    public float knockbackForce = 0f;
-    public float stunDuration = 0f;
+    [Header("100% Settings (Stage 2)")]
+    public GameObject obj100Percent;
+    public GameObject playerAnim100Percent;
+    public float duration100Percent = 2.0f;
+
+    [Header("Combat Options")]
+    public float knockbackForce = 10f;
+    public float stunDuration = 0.5f;
 
     private float lastUsedTime = -999f;
-    private PlayerStats playerStats;
-    private Vector2 direction;
-    private Camera mainCam;
-    private Transform cachedHand;
-    private HashSet<GameObject> hitEnemiesHistory = new HashSet<GameObject>();
+    private bool isCharging = false;
+    private bool isExecuting = false;
 
-    public float Cooldown => cooldown;
-    public float CooldownRemaining => Mathf.Max(0f, (lastUsedTime + cooldown) - Time.time);
+    private SpriteRenderer playerRenderer;
+    private int currentCalculatedDamage;
+    private Vector2 currentAttackDirection;
 
-    private void Awake() { mainCam = Camera.main; }
+    private void Awake()
+    {
+        DisableAllVisuals();
+    }
 
     public bool TryUse(GameObject owner)
     {
-        if (owner == null || Time.time < lastUsedTime + cooldown) return false;
-        playerStats = owner.GetComponentInChildren<PlayerStats>();
-        if (playerStats == null || !playerStats.SpendMP(skillManaCost)) return false;
+        if (owner == null || isCharging || isExecuting || skillData == null) return false;
+        if (Time.time < lastUsedTime + Cooldown) return false;
 
-        cachedHand = FindChildRecursive(owner.transform, handObjectName);
+        // [Ï∂îÍ∞Ä] ÌòÑÏû¨ Ïû•Ï∞©Îêú Î¨¥Í∏∞Í∞Ä Í∑ºÏ†ë(Melee) Î¨¥Í∏∞Ïù∏ÏßÄ ÌôïÏù∏Ìï©ÎãàÎã§.
+        var weaponManager = owner.GetComponentInChildren<WeaponManager>();
+        if (weaponManager == null || weaponManager.currentWeapon == null || weaponManager.currentWeapon.weaponType != WeaponType.Melee)
+        {
+            Debug.Log("<color=red>Í∑ºÏ†ë(Melee) Î¨¥Í∏∞Î•º Ïû•Ï∞©Ìï¥Ïïº Ïõ®Ìè∞ Ï∞®ÏßÄÎ•º ÏÇ¨Ïö©Ìï† Ïàò ÏûàÏäµÎãàÎã§!</color>");
+            return false;
+        }
+
+        var stats = owner.GetComponentInChildren<PlayerStats>();
         var runner = owner.GetComponent<CoroutineRunner>();
-        if (runner == null) return false;
 
-        KeyCode pressedKey = GetCurrentPressedKey();
-        lastUsedTime = Time.time;
-        runner.StartCoroutine(ChargeSequence(owner, pressedKey));
+        if (stats == null || runner == null) return false;
+        if (!stats.SpendMP(skillData.skillManaCost)) return false;
+
+        playerRenderer = owner.GetComponent<SpriteRenderer>() ?? owner.GetComponentInChildren<SpriteRenderer>();
+
+        runner.StartCoroutine(ChargeRoutine(owner, stats));
         return true;
     }
 
-    private IEnumerator ChargeSequence(GameObject owner, KeyCode keyToHold)
+    private IEnumerator ChargeRoutine(GameObject owner, PlayerStats stats)
     {
+        isCharging = true;
+        float chargeTimer = 0f;
+
+        float maxChargeTime = 2f;
+        if (skillData.stageTimeThresholds != null && skillData.stageTimeThresholds.Length > 0)
+        {
+            maxChargeTime = skillData.stageTimeThresholds[skillData.stageTimeThresholds.Length - 1];
+        }
+
         var playerElement = owner.GetComponentInChildren<PlayerElement>();
         ElementType currentElement = playerElement != null ? playerElement.CurrentElement : ElementType.None;
         var activeEnhancer = GetComponents<ISkillElementEnhancer>().FirstOrDefault(e => e.TargetElement == currentElement);
 
         activeEnhancer?.OnStart(owner);
-        ToggleAllEffects(false, false, false);
 
-        float elapsed = 0f;
-        // [ºˆ¡§] ¬˜¬° Ω√¿€ Ω√ ∞‘¿Ã¡ˆ √ ±‚»≠
-        if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(0, maxChargeDuration);
+        KeyCode activeKey = KeyCode.None;
+        if (Input.GetKey(KeyCode.Q)) activeKey = KeyCode.Q;
+        else if (Input.GetKey(KeyCode.W)) activeKey = KeyCode.W;
+        else if (Input.GetKey(KeyCode.E)) activeKey = KeyCode.E;
+        else if (Input.GetKey(KeyCode.R)) activeKey = KeyCode.R;
 
-        while (elapsed < maxChargeDuration && (keyToHold == KeyCode.None || Input.GetKey(keyToHold)))
+        if (chargeGaugeUI != null)
         {
-            elapsed += Time.deltaTime;
+            chargeGaugeUI.Show();
+            chargeGaugeUI.SetGauge(0, maxChargeTime);
+        }
 
-            // [ºˆ¡§] ∏≈ «¡∑π¿” ∞‘¿Ã¡ˆ UI æ˜µ•¿Ã∆Æ (0 -> 2√ ∑Œ ¬˜ø¿∏ß)
-            if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(elapsed, maxChargeDuration);
+        // [ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩŒ∫ÔøΩ] ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ 1ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ√∑ÔøΩÔøΩÃæÔøΩ ÔøΩÔøΩƒ°ÔøΩÔøΩ ÔøΩœ∫ÔøΩÔøΩœ∞ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ≈¥
+        if (chargingVFX != null)
+        {
+            chargingVFX.transform.position = owner.transform.position;
+            chargingVFX.SetActive(true);
+        }
 
-            UpdateDirection(GetHandPosition(owner));
+        while (activeKey != KeyCode.None && Input.GetKey(activeKey))
+        {
+            chargeTimer += Time.deltaTime;
+            chargeTimer = Mathf.Clamp(chargeTimer, 0f, maxChargeTime);
+
+            if (chargeGaugeUI != null) chargeGaugeUI.SetGauge(chargeTimer, maxChargeTime);
             activeEnhancer?.OnUpdate(owner);
+
+            // [ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩŒ∫ÔøΩ] ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ√∑ÔøΩÔøΩÃæÔøΩ ÔøΩÔøΩƒ°ÔøΩÔøΩ ÔøΩ—æ∆∞ÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩÏΩ∫ ÔøΩÔøΩÔøΩ‚ø° ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ¬° ÔøΩÔøΩÔøΩÔøΩ∆ÆÔøΩÔøΩ ÔøΩ¬øÔøΩ ÔøΩÔøΩÔøΩÔøΩ
+            if (chargingVFX != null)
+            {
+                chargingVFX.transform.position = owner.transform.position;
+
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                bool isFacingRight = mousePos.x >= owner.transform.position.x;
+                Vector3 vfxScale = chargingVFX.transform.localScale;
+                vfxScale.x = Mathf.Abs(vfxScale.x) * (isFacingRight ? 1f : -1f);
+                chargingVFX.transform.localScale = vfxScale;
+            }
+
             yield return null;
         }
 
-        // ¬˜¬° ¡æ∑· »ƒ ∞‘¿Ã¡ˆ º˚±‚±‚
+        if (chargingVFX != null)
+        {
+            chargingVFX.SetActive(false);
+        }
+
+        float chargePercent = chargeTimer / maxChargeTime;
+
+        if (activeEnhancer is WeaponChargeWindEnhancer windEnhancer)
+        {
+            windEnhancer.ApplyWindChargeEffect(chargePercent);
+        }
+
         if (chargeGaugeUI != null) chargeGaugeUI.Hide();
+        isCharging = false;
 
-        float finalRatio = Mathf.Clamp01(elapsed / maxChargeDuration);
-        GameObject targetEffect = (finalRatio >= 1.0f) ? effect100 : (finalRatio >= 0.5f ? effect50 : effect0);
-        float damageMult = (finalRatio >= 1.0f) ? 2.5f : (finalRatio >= 0.5f ? 1.5f : 1.0f);
+        yield return StartCoroutine(ExecuteAttackRoutine(owner, stats, chargeTimer, activeEnhancer));
+    }
 
-        if (targetEffect != null)
+    private IEnumerator ExecuteAttackRoutine(GameObject owner, PlayerStats stats, float chargeTimer, ISkillElementEnhancer activeEnhancer)
+    {
+        isExecuting = true;
+
+        SetPlayerCoreVisual(owner, false);
+
+        int stageIndex = 0;
+        GameObject activeParentObj = null;
+        GameObject activePlayerAnim = null;
+        float currentAnimDuration = 0f;
+
+        if (skillData.stageTimeThresholds.Length >= 3)
         {
-            targetEffect.SetActive(true);
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            SyncPivotTransform(targetEffect, GetHandPosition(owner), angle);
-
-            yield return StartCoroutine(PlayAnimationWithFollow(targetEffect, owner, damageMult));
-
-            targetEffect.SetActive(false);
-            knockbackForce = 0f;
-            stunDuration = 0f;
+            if (chargeTimer >= skillData.stageTimeThresholds[2])
+            {
+                stageIndex = 2;
+                activeParentObj = obj100Percent;
+                activePlayerAnim = playerAnim100Percent;
+                currentAnimDuration = duration100Percent;
+            }
+            else if (chargeTimer >= skillData.stageTimeThresholds[1])
+            {
+                stageIndex = 1;
+                activeParentObj = obj50Percent;
+                activePlayerAnim = playerAnim50Percent;
+                currentAnimDuration = duration50Percent;
+            }
+            else
+            {
+                stageIndex = 0;
+                activeParentObj = obj0Percent;
+                activePlayerAnim = playerAnim0Percent;
+                currentAnimDuration = duration0Percent;
+            }
         }
+
+        float baseDamage = stats.Attack.Value * skillData.damageRatio;
+        float currentMultiplier = skillData.stageMultipliers.Length > stageIndex ? skillData.stageMultipliers[stageIndex] : 1f;
+        currentCalculatedDamage = Mathf.RoundToInt(baseDamage * currentMultiplier);
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        Vector3 attackOrigin = owner.transform.position;
+
+        bool isFacingRight = mousePos.x >= attackOrigin.x;
+        currentAttackDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        if (activeParentObj != null)
+        {
+            activeParentObj.transform.position = attackOrigin;
+
+            Vector3 effectScale = activeParentObj.transform.localScale;
+            effectScale.x = Mathf.Abs(effectScale.x) * (isFacingRight ? 1f : -1f);
+            activeParentObj.transform.localScale = effectScale;
+            activeParentObj.transform.rotation = Quaternion.identity;
+
+            activeParentObj.SetActive(true);
+
+            Animator skillAnim = activeParentObj.GetComponent<Animator>();
+            if (skillAnim == null) skillAnim = activeParentObj.GetComponentInChildren<Animator>();
+
+            SafeSetTrigger(skillAnim, "OnAttack");
+        }
+
+        if (activePlayerAnim != null)
+        {
+            activePlayerAnim.transform.position = attackOrigin;
+
+            Vector3 playerAnimScale = activePlayerAnim.transform.localScale;
+            playerAnimScale.x = Mathf.Abs(playerAnimScale.x) * (isFacingRight ? 1f : -1f);
+            activePlayerAnim.transform.localScale = playerAnimScale;
+
+            activePlayerAnim.SetActive(true);
+
+            Animator playerAnim = activePlayerAnim.GetComponent<Animator>();
+            if (playerAnim == null) playerAnim = activePlayerAnim.GetComponentInChildren<Animator>();
+
+            SafeSetTrigger(playerAnim, "OnAttack");
+        }
+
+        yield return new WaitForSeconds(currentAnimDuration);
+
+        DisableAllVisuals();
+        SetPlayerCoreVisual(owner, true);
+
+        var visualHandler = owner.GetComponent<PlayerVisualHandler>();
+        if (visualHandler != null) visualHandler.TriggerCombatMode();
+
         activeEnhancer?.OnEnd(owner);
+
+        lastUsedTime = Time.time;
+        isExecuting = false;
     }
 
-    private IEnumerator PlayAnimationWithFollow(GameObject target, GameObject owner, float damageMult)
+    public void PerformHitboxDamage(Collider2D enemyCollider)
     {
-        Animator anim = target.GetComponentInChildren<Animator>();
-        float timer = 0f, duration = 0.5f;
-        hitEnemiesHistory.Clear();
-
-        if (anim != null)
+        EnemyHealth healthScript = enemyCollider.GetComponentInParent<EnemyHealth>();
+        if (healthScript != null)
         {
-            anim.SetTrigger("OnAttack");
-            yield return new WaitForEndOfFrame();
-            duration = anim.GetCurrentAnimatorStateInfo(0).length;
-        }
+            healthScript.TakeDamage(currentCalculatedDamage, currentAttackDirection);
 
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            if (owner != null)
+            Rigidbody2D rb = enemyCollider.GetComponent<Rigidbody2D>();
+            if (rb != null)
             {
-                target.transform.position = GetHandPosition(owner);
-                ExecuteContinuousAttack(target, owner, damageMult);
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(currentAttackDirection * knockbackForce, ForceMode2D.Impulse);
             }
-            yield return null;
-        }
-    }
 
-    private void ExecuteContinuousAttack(GameObject effectObj, GameObject owner, float damageMult)
-    {
-        Physics2D.SyncTransforms();
-        CircleCollider2D circleCol = effectObj.GetComponentInChildren<CircleCollider2D>();
-        if (circleCol == null) return;
-
-        Vector2 attackCenter = effectObj.transform.TransformPoint(circleCol.offset);
-        float actualRadius = circleCol.radius * effectObj.transform.lossyScale.x;
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackCenter, actualRadius, enemyLayer);
-
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            if (hitEnemiesHistory.Contains(enemy.gameObject)) continue;
-
-            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            if (!healthScript.IsDead)
             {
-                int finalDamage = Mathf.RoundToInt(playerStats.Attack.Value * damageMult);
-                Vector2 rawDir = (enemy.transform.position - owner.transform.position);
-                Vector2 knockbackDir = rawDir.magnitude < 0.1f ? Vector2.up : rawDir.normalized;
+                Animator enemyAnim = enemyCollider.GetComponentInChildren<Animator>();
+                SafeSetTrigger(enemyAnim, "Hit");
 
-                Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
-                if (rb != null && knockbackForce > 0)
-                {
-                    rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
-                }
-
-                enemyHealth.TakeDamage(finalDamage); // ºˆ¡§µ» EnemyHealthø° ∏¬√Á »£√‚
-                hitEnemiesHistory.Add(enemy.gameObject);
+                EnemyMover mover = enemyCollider.GetComponent<EnemyMover>();
+                if (mover != null) mover.ApplyStun(stunDuration);
             }
         }
     }
 
-    private Vector3 GetHandPosition(GameObject owner)
+    private void DisableAllVisuals()
     {
-        if (cachedHand != null) return cachedHand.position;
-        float lookDir = owner.transform.localScale.x > 0 ? 1 : -1;
-        return owner.transform.position + new Vector3(handOffset.x * lookDir, handOffset.y, handOffset.z);
+        if (chargingVFX != null) chargingVFX.SetActive(false);
+        if (obj0Percent) obj0Percent.SetActive(false);
+        if (obj50Percent) obj50Percent.SetActive(false);
+        if (obj100Percent) obj100Percent.SetActive(false);
+
+        if (playerAnim0Percent) playerAnim0Percent.SetActive(false);
+        if (playerAnim50Percent) playerAnim50Percent.SetActive(false);
+        if (playerAnim100Percent) playerAnim100Percent.SetActive(false);
     }
 
-    private Transform FindChildRecursive(Transform parent, string name)
+    private void SetPlayerCoreVisual(GameObject owner, bool show)
     {
-        foreach (Transform child in parent)
+        if (playerRenderer != null) playerRenderer.enabled = show;
+
+        foreach (Transform child in owner.transform)
         {
-            if (child.name == name) return child;
-            Transform result = FindChildRecursive(child, name);
-            if (result != null) return result;
+            if (child.name == "SkillHolder" || child.name == "Shadow" || child.gameObject == gameObject) continue;
+            child.gameObject.SetActive(show);
         }
-        return null;
     }
 
-    private void SyncPivotTransform(GameObject pivotObj, Vector3 pivotPos, float angle)
+    private void SafeSetTrigger(Animator anim, string triggerName)
     {
-        pivotObj.transform.position = pivotPos;
-        pivotObj.transform.rotation = Quaternion.Euler(0, 0, angle + rotationOffset);
-        pivotObj.transform.localScale = Vector3.one * effectScale;
-    }
+        if (anim == null) return;
 
-    private void UpdateDirection(Vector3 pivotPos)
-    {
-        Vector3 mouseScreenPos = Input.mousePosition;
-        Vector3 worldMousePos = mainCam.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -mainCam.transform.position.z));
-        direction = ((Vector2)worldMousePos - (Vector2)pivotPos).normalized;
-    }
-
-    private void ToggleAllEffects(bool s0, bool s50, bool s100)
-    {
-        if (effect0 != null) effect0.SetActive(s0);
-        if (effect50 != null) effect50.SetActive(s50);
-        if (effect100 != null) effect100.SetActive(s100);
-    }
-
-    private KeyCode GetCurrentPressedKey()
-    {
-        if (Input.GetKey(KeyCode.Q)) return KeyCode.Q;
-        if (Input.GetKey(KeyCode.W)) return KeyCode.W;
-        if (Input.GetKey(KeyCode.E)) return KeyCode.E;
-        if (Input.GetKey(KeyCode.R)) return KeyCode.R;
-        return KeyCode.None;
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == triggerName)
+            {
+                anim.SetTrigger(triggerName);
+                break;
+            }
+        }
     }
 }

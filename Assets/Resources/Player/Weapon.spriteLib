@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
+  m_Library:
+  - m_Name: Melee
+    m_Hash: 237393061
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: LongSword
+      m_Hash: 68829670
+      m_Sprite: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 6555056440475222661, guid: 76eab3951b8498e40a9eb15d0b2c7358,
+        type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 1
+  - m_Name: Range
+    m_Hash: 306607437
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Shotgun
+      m_Hash: 554920573
+      m_Sprite: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2408530018317867212, guid: d4fb99206de639f4083afae939eacb8e,
+        type: 3}
+    - m_Name: Sniper
+      m_Hash: 696536573
+      m_Sprite: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff,
+        type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Magic
+    m_Hash: 147310122
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: MagicStaff
+      m_Hash: 205227882
+      m_Sprite: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa,
+        type: 3}
+    - m_Name: MagicGuntlet
+      m_Hash: 267356102
+      m_Sprite: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 537912364658707811, guid: b40120efe6c0e4741beef859a742a276,
+        type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639093015640440847
+  m_Version: 1

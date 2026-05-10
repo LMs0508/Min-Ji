@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3997675270386134682}
   - component: {fileID: 8953196560819077458}
-  - component: {fileID: 6918707823950793983}
   - component: {fileID: 1933841206944982029}
+  - component: {fileID: 2007745305263100350}
   m_Layer: 0
   m_Name: FireTrail
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.17157628, y: 0.17157628, z: 0.17157628}
+  m_LocalScale: {x: 0.04570449, y: 0.04570449, z: 0.04570449}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,18 +83,32 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4423522159086083979, guid: f72af6de322737c4a9e169fe21bd000b,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: f72af6de322737c4a9e169fe21bd000b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.75, y: 4.72}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!58 &6918707823950793983
+--- !u!114 &1933841206944982029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265661802508788631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e881712f6ec2993459a59e7cd87d1139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damage: 5
+  lifetime: 1.5
+  damageInterval: 0.5
+--- !u!58 &2007745305263100350
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,19 +143,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!114 &1933841206944982029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4265661802508788631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e881712f6ec2993459a59e7cd87d1139, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  damage: 5
-  lifetime: 1.5
-  damageInterval: 0.5
+  m_Radius: 2.56

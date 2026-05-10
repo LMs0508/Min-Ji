@@ -1,23 +1,37 @@
 using UnityEngine;
+using Game.Player;
 
 public class MeleeArea : MonoBehaviour
 {
-    [Header("∞¯∞› ∆«¡§ º≥¡§")]
+    [Header("Í≥µÍ≤© ÌåêÏ†ï ÏÑ§Ï†ï")]
     public float radius = 0.5f;
-    public LayerMask targetLayer; // ¥©±∏∏¶ ∞¯∞›«“¡ˆ(Player)
+    public string targetTag = "Player";
 
-    private int damage;
+    private float damage;
 
-    public void CheckAttack(int attackDamage)
+    public void CheckAttack(float attackDamage)
     {
-        damage = attackDamage;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, radius, targetLayer);
-        
-        if(hit != null)
+        foreach (var hit in hits)
         {
-            Debug.Log($"{hit.name}ø°∞‘ {damage} µ•πÃ¡ˆ∏¶ ¿‘«˚Ω¿¥œ¥Ÿ!");
+            if (hit.CompareTag(targetTag))
+            {
+                PlayerStats pStats = hit.GetComponent<PlayerStats>();
+                if (pStats == null) pStats = hit.GetComponentInChildren<PlayerStats>();
+
+                if (pStats != null)
+                {
+                    pStats.TakeDamage(attackDamage);
+                    return;
+                }
+            }
         }
+    }
+
+    public void OnMonsterHit(float attackDamage)
+    {
+        CheckAttack(attackDamage);
     }
 
     private void OnDrawGizmosSelected()

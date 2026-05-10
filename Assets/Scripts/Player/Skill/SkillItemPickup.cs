@@ -19,7 +19,7 @@ public class SkillItemPickup : MonoBehaviour
 
     private void TryPickup()
     {
-        var slotUI = FindObjectOfType<SlotSelectUI>(true);
+        var slotUI = FindFirstObjectByType<SlotSelectUI>(FindObjectsInactive.Include);
         if (slotUI != null && playerSlots != null)
         {
             // UI를 열어 슬롯을 선택하게 함

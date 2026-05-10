@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
+  m_Name: MagicStaff
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  itemName: MagicStaff
+  itemType: 1
+  icon: {fileID: -2287089127996492967, guid: fa7f6b6ad76c3454ab08f4e0fe006daa, type: 3}
+  description: "\uAE30\uBCF8\uC801\uC778 \uB9C8\uB825\uC2A4\uD0DC\uD504\n\uC8FC\uBB38\uB825
+    + 20, \uC0AC\uAC70\uB9AC 8\n\uC774\uB3D9\uC18D\uB3C4 + 50%, \uCFE8\uAC10 +10%\n
+    \uACF5\uACA9\uC18D\uB3C4 - 50%"
+  isStackable: 0
+  maxStack: 10
+  value: 0
+  prefab: {fileID: 6284631861351537978, guid: ad653f875579d474995a4cb9875d8ddf, type: 3}
+  consumableType: 0
+  duration: 0
+  weaponType: 2
+  attackDamage: 0
+  attackSpeedMultiplier: 0.5
+  armorStats: 1
+  cooldownStats: 1.1
+  hpRegen: 0
+  mpRegen: 1
+  playerSpeed: 1.5
+  weaponAnimatorOverride: {fileID: 22100000, guid: 6944b8701f21f3243a2ec7af36c89adc,
+    type: 2}
+  attackRange: 8
+  projectilePrefab: {fileID: 7812917982885449017, guid: bc11eb3eaeb77574aadbcb520cd1923f,
+    type: 3}
+  projectileSpeed: 6
+  magicPower: 20
+  manaRegenBonus: 1
+  canCharge: 1

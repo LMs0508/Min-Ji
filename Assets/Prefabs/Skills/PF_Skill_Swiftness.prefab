@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037dc32316638194a841b612fff18699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwiftnessSkill
-  icon: {fileID: 4440373997109027217, guid: 4d72f262116608c43841929b711fa4c5, type: 3}
+  skillData: {fileID: 11400000, guid: 8ff362036f3f3554fa520a9f436bff65, type: 2}
   speedMultiplier: 3
   duration: 3
   cooldown: 5

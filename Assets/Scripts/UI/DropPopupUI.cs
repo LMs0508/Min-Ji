@@ -17,19 +17,19 @@ public class DropPopupUI : MonoBehaviour
         maxCount = totalCount;
         currentCount = 1;
 
-        titleText.text = $"{item.itemName} ¹ö¸®±â";
+        titleText.text = $"{item.itemName} ë²„ë¦¬ê¸°";
         gameObject.SetActive(true);
         UpdateDisplay();
     }
 
-    // [Ãß°¡] 0 ¹öÆ°: Áï½Ã ÃÖ¼Ò ¼ö·®(1)À¸·Î ¼³Á¤
+    // [ì¶”ê°€] 0 ë²„íŠ¼: ì¦‰ì‹œ ìµœì†Œ ìˆ˜ëŸ‰(1)ìœ¼ë¡œ ì„¤ì •
     public void OnClickZero()
     {
         currentCount = 1;
         UpdateDisplay();
     }
 
-    // [Ãß°¡] M ¹öÆ°: Áï½Ã ÃÖ´ë º¸À¯·®À¸·Î ¼³Á¤
+    // [ì¶”ê°€] M ë²„íŠ¼: ì¦‰ì‹œ ìµœëŒ€ ë³´ìœ ëŸ‰ìœ¼ë¡œ ì„¤ì •
     public void OnClickMax()
     {
         currentCount = maxCount;

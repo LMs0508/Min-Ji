@@ -29,6 +29,10 @@ namespace Game.Player
         [Header("UI & Effect")]
         public GameObject damageTextPrefab;
         public Transform popupPoint;
+        [SerializeField] private float hitFlashDuration = 0.15f;
+
+        private SpriteRenderer sr;
+        private Coroutine hitFlashCoroutine;
 
         [Header("Base Stats")]
         [SerializeField] private Stat maxHP = new Stat();
@@ -53,12 +57,19 @@ namespace Game.Player
         public Stat CooldownReduction => cooldownReduction;
         public Stat AttackSpeed => attackSpeed;
 
+
         [Header("Runtime")]
         [SerializeField] private float currentHP;
         [SerializeField] private float currentMP;
 
         public float CurrentHP => currentHP;
         public float CurrentMP => currentMP;
+
+        [Header("Death Settings")]
+        public GameObject deathPrefab;
+
+        // [추가] 플레이어 사망 여부를 확인하는 프로퍼티
+        public bool IsDead { get; private set; }
 
         public event Action<float, float> OnHPChanged;
         public event Action<float, float> OnMPChanged;
@@ -72,65 +83,187 @@ namespace Game.Player
 
         private void Update()
         {
+            if (IsDead) return; // 죽었으면 재생하지 않음
             RegenerateStats();
         }
 
         private void RegenerateStats()
         {
-            // [수정] 퍼센트 기반 체력 재생 로직
+            bool hpChanged = false;
+            bool mpChanged = false;
+
             if (currentHP < MaxHP.Value && HPRegen.Value > 0)
             {
-                // 공식: 최대 체력 * (재생 스탯 * 0.01) * 초당 시간
                 float regenAmount = MaxHP.Value * (HPRegen.Value * 0.01f) * Time.deltaTime;
                 currentHP = Mathf.Min(currentHP + regenAmount, MaxHP.Value);
-                OnHPChanged?.Invoke(currentHP, MaxHP.Value);
+                hpChanged = true;
             }
 
-            // [수정] 퍼센트 기반 마나 재생 로직
             if (currentMP < MaxMP.Value && MPRegen.Value > 0)
             {
-                // 공식: 최대 마나 * (재생 스탯 * 0.01) * 초당 시간
                 float regenAmount = MaxMP.Value * (MPRegen.Value * 0.01f) * Time.deltaTime;
                 currentMP = Mathf.Min(currentMP + regenAmount, MaxMP.Value);
-                OnMPChanged?.Invoke(currentMP, MaxMP.Value);
+                mpChanged = true;
             }
+
+            if (hpChanged) OnHPChanged?.Invoke(currentHP, MaxHP.Value);
+            if (mpChanged) OnMPChanged?.Invoke(currentMP, MaxMP.Value);
         }
 
         public void Heal(float amount)
         {
-            if (amount <= 0f) return;
+            if (amount <= 0f || IsDead) return;
             currentHP = Mathf.Min(currentHP + amount, MaxHP.Value);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
         }
+
         public void RestoreMana(float amount)
         {
+            if (amount <= 0f || IsDead) return;
             currentMP = Mathf.Min(currentMP + amount, maxMP.Value);
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
-            
         }
+
         public void TakeDamage(float amount)
         {
-            if (amount <= 0f) return;
+            if (amount <= 0f || IsDead) return; // 이미 죽었으면 데미지 무시
+
             float reductionPercent = Mathf.Clamp(Defense.Value, 0f, 100f) * 0.01f;
             float finalDamage = amount * (1f - reductionPercent);
             currentHP = Mathf.Max(currentHP - finalDamage, 0f);
             OnHPChanged?.Invoke(currentHP, MaxHP.Value);
 
             SpawnDamageText(amount);
+
+            // [추가] 체력이 0이 되면 사망 처리 실행
+            if (currentHP <= 0f)
+            {
+                Die();
+                return; // 사망 시 번쩍임 효과 무시
+            }
+
+            if (hitFlashCoroutine != null)
+            {
+                StopCoroutine(hitFlashCoroutine);
+            }
+            ForceResetVisual();
+
+            hitFlashCoroutine = StartCoroutine(HitFlashRoutine());
+        }
+
+        private void Die()
+        {
+            if (IsDead) return;
+            IsDead = true;
+
+            StopAllCoroutines();
+            ForceResetVisual();
+
+            // 1. 물리 및 콜라이더 즉시 정지
+            Rigidbody2D rb = transform.root.GetComponentInChildren<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.simulated = false;
+            }
+            Collider2D[] colliders = transform.root.GetComponentsInChildren<Collider2D>();
+            foreach (var col in colliders) col.enabled = false;
+
+            // 2. [핵심] 기존의 모든 비주얼(몸체, 무기 등)을 완전히 숨김
+            // Shadow를 제외한 모든 자식 오브젝트를 비활성화합니다.
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var s in allSrs)
+            {
+                if (s.gameObject.name != "Shadow" && !s.gameObject.name.Contains("DamageText"))
+                {
+                    Color c = s.color;
+                    c.a = 0f;
+                    s.color = c;
+
+                    // 혹시 몰라 enabled도 같이 끕니다.
+                    s.enabled = false;
+                }
+            }
+
+            // 3. [핵심] 사망 프리팹을 현재 위치에 생성
+            if (deathPrefab != null)
+            {
+                // 플레이어의 현재 위치와 방향에 맞춰 생성
+                GameObject deathEffect = Instantiate(deathPrefab, transform.position, transform.rotation);
+
+                // 생성된 프리팹이 마지막 프레임에서 멈추도록 설정되어 있는지 확인
+                Animator anim = deathEffect.GetComponent<Animator>();
+                if (anim != null)
+                {
+                    anim.Play("Die", 0, 0f);
+                }
+            }
+
+            // 4. 다른 모든 스크립트 비활성화
+            MonoBehaviour[] scripts = transform.root.GetComponentsInChildren<MonoBehaviour>();
+            foreach (var script in scripts)
+            {
+                if (script == this || script == null) continue;
+                if (script.GetType().Name.Contains("DamageText")) continue;
+                script.enabled = false;
+            }
+
+            Debug.Log("<color=red>플레이어 사망: 사망 프리팹 생성 완료</color>");
+        }
+
+        private IEnumerator HitFlashRoutine()
+        {
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+
+            if (allSrs != null && allSrs.Length > 0)
+            {
+                foreach (var sr in allSrs)
+                {
+                    if (sr != null && sr.gameObject.activeInHierarchy && sr.gameObject.name != "Shadow")
+                    {
+                        sr.color = Color.red;
+                    }
+                }
+
+                yield return new WaitForSeconds(hitFlashDuration);
+
+                foreach (var sr in allSrs)
+                {
+                    if (sr != null) sr.color = Color.white;
+                }
+            }
+
+            hitFlashCoroutine = null;
+        }
+
+        public void ForceResetVisual()
+        {
+            foreach (var sr in transform.root.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                if (sr != null) sr.color = Color.white;
+            }
+        }
+
+        private void OnDisable()
+        {
+            ResetAllColors();
+        }
+
+        public void ResetAllColors()
+        {
+            SpriteRenderer[] allSrs = transform.root.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var sr in allSrs)
+            {
+                if (sr != null) sr.color = Color.white;
+            }
         }
 
         private void SpawnDamageText(float damage)
         {
             if (damageTextPrefab == null) return;
 
-            // 1. 위치 설정
             Vector3 spawnPos = (popupPoint != null) ? popupPoint.position : transform.position + Vector3.up * 1.5f;
-
-            // 2. [핵심 수정] 생성할 때 세 번째 인자로 popupPoint를 넣어 부모로 설정합니다.
-            // 이렇게 해야 UI가 Canvas(부모)의 영향을 받아 화면에 그려집니다.
             GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity, popupPoint);
-
-            // 3. 프리팹이 꺼져있을 경우를 대비해 깨우기
             textObj.SetActive(true);
 
             DamageText_Player damageScript = textObj.GetComponent<DamageText_Player>();
@@ -139,10 +272,11 @@ namespace Game.Player
                 damageScript.Setup(damage);
             }
         }
+
         public bool SpendMP(float amount)
         {
             if (amount <= 0f) return true;
-            if (currentMP < amount) return false;
+            if (currentMP < amount || IsDead) return false;
             currentMP -= amount;
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
             return true;
@@ -150,7 +284,7 @@ namespace Game.Player
 
         public void RestoreMP(float amount)
         {
-            if (amount <= 0f) return;
+            if (amount <= 0f || IsDead) return;
             currentMP = Mathf.Min(currentMP + amount, MaxMP.Value);
             OnMPChanged?.Invoke(currentMP, MaxMP.Value);
         }
@@ -163,16 +297,15 @@ namespace Game.Player
 
         private Coroutine speedBuffCoroutine;
         private Coroutine attackBuffCoroutine;
+        private Coroutine defenseBuffCoroutine;
 
-        // 이동 속도 버프 적용
         public void ApplySpeedBuff(float multiplier, float duration)
         {
-            // 이미 버프가 있다면 기존 버프를 멈추고 새로 시작 (시간 갱신형)
-            // 만약 아예 못 쓰게 하려면 if (speedBuffCoroutine != null) return; 을 사용하세요.
+            if (IsDead) return;
             if (speedBuffCoroutine != null)
             {
                 StopCoroutine(speedBuffCoroutine);
-                moveSpeed.Divide(multiplier); // 중첩 방지를 위해 일단 원복
+                moveSpeed.Divide(multiplier);
             }
             speedBuffCoroutine = StartCoroutine(SpeedBuffRoutine(multiplier, duration));
         }
@@ -182,12 +315,12 @@ namespace Game.Player
             moveSpeed.Multiply(multiplier);
             yield return new WaitForSeconds(duration);
             moveSpeed.Divide(multiplier);
-            speedBuffCoroutine = null; // 종료 후 비워주기
+            speedBuffCoroutine = null;
         }
 
-        // 공격력 버프 적용
         public void ApplyAttackBuff(float multiplier, float duration)
         {
+            if (IsDead) return;
             if (attackBuffCoroutine != null)
             {
                 StopCoroutine(attackBuffCoroutine);
@@ -203,7 +336,25 @@ namespace Game.Player
             attack.Divide(multiplier);
             attackBuffCoroutine = null;
         }
-    
+
+        public void ApplyDefenseBuff(float multiplier, float duration)
+        {
+            if (IsDead) return;
+            if (defenseBuffCoroutine != null)
+            {
+                StopCoroutine(defenseBuffCoroutine);
+                defense.Divide(multiplier);
+            }
+            defenseBuffCoroutine = StartCoroutine(DefenseBuffRoutine(multiplier, duration));
+        }
+
+        private IEnumerator DefenseBuffRoutine(float multiplier, float duration)
+        {
+            defense.Multiply(multiplier);
+            yield return new WaitForSeconds(duration);
+            defense.Divide(multiplier);
+            defenseBuffCoroutine = null;
+        }
 
         public void ClampResources()
         {

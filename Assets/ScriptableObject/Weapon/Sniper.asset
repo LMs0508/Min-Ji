@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e2bcc780e9024459e35a0aaaa51921, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  itemName: Sniper
+  itemType: 2
+  icon: {fileID: -4741177646323321406, guid: 49dc44b7e601cdb4181ad973d42906ff, type: 3}
+  description: "\uAE30\uBCF8\uC801\uC778 \uC800\uACA9\uCD1D\n\uACF5\uACA9\uB825 +
+    20, \uC0AC\uAC70\uB9AC 15\n\uACF5\uC18D-20%, \uBC29\uC5B4\uB825 - 20%"
+  isStackable: 0
+  maxStack: 10
+  value: 0
+  prefab: {fileID: 6284631861351537978, guid: 18415a7670145344da7f9abdbe48aa9c, type: 3}
+  consumableType: 0
+  duration: 0
+  weaponType: 1
+  attackDamage: 20
+  attackSpeedMultiplier: 0.8
+  armorStats: 0.8
+  cooldownStats: 0
+  hpRegen: 0
+  mpRegen: 0
+  playerSpeed: 1
+  weaponAnimatorOverride: {fileID: 22100000, guid: 4e1342846e7a0e642ab836f28dbee1e5,
+    type: 2}
+  attackRange: 15
+  projectilePrefab: {fileID: 7812917982885449017, guid: a7363e8215ab62a48bbbb6b81377c1ad,
+    type: 3}
+  projectileSpeed: 20
+  magicPower: 0
+  manaRegenBonus: 0
+  canCharge: 1

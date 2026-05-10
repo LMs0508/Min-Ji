@@ -5,112 +5,81 @@ namespace Cainos.PixelArtTopDown_Basic
 {
     public class TopDownCharacterController : MonoBehaviour
     {
+        [Header("이동 설정")]
         public float speed = 5f;
-        public GameObject clickEffectPrefab; // 1. 방금 만든 프리팹을 넣을 칸
+        public float stoppingDistance = 0.1f;
+        public GameObject clickEffectPrefab;
 
-        private Animator animator;
+        public bool IsMoving { get; private set; }
+        public Vector2 MoveDirection { get; private set; }
+
         private Rigidbody2D rb;
         private Vector2 targetPosition;
-        private bool isMoving = false;
-        public float stoppingDistance = 0.1f;
         private bool isDraggingFromUI = false;
+
         private void Start()
         {
-            animator = GetComponent<Animator>();
             rb = GetComponent<Rigidbody2D>();
             targetPosition = transform.position;
+            MoveDirection = Vector2.down; // 기본 정면 응시
         }
 
         private void Update()
         {
-            // 1. 마우스를 처음 눌렀을 때 (Down)
-            if (Input.GetMouseButtonDown(1))
+            HandleInput();
+            MoveToTarget();
+        }
+
+        private void HandleInput()
+        {
+            if (Input.GetMouseButtonDown(1)) // 우클릭
             {
-                // 만약 UI 위에서 눌렀다면 "이 드래그는 이동용이 아님"을 기록
-                if (EventSystem.current.IsPointerOverGameObject())
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 {
                     isDraggingFromUI = true;
                     return;
                 }
-                else
-                {
-                    isDraggingFromUI = false;
-                    ShowClickEffect();
-                }
-            }
-
-            // 2. 마우스를 떼었을 때 (Up)
-            if (Input.GetMouseButtonUp(1))
-            {
                 isDraggingFromUI = false;
+                ShowClickEffect();
             }
 
-            // 3. UI에서 시작한 드래그가 아닐 때만 이동 로직 실행
-            if (!isDraggingFromUI)
+            if (Input.GetMouseButtonUp(1)) isDraggingFromUI = false;
+
+            if (Input.GetMouseButton(1) && !isDraggingFromUI)
             {
-                // 누르고 있는 동안 타겟 갱신
-                if (Input.GetMouseButton(1))
-                {
-                    SetTargetPosition();
-                }
+                targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
             }
-
-            MoveToTarget();
-        }
-
-        private void ShowClickEffect()
-        {
-            if (clickEffectPrefab == null) return;
-
-            // 마우스 위치 계산 (좌표 변환)
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = -Camera.main.transform.position.z;
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-            // 2. 이펙트 생성
-            GameObject effect = Instantiate(clickEffectPrefab, worldPos, Quaternion.identity);
-
-            // 3. 0.5초 뒤에 자동으로 파괴 (애니메이션 길이에 맞춰 조절)
-            Destroy(effect, 0.5f);
-        }
-
-        private void SetTargetPosition()
-        {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = -Camera.main.transform.position.z;
-            targetPosition = Camera.main.ScreenToWorldPoint(mousePos);
-            isMoving = true;
         }
 
         private void MoveToTarget()
         {
             float distance = Vector2.Distance(transform.position, targetPosition);
 
-            if (isMoving && distance > stoppingDistance)
+            if (distance > stoppingDistance)
             {
-                Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-                UpdateAnimator(direction);
-                rb.linearVelocity = direction * speed;
-                animator.SetBool("IsMoving", true);
+                IsMoving = true;
+                MoveDirection = (targetPosition - (Vector2)transform.position).normalized;
+                rb.linearVelocity = MoveDirection * speed;
             }
             else
             {
                 rb.linearVelocity = Vector2.zero;
-                animator.SetBool("IsMoving", false);
-                isMoving = false;
+                IsMoving = false;
             }
         }
 
-        private void UpdateAnimator(Vector2 dir)
+        private void ShowClickEffect()
         {
-            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-            {
-                animator.SetInteger("Direction", dir.x > 0 ? 2 : 3);
-            }
-            else
-            {
-                animator.SetInteger("Direction", dir.y > 0 ? 1 : 0);
-            }
+            if (clickEffectPrefab == null) return;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+            Destroy(Instantiate(clickEffectPrefab, worldPos, Quaternion.identity), 0.5f);
+        }
+
+        public void StopMovement()
+        {
+            targetPosition = transform.position;
+            IsMoving = false;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
         }
     }
 }

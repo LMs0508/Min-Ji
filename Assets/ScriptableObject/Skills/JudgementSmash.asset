@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78881d2681cbc8846a1d5d57af81bfde, type: 3}
+  m_Name: JudgementSmash
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillName: JudgementSmash
+  icon: {fileID: -1025219060167273282, guid: 7cc1fd4fd9bc72d43864dee394d53d89, type: 3}
+  description: 
+  cooldown: 1
+  skillManaCost: 10
+  isActive: 1
+  isBuff: 0
+  useCharge: 0
+  useStack: 0
+  isElementReactive: 1
+  defaultElement: 0
+  fireEnhancerPrefab: {fileID: 5294955900493390210, guid: b7ad6d112d2f1e644a578333fe49e2af,
+    type: 3}
+  waterEnhancerPrefab: {fileID: 1258533338136033330, guid: bb8f54d4d6c69cf4abc0c1d5470996dc,
+    type: 3}
+  earthEnhancerPrefab: {fileID: 4937136067963055059, guid: 3e6c761cb1e98654ebfdacaf5c135009,
+    type: 3}
+  windEnhancerPrefab: {fileID: 6173297824533353180, guid: 5221a1c0f4fd30c4090789c594c2ffaa,
+    type: 3}
+  fireElementDescription: 
+  waterElementDescription: 
+  earthElementDescription: 
+  windElementDescription: 
+  noneElementDescription: 
+  damageType: 0
+  damageRatio: 1.5
+  dashDistance: 3
+  dashTime: 0.12
+  buffDuration: 5
+  speedMultiplier: 1
+  attackSpeedBoost: 0
+  attackBuffMultiplier: 1
+  armor: 1.2
+  cooltimeReduce: 1
+  maxChargeStages: 3
+  stageTimeThresholds:
+  - 0
+  - 1
+  - 2
+  stageMultipliers:
+  - 1
+  - 2
+  - 3
+  stageRanges:
+  - 1
+  - 2
+  - 3
+  maxStacks: 3
+  stackEffect: 0
+  stackBonusDamage: 0.5
+  skillPrefab: {fileID: 3692249636830114244, guid: 617a110dac3f6144f831c5311ada794e,
+    type: 3}

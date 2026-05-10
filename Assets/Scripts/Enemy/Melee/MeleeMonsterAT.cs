@@ -2,24 +2,22 @@ using UnityEngine;
 
 public class MeleeMonsterAT : MonoBehaviour
 {
-    private EnemyAI ai; // Ãß°İ °ü·Ã
-    private EnemyHealth health; // Ã¼·Â°ü·Ã
-    public MeleeArea meleeArea; // °ø°İ ÆÇÁ¤ °ü·Ã
+    private EnemyStats stats;
+    public MeleeArea meleeArea;
 
-    void Awake()
+    void Start()
     {
-        ai = GetComponent<EnemyAI>();
-        health = GetComponent<EnemyHealth>();
+        stats = GetComponentInParent<EnemyStats>();
     }
 
-    // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌº¥Æ® µîÀ» À§ÇÑ ÄÚµå
-    public void OnAttackEvent()
+    public void OnMonsterHit()
     {
-        if (meleeArea != null)
+        if (meleeArea != null && stats != null && stats.enemyData != null)
         {
-            // EnemyStats¿¡¼­ °ø°İ·Â °¡Á®¿Àµµ·Ï ¿¬°áÇÔ
-            int damage = (int)GetComponent<EnemyStats>().enemyData.attackDamage;
+            float damage = stats.enemyData.damage;
             meleeArea.CheckAttack(damage);
+
+            Debug.Log($"<color=cyan>[ì´ë²¤íŠ¸]</color> ê³µê²© ì‹¤í–‰! ë°ë¯¸ì§€: {damage}");
         }
     }
 }

@@ -12,12 +12,25 @@ public class PlayerDebuffManager : MonoBehaviour
     private Coroutine burnCoroutine;
     private Coroutine blindFadeCoroutine;
 
+    [Header("UI 설정")]
+    public Transform debuffContainer;   // 아이콘들이 배치될 부모 (Horizontal Layout Group)
+    public GameObject debuffIconPrefab; // DebuffIconUI 스크립트가 붙은 프리팹
+    public List<DebuffIconData> debuffConfigs; // 에디터에서 타입별 아이콘 설정
 
     [Header("Blind UI")]
-    public GameObject blindPanel; // 위에서 만든 BlindPanel을 여기에 드래그
+    public GameObject blindPanel;
 
-    // 각 디버프별 현재 적용 중인 배율/강도를 저장 (가장 강한 것 비교용)
+    // 각 디버프별 현재 적용 중인 배율/강도를 저장
     private Dictionary<DebuffType, float> activeDebuffs = new Dictionary<DebuffType, float>();
+    // 현재 화면에 떠있는 UI 아이콘들을 관리
+    private Dictionary<DebuffType, DebuffIconUI> activeIconUIs = new Dictionary<DebuffType, DebuffIconUI>();
+
+    [System.Serializable]
+    public struct DebuffIconData
+    {
+        public DebuffType type;
+        public Sprite iconSprite;
+    }
 
     void Awake()
     {
@@ -26,29 +39,71 @@ public class PlayerDebuffManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // 외부(적, 환경)에서 디버프를 걸 때 호출
     public void ApplyDebuff(DebuffType type, float power, float duration)
     {
-        // 이미 해당 디버프가 걸려있는데, 새로 걸려는 게 더 약하면 무시
-        if (activeDebuffs.ContainsKey(type) && activeDebuffs[type] <= power)
+        // 중복 디버프 처리 로직
+        if (activeDebuffs.ContainsKey(type))
         {
-            // (참고: 슬로우의 경우 power가 낮을수록(0.2f) 강한 것이므로 로직에 따라 비교문을 수정)
             if (type == DebuffType.Slow && power > activeDebuffs[type]) return;
             if (type != DebuffType.Slow && power < activeDebuffs[type]) return;
+            
+            // 기존에 같은 디버프가 있다면 UI와 코루틴을 정리하고 새로 시작 (시간 갱신 효과)
+            StopExistingDebuff(type);
         }
 
         StartCoroutine(DebuffRoutine(type, power, duration));
     }
 
+    private void StopExistingDebuff(DebuffType type)
+    {
+        // 특정 타입의 디버프 UI 제거
+        if (activeIconUIs.TryGetValue(type, out DebuffIconUI ui))
+        {
+            if (ui != null) Destroy(ui.gameObject);
+            activeIconUIs.Remove(type);
+        }
+        // 기존 코루틴은 동일 타입이 들어올 때 ApplyDebuff 레벨에서 정리되거나 
+        // 로직에 따라 StopCoroutine을 타입별로 관리할 수 있습니다.
+    }
+
     private IEnumerator DebuffRoutine(DebuffType type, float power, float duration)
     {
         activeDebuffs[type] = power;
-        ApplyEffect(type, power, true); // 효과 적용
+        ApplyEffect(type, power, true);
 
-        yield return new WaitForSeconds(duration);
+        // --- UI 아이콘 생성 ---
+        Sprite icon = debuffConfigs.Find(x => x.type == type).iconSprite;
+        if (debuffIconPrefab != null && debuffContainer != null && icon != null)
+        {
+            GameObject go = Instantiate(debuffIconPrefab, debuffContainer);
+            DebuffIconUI ui = go.GetComponent<DebuffIconUI>();
+            ui.Setup(icon, duration);
+            activeIconUIs[type] = ui;
+        }
 
-        ApplyEffect(type, power, false); // 효과 제거
+        float timer = duration;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            
+            // UI에 남은 시간 전달
+            if (activeIconUIs.ContainsKey(type) && activeIconUIs[type] != null)
+            {
+                activeIconUIs[type].UpdateTime(timer);
+            }
+            
+            yield return null;
+        }
+
+        ApplyEffect(type, power, false);
         activeDebuffs.Remove(type);
+
+        // --- UI 아이콘 제거 ---
+        if (activeIconUIs.TryGetValue(type, out DebuffIconUI remainingUI))
+        {
+            if (remainingUI != null) Destroy(remainingUI.gameObject);
+            activeIconUIs.Remove(type);
+        }
     }
 
     private void ApplyEffect(DebuffType type, float power, bool isApply)
@@ -59,77 +114,57 @@ public class PlayerDebuffManager : MonoBehaviour
                 if (isApply) stats.MoveSpeed.Multiply(power);
                 else stats.MoveSpeed.Divide(power);
                 break;
-
             case DebuffType.Weakness:
                 if (isApply) stats.Attack.Multiply(power);
                 else stats.Attack.Divide(power);
                 break;
-
-            case DebuffType.Stun: // 속박/기절
+            case DebuffType.Stun:
                 HandleStun(isApply);
                 break;
-
-            case DebuffType.Silence:
-                // 플레이어 컨트롤러의 스킬 사용 bool 변수를 제어하거나 stats에 추가 필요
-                Debug.Log(isApply ? "침묵 상태!" : "침묵 해제");
-                break;
-
             case DebuffType.Burn:
                 if (isApply)
                 {
                     if (burnCoroutine != null) StopCoroutine(burnCoroutine);
                     burnCoroutine = StartCoroutine(BurnDamage(power));
                 }
-                else
-                {
-                    if (burnCoroutine != null) StopCoroutine(burnCoroutine);
-                }
+                else if (burnCoroutine != null) StopCoroutine(burnCoroutine);
                 break;
-
-
-            case DebuffType.Blind: // 실명
+            case DebuffType.Blind:
                 HandleBlind(isApply);
                 break;
         }
     }
+
     private void HandleStun(bool isApply)
     {
         if (isApply)
         {
-            // multiplier가 0이 되면 복구가 안 되므로 0.0001f를 곱합니다.
             stats.MoveSpeed.Multiply(0.0001f);
             if (anim != null) anim.speed = 0f;
             if (rb != null) rb.linearVelocity = Vector2.zero;
-            Debug.Log("캐릭터가 굳었습니다!");
         }
         else
         {
-            // 0.0001f를 다시 나눠서 1로 복구합니다.
             stats.MoveSpeed.Divide(0.0001f);
             if (anim != null) anim.speed = 1f;
-            Debug.Log("속박 해제!");
         }
     }
-
-
 
     private void HandleBlind(bool isApply)
     {
         if (blindPanel == null) return;
-
         if (blindFadeCoroutine != null) StopCoroutine(blindFadeCoroutine);
-        blindFadeCoroutine = StartCoroutine(FadeBlind(isApply ? 0.8f : 0f));
+        blindFadeCoroutine = StartCoroutine(FadeBlind(isApply ? 0.99f : 0f));
     }
 
     private IEnumerator FadeBlind(float targetAlpha)
     {
         Image img = blindPanel.GetComponent<Image>();
         blindPanel.SetActive(true);
-
         Color color = img.color;
         float startAlpha = color.a;
         float elapsed = 0f;
-        float duration = 0.5f; // 0.5초 동안 서서히
+        float duration = 0.5f;
 
         while (elapsed < duration)
         {
@@ -138,7 +173,6 @@ public class PlayerDebuffManager : MonoBehaviour
             img.color = color;
             yield return null;
         }
-
         if (targetAlpha <= 0f) blindPanel.SetActive(false);
     }
 
@@ -147,26 +181,28 @@ public class PlayerDebuffManager : MonoBehaviour
         while (true)
         {
             stats.TakeDamage(damage);
-            yield return new WaitForSeconds(1f); // 1초마다 데미지
+            yield return new WaitForSeconds(1f);
         }
     }
 
     public void ResetAllDebuffs()
     {
-        // 1. 모든 실행 중인 디버프 코루틴 정지
         StopAllCoroutines();
-
-        // 2. 딕셔너리 초기화
         activeDebuffs.Clear();
 
-        // 3. 모든 스탯 강제 복구 (기본값으로 세팅)
-        stats.MoveSpeed.Divide(stats.MoveSpeed.Multiplier); // 배율을 1로 만듦
+        // UI 모두 제거
+        foreach (var ui in activeIconUIs.Values)
+        {
+            if (ui != null) Destroy(ui.gameObject);
+        }
+        activeIconUIs.Clear();
+
+        stats.MoveSpeed.Divide(stats.MoveSpeed.Multiplier);
         stats.Attack.Divide(stats.Attack.Multiplier);
 
-        // 4. 특수 연출 UI 및 애니메이션 복구
         if (blindPanel != null) blindPanel.SetActive(false);
         if (anim != null) anim.speed = 1f;
 
-        Debug.Log("모든 신체 상태가 정화되었습니다.");
+        Debug.Log("모든 디버프와 UI가 정화되었습니다.");
     }
 }
