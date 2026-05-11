@@ -204,10 +204,9 @@ TitleScene → GameScene → village(마을) → floor01~04(던전 4층) → Bos
 
 ### Phase 1 — 타이틀 / 마을 진입
 1. TitleScene에서 시작 → GameScene 로드
-2. village 첫 입장 시 `VillageIntroController` 컷신 (1회만)
-3. 마을 NPC들과 Space로 대화 → 퀘스트 수락 (`startCutscene` 자동 재생)
+2. 마을 NPC들과 Space로 대화 → 퀘스트 수락 (`startCutscene` 자동 재생)
 
-### Phase 2 — 던전 클라이밍 (floor01~04)
+### Phase 2 — 던전 클라이밍 (village~BossRoom)
 1. 마을 포털 → `SceneFlowManager.LoadFloorAsync(floorIndex)`
 2. 이전 floor 언로드 → 새 floor Additive 로드 → `FloorSpawn`으로 플레이어 이동
 3. 던전 내부:
@@ -260,7 +259,7 @@ TitleScene → GameScene → village(마을) → floor01~04(던전 4층) → Bos
 1. `TitleScene` — 타이틀
 2. `GameScene` — 영구 매니저 베이스 (Additive 기준)
 3. `village` — 마을
-4. `floor01` ~ `floor04` — 던전 4층
+4. `floor01` ~ `floor04` — 테스트장소(디버그용)
 5. `Boss` / `Boss_Under1` / `Boss_Under2` / `Boss_Room` — 보스 진입 단계
 6. `BossHouse` — 보스 집
 7. `InHouse` — 인 하우스

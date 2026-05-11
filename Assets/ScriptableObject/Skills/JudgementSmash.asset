@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: JudgementSmash
   icon: {fileID: -1025219060167273282, guid: 7cc1fd4fd9bc72d43864dee394d53d89, type: 3}
-  description: 
+  description: "\uB192\uAC8C \uC810\uD504\uD558\uC5EC \uB0B4\uB824\uCE5C\uB2E4."
   cooldown: 1
   skillManaCost: 10
   isActive: 1
@@ -32,10 +32,11 @@ MonoBehaviour:
   windEnhancerPrefab: {fileID: 6173297824533353180, guid: 5221a1c0f4fd30c4090789c594c2ffaa,
     type: 3}
   fireElementDescription: 
-  waterElementDescription: 
+  waterElementDescription: "\uB099\uD558\uC9C0\uC810\uC5D0 \uD3ED\uD3EC\uC218\uB97C
+    \uB9CC\uB4E4\uC5B4 \uC9C0\uC18D\uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
   earthElementDescription: 
   windElementDescription: 
-  noneElementDescription: 
+  noneElementDescription: "\uB192\uAC8C \uC810\uD504\uD558\uC5EC \uB0B4\uB824\uCE5C\uB2E4."
   damageType: 0
   damageRatio: 1.5
   dashDistance: 3

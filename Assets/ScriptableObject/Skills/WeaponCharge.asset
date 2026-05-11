@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: WeaponCharge
   icon: {fileID: 4120006714373311370, guid: 484b6555e08118345a4f36038d56afff, type: 3}
-  description: 
+  description: "\uAE30\uB97C \uBAA8\uC544 \uACF5\uACA9\uC744 \uD55C\uB2E4. \uAE30\uB97C
+    \uBAA8\uC740 \uB9CC\uD07C \uB370\uBBF8\uC9C0\uAC00 \uAC15\uB825\uD574\uC9C4\uB2E4."
   cooldown: 1
+  skillManaCost: 10
   isActive: 1
   isBuff: 0
   useCharge: 1
@@ -32,9 +34,12 @@ MonoBehaviour:
   waterElementDescription: 
   earthElementDescription: 
   windElementDescription: 
-  noneElementDescription: 
+  noneElementDescription: "\uAE30\uB97C \uBAA8\uC544 \uACF5\uACA9\uC744 \uD55C\uB2E4.
+    \uAE30\uB97C \uBAA8\uC740 \uB9CC\uD07C \uB370\uBBF8\uC9C0\uAC00 \uAC15\uB825\uD574\uC9C4\uB2E4."
   damageType: 0
   damageRatio: 1.5
+  dashDistance: 3
+  dashTime: 0.12
   buffDuration: 5
   speedMultiplier: 1
   attackSpeedBoost: 0

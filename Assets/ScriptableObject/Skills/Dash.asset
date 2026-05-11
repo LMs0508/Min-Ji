@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: Dash
   icon: {fileID: 9144078166543854885, guid: ac9b26576a773324a9c8941a1fca50d9, type: 3}
-  description: 
+  description: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
   cooldown: 3
   skillManaCost: 10
   isActive: 0
@@ -27,11 +27,11 @@ MonoBehaviour:
   waterEnhancerPrefab: {fileID: 0}
   earthEnhancerPrefab: {fileID: 0}
   windEnhancerPrefab: {fileID: 0}
-  fireElementDescription: 
-  waterElementDescription: 
-  earthElementDescription: 
-  windElementDescription: 
-  noneElementDescription: 
+  fireElementDescription: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
+  waterElementDescription: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
+  earthElementDescription: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
+  windElementDescription: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
+  noneElementDescription: "\uC9E7\uC740\uAC70\uB9AC\uB97C \uB2EC\uB9B0\uB2E4"
   damageType: 0
   damageRatio: 1
   dashDistance: 3
