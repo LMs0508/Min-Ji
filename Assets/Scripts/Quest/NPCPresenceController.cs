@@ -1,14 +1,26 @@
 using UnityEngine;
-using System.Collections; // 지연 시간을 위해 추가
+using System.Collections;
 
 public class NPCPresenceController : MonoBehaviour
 {
+    // 어떤 조건일 때 반응할지 선택
+    public enum TriggerCondition
+    {
+        OnQuestAccepted,    // 퀘스트 수락 시
+        OnQuestCompleted,   // 퀘스트 완료(isFinished) 시
+        OnQuestAcceptedOrCompleted // 수락 또는 완료 시 (기존 동작)
+    }
+
     [Header("설정")]
     public string targetQuestTitle = "퀘스트이름";
-    public bool shouldBeActiveWhenAccepted = false;
+    public bool shouldBeActiveWhenTriggered = false;
+
+    [Header("트리거 조건")]
+    [Tooltip("어떤 시점에 활성화 상태가 바뀔지 선택")]
+    public TriggerCondition triggerCondition = TriggerCondition.OnQuestAcceptedOrCompleted;
 
     [Header("지연 설정")]
-    public float delaySeconds = 0f; // 몇 초 뒤에 사라지게 할지 인스펙터에서 설정
+    public float delaySeconds = 0f;
 
     private void OnEnable()
     {
@@ -38,8 +50,7 @@ public class NPCPresenceController : MonoBehaviour
         // 1. 현재 진행 중인 퀘스트 목록에서 검색
         QuestData q = QuestManager.Instance.activeQuests.Find(x => x.questTitle == targetQuestTitle);
 
-        // 2. 진행 중인 목록에 없다면, 이미 완료되어 리스트에서 나갔는지 확인하기 위해 모든 NPC의 퀘스트 목록 검색
-        // (비활성화된 객체도 포함하여 찾아야 완료된 퀘스트 데이터를 확인할 수 있습니다)
+        // 2. 진행 중인 목록에 없다면, 모든 NPC의 퀘스트 목록 검색 (완료된 퀘스트 포함)
         if (q == null)
         {
             NPCDialogue[] allNPCs = FindObjectsByType<NPCDialogue>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -50,40 +61,68 @@ public class NPCPresenceController : MonoBehaviour
             }
         }
 
-        // 수락되었거나 이미 종료(Finished)된 상태인지 체크
-        bool isStartedOrDone = (q != null && (q.isAccepted || q.isFinished));
+        // 트리거 조건에 따라 활성화 여부 판단
+        bool isTriggered = false;
+        if (q != null)
+        {
+            switch (triggerCondition)
+            {
+                case TriggerCondition.OnQuestAccepted:
+                    // 수락은 됐지만 아직 완료되지 않은 상태
+                    isTriggered = q.isAccepted && !q.isFinished;
+                    break;
+                case TriggerCondition.OnQuestCompleted:
+                    // 완료된 상태
+                    isTriggered = q.isFinished;
+                    break;
+                case TriggerCondition.OnQuestAcceptedOrCompleted:
+                    // 수락되었거나 완료된 상태 (기존 동작)
+                    isTriggered = q.isAccepted || q.isFinished;
+                    break;
+            }
+        }
 
-        // 이미 원하는 활성화 상태라면 중복 처리를 방지 (비활성화 상태에서 코루틴 시작 시 오류 방지)
-        bool targetActiveState = isStartedOrDone ? shouldBeActiveWhenAccepted : !shouldBeActiveWhenAccepted;
+        // 이미 원하는 활성화 상태라면 중복 처리 방지
+        bool targetActiveState = isTriggered ? shouldBeActiveWhenTriggered : !shouldBeActiveWhenTriggered;
         if (gameObject.activeSelf == targetActiveState) return;
 
-        // 퀘스트 수락 시 사라져야 하는 경우(마을 할머니)이고, 지연 시간이 설정되어 있다면
-        if (isStartedOrDone && !shouldBeActiveWhenAccepted && delaySeconds > 0)
+        // 트리거 발동 시 사라져야 하는 경우이고, 지연 시간이 설정되어 있다면
+        if (isTriggered && !shouldBeActiveWhenTriggered && delaySeconds > 0)
         {
             StartCoroutine(DelayedDisable());
         }
+        // 트리거 발동 시 나타나야 하는 경우이고, 지연 시간이 설정되어 있다면
+        else if (isTriggered && shouldBeActiveWhenTriggered && delaySeconds > 0)
+        {
+            StartCoroutine(DelayedEnable());
+        }
         else
         {
-            // 그 외의 경우(즉시 나타나야 하는 집 안 할머니 등)는 기존처럼 즉시 처리
-            ApplyPresence(isStartedOrDone);
+            ApplyPresence(isTriggered);
         }
     }
 
     private IEnumerator DelayedDisable()
     {
         yield return new WaitForSeconds(delaySeconds);
-        ApplyPresence(true); // 수락된 상태(isAccepted = true)로 적용
+        ApplyPresence(true);
     }
 
-    private void ApplyPresence(bool isAccepted)
+    private IEnumerator DelayedEnable()
     {
-        if (isAccepted)
+        yield return new WaitForSeconds(delaySeconds);
+        ApplyPresence(true);
+    }
+
+    private void ApplyPresence(bool isTriggered)
+    {
+        if (isTriggered)
         {
-            gameObject.SetActive(shouldBeActiveWhenAccepted);
+            gameObject.SetActive(shouldBeActiveWhenTriggered);
         }
         else
         {
-            gameObject.SetActive(!shouldBeActiveWhenAccepted);
+            gameObject.SetActive(!shouldBeActiveWhenTriggered);
         }
     }
 }
